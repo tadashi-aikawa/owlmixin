@@ -1,8 +1,9 @@
 # coding: utf-8
 
+from __future__ import division, absolute_import, unicode_literals
 import json
 
-r"""
+"""
 For example::
 
     class Human(JsonMixin):
@@ -46,7 +47,7 @@ For example::
 """
 
 
-class JsonMixin():
+class JsonMixin:
     @classmethod
     def from_dict(cls, d):
         return cls(**d)
@@ -63,7 +64,7 @@ class JsonMixin():
         return self._traverse_dict(self.__dict__)
 
     def to_json(self, indent=0):
-        return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False)
+        return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False, sort_keys=True)
 
     def to_pretty_json(self):
         return self.to_json(4)
