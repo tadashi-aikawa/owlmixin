@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from __future__ import division, absolute_import, unicode_literals
+
 from typing import List
 
 from jsonmixin.main import JsonMixin
@@ -13,10 +14,10 @@ def del_trim(target):
 
 class Human(JsonMixin):
     def __init__(self, id, name, favorite_spots):
-        # type: (int, str, List[Spot]) -> Human
+        # type: (int, str, List[dict]) -> Human
         self.id = id
         self.name = name
-        self.favorite_spots = Spot.from_dicts(favorite_spots)
+        self.favorite_spots = Spot.from_dicts(favorite_spots)  # type: List[Spot]
 
 
 class Spot(JsonMixin):

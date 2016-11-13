@@ -1,7 +1,10 @@
 # coding: utf-8
 
 from __future__ import division, absolute_import, unicode_literals
+
 import json
+
+from typing import TypeVar, List
 
 """
 For example::
@@ -46,27 +49,35 @@ For example::
     True
 """
 
+T = TypeVar('T', bound='JsonMixin')
+
 
 class JsonMixin:
     @classmethod
     def from_dict(cls, d):
+        # type: (dict) -> T
         return cls(**d)
 
     @classmethod
     def from_dicts(cls, ds):
+        # type: (List[dict]) -> List[T]
         return [cls(**d) for d in ds]
 
     @classmethod
     def from_json(cls, data):
+        # type: (str) -> T
         return cls.from_dict(json.loads(data))
 
     def to_dict(self):
+        # type: () -> dict
         return self._traverse_dict(self.__dict__)
 
     def to_json(self, indent=0):
+        # type: () -> str
         return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False, sort_keys=True)
 
     def to_pretty_json(self):
+        # type: () -> str
         return self.to_json(4)
 
     def _traverse_dict(self, instance_dict):
