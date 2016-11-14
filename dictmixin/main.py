@@ -9,14 +9,14 @@ from typing import TypeVar, List
 """
 For example::
 
-    class Human(JsonMixin):
+    class Human(DictMixin):
         def __init__(self, id, name, favorite):
             self.id = id
             self.name = name
             self.favorite = Food.from_dicts(favorite)
 
 
-    class Food(JsonMixin):
+    class Food(DictMixin):
         def __init__(self, id, name, color=None):
             self.id = id
             self.name = name
@@ -49,10 +49,10 @@ For example::
     True
 """
 
-T = TypeVar('T', bound='JsonMixin')
+T = TypeVar('T', bound='DictMixin')
 
 
-class JsonMixin:
+class DictMixin:
     @classmethod
     def from_dict(cls, d):
         # type: (dict) -> T
@@ -87,7 +87,7 @@ class JsonMixin:
         return output
 
     def _traverse(self, key, value):
-        if isinstance(value, JsonMixin):
+        if isinstance(value, DictMixin):
             return value.to_dict()
         elif isinstance(value, dict):
             return self._traverse_dict(value)

@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import List
 
-from jsonmixin.main import JsonMixin
+from dictmixin.main import DictMixin
 
 
 def del_trim(target):
@@ -12,7 +12,7 @@ def del_trim(target):
     return target.replace("\n", "").replace(" ", "")
 
 
-class Human(JsonMixin):
+class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
         # type: (int, str, List[dict]) -> Human
         self.id = id
@@ -20,7 +20,7 @@ class Human(JsonMixin):
         self.favorite_spots = Spot.from_dicts(favorite_spots)  # type: List[Spot]
 
 
-class Spot(JsonMixin):
+class Spot(DictMixin):
     def __init__(self, names, address):
         # type: (List[str], str) -> Spot
         self.names = names
