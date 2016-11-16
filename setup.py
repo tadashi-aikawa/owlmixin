@@ -11,7 +11,7 @@ setup(
     license=__license__,
     author=__author__,
     author_email='syou.maman@gmail.com',
-    url='https://github.com/tadashi-aikawa/dict-mixin.git',
+    url='https://github.com/tadashi-aikawa/dictmixin.git',
     keywords='dict json convert parse each other',
     packages=find_packages(),
     install_requires=[],
