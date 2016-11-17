@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 import json
 
-from typing import TypeVar, List
+from typing import TypeVar, List, Dict
 
 """
 For example::
@@ -59,9 +59,14 @@ class DictMixin:
         return cls(**d)
 
     @classmethod
-    def from_dicts(cls, ds):
+    def from_dict2list(cls, ds):
         # type: (List[dict]) -> List[T]
         return [cls(**d) for d in ds]
+
+    @classmethod
+    def from_dict2dict(cls, ds):
+        # type: (dict) -> Dict[str, T]
+        return {k: cls(**v) for k, v in ds.items()}
 
     @classmethod
     def from_json(cls, data):
