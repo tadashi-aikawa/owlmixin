@@ -2,19 +2,19 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from typing import List
+from typing import List, Text
 
 from dictmixin.main import DictMixin
 
 
 def del_trim(target):
-    # type: (str) -> str
+    # type: (Text) -> Text
     return target.replace("\n", "").replace(" ", "")
 
 
 class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
-        # type: (int, str, List[dict]) -> Human
+        # type: (int, Text, List[dict]) -> Human
         self.id = id
         self.name = name
         self.favorite_spots = Spot.from_dict2list(favorite_spots)  # type: List[Spot]
@@ -22,7 +22,7 @@ class Human(DictMixin):
 
 class Spot(DictMixin):
     def __init__(self, names, address):
-        # type: (List[str], str) -> Spot
+        # type: (List[Text], Text) -> Spot
         self.names = names
         self.address = address
 
