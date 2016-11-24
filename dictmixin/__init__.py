@@ -4,5 +4,5 @@ from . import main
 
 __title__ = 'dictmixin'
 __version__ = '0.1.0'
-__author__ = 'Tadashi Aikawa'
+__author__ = 'tadashi-aikawa'
 __license__ = 'MIT'
