@@ -2,23 +2,14 @@
 # coding: utf-8
 
 import re
-from os import read
-
 from setuptools import setup, find_packages
-
-
-def find_version(*file_paths):
-    version_file = read(*file_paths)
-    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
-                              version_file, re.M)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
 
 
 setup(
     name='dictmixin',
-    version=find_version("dictmixin", "__init__.py"),
+    __version__=re.search(
+        r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
+        open('dictmixin/__init__.py').read()).group(1),
     description='Parsing mixin which converts `data class instance`, `dict object`, and `json string` each other.',
     license='MIT',
     author='tadashi-aikawa',
