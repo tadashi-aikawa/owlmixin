@@ -1,4 +1,2 @@
 typing
-pytest
-pytest-cov
 pyyaml
