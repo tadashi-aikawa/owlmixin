@@ -3,6 +3,8 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import json
+import yaml
+from yaml import Loader, SafeLoader
 
 from typing import TypeVar, List, Dict, Text
 
@@ -52,6 +54,14 @@ For example::
 T = TypeVar('T', bound='DictMixin')
 
 
+def construct_yaml_str(self, node):
+    return self.construct_scalar(node)
+
+
+Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
+SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
+
+
 class DictMixin:
     @classmethod
     def from_dict(cls, d):
@@ -72,6 +82,11 @@ class DictMixin:
     def from_json(cls, data):
         # type: (Text) -> T
         return cls.from_dict(json.loads(data))
+
+    @classmethod
+    def from_yaml(cls, data):
+        # type: (Text) -> T
+        return cls.from_dict(yaml.load(data))
 
     def to_dict(self):
         # type: () -> dict
