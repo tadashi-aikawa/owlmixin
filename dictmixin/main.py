@@ -6,7 +6,7 @@ import json
 import yaml
 from yaml import Loader, SafeLoader
 
-from typing import TypeVar, List, Dict, Text
+from typing import TypeVar, List, Dict, Text, Union
 
 """
 For example::
@@ -85,7 +85,7 @@ class DictMixin:
 
     @classmethod
     def from_yaml(cls, data):
-        # type: (Text) -> T
+        # type: (Union[Text, file]) -> T
         return cls.from_dict(yaml.load(data))
 
     def to_dict(self):
