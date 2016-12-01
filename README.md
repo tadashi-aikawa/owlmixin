@@ -29,3 +29,4 @@ pip install git+https://github.com/tadashi-aikawa/dictmixin@0.2.0
 | yaml     | instance | `from_yaml`                                     |
 | yaml     | dict     | -                                               |
 | yaml     | json     | -                                               |
+
