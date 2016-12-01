@@ -140,27 +140,3 @@ class TestToJson:
         }
         """)
 
-
-class TestFromYaml:
-    def test_normal(self):
-        r = Human.from_yaml("""
-            id: 1
-            name: "メンバ1"
-            favorite_spots:
-              - address: address1
-                names:
-                  - spot1
-              - address: address2
-                names:
-                  - spot21
-                  - spot22
-        """)
-
-        assert r.to_dict() == {
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
-                {"names": ["spot21", "spot22"], "address": "address2"}
-            ]
-        }
