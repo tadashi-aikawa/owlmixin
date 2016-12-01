@@ -10,7 +10,6 @@ install:
   - pip install pytest pytest-cov codeclimate-test-reporter
 script:
   - py.test -v --cov=dictmixin tests/
-after_sucess:
   - codeclimate-test-reporter
 notifications:
   slack:
