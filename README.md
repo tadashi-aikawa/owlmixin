@@ -1,7 +1,8 @@
 # dictmixin
 
 [![](https://api.travis-ci.org/tadashi-aikawa/dictmixin.svg?branch=master)](https://travis-ci.org/tadashi-aikawa/dictmixin)
-[![](https://coveralls.io/repos/github/tadashi-aikawa/dictmixin/badge.svg)](https://coveralls.io/github/tadashi-aikawa/dictmixin)
+[![Test Coverage](https://codeclimate.com/github/tadashi-aikawa/dictmixin/badges/coverage.svg)](https://codeclimate.com/github/tadashi-aikawa/dictmixin/coverage)
+[![Code Climate](https://codeclimate.com/github/tadashi-aikawa/dictmixin/badges/gpa.svg)](https://codeclimate.com/github/tadashi-aikawa/dictmixin)
 [![](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 [![](https://img.shields.io/badge/python-2.7/3.3/3.4/3.5-blue.svg)]()
 
