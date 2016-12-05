@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 def load_required_modules():
     with open(os.path.join(os.path.dirname(__file__), "requirements.txt")) as f:
-        return [line.strip() for line in f.read().strip().split(os.linesep) if line.strip()]
+        return [line.strip() for line in f.readlines() if line.strip()]
 
 
 setup(
