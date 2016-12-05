@@ -3,6 +3,6 @@
 from . import main
 
 __title__ = 'dictmixin'
-__version__ = '0.2.1'
+__version__ = '0.3.0'
 __author__ = 'tadashi-aikawa'
 __license__ = 'MIT'

@@ -54,6 +54,11 @@ For example::
 T = TypeVar('T', bound='DictMixin')
 
 
+class MyDumper(yaml.SafeDumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(MyDumper, self).increase_indent(flow, False)
+
+
 def construct_yaml_str(self, node):
     return self.construct_scalar(node)
 
@@ -94,11 +99,24 @@ class DictMixin:
 
     def to_json(self, indent=0):
         # type: () -> Text
-        return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False, sort_keys=True)
+        return json.dumps(self.to_dict(),
+                          indent=indent,
+                          ensure_ascii=False,
+                          sort_keys=True,
+                          separators=(',', ': '))
 
     def to_pretty_json(self):
         # type: () -> Text
         return self.to_json(4)
+
+    def to_yaml(self):
+        # type: () -> Text
+        return yaml.dump(self.to_dict(),
+                         indent=2,
+                         encoding=None,
+                         allow_unicode=True,
+                         default_flow_style=False,
+                         Dumper=MyDumper)
 
     def _traverse_dict(self, instance_dict):
         output = {}

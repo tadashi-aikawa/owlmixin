@@ -164,3 +164,62 @@ class TestToJson:
             "name": "メンバ1"
         }
         """)
+
+
+class TestToPrettyJson:
+    def test_normal(self):
+        r = Human.from_dict({
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"], "address": "address2"}
+            ]
+        })
+
+        assert r.to_pretty_json() == """
+{
+    "favorite_spots": [
+        {
+            "address": "address1",
+            "names": [
+                "spot1"
+            ]
+        },
+        {
+            "address": "address2",
+            "names": [
+                "spot21",
+                "spot22"
+            ]
+        }
+    ],
+    "id": 1,
+    "name": "メンバ1"
+}
+""".strip()
+
+
+class TestToYaml:
+    def test_normal(self):
+        r = Human.from_dict({
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"], "address": "address2"}
+            ]
+        })
+
+        assert r.to_yaml() == """
+favorite_spots:
+  - address: address1
+    names:
+      - spot1
+  - address: address2
+    names:
+      - spot21
+      - spot22
+id: 1
+name: メンバ1
+""".lstrip()

@@ -11,7 +11,7 @@ Parsing mixin which converts `data class instance`, `dict object`, `json string`
 ## Installation
 
 ```
-pip install git+https://github.com/tadashi-aikawa/dictmixin@0.2.1
+pip install git+https://github.com/tadashi-aikawa/dictmixin@0.3.0
 ```
 
 ## API
@@ -20,7 +20,7 @@ pip install git+https://github.com/tadashi-aikawa/dictmixin@0.2.1
 |----------|----------|-------------------------------------------------|
 | instance | dict     | `to_dict`                                       |
 | instance | json     | `to_json`, `to_pretty_json`                     |
-| instance | yaml     | -                                               |
+| instance | yaml     | `to_yaml`                                       |
 | dict     | instance | `from_dict`, `from_dict2list`, `from_dict2dict` |
 | dict     | json     | -                                               |
 | dict     | yaml     | -                                               |
