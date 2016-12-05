@@ -8,9 +8,6 @@ indent_size = 4
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[test_main.py]
-trim_trailing_whitespace = false
-
 [.travis.yml]
 indent_size = 2
 

@@ -177,25 +177,24 @@ class TestToPrettyJson:
             ]
         })
 
-        # カンマの後のスペースを忘れないように
         assert r.to_pretty_json() == """
 {
     "favorite_spots": [
         {
-            "address": "address1", 
+            "address": "address1",
             "names": [
                 "spot1"
             ]
-        }, 
+        },
         {
-            "address": "address2", 
+            "address": "address2",
             "names": [
-                "spot21", 
+                "spot21",
                 "spot22"
             ]
         }
-    ], 
-    "id": 1, 
+    ],
+    "id": 1,
     "name": "メンバ1"
 }
 """.strip()

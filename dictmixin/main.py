@@ -99,7 +99,11 @@ class DictMixin:
 
     def to_json(self, indent=0):
         # type: () -> Text
-        return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False, sort_keys=True)
+        return json.dumps(self.to_dict(),
+                          indent=indent,
+                          ensure_ascii=False,
+                          sort_keys=True,
+                          separators=(',', ': '))
 
     def to_pretty_json(self):
         # type: () -> Text
