@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import os
 import re
 from setuptools import setup, find_packages
+
+
+def load_required_modules():
+    with open(os.path.join(os.path.dirname(__file__), "requirements.txt")) as f:
+        return [line.strip() for line in f.read().strip().split(os.linesep) if line.strip()]
 
 
 setup(
@@ -19,7 +25,7 @@ setup(
     url='https://github.com/tadashi-aikawa/dictmixin.git',
     keywords='dict json convert parse each other',
     packages=find_packages(exclude=['tests*']),
-    install_requires=[],
+    install_requires=load_required_modules(),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
