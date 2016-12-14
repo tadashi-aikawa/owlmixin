@@ -67,21 +67,26 @@ Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
+def replace_keys(d, keymap):
+    # type: dict -> Dict[Text, Text]
+    return {keymap.get(k, k): v for k, v in d.items()}
+
+
 class DictMixin:
     @classmethod
     def from_dict(cls, d):
         # type: (dict) -> T
-        return cls(**d)
+        return cls(**replace_keys(d, {"self": "_self"}))
 
     @classmethod
     def from_dict2list(cls, ds):
         # type: (List[dict]) -> List[T]
-        return [cls(**d) for d in ds]
+        return [cls.from_dict(d) for d in ds]
 
     @classmethod
     def from_dict2dict(cls, ds):
         # type: (dict) -> Dict[Text, T]
-        return {k: cls(**v) for k, v in ds.items()}
+        return {k: cls.from_dict(v) for k, v in ds.items()}
 
     @classmethod
     def from_json(cls, data):
