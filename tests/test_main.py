@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import List, Text
 
-from dictmixin.main import DictMixin
+from dictmixin.main import DictMixin, replace_keys
 
 
 def del_trim(target):
@@ -25,6 +25,29 @@ class Spot(DictMixin):
         # type: (List[Text], Text) -> Spot
         self.names = names
         self.address = address
+
+
+class TestReplaceKeys:
+    def test_normal(self):
+        keymap = {
+            "self": "_self",
+            "before": "after"
+        }
+        d = {
+            "before": 1,
+            "before2": 2,
+            "self": 3,
+            "self2": 4
+        }
+
+        expected = {
+            "after": 1,
+            "before2": 2,
+            "_self": 3,
+            "self2": 4
+        }
+
+        assert replace_keys(d, keymap) == expected
 
 
 class TestFromDict:
