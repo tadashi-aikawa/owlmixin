@@ -6,7 +6,7 @@ import json
 import yaml
 from yaml import Loader, SafeLoader
 
-from typing import TypeVar, List, Dict, Text, Union
+from typing import TypeVar, List, Dict, Text, Union, Optional
 
 """
 For example::
@@ -77,6 +77,11 @@ class DictMixin:
     def from_dict(cls, d):
         # type: (dict) -> T
         return cls(**replace_keys(d, {"self": "_self"}))
+
+    @classmethod
+    def from_optional_dict(cls, d):
+        # type: (Optional[dict]) -> Optional[T]
+        return cls.from_dict(d) if d is not None else None
 
     @classmethod
     def from_dict2list(cls, ds):

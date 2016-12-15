@@ -3,6 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from typing import List, Text
+import pytest
 
 from dictmixin.main import DictMixin, replace_keys
 
@@ -73,6 +74,38 @@ class TestFromDict:
         assert r.favorite_spots[1].names[0] == "spot21"
         assert r.favorite_spots[1].names[1] == "spot22"
         assert r.favorite_spots[1].address == "address2"
+
+    def test_none(self):
+        with pytest.raises(AttributeError):
+            Human.from_dict(None)
+
+
+class TestFromOptionalDict:
+    def test_normal(self):
+        r = Human.from_optional_dict({
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"], "address": "address2"}
+            ]
+        })
+
+        assert r.id == 1
+        assert r.name == "メンバ1"
+        assert len(r.favorite_spots) == 2
+
+        assert len(r.favorite_spots[0].names) == 1
+        assert r.favorite_spots[0].names[0] == "spot1"
+        assert r.favorite_spots[0].address == "address1"
+
+        assert len(r.favorite_spots[1].names) == 2
+        assert r.favorite_spots[1].names[0] == "spot21"
+        assert r.favorite_spots[1].names[1] == "spot22"
+        assert r.favorite_spots[1].address == "address2"
+
+    def test_none(self):
+        assert Human.from_optional_dict(None) is None
 
 
 class TestFromDict2List:
