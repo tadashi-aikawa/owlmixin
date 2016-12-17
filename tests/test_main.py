@@ -120,6 +120,21 @@ class TestFromDict2List:
         assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": "address2"}
 
 
+class TestFromOptionalDict2List:
+    def test_normal(self):
+        r = Spot.from_optional_dict2list([
+            {"names": ["spot1"], "address": "address1"},
+            {"names": ["spot21", "spot22"], "address": "address2"}
+        ])
+
+        assert len(r) == 2
+        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": "address2"}
+
+    def test_none(self):
+        assert Human.from_optional_dict2list(None) is None
+
+
 class TestFromDict2Dict:
     def test_normal(self):
         r = Spot.from_dict2dict({
@@ -130,6 +145,21 @@ class TestFromDict2Dict:
         assert len(r) == 2
         assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": "address2"}
         assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
+
+
+class TestFromOptionalDict2Dict:
+    def test_normal(self):
+        r = Spot.from_optional_dict2dict({
+            "spot1": {"names": ["spot1"], "address": "address1"},
+            "spot2": {"names": ["spot21", "spot22"], "address": "address2"}
+        })
+
+        assert len(r) == 2
+        assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": "address2"}
+        assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
+
+    def test_none(self):
+        assert Human.from_optional_dict2dict(None) is None
 
 
 class TestToDict:

@@ -89,9 +89,19 @@ class DictMixin:
         return [cls.from_dict(d) for d in ds]
 
     @classmethod
+    def from_optional_dict2list(cls, ds):
+        # type: (Optional[List[dict]]) -> Optional[List[T]]
+        return cls.from_dict2list(ds) if ds is not None else None
+
+    @classmethod
     def from_dict2dict(cls, ds):
         # type: (dict) -> Dict[Text, T]
         return {k: cls.from_dict(v) for k, v in ds.items()}
+
+    @classmethod
+    def from_optional_dict2dict(cls, ds):
+        # type: (Optional[dict]) -> Optional[Dict[Text, T]]
+        return cls.from_dict2dict(ds) if ds is not None else None
 
     @classmethod
     def from_json(cls, data):
