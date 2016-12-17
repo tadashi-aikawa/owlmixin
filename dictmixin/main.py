@@ -6,7 +6,7 @@ import json
 import yaml
 from yaml import Loader, SafeLoader
 
-from typing import TypeVar, List, Dict, Text, Union
+from typing import TypeVar, List, Dict, Text, Union, Optional
 
 """
 For example::
@@ -79,14 +79,29 @@ class DictMixin:
         return cls(**replace_keys(d, {"self": "_self"}))
 
     @classmethod
+    def from_optional_dict(cls, d):
+        # type: (Optional[dict]) -> Optional[T]
+        return cls.from_dict(d) if d is not None else None
+
+    @classmethod
     def from_dict2list(cls, ds):
         # type: (List[dict]) -> List[T]
         return [cls.from_dict(d) for d in ds]
 
     @classmethod
+    def from_optional_dict2list(cls, ds):
+        # type: (Optional[List[dict]]) -> Optional[List[T]]
+        return cls.from_dict2list(ds) if ds is not None else None
+
+    @classmethod
     def from_dict2dict(cls, ds):
         # type: (dict) -> Dict[Text, T]
         return {k: cls.from_dict(v) for k, v in ds.items()}
+
+    @classmethod
+    def from_optional_dict2dict(cls, ds):
+        # type: (Optional[dict]) -> Optional[Dict[Text, T]]
+        return cls.from_dict2dict(ds) if ds is not None else None
 
     @classmethod
     def from_json(cls, data):
