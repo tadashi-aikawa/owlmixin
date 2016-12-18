@@ -11,23 +11,24 @@ Parsing mixin which converts `data class instance`, `dict object`, `json string`
 ## Installation
 
 ```
-pip install git+https://github.com/tadashi-aikawa/dictmixin@0.3.0
+pip install git+https://github.com/tadashi-aikawa/dictmixin@0.4.0
 ```
 
 ## API
 
-|   from   |    to    |                      method                     |
-|----------|----------|-------------------------------------------------|
-| instance | dict     | `to_dict`                                       |
-| instance | json     | `to_json`, `to_pretty_json`                     |
-| instance | yaml     | `to_yaml`                                       |
-| dict     | instance | `from_dict`, `from_dict2list`, `from_dict2dict` |
-| dict     | json     | -                                               |
-| dict     | yaml     | -                                               |
-| json     | instance | `from_json`                                     |
-| json     | dict     | -                                               |
-| json     | yaml     | -                                               |
-| yaml     | instance | `from_yaml`                                     |
-| yaml     | dict     | -                                               |
-| yaml     | json     | -                                               |
+|   from   |    to    |                      method                          |
+|----------|----------|------------------------------------------------------|
+| instance | dict     | `to_dict`                                            |
+| instance | json     | `to_json`, `to_pretty_json`                          |
+| instance | yaml     | `to_yaml`                                            |
+| dict     | instance | `from_dict`, `from_dict2list`, `from_dict2dict` (*1) |
+| dict     | json     | -                                                    |
+| dict     | yaml     | -                                                    |
+| json     | instance | `from_json`                                          |
+| json     | dict     | -                                                    |
+| json     | yaml     | -                                                    |
+| yaml     | instance | `from_yaml`                                          |
+| yaml     | dict     | -                                                    |
+| yaml     | json     | -                                                    |
 
+*1: Also includes optional methods. (`from_optional_xxx`)
