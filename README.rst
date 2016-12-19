@@ -1,3 +1,4 @@
+=========
 dictmixin
 =========
 
@@ -7,35 +8,43 @@ Parsing mixin which converts `data class instance`, `dict object`, `json string`
 
 
 Installation
-------------
+============
 
-.. code::
+.. code-block::
 
-    pip install git+https://github.com/tadashi-aikawa/dictmixin@0.4.0
+    pip install dictmixin
 
 
 API
----
+===
 
-.. csv-table::
-    :header: "from", "to", "method"
-    :widths: 1,1,8
+**From instance to another**
 
-    "instance","dict","`to_dict`"
-    "instance","json","`to_json`, `to_pretty_json`"
-    "instance","yaml"    , "`to_yaml`"
-    "dict",    "instance", "`from_dict`, `from_dict2list`, `from_dict2dict` [1]_"
-    "dict",    "json"    , ""
-    "dict",    "yaml"    , ""
-    "json",    "instance", "`from_json`"
-    "json",    "dict"    , ""
-    "json",    "yaml"    , ""
-    "yaml",    "instance", "`from_yaml`"
-    "yaml",    "dict"    , ""
-    "yaml",    "json"    , ""
+- ``to_dict``
+    - instance => dict
+- ``to_json``
+    - instance => json string
+- ``to_pretty_json``
+    - instance => json string (has indent and line break)
+- ``to_yaml``
+    - instance => yaml string
+
+**From something to instance**
+
+- ``from_dict``
+    - dict => instance [1]_
+- ``from_dict2list``
+    - dict => List[instance] [1]_
+- ``from_dict2dict``
+    - dict => Dict[instance] [1]_
+- ``from_json``
+    - json string => instance
+- ``from_yaml``
+    - yaml string => instance
 
 
 .. [1] Also includes optional methods. (`from_optional_xxx`)
+
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/dictmixin.svg?branch=master
     :target: https://api.travis-ci.org/tadashi-aikawa/dictmixin
