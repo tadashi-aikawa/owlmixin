@@ -5,33 +5,50 @@ import os
 import re
 from setuptools import setup, find_packages
 
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def load_readme():
+    with open(os.path.join(here, 'README.rst')) as f:
+        return f.read()
+
 
 def load_required_modules():
-    with open(os.path.join(os.path.dirname(__file__), "requirements.txt")) as f:
+    with open(os.path.join(here, "requirements.txt")) as f:
         return [line.strip() for line in f.readlines() if line.strip()]
 
 
 setup(
     name='dictmixin',
-    __version__=re.search(
+    version=re.search(
         r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
         open('dictmixin/__init__.py').read()).group(1),
-    description='Parsing mixin which converts `data class instance`, `dict object`, and `json string` each other.',
+    description='Mixin which converts `Data class instance`, `Dict object`, and other formatted string each other.',
+    long_description=load_readme(),
     license='MIT',
     author='tadashi-aikawa',
     author_email='syou.maman@gmail.com',
     maintainer='tadashi-aikawa',
     maintainer_email='tadashi-aikawa',
     url='https://github.com/tadashi-aikawa/dictmixin.git',
-    keywords='dict json convert parse each other',
+    keywords='data class instance dict json yaml convert parse each other',
     packages=find_packages(exclude=['tests*']),
     install_requires=load_required_modules(),
+    extras_require={
+        'test': ['pytest', 'pytest-cov']
+    },
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
 )
