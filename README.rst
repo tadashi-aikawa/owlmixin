@@ -4,7 +4,7 @@ dictmixin
 
 |travis| |coverage| |complexity| |versions| |license|
 
-Parsing mixin which converts `data class instance`, `dict object`, `json string` and `yaml string` each other.
+Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.
 
 
 Installation
@@ -43,7 +43,7 @@ API
     - yaml string => instance
 
 
-.. [1] Also includes optional methods. (`from_optional_xxx`)
+.. [1] Also includes optional methods. (``from_optional_xxx``)
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/dictmixin.svg?branch=master

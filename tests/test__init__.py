@@ -5,7 +5,7 @@ from __future__ import division, absolute_import, unicode_literals
 from typing import List, Text
 import pytest
 
-from dictmixin.main import DictMixin, replace_keys
+from dictmixin import DictMixin, replace_keys
 
 
 def del_trim(target):

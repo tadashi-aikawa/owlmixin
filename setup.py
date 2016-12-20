@@ -23,7 +23,7 @@ setup(
     version=re.search(
         r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
         open('dictmixin/__init__.py').read()).group(1),
-    description='Mixin which converts `Data class instance`, `Dict object`, and other formatted string each other.',
+    description='Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.',
     long_description=load_readme(),
     license='MIT',
     author='tadashi-aikawa',
@@ -38,7 +38,7 @@ setup(
         'test': ['pytest', 'pytest-cov']
     },
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
