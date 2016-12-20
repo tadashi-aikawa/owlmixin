@@ -37,7 +37,7 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
         def __init__(self, id, name, favorite):
             self.id = id  # type: Text
             self.name = name  # type: Text
-            self.favorite = Food.from_dicts(favorite)  # type: Food
+            self.favorite = Food.from_dict2list(favorite)  # type: Food
 
     jiro = Human.from_dict({
         "id": 10,
@@ -110,5 +110,6 @@ Installation
 .. |complexity| image:: https://codeclimate.com/github/tadashi-aikawa/dictmixin/badges/gpa.svg
     :target: https://codeclimate.com/github/tadashi-aikawa/dictmixin
     :alt: Code Climate
-.. |versions| image:: https://img.shields.io/badge/python-2.7/3.3/3.4/3.5-blue.svg
+.. |pypi| image:: 	https://img.shields.io/pypi/v/dictmixin.svg
+.. |versions| image:: https://img.shields.io/pypi/pyversions/dictmixin.svg
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
