@@ -9,7 +9,7 @@ from yaml import Loader, SafeLoader
 from typing import TypeVar, List, Dict, Text, Union, Optional
 
 __title__ = 'dictmixin'
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 __author__ = 'tadashi-aikawa'
 __license__ = 'MIT'
 
