@@ -2,7 +2,7 @@
 dictmixin
 =========
 
-|travis| |coverage| |complexity| |versions| |license|
+|pypi| |travis| |coverage| |complexity| |versions| |license|
 
 Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.
 
