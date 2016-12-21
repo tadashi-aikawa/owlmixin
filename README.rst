@@ -37,7 +37,7 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
         def __init__(self, id, name, favorite):
             self.id = id  # type: Text
             self.name = name  # type: Text
-            self.favorite = Food.from_dict2list(favorite)  # type: Food
+            self.favorite = Food.from_dict2list(favorite)  # type: List[Food]
 
     jiro = Human.from_dict({
         "id": 10,
