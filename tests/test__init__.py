@@ -2,10 +2,17 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from typing import List, Text
+from typing import List
+
 import pytest
 
 from dictmixin import DictMixin, replace_keys
+
+# For python 3.5.0-3.5.1
+try:
+    from typing import Text
+except ImportError:
+    pass
 
 
 def del_trim(target):

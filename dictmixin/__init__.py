@@ -6,7 +6,13 @@ import json
 import yaml
 from yaml import Loader, SafeLoader
 
-from typing import TypeVar, List, Dict, Text, Union, Optional
+from typing import TypeVar, List, Dict, Union, Optional
+
+# For python 3.5.0-3.5.1
+try:
+    from typing import Text
+except ImportError:
+    pass
 
 __title__ = 'dictmixin'
 __version__ = '0.5.1'
