@@ -60,6 +60,8 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
     }
     >>> print(jiro.to_dict())
     {'favorite': [{'color': None, 'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
+    >>> print(jiro.to_dict(ignore_none=True))
+    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
 
 
 API
