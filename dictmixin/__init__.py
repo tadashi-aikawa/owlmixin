@@ -81,45 +81,42 @@ class DictMixin:
         # type: (Union[Text, file]) -> T
         return cls.from_dict(yaml.load(data))
 
-    def to_dict(self):
-        # type: () -> dict
-        return self._traverse_dict(self.__dict__)
+    def to_dict(self, ignore_none=False):
+        # type: (bool) -> dict
+        return self._traverse_dict(self.__dict__, ignore_none)
 
-    def to_json(self, indent=0):
-        # type: () -> Text
-        return json.dumps(self.to_dict(),
+    def to_json(self, indent=0, ignore_none=False):
+        # type: (int, bool) -> Text
+        return json.dumps(self.to_dict(ignore_none),
                           indent=indent,
                           ensure_ascii=False,
                           sort_keys=True,
                           separators=(',', ': '))
 
-    def to_pretty_json(self):
-        # type: () -> Text
-        return self.to_json(4)
+    def to_pretty_json(self, ignore_none=False):
+        # type: (bool) -> Text
+        return self.to_json(4, ignore_none)
 
-    def to_yaml(self):
-        # type: () -> Text
-        return yaml.dump(self.to_dict(),
+    def to_yaml(self, ignore_none=False):
+        # type: (bool) -> Text
+        return yaml.dump(self.to_dict(ignore_none),
                          indent=2,
                          encoding=None,
                          allow_unicode=True,
                          default_flow_style=False,
                          Dumper=MyDumper)
 
-    def _traverse_dict(self, instance_dict):
-        output = {}
-        for key, value in instance_dict.items():
-            output[key] = self._traverse(key, value)
-        return output
+    def _traverse_dict(self, instance_dict, ignore_none):
+        return {k: self._traverse(k, v, ignore_none) for k, v in instance_dict.items() if not (ignore_none and v is None)}
 
-    def _traverse(self, key, value):
+    def _traverse(self, key, value, ignore_none=False):
         if isinstance(value, DictMixin):
-            return value.to_dict()
+            return value.to_dict(ignore_none)
         elif isinstance(value, dict):
-            return self._traverse_dict(value)
+            return self._traverse_dict(value, ignore_none)
         elif isinstance(value, list):
-            return [self._traverse(key, i) for i in value]
+            return [self._traverse(key, i, ignore_none) for i in value]
         elif hasattr(value, '__dict__'):
-            return self._traverse_dict(value.__dict__)
+            return self._traverse_dict(value.__dict__, ignore_none)
         else:
             return value

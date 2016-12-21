@@ -189,6 +189,25 @@ class TestToDict:
             ]
         }
 
+    def test_ignore_none(self):
+        r = Human.from_dict({
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"]}
+            ]
+        })
+
+        assert r.to_dict(ignore_none=True) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"]}
+            ]
+        }
+
 
 class TestFromJson:
     def test_normal(self):
