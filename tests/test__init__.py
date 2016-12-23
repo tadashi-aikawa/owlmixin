@@ -15,11 +15,6 @@ except ImportError:
     pass
 
 
-def del_trim(target):
-    # type: (Text) -> Text
-    return target.replace("\n", "").replace(" ", "")
-
-
 class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
         # type: (int, Text, List[dict]) -> Human
@@ -266,15 +261,12 @@ class TestToJson:
             ]
         })
 
-        assert del_trim(r.to_json()) == del_trim("""{
-            "favorite_spots": [
-                {"address": "address1", "names": ["spot1"]},
-                {"address": null, "names": ["spot21", "spot22"]}
-            ],
-            "id": 1,
-            "name": "メンバ1"
-        }
-        """)
+        assert r.to_json() == """{
+"favorite_spots": [{"address": "address1","names": ["spot1"]},{"address": null,"names": ["spot21","spot22"]}],
+"id": 1,
+"name": "メンバ1"
+}
+""".replace("\n", "")
 
 
 class TestToPrettyJson:

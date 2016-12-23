@@ -85,7 +85,7 @@ class DictMixin:
         # type: (bool) -> dict
         return self._traverse_dict(self.__dict__, ignore_none)
 
-    def to_json(self, indent=0, ignore_none=False):
+    def to_json(self, indent=None, ignore_none=False):
         # type: (int, bool) -> Text
         return json.dumps(self.to_dict(ignore_none),
                           indent=indent,
