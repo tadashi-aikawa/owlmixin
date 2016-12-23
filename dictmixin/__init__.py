@@ -2,6 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+import re
 import json
 import yaml
 from yaml import Loader, SafeLoader
@@ -35,51 +36,60 @@ Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
-def replace_keys(d, keymap):
-    # type: dict -> Dict[Text, Text]
-    return {keymap.get(k, k): v for k, v in d.items()}
+def replace_keys(d, keymap, force_snake_case):
+    # type: (dict, Dict[Text, Text], bool) -> Dict[Text, Text]
+    return {
+        to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k):
+            v for k, v in d.items()
+        }
+
+
+def to_snake(value):
+    # type: Text -> Text
+    # For key of dictionary
+    return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
 
 
 class DictMixin:
     @classmethod
-    def from_dict(cls, d):
-        # type: (dict) -> T
-        return cls(**replace_keys(d, {"self": "_self"}))
+    def from_dict(cls, d, force_snake_case=True):
+        # type: (dict, bool) -> T
+        return cls(**replace_keys(d, {"self": "_self"}, force_snake_case))
 
     @classmethod
-    def from_optional_dict(cls, d):
-        # type: (Optional[dict]) -> Optional[T]
-        return cls.from_dict(d) if d is not None else None
+    def from_optional_dict(cls, d, force_snake_case=True):
+        # type: (Optional[dict], bool) -> Optional[T]
+        return cls.from_dict(d, force_snake_case) if d is not None else None
 
     @classmethod
-    def from_dict2list(cls, ds):
-        # type: (List[dict]) -> List[T]
-        return [cls.from_dict(d) for d in ds]
+    def from_dict2list(cls, ds, force_snake_case=True):
+        # type: (List[dict], bool) -> List[T]
+        return [cls.from_dict(d, force_snake_case) for d in ds]
 
     @classmethod
-    def from_optional_dict2list(cls, ds):
-        # type: (Optional[List[dict]]) -> Optional[List[T]]
-        return cls.from_dict2list(ds) if ds is not None else None
+    def from_optional_dict2list(cls, ds, force_snake_case=True):
+        # type: (Optional[List[dict]], bool) -> Optional[List[T]]
+        return cls.from_dict2list(ds, force_snake_case) if ds is not None else None
 
     @classmethod
-    def from_dict2dict(cls, ds):
-        # type: (dict) -> Dict[Text, T]
-        return {k: cls.from_dict(v) for k, v in ds.items()}
+    def from_dict2dict(cls, ds, force_snake_case=True):
+        # type: (dict, bool) -> Dict[Text, T]
+        return {k: cls.from_dict(v, force_snake_case) for k, v in ds.items()}
 
     @classmethod
-    def from_optional_dict2dict(cls, ds):
-        # type: (Optional[dict]) -> Optional[Dict[Text, T]]
-        return cls.from_dict2dict(ds) if ds is not None else None
+    def from_optional_dict2dict(cls, ds, force_snake_case=True):
+        # type: (Optional[dict], bool) -> Optional[Dict[Text, T]]
+        return cls.from_dict2dict(ds, force_snake_case) if ds is not None else None
 
     @classmethod
-    def from_json(cls, data):
-        # type: (Text) -> T
-        return cls.from_dict(json.loads(data))
+    def from_json(cls, data, force_snake_case=True):
+        # type: (Text, bool) -> T
+        return cls.from_dict(json.loads(data), force_snake_case)
 
     @classmethod
-    def from_yaml(cls, data):
-        # type: (Union[Text, file]) -> T
-        return cls.from_dict(yaml.load(data))
+    def from_yaml(cls, data, force_snake_case=True):
+        # type: (Union[Text, file], bool) -> T
+        return cls.from_dict(yaml.load(data), force_snake_case)
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
