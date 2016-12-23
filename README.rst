@@ -80,19 +80,21 @@ API
 
 **From something to instance**
 
-- ``from_dict``
-    - dict => instance [1]_
-- ``from_dict2list``
-    - dict => List[instance] [1]_
-- ``from_dict2dict``
-    - dict => Dict[instance] [1]_
-- ``from_json``
+- ``from_dict`` [1]_ [2]_ [3]_
+    - dict => instance
+- ``from_dict2list`` [1]_ [2]_ [3]_
+    - dict => List[instance]
+- ``from_dict2dict`` [1]_ [2]_ [3]_
+    - dict => Dict[instance]
+- ``from_json`` [2]_ [3]_
     - json string => instance
-- ``from_yaml``
+- ``from_yaml`` [2]_ [3]_
     - yaml string => instance
 
 
 .. [1] Also includes optional methods. (``from_optional_xxx``)
+.. [2] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)
+.. [3] Key ``self`` is transformed to ``_self`` in order to avoid duplicate.
 
 
 Installation
