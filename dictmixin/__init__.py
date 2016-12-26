@@ -16,7 +16,7 @@ except ImportError:
     pass
 
 __title__ = 'dictmixin'
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 __author__ = 'tadashi-aikawa'
 __license__ = 'MIT'
 
@@ -45,7 +45,7 @@ def replace_keys(d, keymap, force_snake_case):
 
 
 def to_snake(value):
-    # type: Text -> Text
+    # type: (Text) -> Text
     # For key of dictionary
     return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
 
