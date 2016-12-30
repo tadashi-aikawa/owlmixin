@@ -17,17 +17,22 @@ except ImportError:
 
 class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
-        # type: (int, Text, List[dict]) -> Human
-        self.id = id
-        self.name = name
+        self.id = id  # type: int
+        self.name = name  # type: Text
         self.favorite_spots = Spot.from_dict2list(favorite_spots)  # type: List[Spot]
 
 
 class Spot(DictMixin):
     def __init__(self, names, address=None):
-        # type: (List[Text], Text) -> Spot
-        self.names = names  # type: Text
+        self.names = names  # type: List[Text]
         self.address = address  # type: Optional[Text]
+
+
+class Animal(DictMixin):
+    def __init__(self, id, name, is_big):
+        self.id = int(id)  # type: int
+        self.name = name  # type: Text
+        self.is_big = is_big == "1"  # type: bool
 
 
 class TestReplaceKeys:
@@ -213,6 +218,35 @@ class TestFromOptionalDict2Dict:
 
     def test_none(self):
         assert Human.from_optional_dict2dict(None) is None
+
+
+class TestFromCsv:
+    def test_normal_without_header(self):
+        rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
+
+        assert [r.to_dict() for r in rs] == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
+
+    def test_normal_with_header(self):
+        rs = Animal.from_csv("tests/csv/animals_with_header.csv")
+
+        assert [r.to_dict() for r in rs] == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
+
+    def test_normal_separated_by_tab(self):
+        rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
+
+        assert [r.to_dict() for r in rs] == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
 
 
 class TestToDict:

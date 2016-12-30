@@ -3,6 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import re
+import csv
 import json
 import yaml
 from yaml import Loader, SafeLoader
@@ -90,6 +91,17 @@ class DictMixin:
     def from_yaml(cls, data, force_snake_case=True):
         # type: (Union[Text, file], bool) -> T
         return cls.from_dict(yaml.load(data), force_snake_case)
+
+    @classmethod
+    def from_csv(cls, csvfile, fieldnames=None, force_snake_case=True):
+        # type: (file, bool) -> List[T]
+        with open(csvfile) as f:
+            snippet = f.read(1024)
+            f.seek(0)
+
+            dialect = csv.Sniffer().sniff(snippet)
+            reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
+            return cls.from_dict2list(reader, force_snake_case=force_snake_case)
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
