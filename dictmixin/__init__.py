@@ -96,10 +96,11 @@ class DictMixin:
     def from_csv(cls, csvfile, fieldnames=None, force_snake_case=True):
         # type: (file, bool) -> List[T]
         with open(csvfile) as f:
-            snippet = f.read(1024)
+            snippet = f.read(8192)
             f.seek(0)
 
             dialect = csv.Sniffer().sniff(snippet)
+            dialect.skipinitialspace = True
             reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
             return cls.from_dict2list(reader, force_snake_case=force_snake_case)
 
