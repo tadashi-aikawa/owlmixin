@@ -2,13 +2,9 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-import re
-import csv
-import json
-import yaml
-from yaml import Loader, SafeLoader
-
 from typing import TypeVar, List, Dict, Union, Optional
+
+from . import dictutil
 
 # For python 3.5.0-3.5.1
 try:
@@ -24,38 +20,11 @@ __license__ = 'MIT'
 T = TypeVar('T', bound='DictMixin')
 
 
-class MyDumper(yaml.SafeDumper):
-    def increase_indent(self, flow=False, indentless=False):
-        return super(MyDumper, self).increase_indent(flow, False)
-
-
-def construct_yaml_str(self, node):
-    return self.construct_scalar(node)
-
-
-Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
-SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
-
-
-def replace_keys(d, keymap, force_snake_case):
-    # type: (dict, Dict[Text, Text], bool) -> Dict[Text, Text]
-    return {
-        to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k):
-            v for k, v in d.items()
-        }
-
-
-def to_snake(value):
-    # type: (Text) -> Text
-    # For key of dictionary
-    return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
-
-
 class DictMixin:
     @classmethod
     def from_dict(cls, d, force_snake_case=True):
         # type: (dict, bool) -> T
-        return cls(**replace_keys(d, {"self": "_self"}, force_snake_case))
+        return cls(**dictutil.replace_keys(d, {"self": "_self"}, force_snake_case))
 
     @classmethod
     def from_optional_dict(cls, d, force_snake_case=True):
@@ -85,24 +54,17 @@ class DictMixin:
     @classmethod
     def from_json(cls, data, force_snake_case=True):
         # type: (Text, bool) -> T
-        return cls.from_dict(json.loads(data), force_snake_case)
+        return cls.from_dict(dictutil.load_json(data), force_snake_case)
 
     @classmethod
     def from_yaml(cls, data, force_snake_case=True):
         # type: (Union[Text, file], bool) -> T
-        return cls.from_dict(yaml.load(data), force_snake_case)
+        return cls.from_dict(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
     def from_csv(cls, csvfile, fieldnames=None, force_snake_case=True):
-        # type: (file, bool) -> List[T]
-        with open(csvfile) as f:
-            snippet = f.read(8192)
-            f.seek(0)
-
-            dialect = csv.Sniffer().sniff(snippet)
-            dialect.skipinitialspace = True
-            reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
-            return cls.from_dicts(reader, force_snake_case=force_snake_case)
+        # type: (Text, Optional[List[Text]], bool) -> List[T]
+        return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames), force_snake_case=force_snake_case)
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
@@ -110,11 +72,7 @@ class DictMixin:
 
     def to_json(self, indent=None, ignore_none=False):
         # type: (int, bool) -> Text
-        return json.dumps(self.to_dict(ignore_none),
-                          indent=indent,
-                          ensure_ascii=False,
-                          sort_keys=True,
-                          separators=(',', ': '))
+        return dictutil.dump_json(self.to_dict(ignore_none), indent)
 
     def to_pretty_json(self, ignore_none=False):
         # type: (bool) -> Text
@@ -122,12 +80,7 @@ class DictMixin:
 
     def to_yaml(self, ignore_none=False):
         # type: (bool) -> Text
-        return yaml.dump(self.to_dict(ignore_none),
-                         indent=2,
-                         encoding=None,
-                         allow_unicode=True,
-                         default_flow_style=False,
-                         Dumper=MyDumper)
+        return dictutil.dump_yaml(self.to_dict(ignore_none))
 
     def _traverse_dict(self, instance_dict, ignore_none):
         return {k: self._traverse(k, v, ignore_none) for k, v in instance_dict.items() if not (ignore_none and v is None)}
