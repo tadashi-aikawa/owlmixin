@@ -29,7 +29,7 @@ class DictMixin:
     @classmethod
     def from_optional_dict(cls, d, force_snake_case=True):
         # type: (Optional[dict], bool) -> Optional[T]
-        return cls.from_dict(d, force_snake_case) if d is not None else None
+        return d and cls.from_dict(d, force_snake_case)
 
     @classmethod
     def from_dicts(cls, ds, force_snake_case=True):
@@ -39,7 +39,7 @@ class DictMixin:
     @classmethod
     def from_optional_dicts(cls, ds, force_snake_case=True):
         # type: (Optional[List[dict]], bool) -> Optional[List[T]]
-        return cls.from_dicts(ds, force_snake_case) if ds is not None else None
+        return ds and cls.from_dicts(ds, force_snake_case)
 
     @classmethod
     def from_dicts_by_key(cls, ds, force_snake_case=True):
@@ -49,7 +49,7 @@ class DictMixin:
     @classmethod
     def from_optional_dicts_by_key(cls, ds, force_snake_case=True):
         # type: (Optional[dict], bool) -> Optional[Dict[Text, T]]
-        return cls.from_dicts_by_key(ds, force_snake_case) if ds is not None else None
+        return ds and cls.from_dicts_by_key(ds, force_snake_case)
 
     @classmethod
     def from_json(cls, data, force_snake_case=True):
