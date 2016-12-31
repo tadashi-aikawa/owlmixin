@@ -19,7 +19,7 @@ class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
         self.id = id  # type: int
         self.name = name  # type: Text
-        self.favorite_spots = Spot.from_dict2list(favorite_spots)  # type: List[Spot]
+        self.favorite_spots = Spot.from_dicts(favorite_spots)  # type: List[Spot]
 
 
 class Spot(DictMixin):
@@ -166,9 +166,9 @@ class TestFromOptionalDict:
         assert Human.from_optional_dict(None) is None
 
 
-class TestFromDict2List:
+class TestFromDicts:
     def test_normal(self):
-        r = Spot.from_dict2list([
+        r = Spot.from_dicts([
             {"names": ["spot1"], "address": "address1"},
             {"names": ["spot21", "spot22"]}
         ])
@@ -178,9 +178,9 @@ class TestFromDict2List:
         assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
 
-class TestFromOptionalDict2List:
+class TestFromOptionalDicts:
     def test_normal(self):
-        r = Spot.from_optional_dict2list([
+        r = Spot.from_optional_dicts([
             {"names": ["spot1"], "address": "address1"},
             {"names": ["spot21", "spot22"]}
         ])
@@ -190,12 +190,12 @@ class TestFromOptionalDict2List:
         assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
     def test_none(self):
-        assert Human.from_optional_dict2list(None) is None
+        assert Human.from_optional_dicts(None) is None
 
 
-class TestFromDict2Dict:
+class TestFromDictsByKey:
     def test_normal(self):
-        r = Spot.from_dict2dict({
+        r = Spot.from_dicts_by_key({
             "spot1": {"names": ["spot1"], "address": "address1"},
             "spot2": {"names": ["spot21", "spot22"]}
         })
@@ -205,9 +205,9 @@ class TestFromDict2Dict:
         assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
 
-class TestFromOptionalDict2Dict:
+class TestFromOptionalDictsByKey:
     def test_normal(self):
-        r = Spot.from_optional_dict2dict({
+        r = Spot.from_optional_dicts_by_key({
             "spot1": {"names": ["spot1"], "address": "address1"},
             "spot2": {"names": ["spot21", "spot22"]}
         })
@@ -217,7 +217,7 @@ class TestFromOptionalDict2Dict:
         assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
     def test_none(self):
-        assert Human.from_optional_dict2dict(None) is None
+        assert Human.from_optional_dicts_by_key(None) is None
 
 
 class TestFromCsv:

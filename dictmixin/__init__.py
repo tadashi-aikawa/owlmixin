@@ -63,24 +63,24 @@ class DictMixin:
         return cls.from_dict(d, force_snake_case) if d is not None else None
 
     @classmethod
-    def from_dict2list(cls, ds, force_snake_case=True):
+    def from_dicts(cls, ds, force_snake_case=True):
         # type: (List[dict], bool) -> List[T]
         return [cls.from_dict(d, force_snake_case) for d in ds]
 
     @classmethod
-    def from_optional_dict2list(cls, ds, force_snake_case=True):
+    def from_optional_dicts(cls, ds, force_snake_case=True):
         # type: (Optional[List[dict]], bool) -> Optional[List[T]]
-        return cls.from_dict2list(ds, force_snake_case) if ds is not None else None
+        return cls.from_dicts(ds, force_snake_case) if ds is not None else None
 
     @classmethod
-    def from_dict2dict(cls, ds, force_snake_case=True):
+    def from_dicts_by_key(cls, ds, force_snake_case=True):
         # type: (dict, bool) -> Dict[Text, T]
         return {k: cls.from_dict(v, force_snake_case) for k, v in ds.items()}
 
     @classmethod
-    def from_optional_dict2dict(cls, ds, force_snake_case=True):
+    def from_optional_dicts_by_key(cls, ds, force_snake_case=True):
         # type: (Optional[dict], bool) -> Optional[Dict[Text, T]]
-        return cls.from_dict2dict(ds, force_snake_case) if ds is not None else None
+        return cls.from_dicts_by_key(ds, force_snake_case) if ds is not None else None
 
     @classmethod
     def from_json(cls, data, force_snake_case=True):
@@ -102,7 +102,7 @@ class DictMixin:
             dialect = csv.Sniffer().sniff(snippet)
             dialect.skipinitialspace = True
             reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
-            return cls.from_dict2list(reader, force_snake_case=force_snake_case)
+            return cls.from_dicts(reader, force_snake_case=force_snake_case)
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
