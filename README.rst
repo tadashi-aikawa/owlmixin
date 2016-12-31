@@ -89,7 +89,9 @@ API
 - ``from_json`` [2]_ [3]_
     - json string => instance
 - ``from_yaml`` [2]_ [3]_
-    - yaml string => instance
+    - yaml string or file => instance
+- ``from_csv`` [2]_ [3]_
+    - csv file => List[instance]
 
 
 .. [1] Also includes optional methods. (``from_optional_xxx``)
