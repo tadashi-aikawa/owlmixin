@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 __title__ = 'dictmixin'
-__version__ = '0.7.1'
+__version__ = '0.8.0'
 __author__ = 'tadashi-aikawa'
 __license__ = 'MIT'
 
