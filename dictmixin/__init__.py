@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from typing import TypeVar, List, Dict, Union, Optional
+from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic
 
 from . import dictutil
 
@@ -20,6 +20,18 @@ __license__ = 'MIT'
 T = TypeVar('T', bound='DictMixin')
 
 
+class TList(List, Generic[T]):
+    def to_dicts(self, ignore_none=False):
+        # type: (bool) -> List[dict]
+        return [x.to_dict(ignore_none) for x in self]
+
+
+class TDict(Dict, Generic[T]):
+    def to_dict(self, ignore_none=False):
+        # type: (bool) -> dict
+        return {k: v.to_dict(ignore_none) for k, v in self.items()}
+
+
 class DictMixin:
     @classmethod
     def from_dict(cls, d, force_snake_case=True):
@@ -33,22 +45,22 @@ class DictMixin:
 
     @classmethod
     def from_dicts(cls, ds, force_snake_case=True):
-        # type: (List[dict], bool) -> List[T]
-        return [cls.from_dict(d, force_snake_case) for d in ds]
+        # type: (List[dict], bool) -> TList[T]
+        return TList([cls.from_dict(d, force_snake_case) for d in ds])
 
     @classmethod
     def from_optional_dicts(cls, ds, force_snake_case=True):
-        # type: (Optional[List[dict]], bool) -> Optional[List[T]]
+        # type: (Optional[List[dict]], bool) -> Optional[TList[T]]
         return ds and cls.from_dicts(ds, force_snake_case)
 
     @classmethod
     def from_dicts_by_key(cls, ds, force_snake_case=True):
-        # type: (dict, bool) -> Dict[Text, T]
-        return {k: cls.from_dict(v, force_snake_case) for k, v in ds.items()}
+        # type: (Dict[Text, dict], bool) -> TDict[T]
+        return TDict({k: cls.from_dict(v, force_snake_case) for k, v in ds.items()})
 
     @classmethod
     def from_optional_dicts_by_key(cls, ds, force_snake_case=True):
-        # type: (Optional[dict], bool) -> Optional[Dict[Text, T]]
+        # type: (Optional[dict], bool) -> Optional[TDict[T]]
         return ds and cls.from_dicts_by_key(ds, force_snake_case)
 
     @classmethod
@@ -63,7 +75,7 @@ class DictMixin:
 
     @classmethod
     def from_csv(cls, csvfile, fieldnames=None, force_snake_case=True):
-        # type: (Text, Optional[List[Text]], bool) -> List[T]
+        # type: (Text, Optional[Sequence[Text]], bool) -> TList[T]
         return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames), force_snake_case=force_snake_case)
 
     def to_dict(self, ignore_none=False):
