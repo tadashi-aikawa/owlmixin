@@ -38,6 +38,14 @@ class Animal(DictMixin):
         # Unfortunately, this is number (0: True / 1:False)
         self.is_big = int(is_big) == 1  # type: bool
 
+    def _to_dict(self):
+        # Override because of returning YES or NO on is_big
+        return {
+            "id": self.id,
+            "name": self.name,
+            "is_big": "YES" if self.is_big else "NO"
+        }
+
 
 SAMPLE_HUMAN = {
     "id": 1,
@@ -166,7 +174,7 @@ class TestToDict:
                 {"names": ["spot1"], "address": "address1"},
                 {"names": ["spot21", "spot22"], "address": None}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
                 "toshi": {
                     "id": 100,
@@ -174,7 +182,7 @@ class TestToDict:
                     "favorite_spots": [
                         {"names": ["toshi_spot"], "address": None}
                     ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": False},
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
                     "friends_by_short_name": None
                 },
                 "hide": {
@@ -183,7 +191,7 @@ class TestToDict:
                     "favorite_spots": [
                         {"names": ["hide_spot"], "address": None}
                     ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": True},
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
                     "friends_by_short_name": None
                 }
             }
@@ -191,7 +199,33 @@ class TestToDict:
 
     def test_ignore_none(self):
         r = Human.from_dict(SAMPLE_HUMAN)
-        assert r.to_dict(ignore_none=True) == SAMPLE_HUMAN
+        assert r.to_dict(ignore_none=True) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot21", "spot22"]}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_spots": [
+                        {"names": ["toshi_spot"]}
+                    ],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"]}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
+                }
+            }
+        }
 
 
 class TestFromDicts:
@@ -229,7 +263,7 @@ class TestFromDictsByKey:
             "favorite_spots": [
                 {"names": ["toshi_spot"], "address": None}
             ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False},
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
             "friends_by_short_name": None
         }
         assert r["hide"].to_dict() == {
@@ -238,7 +272,7 @@ class TestFromDictsByKey:
             "favorite_spots": [
                 {"names": ["hide_spot"], "address": None}
             ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True},
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
             "friends_by_short_name": None
         }
 
@@ -255,7 +289,7 @@ class TestFromOptionalDictsByKey:
             "favorite_spots": [
                 {"names": ["toshi_spot"], "address": None}
             ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False},
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
             "friends_by_short_name": None
         }
         assert r["hide"].to_dict() == {
@@ -264,7 +298,7 @@ class TestFromOptionalDictsByKey:
             "favorite_spots": [
                 {"names": ["hide_spot"], "address": None}
             ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True},
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
             "friends_by_short_name": None
         }
 
@@ -277,27 +311,27 @@ class TestFromCsv:
         rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": 0},
-            {"id": 2, "name": "a cat", "is_big": 0},
-            {"id": 3, "name": "a lion", "is_big": 1},
+            {"id": 1, "name": "a dog", "is_big": "NO"},
+            {"id": 2, "name": "a cat", "is_big": "NO"},
+            {"id": 3, "name": "a lion", "is_big": "YES"},
         ]
 
     def test_normal_with_header(self):
         rs = Animal.from_csv("tests/csv/animals_with_header.csv")
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": 0},
-            {"id": 2, "name": "a cat", "is_big": 0},
-            {"id": 3, "name": "a lion", "is_big": 1},
+            {"id": 1, "name": "a dog", "is_big": "NO"},
+            {"id": 2, "name": "a cat", "is_big": "NO"},
+            {"id": 3, "name": "a lion", "is_big": "YES"},
         ]
 
     def test_normal_separated_by_tab(self):
         rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": 0},
-            {"id": 2, "name": "a cat", "is_big": 0},
-            {"id": 3, "name": "a lion", "is_big": 1},
+            {"id": 1, "name": "a dog", "is_big": "NO"},
+            {"id": 2, "name": "a cat", "is_big": "NO"},
+            {"id": 3, "name": "a lion", "is_big": "YES"},
         ]
 
 
@@ -321,7 +355,7 @@ class TestFromJson:
                 {"names": ["spot1"], "address": "address1"},
                 {"names": ["spot21", "spot22"]}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
 
@@ -350,7 +384,7 @@ class TestFromYaml:
                 {"names": ["spot1"], "address": "address1"},
                 {"names": ["spot21", "spot22"]}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
 
@@ -367,7 +401,7 @@ class TestToJson:
         })
 
         assert r.to_json(ignore_none=True) == """{
-"favorite_animal": {"id": 1,"is_big": false,"name": "a dog"},
+"favorite_animal": {"id": 1,"is_big": "NO","name": "a dog"},
 "favorite_spots": [{"address": "address1","names": ["spot1"]},{"names": ["spot21","spot22"]}],
 "id": 1,
 "name": "メンバ1"
@@ -384,14 +418,14 @@ class TestToPrettyJson:
                 {"names": ["spot1"], "address": "address1"},
                 {"names": ["spot21", "spot22"]}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 1},
         })
 
         assert r.to_pretty_json(ignore_none=True) == """
 {
     "favorite_animal": {
         "id": 1,
-        "is_big": false,
+        "is_big": "YES",
         "name": "a dog"
     },
     "favorite_spots": [
@@ -429,7 +463,7 @@ class TestToYaml:
         assert r.to_yaml(ignore_none=True) == """
 favorite_animal:
   id: 1
-  is_big: false
+  is_big: 'NO'
   name: a dog
 favorite_spots:
   - address: address1

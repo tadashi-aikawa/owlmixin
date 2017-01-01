@@ -80,7 +80,7 @@ class DictMixin:
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
-        return self._traverse_dict(self.__dict__, ignore_none)
+        return self._traverse_dict(self._to_dict(), ignore_none)
 
     def to_json(self, indent=None, ignore_none=False):
         # type: (int, bool) -> Text
@@ -94,6 +94,14 @@ class DictMixin:
         # type: (bool) -> Text
         return dictutil.dump_yaml(self.to_dict(ignore_none))
 
+    def _to_dict(self):
+        # type: () -> dict
+        """
+        please override this method and return dict you want,
+        if you want to place special handling between conversion from instance variable to dict.
+        """
+        return self.__dict__
+
     def _traverse_dict(self, instance_dict, ignore_none):
         return {k: self._traverse(k, v, ignore_none) for k, v in instance_dict.items() if not (ignore_none and v is None)}
 
@@ -104,7 +112,5 @@ class DictMixin:
             return self._traverse_dict(value, ignore_none)
         elif isinstance(value, list):
             return [self._traverse(key, i, ignore_none) for i in value]
-        elif hasattr(value, '__dict__'):
-            return self._traverse_dict(value.__dict__, ignore_none)
         else:
             return value
