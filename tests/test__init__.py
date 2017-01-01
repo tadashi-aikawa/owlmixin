@@ -6,7 +6,7 @@ from typing import List, Optional
 
 import pytest
 
-from dictmixin import DictMixin, replace_keys, to_snake
+from dictmixin import DictMixin, TList, TDict
 
 # For python 3.5.0-3.5.1
 try:
@@ -19,7 +19,7 @@ class Human(DictMixin):
     def __init__(self, id, name, favorite_spots):
         self.id = id  # type: int
         self.name = name  # type: Text
-        self.favorite_spots = Spot.from_dict2list(favorite_spots)  # type: List[Spot]
+        self.favorite_spots = Spot.from_dicts(favorite_spots)  # type: TList[Spot]
 
 
 class Spot(DictMixin):
@@ -33,80 +33,6 @@ class Animal(DictMixin):
         self.id = int(id)  # type: int
         self.name = name  # type: Text
         self.is_big = is_big == "1"  # type: bool
-
-
-class TestReplaceKeys:
-    def test_need_not_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
-        d = {
-            "before": 1,
-            "before2": 2,
-            "self": 3,
-            "self2": 4,
-            "UpperCamelCase": True,
-            "lowerCamelCase": True,
-            "snake_case": True,
-            "chain-case": True,
-        }
-
-        expected = {
-            "after": 1,
-            "before2": 2,
-            "_self": 3,
-            "self2": 4,
-            "UpperCamelCase": True,
-            "lowerCamelCase": True,
-            "snake_case": True,
-            "chain-case": True
-        }
-
-        assert replace_keys(d, keymap, False) == expected
-
-    def test_need_must_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
-        d = {
-            "before": 1,
-            "before2": 2,
-            "self": 3,
-            "self2": 4,
-            "UpperCamelCase": True,
-            "lowerCamelCase": True,
-            "snake_case": True,
-            "chain-case": True
-        }
-
-        expected = {
-            "after": 1,
-            "before2": 2,
-            "_self": 3,
-            "self2": 4,
-            "upper_camel_case": True,
-            "lower_camel_case": True,
-            "snake_case": True,
-            "chain_case": True
-        }
-
-        assert replace_keys(d, keymap, True) == expected
-
-
-class TestToSnake:
-    def test_lower_camel(self):
-        assert to_snake("lowerCamelCase") == "lower_camel_case"
-
-    def test_upper_camel(self):
-        assert to_snake("UpperCamelCase") == "upper_camel_case"
-
-    def test_chain(self):
-        assert to_snake("chain-case-example") == "chain_case_example"
-
-    def test_snake(self):
-        assert to_snake("snake_case_is_same") == "snake_case_is_same"
 
 
 class TestFromDict:
@@ -166,89 +92,6 @@ class TestFromOptionalDict:
         assert Human.from_optional_dict(None) is None
 
 
-class TestFromDict2List:
-    def test_normal(self):
-        r = Spot.from_dict2list([
-            {"names": ["spot1"], "address": "address1"},
-            {"names": ["spot21", "spot22"]}
-        ])
-
-        assert len(r) == 2
-        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
-
-
-class TestFromOptionalDict2List:
-    def test_normal(self):
-        r = Spot.from_optional_dict2list([
-            {"names": ["spot1"], "address": "address1"},
-            {"names": ["spot21", "spot22"]}
-        ])
-
-        assert len(r) == 2
-        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
-
-    def test_none(self):
-        assert Human.from_optional_dict2list(None) is None
-
-
-class TestFromDict2Dict:
-    def test_normal(self):
-        r = Spot.from_dict2dict({
-            "spot1": {"names": ["spot1"], "address": "address1"},
-            "spot2": {"names": ["spot21", "spot22"]}
-        })
-
-        assert len(r) == 2
-        assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
-        assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
-
-
-class TestFromOptionalDict2Dict:
-    def test_normal(self):
-        r = Spot.from_optional_dict2dict({
-            "spot1": {"names": ["spot1"], "address": "address1"},
-            "spot2": {"names": ["spot21", "spot22"]}
-        })
-
-        assert len(r) == 2
-        assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
-        assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
-
-    def test_none(self):
-        assert Human.from_optional_dict2dict(None) is None
-
-
-class TestFromCsv:
-    def test_normal_without_header(self):
-        rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
-
-        assert [r.to_dict() for r in rs] == [
-            {"id": 1, "name": "a dog", "is_big": False},
-            {"id": 2, "name": "a cat", "is_big": False},
-            {"id": 3, "name": "a lion", "is_big": True},
-        ]
-
-    def test_normal_with_header(self):
-        rs = Animal.from_csv("tests/csv/animals_with_header.csv")
-
-        assert [r.to_dict() for r in rs] == [
-            {"id": 1, "name": "a dog", "is_big": False},
-            {"id": 2, "name": "a cat", "is_big": False},
-            {"id": 3, "name": "a lion", "is_big": True},
-        ]
-
-    def test_normal_separated_by_tab(self):
-        rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
-
-        assert [r.to_dict() for r in rs] == [
-            {"id": 1, "name": "a dog", "is_big": False},
-            {"id": 2, "name": "a cat", "is_big": False},
-            {"id": 3, "name": "a lion", "is_big": True},
-        ]
-
-
 class TestToDict:
     def test_normal(self):
         r = Human.from_dict({
@@ -287,6 +130,93 @@ class TestToDict:
                 {"names": ["spot21", "spot22"]}
             ]
         }
+
+
+class TestFromDicts:
+    def test_normal(self):
+        r = Spot.from_dicts([
+            {"names": ["spot1"], "address": "address1"},
+            {"names": ["spot21", "spot22"]}
+        ])
+
+        assert len(r) == 2
+        assert type(r) == TList
+        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+
+
+class TestFromOptionalDicts:
+    def test_normal(self):
+        r = Spot.from_optional_dicts([
+            {"names": ["spot1"], "address": "address1"},
+            {"names": ["spot21", "spot22"]}
+        ])
+
+        assert len(r) == 2
+        assert type(r) == TList
+        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+
+    def test_none(self):
+        assert Human.from_optional_dicts(None) is None
+
+
+class TestFromDictsByKey:
+    def test_normal(self):
+        r = Spot.from_dicts_by_key({
+            "spot1": {"names": ["spot1"], "address": "address1"},
+            "spot2": {"names": ["spot21", "spot22"]}
+        })
+
+        assert len(r) == 2
+        assert type(r) == TDict
+        assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+
+
+class TestFromOptionalDictsByKey:
+    def test_normal(self):
+        r = Spot.from_optional_dicts_by_key({
+            "spot1": {"names": ["spot1"], "address": "address1"},
+            "spot2": {"names": ["spot21", "spot22"]}
+        })
+
+        assert len(r) == 2
+        assert type(r) == TDict
+        assert r["spot1"].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r["spot2"].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+
+    def test_none(self):
+        assert Human.from_optional_dicts_by_key(None) is None
+
+
+class TestFromCsv:
+    def test_normal_without_header(self):
+        rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
+
+        assert rs.to_dicts() == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
+
+    def test_normal_with_header(self):
+        rs = Animal.from_csv("tests/csv/animals_with_header.csv")
+
+        assert rs.to_dicts() == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
+
+    def test_normal_separated_by_tab(self):
+        rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
+
+        assert rs.to_dicts() == [
+            {"id": 1, "name": "a dog", "is_big": False},
+            {"id": 2, "name": "a cat", "is_big": False},
+            {"id": 3, "name": "a lion", "is_big": True},
+        ]
 
 
 class TestFromJson:
@@ -411,3 +341,22 @@ favorite_spots:
 id: 1
 name: メンバ1
 """.lstrip()
+
+
+class TestTList:
+    def test_to_dicts_normal(self):
+        d = [
+            {"names": ["spot1"], "address": "address1"},
+            {"names": ["spot21", "spot22"], "address": "address2"}
+        ]
+
+        assert d == Spot.from_dicts(d).to_dicts()
+
+
+class TestTDict:
+    def test_to_dicts_by_key_normal(self):
+        d = {
+            "a": {"names": ["spot1"], "address": "address1"},
+            "b": {"names": ["spot21", "spot22"], "address": "address2"}
+        }
+        assert d == Spot.from_dicts_by_key(d).to_dict()
