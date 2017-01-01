@@ -37,7 +37,7 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
         def __init__(self, id, name, favorite):
             self.id = id  # type: Text
             self.name = name  # type: Text
-            self.favorite = Food.from_dict2list(favorite)  # type: List[Food]
+            self.favorite = Food.from_dict2list(favorite)  # type: TList[Food]
 
     jiro = Human.from_dict({
         "id": 10,
@@ -71,6 +71,9 @@ API
 
 - ``to_dict``
     - instance => dict
+    - TDict[instance] => dict
+- ``to_dicts``
+    - TList[instance] => List[dict]
 - ``to_json``
     - instance => json string
 - ``to_pretty_json``
@@ -80,23 +83,28 @@ API
 
 **From something to instance**
 
-- ``from_dict`` [1]_ [2]_ [3]_
+- ``from_dict`` [1]_ [2]_
     - dict => instance
-- ``from_dict2list`` [1]_ [2]_ [3]_
+- ``from_optional_dict`` [1]_ [2]_
+    - Optional[dict] => Optional[instance]
+- ``from_dicts`` [1]_ [2]_
     - dict => List[instance]
-- ``from_dict2dict`` [1]_ [2]_ [3]_
+- ``from_optional_dicts`` [1]_ [2]_
+    - Optional[dict] => Optional[instance]
+- ``from_dicts_by_key`` [1]_ [2]_
     - dict => Dict[instance]
-- ``from_json`` [2]_ [3]_
+- ``from_optional_dicts_by_key`` [1]_ [2]_
+    - Optional[dict] => Optional[instance]
+- ``from_json`` [1]_ [2]_
     - json string => instance
-- ``from_yaml`` [2]_ [3]_
+- ``from_yaml`` [1]_ [2]_
     - yaml string or file => instance
-- ``from_csv`` [2]_ [3]_
+- ``from_csv`` [1]_ [2]_
     - csv file => List[instance]
 
 
-.. [1] Also includes optional methods. (``from_optional_xxx``)
-.. [2] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)
-.. [3] Key ``self`` is transformed to ``_self`` in order to avoid duplicate.
+.. [1] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)
+.. [2] Key ``self`` is transformed to ``_self`` in order to avoid duplicate.
 
 
 Installation
