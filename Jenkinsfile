@@ -13,8 +13,8 @@ node {
 
             stage('Packaging and upload') {
                 sh """
-                   sudo docker run -e VERSION=${VERSION} \
-                                   -e PASSWORD=${env.PYPI_PASSWORD} \
+                   sudo docker run -e RELEASE_VERSION=${VERSION} \
+                                   -e PYPI_PASSWORD=${env.PYPI_PASSWORD} \
                                    --rm $IMAGE_NAME
                 """
             }

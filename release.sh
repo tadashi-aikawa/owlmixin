@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-readonly RELEASE_VERSION=$1
-readonly PYPI_PASSWORD=$2
-
 python setup.py bdist_wheel
-twine upload dist/dictmixin-${RELEASE_VERSION}-py2.py3-none-any.whl -p ${PYPI_PASSWORD}
+twine upload dist/dictmixin-${RELEASE_VERSION}-py2.py3-none-any.whl \
+  --repository-url "https://pypi.python.org/pypi" \
+  -u tadashi-aikawa \
+  -p ${PYPI_PASSWORD}
