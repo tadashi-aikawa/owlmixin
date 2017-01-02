@@ -267,23 +267,25 @@ class TestFromDictsByKey:
 
         assert len(r) == 2
         assert type(r) == TDict
-        assert r["toshi"].to_dict() == {
-            "id": 100,
-            "name": "TOSHIKI",
-            "favorite_spots": [
-                {"names": ["toshi_spot"], "address": None}
-            ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-            "friends_by_short_name": None
-        }
-        assert r["hide"].to_dict() == {
-            "id": 200,
-            "name": "HIDEKI",
-            "favorite_spots": [
-                {"names": ["hide_spot"], "address": None}
-            ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-            "friends_by_short_name": None
+        assert r.to_dict() == {
+            "toshi": {
+                "id": 100,
+                "name": "TOSHIKI",
+                "favorite_spots": [
+                    {"names": ["toshi_spot"], "address": None}
+                ],
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
+                "friends_by_short_name": None
+            },
+            "hide": {
+                "id": 200,
+                "name": "HIDEKI",
+                "favorite_spots": [
+                    {"names": ["hide_spot"], "address": None}
+                ],
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                "friends_by_short_name": None
+            }
         }
 
 
@@ -293,23 +295,25 @@ class TestFromOptionalDictsByKey:
 
         assert len(r) == 2
         assert type(r) == TDict
-        assert r["toshi"].to_dict() == {
-            "id": 100,
-            "name": "TOSHIKI",
-            "favorite_spots": [
-                {"names": ["toshi_spot"], "address": None}
-            ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-            "friends_by_short_name": None
-        }
-        assert r["hide"].to_dict() == {
-            "id": 200,
-            "name": "HIDEKI",
-            "favorite_spots": [
-                {"names": ["hide_spot"], "address": None}
-            ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-            "friends_by_short_name": None
+        assert r.to_dict() == {
+            "toshi": {
+                "id": 100,
+                "name": "TOSHIKI",
+                "favorite_spots": [
+                    {"names": ["toshi_spot"], "address": None}
+                ],
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
+                "friends_by_short_name": None
+            },
+            "hide": {
+                "id": 200,
+                "name": "HIDEKI",
+                "favorite_spots": [
+                    {"names": ["hide_spot"], "address": None}
+                ],
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                "friends_by_short_name": None
+            }
         }
 
     def test_none(self):
@@ -548,6 +552,27 @@ class TestTList:
         assert Spot.from_dicts(d).filter(lambda s: s.address).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
+
+    def test_group_by(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        print(Spot.from_dicts(d).group_by(lambda s: str(len(s.names))).to_dict(ignore_none=True))
+
+        assert Spot.from_dicts(d).group_by(lambda s: str(len(s.names))).to_dict(ignore_none=True) == {
+            "1": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot4"], "address": {"name": "address1"}}
+            ],
+            "2": [
+                {"names": ["spot21", "spot22"]},
+                {"names": ["spot31", "spot32"]}
+            ]
+        }
 
 
 class TestTDict:

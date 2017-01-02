@@ -129,6 +129,15 @@ class TList(List, Generic[T], DictMixin):
         # type: (Callable[[T], bool]) -> TList[T]
         return TList(filter(func, self))
 
+    def group_by(self, to_key):
+        # type: (Callable[[T], Text]) -> TDict[TList[T]]
+        ret = TDict()
+        for v in self:
+            k = to_key(v)
+            ret.setdefault(k, TList())
+            ret[k].append(v)
+        return ret
+
 
 class TDict(Dict, Generic[T], DictMixin):
     def map(self, func):
@@ -138,3 +147,7 @@ class TDict(Dict, Generic[T], DictMixin):
     def filter(self, func):
         # type: (Callable[[T], bool]) -> TList[T]
         return TList(filter(func, [v for k, v in sorted(self.items())]))
+
+    def _to_dict(self):
+        # type: () -> dict
+        return dict(self)
