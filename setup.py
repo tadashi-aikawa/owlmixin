@@ -19,10 +19,10 @@ def load_required_modules():
 
 
 setup(
-    name='dictmixin',
+    name='owlmixin',
     version=re.search(
         r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
-        open('dictmixin/__init__.py').read()).group(1),
+        open('owlmixin/__init__.py').read()).group(1),
     description='Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.',
     long_description=load_readme(),
     license='MIT',
@@ -30,7 +30,7 @@ setup(
     author_email='syou.maman@gmail.com',
     maintainer='tadashi-aikawa',
     maintainer_email='tadashi-aikawa',
-    url='https://github.com/tadashi-aikawa/dictmixin.git',
+    url='https://github.com/tadashi-aikawa/owlmixin.git',
     keywords='data class instance dict json yaml convert parse each other',
     packages=find_packages(exclude=['tests*']),
     install_requires=load_required_modules(),
@@ -38,7 +38,7 @@ setup(
         'test': ['pytest', 'pytest-cov']
     },
     classifiers=[
-        'Development Status :: 7 - Inactive',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',

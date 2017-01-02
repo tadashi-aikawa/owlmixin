@@ -6,7 +6,7 @@ from typing import List, Optional
 
 import pytest
 
-from dictmixin import DictMixin, TList, TDict
+from owlmixin import OwlMixin, TList, TDict
 
 # For python 3.5.0-3.5.1
 try:
@@ -15,18 +15,18 @@ except ImportError:
     pass
 
 
-class Address(DictMixin):
+class Address(OwlMixin):
     def __init__(self, name):
         self.name = name  # type: Text
 
 
-class Spot(DictMixin):
+class Spot(OwlMixin):
     def __init__(self, names, address=None):
         self.names = names  # type: List[Text]
         self.address = Address.from_optional_dict(address)  # type: Optional[Address]
 
 
-class Human(DictMixin):
+class Human(OwlMixin):
     def __init__(self, id, name, favorite_spots, favorite_animal, friends_by_short_name=None):
         self.id = id  # type: int
         self.name = name  # type: Text
@@ -36,7 +36,7 @@ class Human(DictMixin):
         """:type: Optional[TDict[Text, Human]]"""
 
 
-class Animal(DictMixin):
+class Animal(OwlMixin):
     def __init__(self, id, name, is_big):
         self.id = int(id)  # type: int
         self.name = name  # type: Text

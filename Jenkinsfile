@@ -1,4 +1,4 @@
-IMAGE_NAME = "production/dictmixin"
+IMAGE_NAME = "production/owlmixin"
 
 node {
     withCredentials([

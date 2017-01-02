@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable, Any
+from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable
 
 from . import dictutil
 
@@ -12,16 +12,13 @@ try:
 except ImportError:
     pass
 
-__title__ = 'dictmixin'
 __version__ = '1.0.0b2'
-__author__ = 'tadashi-aikawa'
-__license__ = 'MIT'
 
-T = TypeVar('T', bound='DictMixin')
+T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
 
 
-class DictMixin:
+class OwlMixin:
     @classmethod
     def from_dict(cls, d, force_snake_case=True):
         # type: (dict, bool) -> T
@@ -115,7 +112,7 @@ class DictMixin:
         return [self._traverse(None, i, ignore_none) for i in instance_list]
 
     def _traverse(self, key, value, ignore_none=False):
-        if isinstance(value, DictMixin) and not isinstance(value, (TList, TDict)):
+        if isinstance(value, OwlMixin) and not isinstance(value, (TList, TDict)):
             return value.to_dict(ignore_none)
         elif isinstance(value, dict):
             return self._traverse_dict(value, ignore_none)
@@ -125,7 +122,7 @@ class DictMixin:
             return value
 
 
-class TList(list, Generic[T], DictMixin):
+class TList(list, Generic[T], OwlMixin):
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, self))
@@ -144,7 +141,7 @@ class TList(list, Generic[T], DictMixin):
         return ret
 
 
-class TDict(dict, Generic[T], DictMixin):
+class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, [v for k, v in sorted(self.items())]))

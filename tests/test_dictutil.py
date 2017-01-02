@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from dictmixin import dictutil
+from owlmixin import dictutil
 
 # For python 3.5.0-3.5.1
 try:
