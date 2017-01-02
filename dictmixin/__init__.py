@@ -125,7 +125,7 @@ class DictMixin:
             return value
 
 
-class TList(List, Generic[T], DictMixin):
+class TList(list, Generic[T], DictMixin):
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, self))
@@ -144,7 +144,7 @@ class TList(List, Generic[T], DictMixin):
         return ret
 
 
-class TDict(Dict, Generic[T], DictMixin):
+class TDict(dict, Generic[T], DictMixin):
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, [v for k, v in sorted(self.items())]))
