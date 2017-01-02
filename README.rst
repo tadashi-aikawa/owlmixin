@@ -118,13 +118,13 @@ Installation
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
-:target: https://api.travis-ci.org/tadashi-aikawa/owlmixin
+    :target: https://api.travis-ci.org/tadashi-aikawa/owlmixin
     :alt: Build Status
 .. |coverage| image:: https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/coverage.svg
-:target: https://codeclimate.com/github/tadashi-aikawa/owlmixin/coverage
+    :target: https://codeclimate.com/github/tadashi-aikawa/owlmixin/coverage
     :alt: Test Coverage
 .. |complexity| image:: https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/gpa.svg
-:target: https://codeclimate.com/github/tadashi-aikawa/owlmixin
+    :target: https://codeclimate.com/github/tadashi-aikawa/owlmixin
     :alt: Code Climate
 .. |pypi| image::   https://img.shields.io/pypi/v/owlmixin.svg
 .. |versions| image:: https://img.shields.io/pypi/pyversions/owlmixin.svg
