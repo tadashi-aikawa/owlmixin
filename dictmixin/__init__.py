@@ -67,6 +67,11 @@ class DictMixin:
         # type: (Text, Optional[Sequence[Text]], bool) -> TList[T]
         return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames), force_snake_case=force_snake_case)
 
+    @classmethod
+    def from_json_url(cls, url, force_snake_case=True):
+        # type: (Text, bool) -> T
+        return cls.from_dict(dictutil.load_json_url(url), force_snake_case)
+
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
         if isinstance(self, TList):

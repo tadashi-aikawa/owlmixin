@@ -4,6 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 import re
 import csv
+import requests
 import json
 import yaml
 from yaml import Loader, SafeLoader
@@ -63,6 +64,11 @@ def load_csv(csvfile, fieldnames):
         dialect = csv.Sniffer().sniff(snippet)
         dialect.skipinitialspace = True
         return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect))
+
+
+def load_json_url(url):
+    # type: (Text) -> Union[dict, list]
+    return requests.get(url).json()
 
 
 def dump_json(data, indent):

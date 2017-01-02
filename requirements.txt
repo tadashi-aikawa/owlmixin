@@ -1,2 +1,3 @@
 typing
 pyyaml
+requests
