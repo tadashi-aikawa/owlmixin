@@ -125,8 +125,16 @@ class TList(List, Generic[T], DictMixin):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, self))
 
+    def filter(self, func):
+        # type: (Callable[[T], bool]) -> TList[T]
+        return TList(filter(func, self))
+
 
 class TDict(Dict, Generic[T], DictMixin):
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, [v for k, v in sorted(self.items())]))
+
+    def filter(self, func):
+        # type: (Callable[[T], bool]) -> TList[T]
+        return TList(filter(func, [v for k, v in sorted(self.items())]))

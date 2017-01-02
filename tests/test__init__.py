@@ -539,6 +539,16 @@ class TestTList:
             ["spot1"], ["spot21", "spot22"]
         ]
 
+    def test_filter_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).filter(lambda s: s.address).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}}
+        ]
+
 
 class TestTDict:
     def test_map_normal(self):
@@ -549,4 +559,14 @@ class TestTDict:
 
         assert Spot.from_dicts_by_key(d).map(lambda s: s.names) == [
             ["spot1"], ["spot21", "spot22"]
+        ]
+
+    def test_map_filter(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).filter(lambda s: s.address).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}}
         ]
