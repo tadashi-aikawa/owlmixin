@@ -38,7 +38,7 @@ setup(
         'test': ['pytest', 'pytest-cov']
     },
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 7 - Inactive',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
