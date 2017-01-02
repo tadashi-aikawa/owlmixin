@@ -88,19 +88,21 @@ API
 - ``from_optional_dict`` [1]_ [2]_
     - Optional[dict] => Optional[instance]
 - ``from_dicts`` [1]_ [2]_
-    - dict => List[instance]
+    - dict => TList[instance]
 - ``from_optional_dicts`` [1]_ [2]_
     - Optional[dict] => Optional[instance]
 - ``from_dicts_by_key`` [1]_ [2]_
-    - dict => Dict[instance]
+    - dict => TDict[instance]
 - ``from_optional_dicts_by_key`` [1]_ [2]_
     - Optional[dict] => Optional[instance]
 - ``from_json`` [1]_ [2]_
     - json string => instance
+- ``from_json_url`` [1]_ [2]_
+    - url (which returns json) => instance
 - ``from_yaml`` [1]_ [2]_
     - yaml string or file => instance
 - ``from_csv`` [1]_ [2]_
-    - csv file => List[instance]
+    - csv file => TList[instance]
 
 
 .. [1] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)

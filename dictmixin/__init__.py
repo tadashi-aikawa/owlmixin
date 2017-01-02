@@ -80,7 +80,7 @@ class DictMixin:
         return self._traverse_dict(self._to_dict(), ignore_none)
 
     def to_dicts(self, ignore_none=False):
-        # type: (bool) -> list[dict]
+        # type: (bool) -> List[dict]
         if not isinstance(self, TList):
             raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
 
