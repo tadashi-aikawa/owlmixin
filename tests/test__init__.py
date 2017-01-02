@@ -237,6 +237,45 @@ class TestToDict:
             }
         }
 
+    def test_error(self):
+        with pytest.raises(RuntimeError):
+            Human.from_dict(SAMPLE_HUMAN).favorite_spots.to_dict()
+
+
+class TestToDicts:
+    def test_normal(self):
+        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+        assert spots.to_dicts() == [
+            {
+                "names": ["spot1"],
+                "address": {
+                    "name": "address1"
+                }
+            },
+            {
+                "names": ["spot21", "spot22"],
+                "address": None
+            }
+        ]
+
+    def test_ignore_none(self):
+        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+        assert spots.to_dicts(ignore_none=True) == [
+            {
+                "names": ["spot1"],
+                "address": {
+                    "name": "address1"
+                }
+            },
+            {
+                "names": ["spot21", "spot22"]
+            }
+        ]
+
+    def test_error(self):
+        with pytest.raises(RuntimeError):
+            Human.from_dict(SAMPLE_HUMAN).to_dicts()
+
 
 class TestFromDicts:
     def test_normal(self):
