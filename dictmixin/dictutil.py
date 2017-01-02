@@ -66,7 +66,7 @@ def load_csv(csvfile, fieldnames):
 
 
 def dump_json(data, indent):
-    # type: (dict, int) -> Text
+    # type: (Union[dict, list], int) -> Text
     return json.dumps(data,
                       indent=indent,
                       ensure_ascii=False,
@@ -75,7 +75,7 @@ def dump_json(data, indent):
 
 
 def dump_yaml(data):
-    # type: (dict) -> Text
+    # type: (Union[dict, list]) -> Text
     return yaml.dump(data,
                      indent=2,
                      encoding=None,

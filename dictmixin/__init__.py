@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic
+from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable, Any
 
 from . import dictutil
 
@@ -18,18 +18,7 @@ __author__ = 'tadashi-aikawa'
 __license__ = 'MIT'
 
 T = TypeVar('T', bound='DictMixin')
-
-
-class TList(List, Generic[T]):
-    def to_dicts(self, ignore_none=False):
-        # type: (bool) -> List[dict]
-        return [x.to_dict(ignore_none) for x in self]
-
-
-class TDict(Dict, Generic[T]):
-    def to_dict(self, ignore_none=False):
-        # type: (bool) -> dict
-        return {k: v.to_dict(ignore_none) for k, v in self.items()}
+U = TypeVar('U')
 
 
 class DictMixin:
@@ -80,11 +69,22 @@ class DictMixin:
 
     def to_dict(self, ignore_none=False):
         # type: (bool) -> dict
+        if isinstance(self, TList):
+            raise RuntimeError("TList must not call this method. Please use `to_dicts()` alternatively.")
+
         return self._traverse_dict(self._to_dict(), ignore_none)
+
+    def to_dicts(self, ignore_none=False):
+        # type: (bool) -> list[dict]
+        if not isinstance(self, TList):
+            raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
+
+        return self._traverse(None, self, ignore_none)
 
     def to_json(self, indent=None, ignore_none=False):
         # type: (int, bool) -> Text
-        return dictutil.dump_json(self.to_dict(ignore_none), indent)
+        func = self.to_dicts if isinstance(self, TList) else self.to_dict
+        return dictutil.dump_json(func(ignore_none), indent)
 
     def to_pretty_json(self, ignore_none=False):
         # type: (bool) -> Text
@@ -92,7 +92,8 @@ class DictMixin:
 
     def to_yaml(self, ignore_none=False):
         # type: (bool) -> Text
-        return dictutil.dump_yaml(self.to_dict(ignore_none))
+        func = self.to_dicts if isinstance(self, TList) else self.to_dict
+        return dictutil.dump_yaml(func(ignore_none))
 
     def _to_dict(self):
         # type: () -> dict
@@ -105,12 +106,27 @@ class DictMixin:
     def _traverse_dict(self, instance_dict, ignore_none):
         return {k: self._traverse(k, v, ignore_none) for k, v in instance_dict.items() if not (ignore_none and v is None)}
 
+    def _traverse_list(self, instance_list, ignore_none):
+        return [self._traverse(None, i, ignore_none) for i in instance_list]
+
     def _traverse(self, key, value, ignore_none=False):
-        if isinstance(value, DictMixin):
+        if isinstance(value, DictMixin) and not isinstance(value, (TList, TDict)):
             return value.to_dict(ignore_none)
         elif isinstance(value, dict):
             return self._traverse_dict(value, ignore_none)
         elif isinstance(value, list):
-            return [self._traverse(key, i, ignore_none) for i in value]
+            return self._traverse_list(value, ignore_none)
         else:
             return value
+
+
+class TList(List, Generic[T], DictMixin):
+    def map(self, func):
+        # type: (Callable[[T], U]) -> TList[U]
+        return TList(map(func, self))
+
+
+class TDict(Dict, Generic[T], DictMixin):
+    def map(self, func):
+        # type: (Callable[[T], U]) -> TList[U]
+        return TList(map(func, [v for k, v in self.items()]))

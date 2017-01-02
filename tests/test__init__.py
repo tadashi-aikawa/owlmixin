@@ -15,10 +15,15 @@ except ImportError:
     pass
 
 
+class Address(DictMixin):
+    def __init__(self, name):
+        self.name = name  # type: Text
+
+
 class Spot(DictMixin):
     def __init__(self, names, address=None):
         self.names = names  # type: List[Text]
-        self.address = address  # type: Optional[Text]
+        self.address = Address.from_optional_dict(address)  # type: Optional[Address]
 
 
 class Human(DictMixin):
@@ -51,7 +56,12 @@ SAMPLE_HUMAN = {
     "id": 1,
     "name": "メンバ1",
     "favorite_spots": [
-        {"names": ["spot1"], "address": "address1"},
+        {
+            "names": ["spot1"],
+            "address": {
+                "name": "address1"
+            }
+        },
         {"names": ["spot21", "spot22"]}
     ],
     "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
@@ -87,7 +97,7 @@ class TestFromDict:
 
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
-        assert r.favorite_spots[0].address == "address1"
+        assert r.favorite_spots[0].address.name == "address1"
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
@@ -131,7 +141,7 @@ class TestFromOptionalDict:
 
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
-        assert r.favorite_spots[0].address == "address1"
+        assert r.favorite_spots[0].address.name == "address1"
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
@@ -171,7 +181,7 @@ class TestToDict:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"], "address": None}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
@@ -203,7 +213,7 @@ class TestToDict:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"]}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
@@ -234,7 +244,7 @@ class TestFromDicts:
 
         assert len(r) == 2
         assert type(r) == TList
-        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
         assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
 
@@ -244,7 +254,7 @@ class TestFromOptionalDicts:
 
         assert len(r) == 2
         assert type(r) == TList
-        assert r[0].to_dict() == {"names": ["spot1"], "address": "address1"}
+        assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
         assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
 
     def test_none(self):
@@ -340,8 +350,13 @@ class TestFromJson:
         r = Human.from_json("""{
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
             "favorite_spots": [
-                {"address": "address1", "names": ["spot1"]},
-                {"names": ["spot21", "spot22"]}
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
             ],
             "id": 1,
             "name": "メンバ1"
@@ -352,8 +367,13 @@ class TestFromJson:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
-                {"names": ["spot21", "spot22"]}
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -365,7 +385,8 @@ class TestFromYaml:
             id: 1
             name: "メンバ1"
             favorite_spots:
-              - address: address1
+              - address:
+                  name: address1
                 names:
                   - spot1
               - names:
@@ -381,7 +402,7 @@ class TestFromYaml:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"]}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
@@ -389,12 +410,12 @@ class TestFromYaml:
 
 
 class TestToJson:
-    def test_normal(self):
+    def test_normal_from_dict(self):
         r = Human.from_dict({
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"]}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
@@ -402,10 +423,21 @@ class TestToJson:
 
         assert r.to_json(ignore_none=True) == """{
 "favorite_animal": {"id": 1,"is_big": "NO","name": "a dog"},
-"favorite_spots": [{"address": "address1","names": ["spot1"]},{"names": ["spot21","spot22"]}],
+"favorite_spots": [{"address": {"name": "address1"},"names": ["spot1"]},{"names": ["spot21","spot22"]}],
 "id": 1,
 "name": "メンバ1"
 }
+""".replace("\n", "")
+
+    def test_normal_from_list(self):
+        r = Spot.from_dicts([
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ])
+
+        assert r.to_json(ignore_none=True) == """[
+{"address": {"name": "address1"},"names": ["spot1"]},{"names": ["spot21","spot22"]}
+]
 """.replace("\n", "")
 
 
@@ -415,7 +447,7 @@ class TestToPrettyJson:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"]}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 1},
@@ -430,7 +462,9 @@ class TestToPrettyJson:
     },
     "favorite_spots": [
         {
-            "address": "address1",
+            "address": {
+                "name": "address1"
+            },
             "names": [
                 "spot1"
             ]
@@ -449,12 +483,12 @@ class TestToPrettyJson:
 
 
 class TestToYaml:
-    def test_normal(self):
+    def test_normal_from_dict(self):
         r = Human.from_dict({
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": "address1"},
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"]}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
@@ -466,7 +500,8 @@ favorite_animal:
   is_big: 'NO'
   name: a dog
 favorite_spots:
-  - address: address1
+  - address:
+      name: address1
     names:
       - spot1
   - names:
@@ -476,21 +511,42 @@ id: 1
 name: メンバ1
 """.lstrip()
 
+    def test_normal_from_list(self):
+        r = Spot.from_dicts([
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ])
+
+        assert r.to_yaml(ignore_none=True) == """
+- address:
+    name: address1
+  names:
+    - spot1
+- names:
+    - spot21
+    - spot22
+""".lstrip()
+
 
 class TestTList:
-    def test_to_dicts_normal(self):
+    def test_map_normal(self):
         d = [
-            {"names": ["spot1"], "address": "address1"},
-            {"names": ["spot21", "spot22"], "address": "address2"}
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
         ]
 
-        assert d == Spot.from_dicts(d).to_dicts()
+        assert Spot.from_dicts(d).map(lambda s: s.names) == [
+            ["spot1"], ["spot21", "spot22"]
+        ]
 
 
 class TestTDict:
-    def test_to_dicts_by_key_normal(self):
+    def test_map_normal(self):
         d = {
-            "a": {"names": ["spot1"], "address": "address1"},
-            "b": {"names": ["spot21", "spot22"], "address": "address2"}
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
         }
-        assert d == Spot.from_dicts_by_key(d).to_dict()
+
+        assert Spot.from_dicts_by_key(d).map(lambda s: s.names) == [
+            ["spot1"], ["spot21", "spot22"]
+        ]
