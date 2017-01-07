@@ -5,6 +5,7 @@ from __future__ import division, absolute_import, unicode_literals
 import re
 import csv
 import requests
+import codecs
 import json
 import yaml
 from yaml import Loader, SafeLoader
@@ -57,7 +58,7 @@ def load_yaml(data):
 
 def load_csv(csvfile, fieldnames, encoding):
     # type: (Text, Optional[List[Text]], Text) -> List[dict]
-    with open(csvfile, encoding=encoding) as f:
+    with codecs.open(csvfile, encoding=encoding) as f:
         snippet = f.read(8192)
         f.seek(0)
 
