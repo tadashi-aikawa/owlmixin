@@ -101,12 +101,13 @@ API
     - url (which returns json) => instance
 - ``from_yaml`` [1]_ [2]_
     - yaml string or file => instance
-- ``from_csv`` [1]_ [2]_
+- ``from_csv`` [1]_ [2]_ [3]_
     - csv file => TList[instance]
 
 
 .. [1] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)
 .. [2] Key ``self`` is transformed to ``_self`` in order to avoid duplicate.
+.. [3] You can specify any encodings
 
 
 Installation
