@@ -364,27 +364,36 @@ class TestFromCsv:
         rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": "NO"},
-            {"id": 2, "name": "a cat", "is_big": "NO"},
-            {"id": 3, "name": "a lion", "is_big": "YES"},
+            {"id": 1, "name": "a 犬", "is_big": "NO"},
+            {"id": 2, "name": "a 猫", "is_big": "NO"},
+            {"id": 3, "name": "a ライオン", "is_big": "YES"},
         ]
 
     def test_normal_with_header(self):
         rs = Animal.from_csv("tests/csv/animals_with_header.csv")
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": "NO"},
-            {"id": 2, "name": "a cat", "is_big": "NO"},
-            {"id": 3, "name": "a lion", "is_big": "YES"},
+            {"id": 1, "name": "a 犬", "is_big": "NO"},
+            {"id": 2, "name": "a 猫", "is_big": "NO"},
+            {"id": 3, "name": "a ライオン", "is_big": "YES"},
         ]
 
     def test_normal_separated_by_tab(self):
         rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a dog", "is_big": "NO"},
-            {"id": 2, "name": "a cat", "is_big": "NO"},
-            {"id": 3, "name": "a lion", "is_big": "YES"},
+            {"id": 1, "name": "a 犬", "is_big": "NO"},
+            {"id": 2, "name": "a 猫", "is_big": "NO"},
+            {"id": 3, "name": "a ライオン", "is_big": "YES"},
+        ]
+
+    def test_normal_shiftjis(self):
+        rs = Animal.from_csv("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
+
+        assert rs.to_dicts() == [
+            {"id": 1, "name": "a 犬", "is_big": "NO"},
+            {"id": 2, "name": "a 猫", "is_big": "NO"},
+            {"id": 3, "name": "a ライオン", "is_big": "YES"},
         ]
 
 

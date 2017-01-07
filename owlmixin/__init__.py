@@ -60,9 +60,9 @@ class OwlMixin:
         return cls.from_dict(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
-    def from_csv(cls, csvfile, fieldnames=None, force_snake_case=True):
-        # type: (Text, Optional[Sequence[Text]], bool) -> TList[T]
-        return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames), force_snake_case=force_snake_case)
+    def from_csv(cls, csvfile, fieldnames=None, encoding='utf8', force_snake_case=True):
+        # type: (Text, Optional[Sequence[Text]], Text, bool) -> TList[T]
+        return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames, encoding), force_snake_case=force_snake_case)
 
     @classmethod
     def from_json_url(cls, url, force_snake_case=True):

@@ -55,9 +55,9 @@ def load_yaml(data):
     return yaml.load(data)
 
 
-def load_csv(csvfile, fieldnames):
-    # type: (Text, Optional[List[Text]]) -> List[dict]
-    with open(csvfile) as f:
+def load_csv(csvfile, fieldnames, encoding):
+    # type: (Text, Optional[List[Text]], Text) -> List[dict]
+    with open(csvfile, encoding=encoding) as f:
         snippet = f.read(8192)
         f.seek(0)
 
