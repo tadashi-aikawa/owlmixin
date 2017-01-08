@@ -119,7 +119,7 @@ Installation
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
-    :target: https://api.travis-ci.org/tadashi-aikawa/owlmixin
+    :target: https://travis-ci.org/tadashi-aikawa/owlmixin/builds
     :alt: Build Status
 .. |coverage| image:: https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/coverage.svg
     :target: https://codeclimate.com/github/tadashi-aikawa/owlmixin/coverage

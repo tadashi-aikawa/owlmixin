@@ -1,3 +1,4 @@
 typing
 pyyaml
 requests
+unicodecsv
