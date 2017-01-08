@@ -2,14 +2,14 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+import sys
 import re
-import csv
 import requests
-import codecs
 import json
 import yaml
 from yaml import Loader, SafeLoader
 
+import unicodecsv as csv
 from typing import List, Union, Optional, Iterable, Dict
 
 # For python 3.5.0-3.5.1
@@ -58,13 +58,15 @@ def load_yaml(data):
 
 def load_csv(csvfile, fieldnames, encoding):
     # type: (Text, Optional[List[Text]], Text) -> List[dict]
-    with codecs.open(csvfile, encoding=encoding) as f:
+    with open(csvfile, 'rb') as f:
         snippet = f.read(8192)
         f.seek(0)
 
-        dialect = csv.Sniffer().sniff(snippet)
+        dialect = csv.Sniffer().sniff(
+            snippet.decode(encoding) if sys.version_info >= (3, 0) else snippet
+        )
         dialect.skipinitialspace = True
-        return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect))
+        return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect, encoding=encoding))
 
 
 def load_json_url(url):
