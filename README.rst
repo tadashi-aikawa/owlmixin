@@ -88,13 +88,13 @@ API
 - ``from_optional_dict`` [1]_ [2]_
     - Optional[dict] => Optional[instance]
 - ``from_dicts`` [1]_ [2]_
-    - dict => TList[instance]
+    - List[dict] => TList[instance]
 - ``from_optional_dicts`` [1]_ [2]_
-    - Optional[dict] => Optional[instance]
+    - Optional[List[dict]] => Optional[TList[instance]]
 - ``from_dicts_by_key`` [1]_ [2]_
     - dict => TDict[instance]
 - ``from_optional_dicts_by_key`` [1]_ [2]_
-    - Optional[dict] => Optional[instance]
+    - Optional[dict] => Optional[TDict[instance]]
 - ``from_json`` [1]_ [2]_
     - json string => instance
 - ``from_json_url`` [1]_ [2]_
