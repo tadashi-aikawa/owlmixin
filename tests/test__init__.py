@@ -622,6 +622,14 @@ class TestTList:
             ]
         }
 
+    def test_reduce_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).reduce(lambda r, x: r+len(x.names), 100) == 103
+
 
 class TestTDict:
     def test_map_normal(self):

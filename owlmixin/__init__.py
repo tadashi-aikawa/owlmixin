@@ -2,6 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+import functools
 from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable
 
 from . import dictutil
@@ -139,6 +140,10 @@ class TList(list, Generic[T], OwlMixin):
             ret.setdefault(k, TList())
             ret[k].append(v)
         return ret
+
+    def reduce(self, func, init_value):
+        # type: (Callable[[U, T], U], U) -> U
+        return functools.reduce(func, self, init_value)
 
 
 class TDict(dict, Generic[T], OwlMixin):
