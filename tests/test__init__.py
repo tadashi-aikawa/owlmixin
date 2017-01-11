@@ -581,7 +581,7 @@ name: メンバ1
 
 
 class TestTList:
-    def test_map_normal(self):
+    def test_map(self):
         d = [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]}
@@ -591,7 +591,7 @@ class TestTList:
             ["spot1"], ["spot21", "spot22"]
         ]
 
-    def test_filter_normal(self):
+    def test_filter(self):
         d = [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]}
@@ -622,7 +622,7 @@ class TestTList:
             ]
         }
 
-    def test_reduce_normal(self):
+    def test_reduce(self):
         d = [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]}
@@ -661,7 +661,7 @@ class TestTList:
 
 
 class TestTDict:
-    def test_map_normal(self):
+    def test_map(self):
         d = {
             "a": {"names": ["spot1"], "address": {"name": "address1"}},
             "b": {"names": ["spot21", "spot22"]}
@@ -671,7 +671,7 @@ class TestTDict:
             ["spot1"], ["spot21", "spot22"]
         ]
 
-    def test_map_filter(self):
+    def test_filter(self):
         d = {
             "a": {"names": ["spot1"], "address": {"name": "address1"}},
             "b": {"names": ["spot21", "spot22"]}
