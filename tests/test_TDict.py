@@ -31,7 +31,7 @@ class TestMap:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).map(lambda s: s.names) == [
+        assert Spot.from_dicts_by_key(d).map(lambda k, v: v.names) == [
             ["spot1"], ["spot21", "spot22"]
         ]
 
@@ -43,7 +43,7 @@ class TestFilter:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).filter(lambda s: s.address).to_dicts() == [
+        assert Spot.from_dicts_by_key(d).filter(lambda k, v: v.address).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 

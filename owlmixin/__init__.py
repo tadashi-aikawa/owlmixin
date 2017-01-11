@@ -159,12 +159,12 @@ class TList(list, Generic[T], OwlMixin):
 
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
-        # type: (Callable[[T], U]) -> TList[U]
-        return TList(map(func, [v for k, v in sorted(self.items())]))
+        # type: (Callable[[K, T], U]) -> TList[U]
+        return TList([func(k, v) for k, v in sorted(self.items())])
 
     def filter(self, func):
-        # type: (Callable[[T], bool]) -> TList[T]
-        return TList(filter(func, [v for k, v in sorted(self.items())]))
+        # type: (Callable[[K, T], bool]) -> TList[T]
+        return TList([v for k, v in sorted(self.items()) if func(k, v)])
 
     def _to_dict(self):
         # type: () -> dict
