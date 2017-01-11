@@ -31,8 +31,13 @@ class TestMap:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).map(lambda k, v: v.names) == [
-            ["spot1"], ["spot21", "spot22"]
+        # Sort for test
+        assert sorted(
+            Spot.from_dicts_by_key(d).map(lambda k, v: v.names),
+            key=len
+        ) == [
+            ["spot1"],
+            ["spot21", "spot22"]
         ]
 
 
