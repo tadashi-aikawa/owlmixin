@@ -630,6 +630,14 @@ class TestTList:
 
         assert Spot.from_dicts(d).reduce(lambda r, x: r+len(x.names), 100) == 103
 
+    def test_size(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).size() == 2
+
 
 class TestTDict:
     def test_map_normal(self):
@@ -651,3 +659,11 @@ class TestTDict:
         assert Spot.from_dicts_by_key(d).filter(lambda s: s.address).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
+
+    def test_size(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).size() == 2

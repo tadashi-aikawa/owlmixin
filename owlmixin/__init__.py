@@ -145,6 +145,10 @@ class TList(list, Generic[T], OwlMixin):
         # type: (Callable[[U, T], U], U) -> U
         return functools.reduce(func, self, init_value)
 
+    def size(self):
+        # type: () -> int
+        return len(self)
+
 
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
@@ -158,3 +162,7 @@ class TDict(dict, Generic[T], OwlMixin):
     def _to_dict(self):
         # type: () -> dict
         return dict(self)
+
+    def size(self):
+        # type: () -> int
+        return len(self)
