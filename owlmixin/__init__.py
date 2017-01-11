@@ -3,7 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import functools
-from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable
+from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable, Set
 
 from . import dictutil
 
@@ -160,11 +160,11 @@ class TList(list, Generic[T], OwlMixin):
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
         # type: (Callable[[K, T], U]) -> TList[U]
-        return TList([func(k, v) for k, v in sorted(self.items())])
+        return TList([func(k, v) for k, v in self.items()])
 
     def filter(self, func):
         # type: (Callable[[K, T], bool]) -> TList[T]
-        return TList([v for k, v in sorted(self.items()) if func(k, v)])
+        return TList([v for k, v in self.items() if func(k, v)])
 
     def _to_dict(self):
         # type: () -> dict
@@ -176,6 +176,10 @@ class TDict(dict, Generic[T], OwlMixin):
 
     def find(self, func):
         # type: (Callable[[K, T], bool]) -> T
-        for k, v in sorted(self.items()):
+        for k, v in self.items():
             if func(k, v):
                 return v
+
+    def values(self):
+        # type: () -> TList[T]
+        return TList(super(TDict, self).values())

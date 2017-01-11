@@ -96,7 +96,7 @@ class TestFind:
         d = [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
-            {"names": ["spot31", "spot32"]}
+            {"names": ["spot31", "spot32", "spot33"]}
         ]
 
         assert Spot.from_dicts(d).find(lambda x: len(x.names) == 2).to_dict(ignore_none=True) == {

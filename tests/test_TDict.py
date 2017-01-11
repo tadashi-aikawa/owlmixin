@@ -63,7 +63,7 @@ class TestFind:
         d = {
             "a": {"names": ["spot1"], "address": {"name": "address1"}},
             "b": {"names": ["spot21", "spot22"]},
-            "c": {"names": ["spot31", "spot32"]}
+            "c": {"names": ["spot31", "spot32", "spot33"]}
         }
 
         assert Spot.from_dicts_by_key(d).find(lambda k, v: len(v.names) == 2).to_dict(ignore_none=True) == {
@@ -78,3 +78,22 @@ class TestFind:
         }
 
         assert Spot.from_dicts_by_key(d).find(lambda k, v: v.names == 3) is None
+
+
+class TestValues:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        # Sort for test
+        assert sorted(
+            Spot.from_dicts_by_key(d).values().to_dicts(ignore_none=True),
+            key=lambda x: x["names"][0]
+        ) == [
+           {"names": ["spot1"]},
+           {"names": ["spot21", "spot22"]},
+           {"names": ["spot31", "spot32"]}
+        ]
