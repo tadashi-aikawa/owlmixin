@@ -638,6 +638,27 @@ class TestTList:
 
         assert Spot.from_dicts(d).size() == 2
 
+    def test_find(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 2).to_dict(ignore_none=True) == {
+            "names": ["spot21", "spot22"]
+        }
+
+    def test_find_none(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 3) is None
+
+
 
 class TestTDict:
     def test_map_normal(self):
@@ -667,3 +688,24 @@ class TestTDict:
         }
 
         assert Spot.from_dicts_by_key(d).size() == 2
+
+    def test_find(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).find(lambda k, v: len(v.names) == 2).to_dict(ignore_none=True) == {
+            "names": ["spot21", "spot22"]
+        }
+
+    def test_find_none(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).find(lambda k, v: v.names == 3) is None
+

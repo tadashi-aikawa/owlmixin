@@ -17,6 +17,7 @@ __version__ = '1.0.0b7'
 
 T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
+K = TypeVar('K')
 
 
 class OwlMixin:
@@ -149,6 +150,12 @@ class TList(list, Generic[T], OwlMixin):
         # type: () -> int
         return len(self)
 
+    def find(self, func):
+        # type: (Callable[[T], bool]) -> T
+        for x in self:
+            if func(x):
+                return x
+
 
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
@@ -166,3 +173,9 @@ class TDict(dict, Generic[T], OwlMixin):
     def size(self):
         # type: () -> int
         return len(self)
+
+    def find(self, func):
+        # type: (Callable[[K, T], bool]) -> T
+        for k, v in sorted(self.items()):
+            if func(k, v):
+                return v
