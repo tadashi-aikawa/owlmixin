@@ -162,13 +162,13 @@ class TDict(dict, Generic[T], OwlMixin):
         # type: (Callable[[K, T], U]) -> TList[U]
         return TList([func(k, v) for k, v in self.items()])
 
+    def map_values(self, func):
+        # type: (Callable[[T], U]) -> TDict[U]
+        return TDict({k: func(v) for k, v in self.items()})
+
     def filter(self, func):
         # type: (Callable[[K, T], bool]) -> TList[T]
         return TList([v for k, v in self.items() if func(k, v)])
-
-    def _to_dict(self):
-        # type: () -> dict
-        return dict(self)
 
     def size(self):
         # type: () -> int
@@ -183,3 +183,7 @@ class TDict(dict, Generic[T], OwlMixin):
     def values(self):
         # type: () -> TList[T]
         return TList(super(TDict, self).values())
+
+    def _to_dict(self):
+        # type: () -> dict
+        return dict(self)
