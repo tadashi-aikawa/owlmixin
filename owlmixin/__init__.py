@@ -142,6 +142,10 @@ class TList(list, Generic[T], OwlMixin):
             ret[k].append(v)
         return ret
 
+    def order_by(self, func, reverse=False):
+        # type: (Callable[[T], any], bool) -> TList[T]
+        return TList(sorted(self, key=func, reverse=reverse))
+
     def reduce(self, func, init_value):
         # type: (Callable[[U, T], U], U) -> U
         return functools.reduce(func, self, init_value)

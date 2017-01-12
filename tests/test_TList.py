@@ -57,8 +57,6 @@ class TestGroupBy:
             {"names": ["spot4"], "address": {"name": "address1"}}
         ]
 
-        print(Spot.from_dicts(d).group_by(lambda s: str(len(s.names))).to_dict(ignore_none=True))
-
         assert Spot.from_dicts(d).group_by(lambda s: str(len(s.names))).to_dict(ignore_none=True) == {
             "1": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
@@ -69,6 +67,38 @@ class TestGroupBy:
                 {"names": ["spot31", "spot32"]}
             ]
         }
+
+
+class TestOrderBy:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22", "spot23"]},
+            {"names": ["spot31", "spot32", "spot33", "spot34"]},
+            {"names": ["spot41", "spot42"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).order_by(lambda x: len(x.names)).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22", "spot23"]},
+            {"names": ["spot31", "spot32", "spot33", "spot34"]}
+        ]
+
+    def test_reverse(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22", "spot23"]},
+            {"names": ["spot31", "spot32", "spot33", "spot34"]},
+            {"names": ["spot41", "spot42"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).order_by(lambda x: len(x.names), reverse=True).to_dicts() == [
+            {"names": ["spot31", "spot32", "spot33", "spot34"]},
+            {"names": ["spot21", "spot22", "spot23"]},
+            {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
+            {"names": ["spot1"], "address": {"name": "address1"}}
+        ]
 
 
 class TestReduce:
