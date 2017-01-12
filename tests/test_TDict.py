@@ -99,7 +99,7 @@ class TestFind:
         assert Spot.from_dicts_by_key(d).find(lambda k, v: v.names == 3) is None
 
 
-class TestValues:
+class TestToValues:
     def test_normal(self):
         d = {
             "a": {"names": ["spot1"]},
@@ -109,7 +109,7 @@ class TestValues:
 
         # Sort for test
         assert sorted(
-            Spot.from_dicts_by_key(d).values().to_dicts(ignore_none=True),
+            Spot.from_dicts_by_key(d).to_values().to_dicts(ignore_none=True),
             key=lambda x: x["names"][0]
         ) == [
            {"names": ["spot1"]},

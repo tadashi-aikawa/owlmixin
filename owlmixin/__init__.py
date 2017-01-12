@@ -184,9 +184,9 @@ class TDict(dict, Generic[T], OwlMixin):
             if func(k, v):
                 return v
 
-    def values(self):
+    def to_values(self):
         # type: () -> TList[T]
-        return TList(super(TDict, self).values())
+        return TList(self.values())
 
     def _to_dict(self):
         # type: () -> dict
