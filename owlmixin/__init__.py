@@ -71,30 +71,30 @@ class OwlMixin:
         # type: (Text, bool) -> T
         return cls.from_dict(dictutil.load_json_url(url), force_snake_case)
 
-    def to_dict(self, ignore_none=False):
+    def to_dict(self, ignore_none=True):
         # type: (bool) -> dict
         if isinstance(self, TList):
             raise RuntimeError("TList must not call this method. Please use `to_dicts()` alternatively.")
 
         return self._traverse_dict(self._to_dict(), ignore_none)
 
-    def to_dicts(self, ignore_none=False):
+    def to_dicts(self, ignore_none=True):
         # type: (bool) -> List[dict]
         if not isinstance(self, TList):
             raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
 
         return self._traverse(None, self, ignore_none)
 
-    def to_json(self, indent=None, ignore_none=False):
+    def to_json(self, indent=None, ignore_none=True):
         # type: (int, bool) -> Text
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return dictutil.dump_json(func(ignore_none), indent)
 
-    def to_pretty_json(self, ignore_none=False):
+    def to_pretty_json(self, ignore_none=True):
         # type: (bool) -> Text
         return self.to_json(4, ignore_none)
 
-    def to_yaml(self, ignore_none=False):
+    def to_yaml(self, ignore_none=True):
         # type: (bool) -> Text
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return dictutil.dump_yaml(func(ignore_none))
@@ -113,7 +113,7 @@ class OwlMixin:
     def _traverse_list(self, instance_list, ignore_none):
         return [self._traverse(None, i, ignore_none) for i in instance_list]
 
-    def _traverse(self, key, value, ignore_none=False):
+    def _traverse(self, key, value, ignore_none=True):
         if isinstance(value, OwlMixin) and not isinstance(value, (TList, TDict)):
             return value.to_dict(ignore_none)
         elif isinstance(value, dict):

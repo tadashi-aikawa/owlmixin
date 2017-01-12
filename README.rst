@@ -25,7 +25,7 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
 .. code-block:: python
 
     from typing import Text, Optional
-    from owlmixin import OwlMixin
+    from owlmixin import OwlMixin, TList
 
     class Food(OwlMixin):
         def __init__(self, id, name, color=None):
@@ -37,7 +37,7 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
         def __init__(self, id, name, favorite):
             self.id = id  # type: Text
             self.name = name  # type: Text
-            self.favorite = Food.from_dict2list(favorite)  # type: TList[Food]
+            self.favorite = Food.from_dicts(favorite)  # type: TList[Food]
 
     jiro = Human.from_dict({
         "id": 10,
@@ -54,14 +54,13 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
     'jiro'
     >>> print(jiro.favorite[0].to_pretty_json())
     {
-        "color": null,
         "id": 1,
         "name": "apple"
     }
+    >>> print(jiro.to_dict(ignore_none=False))
+    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
     >>> print(jiro.to_dict())
     {'favorite': [{'color': None, 'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
-    >>> print(jiro.to_dict(ignore_none=True))
-    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
 
 
 API

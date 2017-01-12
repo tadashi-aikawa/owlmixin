@@ -182,6 +182,36 @@ class TestToDict:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_spots": [
+                        {"names": ["toshi_spot"]}
+                    ],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"]}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
+                }
+            }
+        }
+
+    def test_ignore_none_false(self):
+        r = Human.from_dict(SAMPLE_HUMAN)
+        assert r.to_dict(ignore_none=False) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"], "address": None}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
@@ -207,36 +237,6 @@ class TestToDict:
             }
         }
 
-    def test_ignore_none(self):
-        r = Human.from_dict(SAMPLE_HUMAN)
-        assert r.to_dict(ignore_none=True) == {
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
-            "friends_by_short_name": {
-                "toshi": {
-                    "id": 100,
-                    "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"]}
-                    ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
-                },
-                "hide": {
-                    "id": 200,
-                    "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"]}
-                    ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-                }
-            }
-        }
-
     def test_error(self):
         with pytest.raises(RuntimeError):
             Human.from_dict(SAMPLE_HUMAN).favorite_spots.to_dict()
@@ -253,14 +253,13 @@ class TestToDicts:
                 }
             },
             {
-                "names": ["spot21", "spot22"],
-                "address": None
+                "names": ["spot21", "spot22"]
             }
         ]
 
-    def test_ignore_none(self):
+    def test_ignore_none_false(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dicts(ignore_none=True) == [
+        assert spots.to_dicts(ignore_none=False) == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -268,7 +267,8 @@ class TestToDicts:
                 }
             },
             {
-                "names": ["spot21", "spot22"]
+                "names": ["spot21", "spot22"],
+                "address": None
             }
         ]
 
@@ -284,7 +284,7 @@ class TestFromDicts:
         assert len(r) == 2
         assert type(r) == TList
         assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"]}
 
 
 class TestFromOptionalDicts:
@@ -294,7 +294,7 @@ class TestFromOptionalDicts:
         assert len(r) == 2
         assert type(r) == TList
         assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "address": None}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"]}
 
     def test_none(self):
         assert Human.from_optional_dicts(None) is None
@@ -311,19 +311,17 @@ class TestFromDictsByKey:
                 "id": 100,
                 "name": "TOSHIKI",
                 "favorite_spots": [
-                    {"names": ["toshi_spot"], "address": None}
+                    {"names": ["toshi_spot"]}
                 ],
-                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-                "friends_by_short_name": None
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
             },
             "hide": {
                 "id": 200,
                 "name": "HIDEKI",
                 "favorite_spots": [
-                    {"names": ["hide_spot"], "address": None}
+                    {"names": ["hide_spot"]}
                 ],
-                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-                "friends_by_short_name": None
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
             }
         }
 
@@ -339,19 +337,17 @@ class TestFromOptionalDictsByKey:
                 "id": 100,
                 "name": "TOSHIKI",
                 "favorite_spots": [
-                    {"names": ["toshi_spot"], "address": None}
+                    {"names": ["toshi_spot"]}
                 ],
-                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-                "friends_by_short_name": None
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
             },
             "hide": {
                 "id": 200,
                 "name": "HIDEKI",
                 "favorite_spots": [
-                    {"names": ["hide_spot"], "address": None}
+                    {"names": ["hide_spot"]}
                 ],
-                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-                "friends_by_short_name": None
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
             }
         }
 
