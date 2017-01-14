@@ -23,7 +23,7 @@ setup(
     version=re.search(
         r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
         open('owlmixin/__init__.py').read()).group(1),
-    description='Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.',
+    description='Mixin which converts ``data class instance`` and others each other more simple.',
     long_description=load_readme(),
     license='MIT',
     author='tadashi-aikawa',
@@ -31,7 +31,7 @@ setup(
     maintainer='tadashi-aikawa',
     maintainer_email='tadashi-aikawa',
     url='https://github.com/tadashi-aikawa/owlmixin.git',
-    keywords='data class instance dict json yaml convert parse each other',
+    keywords='data class mixin instance dict json yaml csv convert parse each other functional',
     packages=find_packages(exclude=['tests*']),
     install_requires=load_required_modules(),
     extras_require={

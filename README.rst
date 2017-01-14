@@ -4,7 +4,7 @@ owlmixin
 
 |pypi| |travis| |coverage| |complexity| |versions| |license|
 
-Parsing mixin which converts ``data class instance``, ``dict object``, ``json string`` and ``yaml string`` each other.
+Mixin which converts ``data class instance`` and others each other more simple.
 
 
 Motivation
@@ -63,6 +63,46 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
     {'favorite': [{'color': None, 'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
 
 
+You can also use methods chains as following.
+
+.. code-block:: python
+
+    from typing import Optional
+    from owlmixin import OwlMixin, TList
+
+    # `**extra` is necessary to allow extra elements.
+    # Note that you must define all properties in github response json if you don't use `**extra`
+    class Repository(OwlMixin):
+        def __init__(self, id, name, description, stargazers_count, **extra):
+            self.id = id  # type: int
+            self.name = name  # type: Text
+            self.description = description  # type: Optional[Text]
+            self.star_count = stargazers_count  # type: int
+
+    class GithubRepository(OwlMixin):
+        def __init__(self, total_count, incomplete_results, items):
+            self.total_count = total_count  # type: int
+            self.incomplete_results = incomplete_results  # type: bool
+            self.repositories = Repository.from_dicts(items)  # type: TList[Repository]
+
+    >>> GithubRepository \
+    ...     .from_json_url("https://api.github.com/search/repositories?q=git") \
+    ...     .repositories \
+    ...     .filter(lambda x: x.star_count > 100) \
+    ...     .order_by(lambda x: x.star_count, True) \
+    ...     .map(lambda x: {
+    ...         "id": x.id,
+    ...         "message": '★{0.star_count}   {0.name}'.format(x)
+    ...     }) \
+    ...     .to_csv(fieldnames=["id", "message"], with_header=True)
+    ...
+    id,message
+    1062897,★45252   gitignore
+    36502,★15888   git
+    36560369,★2931   my-git
+    18484639,★212   git
+
+
 API
 ===
 
@@ -79,6 +119,8 @@ API
     - instance => json string (has indent and line break)
 - ``to_yaml``
     - instance => yaml string
+- ``to_csv``
+    - TList[instance] => csv string
 
 **From something to instance**
 
