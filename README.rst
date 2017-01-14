@@ -85,17 +85,17 @@ You can also use methods chains as following.
             self.incomplete_results = incomplete_results  # type: bool
             self.repositories = Repository.from_dicts(items)  # type: TList[Repository]
 
-    >>> GithubRepository \
-    ...     .from_json_url("https://api.github.com/search/repositories?q=git") \
-    ...     .repositories \
-    ...     .filter(lambda x: x.star_count > 100) \
-    ...     .order_by(lambda x: x.star_count, True) \
-    ...     .map(lambda x: {
-    ...         "id": x.id,
-    ...         "message": '★{0.star_count}   {0.name}'.format(x)
-    ...     }) \
-    ...     .to_csv(fieldnames=["id", "message"], with_header=True)
-    ...
+    >>> r = GithubRepository \
+    ...         .from_json_url("https://api.github.com/search/repositories?q=git") \
+    ...         .repositories \
+    ...         .filter(lambda x: x.star_count > 100) \
+    ...         .order_by(lambda x: x.star_count, True) \
+    ...         .map(lambda x: {
+    ...             "id": x.id,
+    ...             "message": '★{0.star_count}   {0.name}'.format(x)
+    ...         }) \
+    ...         .to_csv(fieldnames=["id", "message"], with_header=True)
+    >>> print(r)
     id,message
     1062897,★45252   gitignore
     36502,★15888   git
