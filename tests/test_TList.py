@@ -24,6 +24,83 @@ class Spot(OwlMixin):
         self.address = Address.from_optional_dict(address)  # type: Optional[Address]
 
 
+class Human(OwlMixin):
+    def __init__(self, id, name, ruby=None, address=None):
+        self.id = id  # type: int
+        self.name = name  # type: Text
+        self.ruby = ruby  # type: Optional[Text]
+        self.address = address  # type: Optional[Address]
+
+
+class TestToCsv:
+    def test_normal(self):
+        d = [
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name", "ruby"]) == """
+1,一郎,
+2,二郎,じろう
+""".lstrip()
+
+    def test_with_header(self):
+        d = [
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name", "ruby"], with_header=True) == """
+id,name,ruby
+1,一郎,
+2,二郎,じろう
+""".lstrip()
+
+    def test_with_space(self):
+        d = [
+            {"id": 1, "name": " 一 郎 "},
+            {"id": 2, "name": " 二 郎 ", "ruby": "じろう"}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name", "ruby"]) == """
+1, 一 郎 ,
+2, 二 郎 ,じろう
+""".lstrip()
+
+    def test_crlf(self):
+        d = [
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name", "ruby"], crlf=True) == """
+1,一郎,\r
+2,二郎,じろう\r
+""".lstrip()
+
+    def test_including_dict(self):
+        d = [
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "address": {"name": "住所"}}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name", "address"]) == """
+1,一郎,
+2,二郎,{'name': '住所'}
+""".lstrip()
+
+    def test_including_list(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).to_csv(["names", "address"]) == """
+['spot1'],{'name': 'address1'}
+"['spot21','spot22']",
+""".lstrip()
+
+
 class TestMap:
     def test_normal(self):
         d = [

@@ -1,7 +1,9 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
+# Need not unicode_literals
+from __future__ import division, absolute_import
 
+import io
 import sys
 import re
 import requests
@@ -10,13 +12,37 @@ import yaml
 from yaml import Loader, SafeLoader
 
 import unicodecsv as csv
-from typing import List, Union, Optional, Iterable, Dict
+from unicodecsv import register_dialect, Dialect, QUOTE_MINIMAL
+from typing import List, Union, Optional, Sequence, Dict
 
 # For python 3.5.0-3.5.1
 try:
     from typing import Text
 except ImportError:
     pass
+
+
+class CrLfDialect(Dialect):
+    delimiter = ','
+    quotechar = '"'
+    doublequote = True
+    skipinitialspace = True
+    lineterminator = '\r\n'
+    quoting = QUOTE_MINIMAL
+register_dialect("crlf", CrLfDialect)
+
+
+class LfDialect(Dialect):
+    delimiter = ','
+    quotechar = '"'
+    doublequote = True
+    skipinitialspace = True
+    lineterminator = '\n'
+    quoting = QUOTE_MINIMAL
+register_dialect("lf", LfDialect)
+
+
+PYTHON2 = sys.version_info < (3, 0)
 
 
 def replace_keys(d, keymap, force_snake_case):
@@ -62,9 +88,7 @@ def load_csv(csvfile, fieldnames, encoding):
         snippet = f.read(8192)
         f.seek(0)
 
-        dialect = csv.Sniffer().sniff(
-            snippet.decode(encoding) if sys.version_info >= (3, 0) else snippet
-        )
+        dialect = csv.Sniffer().sniff(snippet if PYTHON2 else snippet.decode(encoding))
         dialect.skipinitialspace = True
         return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect, encoding=encoding))
 
@@ -74,7 +98,24 @@ def load_json_url(url):
     return requests.get(url).json()
 
 
-def dump_json(data, indent):
+def dump_csv(data, fieldnames, with_header=False, crlf=False):
+    # type: (List[dict], Sequence[Text], bool, bool) -> Text
+    def force_str(v):
+        # XXX: Double quotation behaves strangely... so replace (why?)
+        return dump_json(v).replace('"', "'") if isinstance(v, (dict, list)) else v
+
+    with io.BytesIO() as sio:
+        dialect = 'crlf' if crlf else 'lf'
+        writer = csv.DictWriter(sio, fieldnames=fieldnames, encoding='utf8', dialect=dialect)
+        if with_header:
+            writer.writeheader()
+        for x in data:
+            writer.writerow({k: force_str(v) for k, v in x.items()})
+        sio.seek(0)
+        return sio.read().decode('utf8')
+
+
+def dump_json(data, indent=None):
     # type: (Union[dict, list], int) -> Text
     return json.dumps(data,
                       indent=indent,

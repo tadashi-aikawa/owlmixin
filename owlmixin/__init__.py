@@ -125,6 +125,10 @@ class OwlMixin:
 
 
 class TList(list, Generic[T], OwlMixin):
+    def to_csv(self, fieldnames, with_header=False, crlf=False):
+        # type: (Sequence[Text], bool, bool) -> Text
+        return dictutil.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
+
     def map(self, func):
         # type: (Callable[[T], U]) -> TList[U]
         return TList(map(func, self))
