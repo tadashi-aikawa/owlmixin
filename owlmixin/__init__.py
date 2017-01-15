@@ -13,7 +13,7 @@ try:
 except ImportError:
     pass
 
-__version__ = '1.0.0rc4'
+__version__ = '1.0.0rc5'
 
 T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
