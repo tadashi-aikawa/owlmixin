@@ -73,12 +73,12 @@ SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
 def load_json(data):
-    # type (Text) -> dict
+    # type (Text) -> Union[dict, list]
     return json.loads(data)
 
 
 def load_yaml(data):
-    # type: (Union[Text, file]) -> dict
+    # type: (Union[Text, file]) -> Union[dict, list]
     return yaml.load(data)
 
 

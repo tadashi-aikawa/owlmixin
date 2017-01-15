@@ -411,7 +411,7 @@ class TestFromJson:
         }
         """)
 
-        assert r.to_dict(ignore_none=True) == {
+        assert r.to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
@@ -425,6 +425,30 @@ class TestFromJson:
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
+
+
+class TestFromJsonToList:
+    def test_normal(self):
+        r = Spot.from_json_to_list("""[
+            {
+                "names": ["spot1"],
+                "address": {"name": "address1"}
+            },
+            {
+                "names": ["spot21", "spot22"]
+            }
+        ]
+        """)
+
+        assert r.to_dicts() == [
+            {
+                "names": ["spot1"],
+                "address": {"name": "address1"}
+            },
+            {
+                "names": ["spot21", "spot22"]
+            }
+        ]
 
 
 class TestFromYaml:
@@ -455,6 +479,29 @@ class TestFromYaml:
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
+
+
+class TestFromYamlToList:
+    def test_normal(self):
+        r = Spot.from_yaml_to_list("""
+            - address:
+                name: address1
+              names:
+                - spot1
+            - names:
+                - spot21
+                - spot22
+        """)
+
+        assert r.to_dicts() == [
+            {
+                "names": ["spot1"],
+                "address": {"name": "address1"}
+            },
+            {
+                "names": ["spot21", "spot22"]
+            }
+        ]
 
 
 class TestToJson:
