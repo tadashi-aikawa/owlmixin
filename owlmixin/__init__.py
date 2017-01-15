@@ -3,7 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import functools
-from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable, Set
+from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable
 
 from . import dictutil
 
@@ -13,7 +13,7 @@ try:
 except ImportError:
     pass
 
-__version__ = '1.0.0rc1'
+__version__ = '1.0.0rc2'
 
 T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
