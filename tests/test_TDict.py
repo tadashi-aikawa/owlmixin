@@ -67,6 +67,18 @@ class TestFilter:
         ]
 
 
+class TestReject:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address).to_dicts() == [
+            {"names": ["spot21", "spot22"]}
+        ]
+
+
 class TestSize:
     def test_normal(self):
         d = {

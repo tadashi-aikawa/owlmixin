@@ -125,6 +125,18 @@ class TestFilter:
         ]
 
 
+class TestReject:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).reject(lambda s: s.address).to_dicts() == [
+            {"names": ["spot21", "spot22"]}
+        ]
+
+
 class TestGroupBy:
     def test_normal(self):
         d = [

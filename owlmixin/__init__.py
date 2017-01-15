@@ -165,7 +165,11 @@ class TList(list, Generic[T], OwlMixin):
 
     def filter(self, func):
         # type: (Callable[[T], bool]) -> TList[T]
-        return TList(filter(func, self))
+        return TList([x for x in self if func(x)])
+
+    def reject(self, func):
+        # type: (Callable[[T], bool]) -> TList[T]
+        return TList([x for x in self if not func(x)])
 
     def group_by(self, to_key):
         # type: (Callable[[T], Text]) -> TDict[TList[T]]
@@ -207,6 +211,10 @@ class TDict(dict, Generic[T], OwlMixin):
     def filter(self, func):
         # type: (Callable[[K, T], bool]) -> TList[T]
         return TList([v for k, v in self.items() if func(k, v)])
+
+    def reject(self, func):
+        # type: (Callable[[K, T], bool]) -> TList[T]
+        return TList([v for k, v in self.items() if not func(k, v)])
 
     def size(self):
         # type: () -> int
