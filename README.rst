@@ -138,15 +138,23 @@ API
     - Optional[dict] => Optional[TDict[instance]]
 - ``from_json`` [1]_ [2]_
     - json string => instance
+- ``from_jsonf`` [1]_ [2]_ [3]_
+    - json file path => instance
 - ``from_json_to_list`` [1]_ [2]_
     - json string => TList[instance]
+- ``from_jsonf_to_list`` [1]_ [2]_ [3]_
+    - json file path => TList[instance]
 - ``from_json_url`` [1]_ [2]_
     - url (which returns json) => instance
 - ``from_yaml`` [1]_ [2]_
-    - yaml string or file => instance
+    - yaml string => instance
+- ``from_yamlf`` [1]_ [2]_ [3]_
+    - yaml file path => instance
 - ``from_yaml_to_list`` [1]_ [2]_
-    - yaml string or file => TList[instance]
-- ``from_csv`` [1]_ [2]_ [3]_
+    - yaml string => TList[instance]
+- ``from_yamlf_to_list`` [1]_ [2]_ [3]_
+    - yaml file path => TList[instance]
+- ``from_csvf`` [1]_ [2]_ [3]_
     - csv file => TList[instance]
 
 

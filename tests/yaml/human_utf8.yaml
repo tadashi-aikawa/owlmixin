@@ -1,0 +1,14 @@
+id: 1
+name: "メンバ1"
+favorite_spots:
+  - address:
+      name: address1
+    names:
+      - spot1
+  - names:
+      - spot21
+      - spot22
+favorite_animal:
+  id: 1
+  name: "a dog"
+  is_big: 0

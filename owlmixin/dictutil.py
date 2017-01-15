@@ -7,6 +7,7 @@ import io
 import sys
 import re
 import requests
+import codecs
 import json
 import yaml
 from yaml import Loader, SafeLoader
@@ -45,6 +46,18 @@ register_dialect("lf", LfDialect)
 PYTHON2 = sys.version_info < (3, 0)
 
 
+class MyDumper(yaml.SafeDumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(MyDumper, self).increase_indent(flow, False)
+
+
+def construct_yaml_str(self, node):
+    return self.construct_scalar(node)
+
+Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
+SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
+
+
 def replace_keys(d, keymap, force_snake_case):
     # type: (dict, Dict[Text, Text], bool) -> Dict[Text, Text]
     return {
@@ -59,32 +72,31 @@ def to_snake(value):
     return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
 
 
-class MyDumper(yaml.SafeDumper):
-    def increase_indent(self, flow=False, indentless=False):
-        return super(MyDumper, self).increase_indent(flow, False)
-
-
-def construct_yaml_str(self, node):
-    return self.construct_scalar(node)
-
-
-Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
-SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
-
-
 def load_json(data):
     # type (Text) -> Union[dict, list]
     return json.loads(data)
 
 
+def load_jsonf(fpath, encoding):
+    # type (Text, Text) -> Union[dict, list]
+    with codecs.open(fpath, encoding=encoding) as f:
+        return json.load(f)
+
+
 def load_yaml(data):
-    # type: (Union[Text, file]) -> Union[dict, list]
+    # type: (Text) -> Union[dict, list]
     return yaml.load(data)
 
 
-def load_csv(csvfile, fieldnames, encoding):
+def load_yamlf(fpath, encoding):
+    # type: (Text, Text) -> Union[dict, list]
+    with codecs.open(fpath, encoding=encoding) as f:
+        return yaml.load(f)
+
+
+def load_csvf(fpath, fieldnames, encoding):
     # type: (Text, Optional[List[Text]], Text) -> List[dict]
-    with open(csvfile, 'rb') as f:
+    with open(fpath, 'rb') as f:
         snippet = f.read(8192)
         f.seek(0)
 

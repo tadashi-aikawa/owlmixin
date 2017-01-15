@@ -1,0 +1,14 @@
+{
+    "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+    "favorite_spots": [
+        {
+            "names": ["spot1"],
+            "address": {"name": "address1"}
+        },
+        {
+            "names": ["spot21", "spot22"]
+        }
+    ],
+    "id": 1,
+    "name": "ƒƒ“ƒo1"
+}

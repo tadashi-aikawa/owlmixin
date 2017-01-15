@@ -57,9 +57,19 @@ class OwlMixin:
         return cls.from_dict(dictutil.load_json(data), force_snake_case)
 
     @classmethod
+    def from_jsonf(cls, data, encoding='utf8', force_snake_case=True):
+        # type: (Text, Text, bool) -> T
+        return cls.from_dict(dictutil.load_jsonf(data, encoding), force_snake_case)
+
+    @classmethod
     def from_json_to_list(cls, data, force_snake_case=True):
         # type: (Text, bool) -> List[T]
         return cls.from_dicts(dictutil.load_json(data), force_snake_case)
+
+    @classmethod
+    def from_jsonf_to_list(cls, data, encoding='utf8', force_snake_case=True):
+        # type: (Text, Text, bool) -> List[T]
+        return cls.from_dicts(dictutil.load_jsonf(data, encoding), force_snake_case)
 
     @classmethod
     def from_yaml(cls, data, force_snake_case=True):
@@ -67,14 +77,24 @@ class OwlMixin:
         return cls.from_dict(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
+    def from_yamlf(cls, data, encoding='utf8', force_snake_case=True):
+        # type: (Union[Text, file], Text, bool) -> T
+        return cls.from_dict(dictutil.load_yamlf(data, encoding), force_snake_case)
+
+    @classmethod
     def from_yaml_to_list(cls, data, force_snake_case=True):
         # type: (Union[Text, file], bool) -> List[T]
         return cls.from_dicts(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
-    def from_csv(cls, csvfile, fieldnames=None, encoding='utf8', force_snake_case=True):
+    def from_yamlf_to_list(cls, data, encoding='utf8', force_snake_case=True):
+        # type: (Union[Text, file], Text, bool) -> List[T]
+        return cls.from_dicts(dictutil.load_yamlf(data, encoding), force_snake_case)
+
+    @classmethod
+    def from_csvf(cls, csvfile, fieldnames=None, encoding='utf8', force_snake_case=True):
         # type: (Text, Optional[Sequence[Text]], Text, bool) -> TList[T]
-        return cls.from_dicts(dictutil.load_csv(csvfile, fieldnames, encoding), force_snake_case=force_snake_case)
+        return cls.from_dicts(dictutil.load_csvf(csvfile, fieldnames, encoding), force_snake_case=force_snake_case)
 
     @classmethod
     def from_json_url(cls, url, force_snake_case=True):

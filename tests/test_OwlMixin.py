@@ -355,9 +355,9 @@ class TestFromOptionalDictsByKey:
         assert Human.from_optional_dicts_by_key(None) is None
 
 
-class TestFromCsv:
+class TestFromCsvf:
     def test_normal_without_header(self):
-        rs = Animal.from_csv("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
+        rs = Animal.from_csvf("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
@@ -366,7 +366,7 @@ class TestFromCsv:
         ]
 
     def test_normal_with_header(self):
-        rs = Animal.from_csv("tests/csv/animals_with_header.csv")
+        rs = Animal.from_csvf("tests/csv/animals_with_header.csv")
 
         assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
@@ -375,7 +375,7 @@ class TestFromCsv:
         ]
 
     def test_normal_separated_by_tab(self):
-        rs = Animal.from_csv("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
+        rs = Animal.from_csvf("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
 
         assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
@@ -384,7 +384,7 @@ class TestFromCsv:
         ]
 
     def test_normal_shiftjis(self):
-        rs = Animal.from_csv("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
+        rs = Animal.from_csvf("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
 
         assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
@@ -427,6 +427,40 @@ class TestFromJson:
         }
 
 
+class TestFromJsonf:
+    def test_utf8(self):
+        assert Human.from_jsonf('tests/json/human_utf8.json').to_dict() == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+        }
+
+    def test_shiftjis(self):
+        assert Human.from_jsonf('tests/json/human_shiftjis.json', encoding='sjis').to_dict() == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+        }
+
+
 class TestFromJsonToList:
     def test_normal(self):
         r = Spot.from_json_to_list("""[
@@ -451,6 +485,30 @@ class TestFromJsonToList:
         ]
 
 
+class TestFromJsonfToList:
+    def test_utf8(self):
+        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dicts() == [
+            {
+                "names": ["spot1"],
+                "address": {"name": "address1"}
+            },
+            {
+                "names": ["スポット21", "スポット22"]
+            }
+        ]
+
+    def test_shiftjis(self):
+        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dicts() == [
+            {
+                "names": ["spot1"],
+                "address": {"name": "address1"}
+            },
+            {
+                "names": ["スポット21", "スポット22"]
+            }
+        ]
+
+
 class TestFromYaml:
     def test_normal(self):
         r = Human.from_yaml("""
@@ -470,7 +528,7 @@ class TestFromYaml:
               is_big: 0
         """)
 
-        assert r.to_dict(ignore_none=True) == {
+        assert r.to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
@@ -480,6 +538,29 @@ class TestFromYaml:
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
+
+class TestFromYamlf:
+    def test_utf8(self):
+        assert Human.from_yamlf('tests/yaml/human_utf8.yaml').to_dict() == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+        }
+
+    def test_shiftjis(self):
+        assert Human.from_yamlf('tests/yaml/human_shiftjis.yaml', encoding='sjis').to_dict() == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+        }
 
 class TestFromYamlToList:
     def test_normal(self):
@@ -501,6 +582,20 @@ class TestFromYamlToList:
             {
                 "names": ["spot21", "spot22"]
             }
+        ]
+
+
+class TestFromYamlfToList:
+    def test_utf8(self):
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["スポット21", "スポット22"]}
+        ]
+
+    def test_shiftjis(self):
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["スポット21", "スポット22"]}
         ]
 
 
