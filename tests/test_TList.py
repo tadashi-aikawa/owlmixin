@@ -2,9 +2,10 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+import pytest
 from typing import List, Optional
 
-from owlmixin import OwlMixin
+from owlmixin import OwlMixin, TList
 
 # For python 3.5.0-3.5.1
 try:
@@ -208,6 +209,15 @@ class TestSize:
         ]
 
         assert Spot.from_dicts(d).size() == 2
+
+
+class TestJoin:
+    def test_normal(self):
+        assert TList(["a", "bc", "def"]).join("---") == "a---bc---def"
+
+    def test_including_not_str(self):
+        with pytest.raises(TypeError):
+            TList(["1", 2, "3"]).join("---")
 
 
 class TestFind:

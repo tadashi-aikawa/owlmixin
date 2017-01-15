@@ -192,6 +192,10 @@ class TList(list, Generic[T], OwlMixin):
         # type: () -> int
         return len(self)
 
+    def join(self, joint):
+        # type: (Text) -> Text
+        return joint.join(self)
+
     def find(self, func):
         # type: (Callable[[T], bool]) -> T
         for x in self:
