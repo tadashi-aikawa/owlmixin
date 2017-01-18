@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import List, Optional
 
-from owlmixin import OwlMixin
+from owlmixin import OwlMixin, TDict
 
 # For python 3.5.0-3.5.1
 try:
@@ -77,6 +77,21 @@ class TestReject:
         assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
+
+
+class TestSum:
+    def test_normal(self):
+        assert TDict({"a": 1, "b": 2, "c": 3}).sum() == 6
+
+
+class TestSumBy:
+    def test_normal(self):
+        d = {
+            "aaa": {"names": ["spot1"], "address": {"name": "address1"}},
+            "bb": {"names": ["spot21", "spot22"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).sum_by(lambda k, v: len(k)*len(v.names)) == 7
 
 
 class TestSize:

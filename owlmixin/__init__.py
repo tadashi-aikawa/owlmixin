@@ -196,6 +196,14 @@ class TList(list, Generic[T], OwlMixin):
         # type: (Callable[[U, T], U], U) -> U
         return functools.reduce(func, self, init_value)
 
+    def sum(self):
+        # type: () -> Union[int, float]
+        return sum(self)
+
+    def sum_by(self, func):
+        # type: (Callable[[T], Union[int, float]]) -> Union[int, float]
+        return self.map(func).sum()
+
     def size(self):
         # type: () -> int
         return len(self)
@@ -227,6 +235,14 @@ class TDict(dict, Generic[T], OwlMixin):
     def reject(self, func):
         # type: (Callable[[K, T], bool]) -> TList[T]
         return TList([v for k, v in self.items() if not func(k, v)])
+
+    def sum(self):
+        # type: () -> Union[int, float]
+        return sum(self.values())
+
+    def sum_by(self, func):
+        # type: (Callable[[K, T], Union[int, float]]) -> Union[int, float]
+        return self.map(func).sum()
 
     def size(self):
         # type: () -> int

@@ -250,6 +250,21 @@ class TestReduce:
         assert Spot.from_dicts(d).reduce(lambda r, x: r+len(x.names), 100) == 103
 
 
+class TestSum:
+    def test_normal(self):
+        assert TList([1, 2, 3]).sum() == 6
+
+
+class TestSumBy:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).sum_by(lambda x: len(x.names)) == 3
+
+
 class TestSize:
     def test_normal(self):
         d = [
