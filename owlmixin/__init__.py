@@ -155,6 +155,10 @@ class OwlMixin:
 
 
 class TList(list, Generic[T], OwlMixin):
+    def __add__(self, values):
+        # type: (TList[T]) -> TList[T]
+        return TList(values + list(self))
+
     def to_csv(self, fieldnames, with_header=False, crlf=False):
         # type: (Sequence[Text], bool, bool) -> Text
         return dictutil.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
@@ -183,6 +187,10 @@ class TList(list, Generic[T], OwlMixin):
     def order_by(self, func, reverse=False):
         # type: (Callable[[T], any], bool) -> TList[T]
         return TList(sorted(self, key=func, reverse=reverse))
+
+    def concat(self, values):
+        # type: (TList[T]) -> TList[T]
+        return self + values
 
     def reduce(self, func, init_value):
         # type: (Callable[[U, T], U], U) -> U

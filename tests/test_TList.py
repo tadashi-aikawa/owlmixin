@@ -33,6 +33,37 @@ class Human(OwlMixin):
         self.address = address  # type: Optional[Address]
 
 
+class Test__Add__:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        e = [
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        sd = Spot.from_dicts(d)
+        se = Spot.from_dicts(e)
+        actual = sd + se
+
+        assert sd.to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+        assert se.to_dicts() ==  [
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert isinstance(actual, TList)
+        assert actual.to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+
 class TestToCsv:
     def test_normal(self):
         d = [
@@ -188,6 +219,24 @@ class TestOrderBy:
             {"names": ["spot21", "spot22", "spot23"]},
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
             {"names": ["spot1"], "address": {"name": "address1"}}
+        ]
+
+
+class TestConcat:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        e = [
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).concat(Spot.from_dicts(e)).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
         ]
 
 
