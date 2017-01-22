@@ -14,13 +14,7 @@ from yaml import Loader, SafeLoader
 
 import unicodecsv as csv
 from unicodecsv import register_dialect, Dialect, QUOTE_MINIMAL
-from typing import List, Union, Optional, Sequence, Dict
-
-# For python 3.5.0-3.5.1
-try:
-    from typing import Text
-except ImportError:
-    pass
+from typing import List, Optional, Dict
 
 
 class CrLfDialect(Dialect):
@@ -59,7 +53,12 @@ SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
 def replace_keys(d, keymap, force_snake_case):
-    # type: (dict, Dict[Text, Text], bool) -> Dict[Text, Text]
+    """
+    :param dict d:
+    :param Dict[unicode, unicode] keymap:
+    :param bool force_snake_case:
+    :rtype: Dict[unicode, unicode]
+    """
     return {
         to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k):
             v for k, v in d.items()
@@ -67,35 +66,57 @@ def replace_keys(d, keymap, force_snake_case):
 
 
 def to_snake(value):
-    # type: (Text) -> Text
-    # For key of dictionary
+    """For key of dictionary
+
+    :param unicode value:
+    :rtype: unicode
+    """
     return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
 
 
-def load_json(data):
-    # type (Text) -> Union[dict, list]
-    return json.loads(data)
+def load_json(json_str):
+    """
+    :param unicode json_str:
+    :rtype: dict | list
+    """
+    return json.loads(json_str)
 
 
 def load_jsonf(fpath, encoding):
-    # type (Text, Text) -> Union[dict, list]
+    """
+    :param unicode fpath:
+    :param unicode encoding:
+    :rtype: dict | list
+    """
     with codecs.open(fpath, encoding=encoding) as f:
         return json.load(f)
 
 
-def load_yaml(data):
-    # type: (Text) -> Union[dict, list]
-    return yaml.load(data)
+def load_yaml(yaml_str):
+    """
+    :param unicode yaml_str:
+    :rtype: dict | list
+    """
+    return yaml.load(yaml_str)
 
 
 def load_yamlf(fpath, encoding):
-    # type: (Text, Text) -> Union[dict, list]
+    """
+    :param unicode fpath:
+    :param unicode encoding:
+    :rtype: dict | list
+    """
     with codecs.open(fpath, encoding=encoding) as f:
         return yaml.load(f)
 
 
 def load_csvf(fpath, fieldnames, encoding):
-    # type: (Text, Optional[List[Text]], Text) -> List[dict]
+    """
+    :param unicode fpath:
+    :param Optional[list[unicode]] fieldnames:
+    :param unicode encoding:
+    :rtype: List[dict]
+    """
     with open(fpath, 'rb') as f:
         snippet = f.read(8192)
         f.seek(0)
@@ -106,12 +127,21 @@ def load_csvf(fpath, fieldnames, encoding):
 
 
 def load_json_url(url):
-    # type: (Text) -> Union[dict, list]
+    """
+    :param unicode url:
+    :rtype: dict | list
+    """
     return requests.get(url).json()
 
 
 def dump_csv(data, fieldnames, with_header=False, crlf=False):
-    # type: (List[dict], Sequence[Text], bool, bool) -> Text
+    """
+    :param List[dict] data:
+    :param List[unicode] fieldnames:
+    :param bool with_header:
+    :param bool crlf:
+    :rtype: unicode
+    """
     def force_str(v):
         # XXX: Double quotation behaves strangely... so replace (why?)
         return dump_json(v).replace('"', "'") if isinstance(v, (dict, list)) else v
@@ -128,7 +158,11 @@ def dump_csv(data, fieldnames, with_header=False, crlf=False):
 
 
 def dump_json(data, indent=None):
-    # type: (Union[dict, list], int) -> Text
+    """
+    :param list | dict data:
+    :param Optional[int] indent:
+    :rtype: unicode
+    """
     return json.dumps(data,
                       indent=indent,
                       ensure_ascii=False,
@@ -137,7 +171,10 @@ def dump_json(data, indent=None):
 
 
 def dump_yaml(data):
-    # type: (Union[dict, list]) -> Text
+    """
+    :param list | dict data:
+    :rtype: unicode
+    """
     return yaml.dump(data,
                      indent=2,
                      encoding=None,

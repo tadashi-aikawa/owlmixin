@@ -3,15 +3,10 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import functools
-from typing import TypeVar, List, Dict, Union, Optional, Sequence, Generic, Callable
+from typing import TypeVar, List, Dict, Union, Optional, Generic, Callable
 
 from . import dictutil
 
-# For python 3.5.0-3.5.1
-try:
-    from typing import Text
-except ImportError:
-    pass
 
 __version__ = '1.0.0rc6'
 
@@ -23,117 +18,246 @@ K = TypeVar('K')
 class OwlMixin:
     @classmethod
     def from_dict(cls, d, force_snake_case=True):
-        # type: (dict, bool) -> T
+        """From dict to instance
+
+        :param dict d: Dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
         return cls(**dictutil.replace_keys(d, {"self": "_self"}, force_snake_case))
 
     @classmethod
     def from_optional_dict(cls, d, force_snake_case=True):
-        # type: (Optional[dict], bool) -> Optional[T]
+        """From dict to instance. If d is None, return None.
+
+        :param Optional[dict] d: Dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: Optional[T]
+        """
         return d and cls.from_dict(d, force_snake_case)
 
     @classmethod
     def from_dicts(cls, ds, force_snake_case=True):
-        # type: (List[dict], bool) -> TList[T]
+        """From list of dict to list of instance
+
+        :param List[dict] ds: List of dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: TList[T]
+        """
         return TList([cls.from_dict(d, force_snake_case) for d in ds])
 
     @classmethod
     def from_optional_dicts(cls, ds, force_snake_case=True):
-        # type: (Optional[List[dict]], bool) -> Optional[TList[T]]
+        """From list of dict to list of instance. If ds is None, return None.
+
+        :param Optional[List[dict]] ds: List of dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: Optional[TList[T]]
+        """
         return ds and cls.from_dicts(ds, force_snake_case)
 
     @classmethod
     def from_dicts_by_key(cls, ds, force_snake_case=True):
-        # type: (Dict[Text, dict], bool) -> TDict[T]
+        """From dict of dict to dict of instance
+
+        :param Dict[unicode, dict] ds: Dict of dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Dict of instance
+        :rtype: TDict[T]
+        """
         return TDict({k: cls.from_dict(v, force_snake_case) for k, v in ds.items()})
 
     @classmethod
     def from_optional_dicts_by_key(cls, ds, force_snake_case=True):
-        # type: (Optional[dict], bool) -> Optional[TDict[T]]
+        """From dict of dict to dict of instance. If ds is None, return None.
+
+        :param Optional[Dict[unicode, dict]] ds: Dict of dict
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Dict of instance
+        :rtype: Optional[TDict[T]]
+        """
         return ds and cls.from_dicts_by_key(ds, force_snake_case)
 
     @classmethod
     def from_json(cls, data, force_snake_case=True):
-        # type: (Text, bool) -> T
+        """From json string to instance
+
+        :param unicode data: Json string
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
         return cls.from_dict(dictutil.load_json(data), force_snake_case)
 
     @classmethod
-    def from_jsonf(cls, data, encoding='utf8', force_snake_case=True):
-        # type: (Text, Text, bool) -> T
-        return cls.from_dict(dictutil.load_jsonf(data, encoding), force_snake_case)
+    def from_jsonf(cls, fpath, encoding='utf8', force_snake_case=True):
+        """From json file path to instance
+
+        :param unicode fpath: Json file path
+        :param unicode encoding: Json file encoding
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
+        return cls.from_dict(dictutil.load_jsonf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_json_to_list(cls, data, force_snake_case=True):
-        # type: (Text, bool) -> List[T]
+        """From json string to list of instance
+
+        :param unicode data: Json string
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: TList[T]
+        """
         return cls.from_dicts(dictutil.load_json(data), force_snake_case)
 
     @classmethod
     def from_jsonf_to_list(cls, data, encoding='utf8', force_snake_case=True):
-        # type: (Text, Text, bool) -> List[T]
+        """From json file path to list of instance
+
+        :param unicode fpath: Json file path
+        :param unicode encoding: Json file encoding
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: TList[T]
+        """
         return cls.from_dicts(dictutil.load_jsonf(data, encoding), force_snake_case)
 
     @classmethod
     def from_yaml(cls, data, force_snake_case=True):
-        # type: (Union[Text, file], bool) -> T
+        """From yaml string to instance
+
+        :param unicode data: Yaml string
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
         return cls.from_dict(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
-    def from_yamlf(cls, data, encoding='utf8', force_snake_case=True):
-        # type: (Union[Text, file], Text, bool) -> T
-        return cls.from_dict(dictutil.load_yamlf(data, encoding), force_snake_case)
+    def from_yamlf(cls, fpath, encoding='utf8', force_snake_case=True):
+        """From yaml file path to instance
+
+        :param unicode fpath: Yaml file path
+        :param unicode encoding: Yaml file encoding
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
+        return cls.from_dict(dictutil.load_yamlf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_yaml_to_list(cls, data, force_snake_case=True):
-        # type: (Union[Text, file], bool) -> List[T]
+        """From yaml string to list of instance
+
+        :param unicode data: Yaml string
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: TList[T]
+        """
         return cls.from_dicts(dictutil.load_yaml(data), force_snake_case)
 
     @classmethod
-    def from_yamlf_to_list(cls, data, encoding='utf8', force_snake_case=True):
-        # type: (Union[Text, file], Text, bool) -> List[T]
-        return cls.from_dicts(dictutil.load_yamlf(data, encoding), force_snake_case)
+    def from_yamlf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
+        """From yaml file path to list of instance
+
+        :param unicode fpath: Yaml file path
+        :param unicode encoding: Yaml file encoding
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of instance
+        :rtype: TList[T]
+        """
+        return cls.from_dicts(dictutil.load_yamlf(fpath, encoding), force_snake_case)
 
     @classmethod
-    def from_csvf(cls, csvfile, fieldnames=None, encoding='utf8', force_snake_case=True):
-        # type: (Text, Optional[Sequence[Text]], Text, bool) -> TList[T]
-        return cls.from_dicts(dictutil.load_csvf(csvfile, fieldnames, encoding), force_snake_case=force_snake_case)
+    def from_csvf(cls, fpath, fieldnames=None, encoding='utf8', force_snake_case=True):
+        """From csv file path to list of instance
+
+        :param unicode fpath: Csv file path
+        :param Optional[Sequence[unicode]] fieldnames: Specify csv header names if not included in the file
+        :param unicode encoding: Csv file encoding
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: List of Instance
+        :rtype: TList[T]
+        """
+        return cls.from_dicts(dictutil.load_csvf(fpath, fieldnames, encoding), force_snake_case=force_snake_case)
 
     @classmethod
     def from_json_url(cls, url, force_snake_case=True):
-        # type: (Text, bool) -> T
+        """From url which returns json to instance
+
+        :param unicode url: Url which returns json
+        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :return: Instance
+        :rtype: T
+        """
         return cls.from_dict(dictutil.load_json_url(url), force_snake_case)
 
     def to_dict(self, ignore_none=True):
-        # type: (bool) -> dict
+        """From instance to dict
+
+        :param bool ignore_none: Properties which is None are excluded if True
+        :return: Dict
+        :rtype: dict
+        """
         if isinstance(self, TList):
             raise RuntimeError("TList must not call this method. Please use `to_dicts()` alternatively.")
 
         return self._traverse_dict(self._to_dict(), ignore_none)
 
     def to_dicts(self, ignore_none=True):
-        # type: (bool) -> List[dict]
+        """From instance to list of dict
+
+        :param bool ignore_none: Properties which is None are excluded if True
+        :return: List of dict
+        :rtype: List[dict]
+        """
         if not isinstance(self, TList):
             raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
 
         return self._traverse(None, self, ignore_none)
 
     def to_json(self, indent=None, ignore_none=True):
-        # type: (int, bool) -> Text
+        """From instance to json string
+
+        :param Optional[int] indent: Number of indentation
+        :param bool ignore_none: Properties which is None are excluded if True
+        :return: Json string
+        :rtype: unicode
+        """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return dictutil.dump_json(func(ignore_none), indent)
 
     def to_pretty_json(self, ignore_none=True):
-        # type: (bool) -> Text
+        """From instance to pretty json string
+
+        :param bool ignore_none: Properties which is None are excluded if True
+        :return: Json string
+        :rtype: unicode
+        """
         return self.to_json(4, ignore_none)
 
     def to_yaml(self, ignore_none=True):
-        # type: (bool) -> Text
+        """From instance to yaml string
+
+        :param bool ignore_none: Properties which is None are excluded if True
+        :return: Yaml string
+        :rtype: unicode
+        """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return dictutil.dump_yaml(func(ignore_none))
 
     def _to_dict(self):
-        # type: () -> dict
-        """
-        please override this method and return dict you want,
+        """please override this method and return dict you want,
         if you want to place special handling between conversion from instance variable to dict.
+
+        :return: Dict
+        :rtype: dict
         """
         return self.__dict__
 
@@ -160,23 +284,43 @@ class TList(list, Generic[T], OwlMixin):
         return TList(values + list(self))
 
     def to_csv(self, fieldnames, with_header=False, crlf=False):
+        """From sequence of text to csv string
+
+        :param Sequence[unicode] fieldnames: Order of columns by property name
+        :param bool with_header: Add headers at the first line if True
+        :param bool crlf: Add CRLF line break at the end of line if True, else add LF
+        :return: Csv string
+        :rtype: unicode
+        """
         # type: (Sequence[Text], bool, bool) -> Text
         return dictutil.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
 
     def map(self, func):
-        # type: (Callable[[T], U]) -> TList[U]
+        """
+        :param (T) -> U func:
+        :rtype: TList[U]
+        """
         return TList(map(func, self))
 
     def filter(self, func):
-        # type: (Callable[[T], bool]) -> TList[T]
+        """
+        :param (T) -> bool func:
+        :rtype: TList[T]
+        """
         return TList([x for x in self if func(x)])
 
     def reject(self, func):
-        # type: (Callable[[T], bool]) -> TList[T]
+        """
+        :param (T) -> bool func:
+        :rtype: TList[T]
+        """
         return TList([x for x in self if not func(x)])
 
     def group_by(self, to_key):
-        # type: (Callable[[T], Text]) -> TDict[TList[T]]
+        """
+        :param (T) -> unicode to_key:
+        :rtype: TDict[TList[T]]
+        """
         ret = TDict()
         for v in self:
             k = to_key(v)
@@ -185,35 +329,60 @@ class TList(list, Generic[T], OwlMixin):
         return ret
 
     def order_by(self, func, reverse=False):
-        # type: (Callable[[T], any], bool) -> TList[T]
+        """
+        :param (T) -> any func:
+        :param bool reverse: Sort by descend order if True, else by ascend
+        :rtype: TDict[TList[T]]
+        """
         return TList(sorted(self, key=func, reverse=reverse))
 
     def concat(self, values):
-        # type: (TList[T]) -> TList[T]
+        """
+        :param TList[T] values:
+        :rtype: TList[T]
+        """
         return self + values
 
     def reduce(self, func, init_value):
-        # type: (Callable[[U, T], U], U) -> U
+        """
+        :param (U, T) -> U func:
+        :param U init_value:
+        :rtype: U
+        """
         return functools.reduce(func, self, init_value)
 
     def sum(self):
-        # type: () -> Union[int, float]
+        """
+        :rtype: int | float
+        """
         return sum(self)
 
     def sum_by(self, func):
+        """
+        :param (T) -> int | float func:
+        :rtype: int | float
+        """
         # type: (Callable[[T], Union[int, float]]) -> Union[int, float]
         return self.map(func).sum()
 
     def size(self):
-        # type: () -> int
+        """
+        :rtype: int
+        """
         return len(self)
 
     def join(self, joint):
-        # type: (Text) -> Text
+        """
+        :param unicode joint:
+        :rtype: unicode
+        """
         return joint.join(self)
 
     def find(self, func):
-        # type: (Callable[[T], bool]) -> T
+        """
+        :param (T) -> bool func:
+        :rtype: T
+        """
         for x in self:
             if func(x):
                 return x
@@ -221,43 +390,66 @@ class TList(list, Generic[T], OwlMixin):
 
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
-        # type: (Callable[[K, T], U]) -> TList[U]
+        """
+        :param (K, T) -> U func:
+        :rtype: TList[U]
+        """
         return TList([func(k, v) for k, v in self.items()])
 
     def map_values(self, func):
-        # type: (Callable[[T], U]) -> TDict[U]
+        """
+        :param (T) -> U func:
+        :rtype: TDict[U]
+        """
         return TDict({k: func(v) for k, v in self.items()})
 
     def filter(self, func):
-        # type: (Callable[[K, T], bool]) -> TList[T]
+        """
+        :param (K, T) -> bool func:
+        :rtype: TList[T]
+        """
         return TList([v for k, v in self.items() if func(k, v)])
 
     def reject(self, func):
-        # type: (Callable[[K, T], bool]) -> TList[T]
+        """
+        :param (K, T) -> bool func:
+        :rtype: TList[T]
+        """
         return TList([v for k, v in self.items() if not func(k, v)])
 
     def sum(self):
-        # type: () -> Union[int, float]
+        """
+        :rtype: int | float
+        """
         return sum(self.values())
 
     def sum_by(self, func):
-        # type: (Callable[[K, T], Union[int, float]]) -> Union[int, float]
+        """
+        :param (K, T) -> int | float func:
+        :rtype: int | float
+        """
         return self.map(func).sum()
 
     def size(self):
-        # type: () -> int
+        """
+        :rtype: int
+        """
         return len(self)
 
     def find(self, func):
-        # type: (Callable[[K, T], bool]) -> T
+        """
+        :param (K, T) -> bool func:
+        :rtype: T
+        """
         for k, v in self.items():
             if func(k, v):
                 return v
 
     def to_values(self):
-        # type: () -> TList[T]
+        """
+        :rtype: TList[T]
+        """
         return TList(self.values())
 
     def _to_dict(self):
-        # type: () -> dict
         return dict(self)
