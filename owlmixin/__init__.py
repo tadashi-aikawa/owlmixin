@@ -117,7 +117,7 @@ class OwlMixin:
         return cls.from_dicts(dictutil.load_json(data), force_snake_case)
 
     @classmethod
-    def from_jsonf_to_list(cls, data, encoding='utf8', force_snake_case=True):
+    def from_jsonf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
         """From json file path to list of instance
 
         :param unicode fpath: Json file path
@@ -126,7 +126,7 @@ class OwlMixin:
         :return: List of instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_jsonf(data, encoding), force_snake_case)
+        return cls.from_dicts(dictutil.load_jsonf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_yaml(cls, data, force_snake_case=True):
@@ -220,7 +220,7 @@ class OwlMixin:
         if not isinstance(self, TList):
             raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
 
-        return self._traverse(None, self, ignore_none)
+        return self._traverse(self, ignore_none)
 
     def to_json(self, indent=None, ignore_none=True):
         """From instance to json string
@@ -262,12 +262,14 @@ class OwlMixin:
         return self.__dict__
 
     def _traverse_dict(self, instance_dict, ignore_none):
-        return {k: self._traverse(k, v, ignore_none) for k, v in instance_dict.items() if not (ignore_none and v is None)}
+        return {k: self._traverse(v, ignore_none) for
+                k, v in instance_dict.items()
+                if not (ignore_none and v is None)}
 
     def _traverse_list(self, instance_list, ignore_none):
-        return [self._traverse(None, i, ignore_none) for i in instance_list]
+        return [self._traverse(i, ignore_none) for i in instance_list]
 
-    def _traverse(self, key, value, ignore_none=True):
+    def _traverse(self, value, ignore_none=True):
         if isinstance(value, OwlMixin) and not isinstance(value, (TList, TDict)):
             return value.to_dict(ignore_none)
         elif isinstance(value, dict):
