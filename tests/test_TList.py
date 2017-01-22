@@ -304,3 +304,43 @@ class TestFind:
         ]
 
         assert Spot.from_dicts(d).find(lambda x: len(x.names) == 3) is None
+
+
+class TestAll:
+    def test_true(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).all(lambda x: len(x.names) > 0) is True
+
+    def test_false(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).all(lambda x: len(x.names) > 1) is False
+
+
+class TestAny:
+    def test_true(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).any(lambda x: len(x.names) > 1) is True
+
+    def test_false(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).any(lambda x: len(x.names) > 2) is False

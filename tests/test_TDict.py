@@ -143,3 +143,43 @@ class TestToValues:
            {"names": ["spot21", "spot22"]},
            {"names": ["spot31", "spot32"]}
         ]
+
+
+class TestAll:
+    def test_true(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "bb": {"names": ["spot21", "spot22"]},
+            "cc": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).all(lambda k, v: len(k) == len(v.names)) is True
+
+    def test_false(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).all(lambda k, v: len(k) == len(v.names)) is False
+
+
+class TestAny:
+    def test_true(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).any(lambda k, v: len(k) == len(v.names)) is True
+
+    def test_false(self):
+        d = {
+            "aaa": {"names": ["spot1"]},
+            "bbb": {"names": ["spot21", "spot22"]},
+            "ccc": {"names": ["spot31", "spot32"]}
+        }
+
+        assert Spot.from_dicts_by_key(d).any(lambda k, v: len(k) == len(v.names)) is False

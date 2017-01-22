@@ -389,6 +389,20 @@ class TList(list, Generic[T], OwlMixin):
             if func(x):
                 return x
 
+    def all(self, func):
+        """
+        :param (T) -> bool func:
+        :rtype: T
+        """
+        return all([func(x) for x in self])
+
+    def any(self, func):
+        """
+        :param (T) -> bool func:
+        :rtype: T
+        """
+        return any([func(x) for x in self])
+
 
 class TDict(dict, Generic[T], OwlMixin):
     def map(self, func):
@@ -455,3 +469,17 @@ class TDict(dict, Generic[T], OwlMixin):
 
     def _to_dict(self):
         return dict(self)
+
+    def all(self, func):
+        """
+        :param (K, T) -> bool func:
+        :rtype: T
+        """
+        return all([func(k, v) for k, v in self.items()])
+
+    def any(self, func):
+        """
+        :param (K, T) -> bool func:
+        :rtype: T
+        """
+        return any([func(k, v) for k, v in self.items()])
