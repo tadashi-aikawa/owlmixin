@@ -7,7 +7,6 @@ from mock import patch
 
 import pytest
 
-import owlmixin.dictutil
 from owlmixin import OwlMixin, TList, TDict
 
 # For python 3.5.0-3.5.1
