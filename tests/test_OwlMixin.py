@@ -3,9 +3,11 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from typing import List, Optional
+from mock import patch
 
 import pytest
 
+import owlmixin.dictutil
 from owlmixin import OwlMixin, TList, TDict
 
 # For python 3.5.0-3.5.1
@@ -391,6 +393,40 @@ class TestFromCsvf:
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
         ]
+
+
+@patch('owlmixin.dictutil.load_json_url')
+class TestFromJsonUrl:
+    def test_normal(self, load_json_url):
+        load_json_url.return_value = {
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+            "favorite_spots": [
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
+            ],
+            "id": 1,
+            "name": "メンバ1"
+        }
+
+        assert Human.from_json_url("hogehoge").to_dict() == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {
+                    "names": ["spot1"],
+                    "address": {"name": "address1"}
+                },
+                {
+                    "names": ["spot21", "spot22"]
+                }
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+        }
 
 
 class TestFromJson:
