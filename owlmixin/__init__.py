@@ -8,7 +8,7 @@ from typing import TypeVar, List, Dict, Union, Optional, Generic, Callable
 from . import dictutil
 
 
-__version__ = '1.0.0rc6'
+__version__ = '1.0.0rc7'
 
 T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
