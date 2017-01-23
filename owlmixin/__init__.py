@@ -8,7 +8,7 @@ from typing import TypeVar, List, Dict, Union, Optional, Generic, Callable
 from . import util
 
 
-__version__ = '1.0.0rc7'
+__version__ = '1.0.0rc8'
 
 T = TypeVar('T')
 U = TypeVar('U')
