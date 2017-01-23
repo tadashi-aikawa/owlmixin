@@ -53,6 +53,9 @@ SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
 class O:
+    """
+    Warning: This class is trial now
+    """
     def __init__(self, value):
         self.value = value
 
@@ -72,6 +75,9 @@ class O:
 
 
 class Or:
+    """
+    Warning: This class is trial now
+    """
     def __init__(self, value):
         self.value = value
 
