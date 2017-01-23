@@ -394,7 +394,7 @@ class TestFromCsvf:
         ]
 
 
-@patch('owlmixin.dictutil.load_json_url')
+@patch('owlmixin.util.load_json_url')
 class TestFromJsonUrl:
     def test_normal(self, load_json_url):
         load_json_url.return_value = {

@@ -5,12 +5,12 @@ from __future__ import division, absolute_import, unicode_literals
 import functools
 from typing import TypeVar, List, Dict, Union, Optional, Generic, Callable
 
-from . import dictutil
+from . import util
 
 
 __version__ = '1.0.0rc7'
 
-T = TypeVar('T', bound='OwlMixin')
+T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 
@@ -25,7 +25,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls(**dictutil.replace_keys(d, {"self": "_self"}, force_snake_case))
+        return cls(**util.replace_keys(d, {"self": "_self"}, force_snake_case))
 
     @classmethod
     def from_optional_dict(cls, d, force_snake_case=True):
@@ -91,7 +91,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls.from_dict(dictutil.load_json(data), force_snake_case)
+        return cls.from_dict(util.load_json(data), force_snake_case)
 
     @classmethod
     def from_jsonf(cls, fpath, encoding='utf8', force_snake_case=True):
@@ -103,7 +103,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls.from_dict(dictutil.load_jsonf(fpath, encoding), force_snake_case)
+        return cls.from_dict(util.load_jsonf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_json_to_list(cls, data, force_snake_case=True):
@@ -114,7 +114,7 @@ class OwlMixin:
         :return: List of instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_json(data), force_snake_case)
+        return cls.from_dicts(util.load_json(data), force_snake_case)
 
     @classmethod
     def from_jsonf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
@@ -126,7 +126,7 @@ class OwlMixin:
         :return: List of instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_jsonf(fpath, encoding), force_snake_case)
+        return cls.from_dicts(util.load_jsonf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_yaml(cls, data, force_snake_case=True):
@@ -137,7 +137,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls.from_dict(dictutil.load_yaml(data), force_snake_case)
+        return cls.from_dict(util.load_yaml(data), force_snake_case)
 
     @classmethod
     def from_yamlf(cls, fpath, encoding='utf8', force_snake_case=True):
@@ -149,7 +149,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls.from_dict(dictutil.load_yamlf(fpath, encoding), force_snake_case)
+        return cls.from_dict(util.load_yamlf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_yaml_to_list(cls, data, force_snake_case=True):
@@ -160,7 +160,7 @@ class OwlMixin:
         :return: List of instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_yaml(data), force_snake_case)
+        return cls.from_dicts(util.load_yaml(data), force_snake_case)
 
     @classmethod
     def from_yamlf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
@@ -172,7 +172,7 @@ class OwlMixin:
         :return: List of instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_yamlf(fpath, encoding), force_snake_case)
+        return cls.from_dicts(util.load_yamlf(fpath, encoding), force_snake_case)
 
     @classmethod
     def from_csvf(cls, fpath, fieldnames=None, encoding='utf8', force_snake_case=True):
@@ -185,7 +185,7 @@ class OwlMixin:
         :return: List of Instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(dictutil.load_csvf(fpath, fieldnames, encoding), force_snake_case=force_snake_case)
+        return cls.from_dicts(util.load_csvf(fpath, fieldnames, encoding), force_snake_case=force_snake_case)
 
     @classmethod
     def from_json_url(cls, url, force_snake_case=True):
@@ -196,7 +196,7 @@ class OwlMixin:
         :return: Instance
         :rtype: T
         """
-        return cls.from_dict(dictutil.load_json_url(url), force_snake_case)
+        return cls.from_dict(util.load_json_url(url), force_snake_case)
 
     def to_dict(self, ignore_none=True):
         """From instance to dict
@@ -231,7 +231,7 @@ class OwlMixin:
         :rtype: unicode
         """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
-        return dictutil.dump_json(func(ignore_none), indent)
+        return util.dump_json(func(ignore_none), indent)
 
     def to_pretty_json(self, ignore_none=True):
         """From instance to pretty json string
@@ -250,7 +250,7 @@ class OwlMixin:
         :rtype: unicode
         """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
-        return dictutil.dump_yaml(func(ignore_none))
+        return util.dump_yaml(func(ignore_none))
 
     def _to_dict(self):
         """please override this method and return dict you want,
@@ -295,7 +295,7 @@ class TList(list, Generic[T], OwlMixin):
         :rtype: unicode
         """
         # type: (Sequence[Text], bool, bool) -> Text
-        return dictutil.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
+        return util.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
 
     def map(self, func):
         """

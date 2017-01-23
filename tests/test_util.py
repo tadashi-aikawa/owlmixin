@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from owlmixin import dictutil
+from owlmixin import util
 
 
 class TestReplaceKeys:
@@ -33,7 +33,7 @@ class TestReplaceKeys:
             "chain-case": True
         }
 
-        assert dictutil.replace_keys(d, keymap, False) == expected
+        assert util.replace_keys(d, keymap, False) == expected
 
     def test_need_must_snake(self):
         keymap = {
@@ -62,18 +62,18 @@ class TestReplaceKeys:
             "chain_case": True
         }
 
-        assert dictutil.replace_keys(d, keymap, True) == expected
+        assert util.replace_keys(d, keymap, True) == expected
 
 
 class TestToSnake:
     def test_lower_camel(self):
-        assert dictutil.to_snake("lowerCamelCase") == "lower_camel_case"
+        assert util.to_snake("lowerCamelCase") == "lower_camel_case"
 
     def test_upper_camel(self):
-        assert dictutil.to_snake("UpperCamelCase") == "upper_camel_case"
+        assert util.to_snake("UpperCamelCase") == "upper_camel_case"
 
     def test_chain(self):
-        assert dictutil.to_snake("chain-case-example") == "chain_case_example"
+        assert util.to_snake("chain-case-example") == "chain_case_example"
 
     def test_snake(self):
-        assert dictutil.to_snake("snake_case_is_same") == "snake_case_is_same"
+        assert util.to_snake("snake_case_is_same") == "snake_case_is_same"
