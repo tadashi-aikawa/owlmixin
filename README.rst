@@ -2,7 +2,7 @@
 owlmixin
 ========
 
-|pypi| |travis| |coverage| |complexity| |versions| |license|
+|pypi| |docslatest| |travis| |coverage| |complexity| |versions| |license|
 
 Mixin which converts ``data class instance`` and others each other more simple.
 
@@ -12,17 +12,27 @@ Motivation
 
 Have you ever wanted to write robust code in Python? This library will make such your wishes come true.
 
-Define your data class which is extend OwlMixin, you can use some useful methods which help your codes robust.
-See following ``Example`` and ``API`` sections.
+| Define your data class which is extend OwlMixin, you can use some useful methods which help your codes robust.
+| See following ``Example`` and ``API Reference`` sections.
+
+
+Installation
+============
+
+.. code-block:: bash
+
+    pip install owlmixin
 
 
 Example
 =======
 
-You don't need to use ``typing`` necessarily, but I recommend to use this to make your codes more robust.
-See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
+| You don't need to use ``typing`` necessarily, but I recommend to use this to make your codes more robust.
+| See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
 
-**WARNING: If you use python 3.5.0 or 3.5.1, please `# type: str` instead of `# type: Text`**
+.. warning::
+
+    If you use python 3.5.0 or 3.5.1, please use ``# type: str`` instead of ``# type: Text``
 
 .. code-block:: python
 
@@ -59,10 +69,10 @@ See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
         "id": 1,
         "name": "apple"
     }
-    >>> print(jiro.to_dict(ignore_none=False))
-    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
     >>> print(jiro.to_dict())
     {'favorite': [{'color': None, 'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
+    >>> print(jiro.to_dict(ignore_none=False))
+    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
 
 
 You can also use methods chains as following.
@@ -105,72 +115,11 @@ You can also use methods chains as following.
     18484639,★212   git
 
 
-API
-===
+API Reference
+=============
 
-**From instance to another**
-
-- ``to_dict``
-    - instance => dict
-    - TDict[instance] => dict
-- ``to_dicts``
-    - TList[instance] => List[dict]
-- ``to_json``
-    - instance => json string
-- ``to_pretty_json``
-    - instance => json string (has indent and line break)
-- ``to_yaml``
-    - instance => yaml string
-- ``to_csv``
-    - TList[instance] => csv string
-
-**From something to instance**
-
-- ``from_dict`` [1]_ [2]_
-    - dict => instance
-- ``from_optional_dict`` [1]_ [2]_
-    - Optional[dict] => Optional[instance]
-- ``from_dicts`` [1]_ [2]_
-    - List[dict] => TList[instance]
-- ``from_optional_dicts`` [1]_ [2]_
-    - Optional[List[dict]] => Optional[TList[instance]]
-- ``from_dicts_by_key`` [1]_ [2]_
-    - dict => TDict[instance]
-- ``from_optional_dicts_by_key`` [1]_ [2]_
-    - Optional[dict] => Optional[TDict[instance]]
-- ``from_json`` [1]_ [2]_
-    - json string => instance
-- ``from_jsonf`` [1]_ [2]_ [3]_
-    - json file path => instance
-- ``from_json_to_list`` [1]_ [2]_
-    - json string => TList[instance]
-- ``from_jsonf_to_list`` [1]_ [2]_ [3]_
-    - json file path => TList[instance]
-- ``from_json_url`` [1]_ [2]_
-    - url (which returns json) => instance
-- ``from_yaml`` [1]_ [2]_
-    - yaml string => instance
-- ``from_yamlf`` [1]_ [2]_ [3]_
-    - yaml file path => instance
-- ``from_yaml_to_list`` [1]_ [2]_
-    - yaml string => TList[instance]
-- ``from_yamlf_to_list`` [1]_ [2]_ [3]_
-    - yaml file path => TList[instance]
-- ``from_csvf`` [1]_ [2]_ [3]_
-    - csv file => TList[instance]
-
-
-.. [1] Keys are transformed to snake case in order to compliant PEP8. (set ``force_snake_case=False`` if you don't want to do it.)
-.. [2] Key ``self`` is transformed to ``_self`` in order to avoid duplicate.
-.. [3] You can specify any encodings
-
-
-Installation
-============
-
-.. code-block::
-
-    pip install owlmixin
+* |docslatest| for master
+* |docs| for current stable version
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
@@ -183,5 +132,11 @@ Installation
     :target: https://codeclimate.com/github/tadashi-aikawa/owlmixin
     :alt: Code Climate
 .. |pypi| image::   https://img.shields.io/pypi/v/owlmixin.svg
+.. |docs| image:: https://readthedocs.org/projects/owlmixin/badge/?version=stable
+    :target: http://owlmixin.readthedocs.io/en/stable/api.html?badge=stable
+    :alt: Documentation Status
+.. |docslatest| image:: https://readthedocs.org/projects/owlmixin/badge/?version=latest
+    :target: http://owlmixin.readthedocs.io/en/latest/api.html?badge=latest
+    :alt: Documentation Status
 .. |versions| image:: https://img.shields.io/pypi/pyversions/owlmixin.svg
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg

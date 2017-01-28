@@ -1,17 +1,21 @@
 language:
   - python
-python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7-dev"
+matrix:
+  include:
+  - python: "2.7"
+  - python: "3.3"
+  - python: "3.4"
+  - python: "3.5"
+  - python: "3.6"
+    env: SPHINX_TARGET="yes"
+  - python: "3.7-dev"
 install:
   - pip install -r requirements.txt
   - pip install pytest pytest-cov codeclimate-test-reporter
+  - '[ $SPHINX_TARGET ] && pip install sphinx || echo "Skip"'
 script:
   - py.test -vv --cov=owlmixin tests/
+  - 'cd docs; [ $SPHINX_TARGET ] && make doctest html linkcheck || echo "Skip"'
 after_success:
   - codeclimate-test-reporter
 notifications:
