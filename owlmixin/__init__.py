@@ -545,6 +545,22 @@ class TList(list, Generic[T], OwlMixin):
         :type crlf: bool
         :return: Csv string
         :rtype: unicode
+
+        Usage:
+
+            >>> humans = Human.from_dicts([
+            ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
+            ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ])
+            >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites']))
+            Tom,1,[{'name': 'Apple'}]
+            John,2,[{'name': 'Orange'}]
+            <BLANKLINE>
+            >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites'], with_header=True))
+            name,id,favorites
+            Tom,1,[{'name': 'Apple'}]
+            John,2,[{'name': 'Orange'}]
+            <BLANKLINE>
         """
         return util.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
 
@@ -553,6 +569,11 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> U
         :rtype: TList[U]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).map(lambda x: x+1)
+            [2, 3, 4, 5, 6]
         """
         return TList(map(func, self))
 
@@ -561,6 +582,11 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> bool
         :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).filter(lambda x: x > 3)
+            [4, 5]
         """
         return TList([x for x in self if func(x)])
 
@@ -569,6 +595,11 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> bool
         :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).reject(lambda x: x > 3)
+            [1, 2, 3]
         """
         return TList([x for x in self if not func(x)])
 
@@ -577,6 +608,11 @@ class TList(list, Generic[T], OwlMixin):
         :param to_key:
         :type to_key: T -> unicode
         :rtype: TDict[TList[T]]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2)
+            {0: [2, 4], 1: [1, 3, 5]}
         """
         ret = TDict()
         for v in self:
@@ -591,7 +627,14 @@ class TList(list, Generic[T], OwlMixin):
         :type func: T -> any
         :param reverse: Sort by descend order if True, else by ascend
         :type reverse: bool
-        :rtype: TDict[TList[T]]
+        :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10)
+            [40, 31, 12, 25, 57]
+            >>> TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10, reverse=True)
+            [57, 25, 12, 31, 40]
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
@@ -600,6 +643,11 @@ class TList(list, Generic[T], OwlMixin):
         :param values:
         :type values: TList[T]
         :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2]).concat(TList([3, 4]))
+            [1, 2, 3, 4]
         """
         return self + values
 
@@ -610,12 +658,22 @@ class TList(list, Generic[T], OwlMixin):
         :param init_value:
         :type init_value: U
         :rtype: U
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).reduce(lambda t, x: t + 2*x, 100)
+            130
         """
         return functools.reduce(func, self, init_value)
 
     def sum(self):
         """
         :rtype: int | float
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).sum()
+            15
         """
         return sum(self)
 
@@ -624,13 +682,22 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> int | float
         :rtype: int | float
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).sum_by(lambda x: x*2)
+            30
         """
-        # type: (Callable[[T], Union[int, float]]) -> Union[int, float]
         return self.map(func).sum()
 
     def size(self):
         """
         :rtype: int
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).size()
+            5
         """
         return len(self)
 
@@ -639,6 +706,11 @@ class TList(list, Generic[T], OwlMixin):
         :param joint:
         :type joint: unicode
         :rtype: unicode
+
+        Usage:
+
+            >>> TList(['A', 'B', 'C']).join("-")
+            'A-B-C'
         """
         return joint.join(self)
 
@@ -647,6 +719,11 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> bool
         :rtype: T
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).find(lambda x: x > 3)
+            4
         """
         for x in self:
             if func(x):
@@ -657,6 +734,13 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> bool
         :rtype: T
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).all(lambda x: x > 0)
+            True
+            >>> TList([1, 2, 3, 4, 5]).all(lambda x: x > 1)
+            False
         """
         return all([func(x) for x in self])
 
@@ -665,6 +749,13 @@ class TList(list, Generic[T], OwlMixin):
         :param func:
         :type func: T -> bool
         :rtype: T
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).any(lambda x: x > 4)
+            True
+            >>> TList([1, 2, 3, 4, 5]).any(lambda x: x > 5)
+            False
         """
         return any([func(x) for x in self])
 
