@@ -769,6 +769,16 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: (K, T) -> U
         :rtype: TList[U]
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> sorted(TDict(machines_by_no).map(lambda k, v: v.name))
+            ['777', 'Atom', 'Doraemon']
         """
         return TList([func(k, v) for k, v in self.items()])
 
@@ -777,6 +787,20 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: T -> U
         :rtype: TDict[U]
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).map_values(lambda x: x.name) == {
+            ...     "no1": "Atom",
+            ...     "no2": "Doraemon",
+            ...     "no3": "777"
+            ... }
+            True
         """
         return TDict({k: func(v) for k, v in self.items()})
 
@@ -785,6 +809,16 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: (K, T) -> bool
         :rtype: TList[T]
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).filter(lambda k, v: v.id < 3).order_by(lambda v: v.id).to_json()
+            '[{"id": 1,"name": "Atom"},{"id": 2,"name": "Doraemon"}]'
         """
         return TList([v for k, v in self.items() if func(k, v)])
 
@@ -793,12 +827,32 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: (K, T) -> bool
         :rtype: TList[T]
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).reject(lambda k, v: v.id < 3).to_json()
+            '[{"id": 3,"name": "777"}]'
         """
         return TList([v for k, v in self.items() if not func(k, v)])
 
     def sum(self):
         """
         :rtype: int | float
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).map_values(lambda x: x.id).sum()
+            6
         """
         return sum(self.values())
 
@@ -807,12 +861,32 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: (K, T) -> (int | float)
         :rtype: int | float
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).sum_by(lambda k, v: v.id)
+            6
         """
         return self.map(func).sum()
 
     def size(self):
         """
         :rtype: int
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).size()
+            3
         """
         return len(self)
 
@@ -821,6 +895,16 @@ class TDict(dict, Generic[T], OwlMixin):
         :param func:
         :type func: (K, T) -> bool
         :rtype: T
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).find(lambda k, v: v.id == 2).to_json()
+            '{"id": 2,"name": "Doraemon"}'
         """
         for k, v in self.items():
             if func(k, v):
@@ -829,6 +913,16 @@ class TDict(dict, Generic[T], OwlMixin):
     def to_values(self):
         """
         :rtype: TList[T]
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).to_values().order_by(lambda x: x.id).to_json()
+            '[{"id": 1,"name": "Atom"},{"id": 2,"name": "Doraemon"},{"id": 3,"name": "777"}]'
         """
         return TList(self.values())
 
@@ -836,7 +930,19 @@ class TDict(dict, Generic[T], OwlMixin):
         """
         :param func:
         :type func: (K, T) -> bool
-        :rtype: T
+        :rtype: bool
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).all(lambda k, v: v.id > 0)
+            True
+            >>> TDict(machines_by_no).all(lambda k, v: v.id > 1)
+            False
         """
         return all([func(k, v) for k, v in self.items()])
 
@@ -844,6 +950,18 @@ class TDict(dict, Generic[T], OwlMixin):
         """
         :param func:
         :type func: (K, T) -> bool
-        :rtype: T
+        :rtype: bool
+
+        Usage:
+
+            >>> machines_by_no = Machine.from_dicts_by_key({
+            ...     "no1": {"id": 1, "name": "Atom"},
+            ...     "no2": {"id": 2, "name": "Doraemon"},
+            ...     "no3": {"id": 3, "name": "777"}
+            ... })
+            >>> TDict(machines_by_no).any(lambda k, v: v.id > 2)
+            True
+            >>> TDict(machines_by_no).any(lambda k, v: v.id > 3)
+            False
         """
         return any([func(k, v) for k, v in self.items()])
