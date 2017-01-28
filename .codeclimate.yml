@@ -1,0 +1,26 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
+        - javascript
+        - python
+        - php
+    exclude_fingerprints:
+      - 1b0b5d0e959332464c112d47ce5ea299
+  fixme:
+    enabled: true
+  radon:
+    enabled: true
+ratings:
+  paths:
+    - "**.inc"
+    - "**.js"
+    - "**.jsx"
+    - "**.module"
+    - "**.php"
+    - "**.py"
+    - "**.rb"
+exclude_paths:
+  - tests/
