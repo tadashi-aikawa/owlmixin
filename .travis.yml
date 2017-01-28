@@ -15,7 +15,7 @@ install:
   - '[ $SPHINX_TARGET ] && pip install sphinx || echo "Skip"'
 script:
   - py.test -vv --cov=owlmixin tests/
-  - 'cd docs; [ $SPHINX_TARGET ] && make doctest html linkcheck || echo "Skip"'
+  - '[ $SPHINX_TARGET ] && (cd docs && make doctest html linkcheck) || echo "Skip"'
 after_success:
   - codeclimate-test-reporter
 notifications:
