@@ -3,20 +3,19 @@ language:
 matrix:
   include:
   - python: "2.7"
-    env: SKIP_SPHINX="yes"
   - python: "3.3"
-    env: SKIP_SPHINX="yes"
   - python: "3.4"
   - python: "3.5"
   - python: "3.6"
+    env: SPHINX_TARGET="yes"
   - python: "3.7-dev"
 install:
   - pip install -r requirements.txt
   - pip install pytest pytest-cov codeclimate-test-reporter
-  - '[ $SKIP_SPHINX ] && echo "Skip" || pip install sphinx sphinx_rtd_theme'
+  - '[ $SPHINX_TARGET ] && pip install sphinx || echo "Skip"'
 script:
   - py.test -vv --cov=owlmixin tests/
-  - 'cd docs; [ $SKIP_SPHINX ] && echo "Skip" || make doctest html linkcheck'
+  - 'cd docs; [ $SPHINX_TARGET ] && make doctest html linkcheck || echo "Skip"'
 after_success:
   - codeclimate-test-reporter
 notifications:
