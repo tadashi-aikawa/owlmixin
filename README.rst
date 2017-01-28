@@ -12,8 +12,8 @@ Motivation
 
 Have you ever wanted to write robust code in Python? This library will make such your wishes come true.
 
-| Define your data class which is extend OwlMixin, you can use some useful methods which help your codes robust.
-| See following ``Example`` and ``API Reference`` sections.
+Define your data class which is extend OwlMixin, you can use some useful methods which help your codes robust.
+See following ``Example`` and ``API Reference`` sections.
 
 
 Installation
