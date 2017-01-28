@@ -13,11 +13,10 @@ matrix:
 install:
   - pip install -r requirements.txt
   - pip install pytest pytest-cov codeclimate-test-reporter
-  - test $SPHINX <> "skip" && pip install sphinx sphinx_rtd_theme || echo "Skip"
+  - [ $SPHINX <> "skip" ] && pip install sphinx sphinx_rtd_theme || echo "Skip"
 script:
   - py.test -vv --cov=owlmixin tests/
-  - test $SPHINX <> "skip" && cd docs; make doctest || echo "Skip"
-  - test $SPHINX <> "skip" && cd docs; make html linkcheck || echo "Skip"
+  - cd docs; [ $SPHINX <> "skip" ] && make doctest html linkcheck || echo "Skip"
 after_success:
   - codeclimate-test-reporter
 notifications:
