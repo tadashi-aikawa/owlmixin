@@ -9,9 +9,11 @@ python:
   - "3.7-dev"
 install:
   - pip install -r requirements.txt
-  - pip install pytest pytest-cov codeclimate-test-reporter
+  - pip install pytest pytest-cov codeclimate-test-reporter sphinx sphinx_rtd_theme
 script:
   - py.test -vv --cov=owlmixin tests/
+  - cd docs; make doctest
+  - cd docs; make html linkcheck
 after_success:
   - codeclimate-test-reporter
 notifications:
