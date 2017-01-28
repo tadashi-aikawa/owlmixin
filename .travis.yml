@@ -7,17 +7,21 @@ matrix:
   - python: "3.3"
     env: SPHINX="skip"
   - python: "3.4"
+    env: SPHINX="on"
   - python: "3.5"
+    env: SPHINX="on"
   - python: "3.6"
+    env: SPHINX="on"
   - python: "3.7-dev"
+    env: SPHINX="on"
 install:
   - pip install -r requirements.txt
   - pip install pytest pytest-cov codeclimate-test-reporter
-  - test $SPHINX == "skip" && pip install sphinx sphinx_rtd_theme
+  - test $SPHINX == "on" && pip install sphinx sphinx_rtd_theme
 script:
   - py.test -vv --cov=owlmixin tests/
-  - test $SPHINX == "skip" && cd docs; make doctest
-  - test $SPHINX == "skip" && cd docs; make html linkcheck
+  - test $SPHINX == "on" && cd docs; make doctest
+  - test $SPHINX == "on" && cd docs; make html linkcheck
 after_success:
   - codeclimate-test-reporter
 notifications:
