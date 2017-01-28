@@ -26,6 +26,26 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Instance
         :rtype: T
+
+        Usage:
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            >>> human.id
+            1
+            >>> human.name
+            'Tom'
+            >>> human.favorites[0].name
+            'Apple'
+            >>> human.favorites[0].names_by_lang["ja"]
+            'りんご'
+
         """
         return cls(**util.replace_keys(d, {"self": "_self"}, force_snake_case))
 
@@ -39,6 +59,11 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Instance
         :rtype: Optional[T]
+
+        Usage:
+
+            >>> Human.from_optional_dict(None)
+            >>> None
         """
         return d and cls.from_dict(d, force_snake_case)
 
@@ -52,6 +77,17 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
+
+        Usage:
+
+            >>> humans = Human.from_dicts([
+            ...    {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
+            ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ])
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
         """
         return TList([cls.from_dict(d, force_snake_case) for d in ds])
 
@@ -64,6 +100,11 @@ class OwlMixin:
         :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :return: List of instance
         :rtype: Optional[TList[T]]
+
+        Usage:
+
+            >>> Human.from_optional_dicts(None)
+            >>> None
         """
         return ds and cls.from_dicts(ds, force_snake_case)
 
@@ -77,6 +118,17 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Dict of instance
         :rtype: TDict[T]
+
+        Usage:
+
+            >>> humans_by_name = Human.from_dicts_by_key({
+            ...    'Tom':  {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
+            ...    'John': {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... })
+            >>> humans_by_name['Tom'].name
+            'Tom'
+            >>> humans_by_name['John'].name
+            'John'
         """
         return TDict({k: cls.from_dict(v, force_snake_case) for k, v in ds.items()})
 
@@ -90,6 +142,11 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Dict of instance
         :rtype: Optional[TDict[T]]
+
+        Usage:
+
+            >>> Human.from_optional_dicts_by_key(None)
+            >>> None
         """
         return ds and cls.from_dicts_by_key(ds, force_snake_case)
 
@@ -103,6 +160,23 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Instance
         :rtype: T
+
+        Usage:
+
+            >>> human = Human.from_json('''{
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... }''')
+            >>> human.id
+            1
+            >>> human.name
+            'Tom'
+            >>> human.favorites[0].names_by_lang["ja"]
+            'りんご'
         """
         return cls.from_dict(util.load_json(data), force_snake_case)
 
@@ -131,6 +205,17 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
+
+        Usage:
+
+            >>> humans = Human.from_json_to_list('''[
+            ...    {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
+            ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ]''')
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
         """
         return cls.from_dicts(util.load_json(data), force_snake_case)
 
@@ -159,6 +244,25 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: Instance
         :rtype: T
+
+        Usage:
+
+            >>> human = Human.from_yaml('''
+            ... id: 1
+            ... name: Tom
+            ... favorites:
+            ...   - name: Apple
+            ...     names_by_lang:
+            ...       en: Apple
+            ...       ja: りんご
+            ...   - name: Orange
+            ... ''')
+            >>> human.id
+            1
+            >>> human.name
+            'Tom'
+            >>> human.favorites[0].names_by_lang["ja"]
+            'りんご'
         """
         return cls.from_dict(util.load_yaml(data), force_snake_case)
 
@@ -187,6 +291,25 @@ class OwlMixin:
         :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
+
+        Usage:
+
+            >>> humans = Human.from_yaml_to_list('''
+            ... - id: 1
+            ...   name: Tom
+            ...   favorites:
+            ...     - name: Apple
+            ... - id: 2
+            ...   name: John
+            ...   favorites:
+            ...     - name: Orange
+            ... ''')
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
+            >>> humans[0].favorites[0].name
+            'Apple'
         """
         return cls.from_dicts(util.load_yaml(data), force_snake_case)
 
@@ -242,6 +365,18 @@ class OwlMixin:
         :type ignore_none: bool
         :return: Dict
         :rtype: dict
+
+        Usage:
+
+            >>> human_dict = {
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple"}}
+            ...     ]
+            ... }
+            >>> Human.from_dict(human_dict).to_dict() == human_dict
+            True
         """
         if isinstance(self, TList):
             raise RuntimeError("TList must not call this method. Please use `to_dicts()` alternatively.")
@@ -255,6 +390,15 @@ class OwlMixin:
         :type ignore_none: bool
         :return: List of dict
         :rtype: List[dict]
+
+        Usage:
+
+            >>> human_dicts = [
+            ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
+            ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ]
+            >>> Human.from_dicts(human_dicts).to_dicts() == human_dicts
+            True
         """
         if not isinstance(self, TList):
             raise RuntimeError("Must not call this method except TList. Please use `to_dict()` alternatively.")
@@ -270,6 +414,19 @@ class OwlMixin:
         :type ignore_none: bool
         :return: Json string
         :rtype: unicode
+
+        Usage:
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            >>> human.to_json()
+            '{"favorites": [{"name": "Apple","names_by_lang": {"en": "Apple","ja": "りんご"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
         """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return util.dump_json(func(ignore_none), indent)
@@ -281,6 +438,34 @@ class OwlMixin:
         :type ignore_none: bool
         :return: Json string
         :rtype: unicode
+
+        Usage:
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            >>> print(human.to_pretty_json())
+            {
+                "favorites": [
+                    {
+                        "name": "Apple",
+                        "names_by_lang": {
+                            "en": "Apple",
+                            "ja": "りんご"
+                        }
+                    },
+                    {
+                        "name": "Orange"
+                    }
+                ],
+                "id": 1,
+                "name": "Tom"
+            }
         """
         return self.to_json(4, ignore_none)
 
@@ -291,6 +476,27 @@ class OwlMixin:
         :type ignore_none: bool
         :return: Yaml string
         :rtype: unicode
+
+        Usage:
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            >>> print(human.to_yaml())
+            favorites:
+              - name: Apple
+                names_by_lang:
+                  en: Apple
+                  ja: りんご
+              - name: Orange
+            id: 1
+            name: Tom
+            <BLANKLINE>
         """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return util.dump_yaml(func(ignore_none))
