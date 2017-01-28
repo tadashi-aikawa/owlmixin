@@ -10,7 +10,7 @@ from . import util
 
 __version__ = '1.0.0rc8'
 
-T = TypeVar('T')
+T = TypeVar('T', bound='OwlMixin')
 U = TypeVar('U')
 K = TypeVar('K')
 
@@ -20,8 +20,10 @@ class OwlMixin:
     def from_dict(cls, d, force_snake_case=True):
         """From dict to instance
 
-        :param dict d: Dict
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param d: Dict
+        :type d: dict
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -31,8 +33,10 @@ class OwlMixin:
     def from_optional_dict(cls, d, force_snake_case=True):
         """From dict to instance. If d is None, return None.
 
-        :param Optional[dict] d: Dict
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param d: Dict
+        :type d: Optional[dict]
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: Optional[T]
         """
@@ -42,8 +46,10 @@ class OwlMixin:
     def from_dicts(cls, ds, force_snake_case=True):
         """From list of dict to list of instance
 
-        :param List[dict] ds: List of dict
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param ds: List of dict
+        :type ds: List[dict]
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
         """
@@ -53,7 +59,8 @@ class OwlMixin:
     def from_optional_dicts(cls, ds, force_snake_case=True):
         """From list of dict to list of instance. If ds is None, return None.
 
-        :param Optional[List[dict]] ds: List of dict
+        :param ds: List of dict
+        :type ds: Optional[List[dict]]
         :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :return: List of instance
         :rtype: Optional[TList[T]]
@@ -64,8 +71,10 @@ class OwlMixin:
     def from_dicts_by_key(cls, ds, force_snake_case=True):
         """From dict of dict to dict of instance
 
-        :param Dict[unicode, dict] ds: Dict of dict
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param ds: Dict of dict
+        :type ds: Dict[unicode, dict]
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Dict of instance
         :rtype: TDict[T]
         """
@@ -75,8 +84,10 @@ class OwlMixin:
     def from_optional_dicts_by_key(cls, ds, force_snake_case=True):
         """From dict of dict to dict of instance. If ds is None, return None.
 
-        :param Optional[Dict[unicode, dict]] ds: Dict of dict
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param ds: Dict of dict
+        :type ds: Optional[Dict[unicode, dict]]
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Dict of instance
         :rtype: Optional[TDict[T]]
         """
@@ -86,8 +97,10 @@ class OwlMixin:
     def from_json(cls, data, force_snake_case=True):
         """From json string to instance
 
-        :param unicode data: Json string
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param data: Json string
+        :type data: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -97,9 +110,12 @@ class OwlMixin:
     def from_jsonf(cls, fpath, encoding='utf8', force_snake_case=True):
         """From json file path to instance
 
-        :param unicode fpath: Json file path
-        :param unicode encoding: Json file encoding
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param fpath: Json file path
+        :type fpath: unicode
+        :param encoding: Json file encoding
+        :type encoding: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -109,8 +125,10 @@ class OwlMixin:
     def from_json_to_list(cls, data, force_snake_case=True):
         """From json string to list of instance
 
-        :param unicode data: Json string
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param data: Json string
+        :type data: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
         """
@@ -120,9 +138,12 @@ class OwlMixin:
     def from_jsonf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
         """From json file path to list of instance
 
-        :param unicode fpath: Json file path
-        :param unicode encoding: Json file encoding
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param fpath: Json file path
+        :type fpath: unicode
+        :param encoding: Json file encoding
+        :type encoding: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
         """
@@ -132,8 +153,10 @@ class OwlMixin:
     def from_yaml(cls, data, force_snake_case=True):
         """From yaml string to instance
 
-        :param unicode data: Yaml string
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param data: Yaml string
+        :type data: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -143,9 +166,12 @@ class OwlMixin:
     def from_yamlf(cls, fpath, encoding='utf8', force_snake_case=True):
         """From yaml file path to instance
 
-        :param unicode fpath: Yaml file path
-        :param unicode encoding: Yaml file encoding
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param fpath: Yaml file path
+        :type fpath: unicode
+        :param encoding: Yaml file encoding
+        :type encoding: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -155,8 +181,10 @@ class OwlMixin:
     def from_yaml_to_list(cls, data, force_snake_case=True):
         """From yaml string to list of instance
 
-        :param unicode data: Yaml string
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param data: Yaml string
+        :type data: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
         """
@@ -166,9 +194,12 @@ class OwlMixin:
     def from_yamlf_to_list(cls, fpath, encoding='utf8', force_snake_case=True):
         """From yaml file path to list of instance
 
-        :param unicode fpath: Yaml file path
-        :param unicode encoding: Yaml file encoding
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param fpath: Yaml file path
+        :type fpath: unicode
+        :param encoding: Yaml file encoding
+        :type encoding: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of instance
         :rtype: TList[T]
         """
@@ -178,10 +209,14 @@ class OwlMixin:
     def from_csvf(cls, fpath, fieldnames=None, encoding='utf8', force_snake_case=True):
         """From csv file path to list of instance
 
-        :param unicode fpath: Csv file path
-        :param Optional[Sequence[unicode]] fieldnames: Specify csv header names if not included in the file
-        :param unicode encoding: Csv file encoding
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param fpath: Csv file path
+        :type fpath: unicode
+        :param fieldnames: Specify csv header names if not included in the file
+        :type fieldnames: Optional[Sequence[unicode]]
+        :param encoding: Csv file encoding
+        :type encoding: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: List of Instance
         :rtype: TList[T]
         """
@@ -191,8 +226,10 @@ class OwlMixin:
     def from_json_url(cls, url, force_snake_case=True):
         """From url which returns json to instance
 
-        :param unicode url: Url which returns json
-        :param bool force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param url: Url which returns json
+        :type url: unicode
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :type force_snake_case: bool
         :return: Instance
         :rtype: T
         """
@@ -201,7 +238,8 @@ class OwlMixin:
     def to_dict(self, ignore_none=True):
         """From instance to dict
 
-        :param bool ignore_none: Properties which is None are excluded if True
+        :param ignore_none: Properties which is None are excluded if True
+        :type ignore_none: bool
         :return: Dict
         :rtype: dict
         """
@@ -213,7 +251,8 @@ class OwlMixin:
     def to_dicts(self, ignore_none=True):
         """From instance to list of dict
 
-        :param bool ignore_none: Properties which is None are excluded if True
+        :param ignore_none: Properties which is None are excluded if True
+        :type ignore_none: bool
         :return: List of dict
         :rtype: List[dict]
         """
@@ -225,8 +264,10 @@ class OwlMixin:
     def to_json(self, indent=None, ignore_none=True):
         """From instance to json string
 
-        :param Optional[int] indent: Number of indentation
-        :param bool ignore_none: Properties which is None are excluded if True
+        :param indent: Number of indentation
+        :type indent: Optional[int]
+        :param ignore_none: Properties which is None are excluded if True
+        :type ignore_none: bool
         :return: Json string
         :rtype: unicode
         """
@@ -236,7 +277,8 @@ class OwlMixin:
     def to_pretty_json(self, ignore_none=True):
         """From instance to pretty json string
 
-        :param bool ignore_none: Properties which is None are excluded if True
+        :param ignore_none: Properties which is None are excluded if True
+        :type ignore_none: bool
         :return: Json string
         :rtype: unicode
         """
@@ -245,7 +287,8 @@ class OwlMixin:
     def to_yaml(self, ignore_none=True):
         """From instance to yaml string
 
-        :param bool ignore_none: Properties which is None are excluded if True
+        :param ignore_none: Properties which is None are excluded if True
+        :type ignore_none: bool
         :return: Yaml string
         :rtype: unicode
         """
@@ -288,39 +331,45 @@ class TList(list, Generic[T], OwlMixin):
     def to_csv(self, fieldnames, with_header=False, crlf=False):
         """From sequence of text to csv string
 
-        :param Sequence[unicode] fieldnames: Order of columns by property name
-        :param bool with_header: Add headers at the first line if True
-        :param bool crlf: Add CRLF line break at the end of line if True, else add LF
+        :param fieldnames: Order of columns by property name
+        :type fieldnames: Sequence[unicode]
+        :param with_header: Add headers at the first line if True
+        :type with_header: bool
+        :param crlf: Add CRLF line break at the end of line if True, else add LF
+        :type crlf: bool
         :return: Csv string
         :rtype: unicode
         """
-        # type: (Sequence[Text], bool, bool) -> Text
         return util.dump_csv(self.to_dicts(), fieldnames, with_header, crlf)
 
     def map(self, func):
         """
-        :param (T) -> U func:
+        :param func:
+        :type func: T -> U
         :rtype: TList[U]
         """
         return TList(map(func, self))
 
     def filter(self, func):
         """
-        :param (T) -> bool func:
+        :param func:
+        :type func: T -> bool
         :rtype: TList[T]
         """
         return TList([x for x in self if func(x)])
 
     def reject(self, func):
         """
-        :param (T) -> bool func:
+        :param func:
+        :type func: T -> bool
         :rtype: TList[T]
         """
         return TList([x for x in self if not func(x)])
 
     def group_by(self, to_key):
         """
-        :param (T) -> unicode to_key:
+        :param to_key:
+        :type to_key: T -> unicode
         :rtype: TDict[TList[T]]
         """
         ret = TDict()
@@ -332,23 +381,28 @@ class TList(list, Generic[T], OwlMixin):
 
     def order_by(self, func, reverse=False):
         """
-        :param (T) -> any func:
-        :param bool reverse: Sort by descend order if True, else by ascend
+        :param func:
+        :type func: T -> any
+        :param reverse: Sort by descend order if True, else by ascend
+        :type reverse: bool
         :rtype: TDict[TList[T]]
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
     def concat(self, values):
         """
-        :param TList[T] values:
+        :param values:
+        :type values: TList[T]
         :rtype: TList[T]
         """
         return self + values
 
     def reduce(self, func, init_value):
         """
-        :param (U, T) -> U func:
-        :param U init_value:
+        :param func:
+        :type func: (U, T) -> U
+        :param init_value:
+        :type init_value: U
         :rtype: U
         """
         return functools.reduce(func, self, init_value)
@@ -361,7 +415,8 @@ class TList(list, Generic[T], OwlMixin):
 
     def sum_by(self, func):
         """
-        :param (T) -> int | float func:
+        :param func:
+        :type func: T -> int | float
         :rtype: int | float
         """
         # type: (Callable[[T], Union[int, float]]) -> Union[int, float]
@@ -375,14 +430,16 @@ class TList(list, Generic[T], OwlMixin):
 
     def join(self, joint):
         """
-        :param unicode joint:
+        :param joint:
+        :type joint: unicode
         :rtype: unicode
         """
         return joint.join(self)
 
     def find(self, func):
         """
-        :param (T) -> bool func:
+        :param func:
+        :type func: T -> bool
         :rtype: T
         """
         for x in self:
@@ -391,44 +448,53 @@ class TList(list, Generic[T], OwlMixin):
 
     def all(self, func):
         """
-        :param (T) -> bool func:
+        :param func:
+        :type func: T -> bool
         :rtype: T
         """
         return all([func(x) for x in self])
 
     def any(self, func):
         """
-        :param (T) -> bool func:
+        :param func:
+        :type func: T -> bool
         :rtype: T
         """
         return any([func(x) for x in self])
 
 
 class TDict(dict, Generic[T], OwlMixin):
+    def _to_dict(self):
+        return dict(self)
+
     def map(self, func):
         """
-        :param (K, T) -> U func:
+        :param func:
+        :type func: (K, T) -> U
         :rtype: TList[U]
         """
         return TList([func(k, v) for k, v in self.items()])
 
     def map_values(self, func):
         """
-        :param (T) -> U func:
+        :param func:
+        :type func: T -> U
         :rtype: TDict[U]
         """
         return TDict({k: func(v) for k, v in self.items()})
 
     def filter(self, func):
         """
-        :param (K, T) -> bool func:
+        :param func:
+        :type func: (K, T) -> bool
         :rtype: TList[T]
         """
         return TList([v for k, v in self.items() if func(k, v)])
 
     def reject(self, func):
         """
-        :param (K, T) -> bool func:
+        :param func:
+        :type func: (K, T) -> bool
         :rtype: TList[T]
         """
         return TList([v for k, v in self.items() if not func(k, v)])
@@ -441,7 +507,8 @@ class TDict(dict, Generic[T], OwlMixin):
 
     def sum_by(self, func):
         """
-        :param (K, T) -> int | float func:
+        :param func:
+        :type func: (K, T) -> (int | float)
         :rtype: int | float
         """
         return self.map(func).sum()
@@ -454,7 +521,8 @@ class TDict(dict, Generic[T], OwlMixin):
 
     def find(self, func):
         """
-        :param (K, T) -> bool func:
+        :param func:
+        :type func: (K, T) -> bool
         :rtype: T
         """
         for k, v in self.items():
@@ -467,19 +535,18 @@ class TDict(dict, Generic[T], OwlMixin):
         """
         return TList(self.values())
 
-    def _to_dict(self):
-        return dict(self)
-
     def all(self, func):
         """
-        :param (K, T) -> bool func:
+        :param func:
+        :type func: (K, T) -> bool
         :rtype: T
         """
         return all([func(k, v) for k, v in self.items()])
 
     def any(self, func):
         """
-        :param (K, T) -> bool func:
+        :param func:
+        :type func: (K, T) -> bool
         :rtype: T
         """
         return any([func(k, v) for k, v in self.items()])
