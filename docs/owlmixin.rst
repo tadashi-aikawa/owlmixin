@@ -11,7 +11,7 @@ API Reference
         from owlmixin import OwlMixin, TList, TDict
 
         class Food(OwlMixin):
-            def __init__(self, name, names_by_lang=None):
+            def __init__(self, name, names_by_lang=None, **extra):
                 self.name = name  # type: unicode
                 self.names_by_lang = names_by_lang  # type: Optional[TDict[unicode, unicode]]
 
@@ -32,7 +32,7 @@ API Reference
     from owlmixin import OwlMixin, TList, TDict
 
     class Food(OwlMixin):
-        def __init__(self, name, names_by_lang=None):
+        def __init__(self, name, names_by_lang=None, **extra):
             self.name = name  # type: unicode
             self.names_by_lang = names_by_lang  # type: Optional[TDict[unicode, unicode]]
 

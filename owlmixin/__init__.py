@@ -46,6 +46,43 @@ class OwlMixin:
             >>> human.favorites[0].names_by_lang["ja"]
             'りんご'
 
+        Automatic camel case conversion:
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            >>> human.favorites[0].names_by_lang["ja"]
+            'りんご'
+
+        You can allow extra parameters (like ``hogehoge``) if the class has ``**extra`` argument.
+
+            >>> apple = Food.from_dict({
+            ...     "name": "Apple",
+            ...     "hogehoge": "ooooooooooooooooooooo",
+            ... })
+            >>> apple.to_dict()
+            {'name': 'Apple'}
+
+        You can prohibit extra parameters (like ``hogehoge``) if the class does not have ``**extra`` argument.
+
+            >>> human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "hogehoge": "ooooooooooooooooooooo",
+            ...     "favorites": [
+            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Orange"}
+            ...     ]
+            ... })
+            Traceback (most recent call last):
+                ...
+            TypeError: __init__() got an unexpected keyword argument 'hogehoge'
+
         """
         return cls(**util.replace_keys(d, {"self": "_self"}, force_snake_case))
 
@@ -377,6 +414,17 @@ class OwlMixin:
             ... }
             >>> Human.from_dict(human_dict).to_dict() == human_dict
             True
+
+        You can include None properties by specifying None for ignore_none
+
+            >>> Food.from_dict({"name": "Apple"}).to_dict(ignore_none=False)
+            {'name': 'Apple', 'names_by_lang': None}
+
+        As default
+
+            >>> Food.from_dict({"name": "Apple"}).to_dict()
+            {'name': 'Apple'}
+
         """
         if isinstance(self, TList):
             raise RuntimeError("TList must not call this method. Please use `to_dicts()` alternatively.")
