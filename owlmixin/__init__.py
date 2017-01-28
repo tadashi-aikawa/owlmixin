@@ -417,13 +417,20 @@ class OwlMixin:
 
         You can include None properties by specifying None for ignore_none
 
-            >>> Food.from_dict({"name": "Apple"}).to_dict(ignore_none=False)
-            {'name': 'Apple', 'names_by_lang': None}
+            >>> f = Food.from_dict({"name": "Apple"}).to_dict(ignore_none=False)
+            >>> f["name"]
+            'Apple'
+            >>> "names_by_lang" in f
+            True
+            >>> f["names_by_lang"]
 
         As default
 
-            >>> Food.from_dict({"name": "Apple"}).to_dict()
-            {'name': 'Apple'}
+            >>> f = Food.from_dict({"name": "Apple"}).to_dict()
+            >>> f["name"]
+            'Apple'
+            >>> "names_by_lang" in f
+            False
 
         """
         if isinstance(self, TList):
@@ -659,8 +666,8 @@ class TList(list, Generic[T], OwlMixin):
 
         Usage:
 
-            >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2)
-            {0: [2, 4], 1: [1, 3, 5]}
+            >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
+            '{"0": [2,4],"1": [1,3,5]}'
         """
         ret = TDict()
         for v in self:
