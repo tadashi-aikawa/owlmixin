@@ -9,6 +9,10 @@ engines:
         - php
     exclude_fingerprints:
       - 1b0b5d0e959332464c112d47ce5ea299
+      - 4445a66c7fb3c57270ce96d3a612db76
+      - 4de2909779b782b090addc1f6ee3def2
+      - 3fe0629cb201d300d04309d7f144c087
+      - 87da91bc04af42ff3cb567aaf240af4a
   fixme:
     enabled: true
   radon:
