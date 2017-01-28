@@ -33,7 +33,7 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
@@ -43,8 +43,8 @@ class OwlMixin:
             'Tom'
             >>> human.favorites[0].name
             'Apple'
-            >>> human.favorites[0].names_by_lang["ja"]
-            'りんご'
+            >>> human.favorites[0].names_by_lang["de"]
+            'Apfel'
 
         Automatic camel case conversion:
 
@@ -52,12 +52,12 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
-            >>> human.favorites[0].names_by_lang["ja"]
-            'りんご'
+            >>> human.favorites[0].names_by_lang["de"]
+            'Apfel'
 
         You can allow extra parameters (like ``hogehoge``) if the class has ``**extra`` argument.
 
@@ -75,7 +75,7 @@ class OwlMixin:
             ...     "name": "Tom",
             ...     "hogehoge": "ooooooooooooooooooooo",
             ...     "favorites": [
-            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
@@ -204,7 +204,7 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... }''')
@@ -212,8 +212,8 @@ class OwlMixin:
             1
             >>> human.name
             'Tom'
-            >>> human.favorites[0].names_by_lang["ja"]
-            'りんご'
+            >>> human.favorites[0].names_by_lang["de"]
+            'Apfel'
         """
         return cls.from_dict(util.load_json(data), force_snake_case)
 
@@ -291,15 +291,15 @@ class OwlMixin:
             ...   - name: Apple
             ...     names_by_lang:
             ...       en: Apple
-            ...       ja: りんご
+            ...       de: Apfel
             ...   - name: Orange
             ... ''')
             >>> human.id
             1
             >>> human.name
             'Tom'
-            >>> human.favorites[0].names_by_lang["ja"]
-            'りんご'
+            >>> human.favorites[0].names_by_lang["de"]
+            'Apfel'
         """
         return cls.from_dict(util.load_yaml(data), force_snake_case)
 
@@ -469,12 +469,12 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
             >>> human.to_json()
-            '{"favorites": [{"name": "Apple","names_by_lang": {"en": "Apple","ja": "りんご"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
+            '{"favorites": [{"name": "Apple","names_by_lang": {"de": "Apfel","en": "Apple"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
         """
         func = self.to_dicts if isinstance(self, TList) else self.to_dict
         return util.dump_json(func(ignore_none), indent)
@@ -493,7 +493,7 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
@@ -503,8 +503,8 @@ class OwlMixin:
                     {
                         "name": "Apple",
                         "names_by_lang": {
-                            "en": "Apple",
-                            "ja": "りんご"
+                            "de": "Apfel",
+                            "en": "Apple"
                         }
                     },
                     {
@@ -531,7 +531,7 @@ class OwlMixin:
             ...     "id": 1,
             ...     "name": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "ja": "りんご"}},
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
             ... })
@@ -539,8 +539,8 @@ class OwlMixin:
             favorites:
               - name: Apple
                 names_by_lang:
+                  de: Apfel
                   en: Apple
-                  ja: りんご
               - name: Orange
             id: 1
             name: Tom

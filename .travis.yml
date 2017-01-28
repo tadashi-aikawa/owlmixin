@@ -1,19 +1,23 @@
 language:
   - python
-python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7-dev"
+matrix:
+  include:
+  - python: "2.7"
+    env: SPHINX="skip"
+  - python: "3.3"
+    env: SPHINX="skip"
+  - python: "3.4"
+  - python: "3.5"
+  - python: "3.6"
+  - python: "3.7-dev"
 install:
   - pip install -r requirements.txt
-  - pip install pytest pytest-cov codeclimate-test-reporter sphinx sphinx_rtd_theme
+  - pip install pytest pytest-cov codeclimate-test-reporter
+  - test $SPHINX == "skip" && pip install sphinx sphinx_rtd_theme
 script:
   - py.test -vv --cov=owlmixin tests/
-  - cd docs; make doctest
-  - cd docs; make html linkcheck
+  - test $SPHINX == "skip" && cd docs; make doctest
+  - test $SPHINX == "skip" && cd docs; make html linkcheck
 after_success:
   - codeclimate-test-reporter
 notifications:
