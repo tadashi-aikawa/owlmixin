@@ -7,7 +7,8 @@ from mock import patch
 
 import pytest
 
-from owlmixin import OwlMixin, TList, TDict
+from owlmixin import OwlMixin
+from owlmixin.collections import TDict, TList
 
 # For python 3.5.0-3.5.1
 try:
@@ -44,7 +45,8 @@ class Animal(OwlMixin):
         # Unfortunately, this is number (0: True / 1:False)
         self.is_big = int(is_big) == 1  # type: bool
 
-    def _to_dict(self):
+    @property
+    def __dict__(self):
         # Override because of returning YES or NO on is_big
         return {
             "id": self.id,
@@ -238,15 +240,11 @@ class TestToDict:
             }
         }
 
-    def test_error(self):
-        with pytest.raises(RuntimeError):
-            Human.from_dict(SAMPLE_HUMAN).favorite_spots.to_dict()
-
 
 class TestToDicts:
     def test_normal(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dicts() == [
+        assert spots.to_dict() == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -260,7 +258,7 @@ class TestToDicts:
 
     def test_ignore_none_false(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dicts(ignore_none=False) == [
+        assert spots.to_dict(ignore_none=False) == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -272,10 +270,6 @@ class TestToDicts:
                 "address": None
             }
         ]
-
-    def test_error(self):
-        with pytest.raises(RuntimeError):
-            Human.from_dict(SAMPLE_HUMAN).to_dicts()
 
 
 class TestFromDicts:
@@ -360,7 +354,7 @@ class TestFromCsvf:
     def test_normal_without_header(self):
         rs = Animal.from_csvf("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
 
-        assert rs.to_dicts() == [
+        assert rs.to_dict() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -369,7 +363,7 @@ class TestFromCsvf:
     def test_normal_with_header(self):
         rs = Animal.from_csvf("tests/csv/animals_with_header.csv")
 
-        assert rs.to_dicts() == [
+        assert rs.to_dict() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -378,7 +372,7 @@ class TestFromCsvf:
     def test_normal_separated_by_tab(self):
         rs = Animal.from_csvf("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
 
-        assert rs.to_dicts() == [
+        assert rs.to_dict() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -387,7 +381,7 @@ class TestFromCsvf:
     def test_normal_shiftjis(self):
         rs = Animal.from_csvf("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
 
-        assert rs.to_dicts() == [
+        assert rs.to_dict() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -509,7 +503,7 @@ class TestFromJsonToList:
         ]
         """)
 
-        assert r.to_dicts() == [
+        assert r.to_dict() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -522,7 +516,7 @@ class TestFromJsonToList:
 
 class TestFromJsonfToList:
     def test_utf8(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dicts() == [
+        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dict() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -533,7 +527,7 @@ class TestFromJsonfToList:
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dicts() == [
+        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dict() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -597,6 +591,7 @@ class TestFromYamlf:
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
+
 class TestFromYamlToList:
     def test_normal(self):
         r = Spot.from_yaml_to_list("""
@@ -609,7 +604,7 @@ class TestFromYamlToList:
                 - spot22
         """)
 
-        assert r.to_dicts() == [
+        assert r.to_dict() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -622,13 +617,13 @@ class TestFromYamlToList:
 
 class TestFromYamlfToList:
     def test_utf8(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dicts() == [
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dict() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["スポット21", "スポット22"]}
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dicts() == [
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dict() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["スポット21", "スポット22"]}
         ]
