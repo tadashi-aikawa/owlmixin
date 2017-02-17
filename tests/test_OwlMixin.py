@@ -46,7 +46,7 @@ class Animal(OwlMixin):
         self.is_big = int(is_big) == 1  # type: bool
 
     @property
-    def __dict__(self):
+    def dict(self):
         # Override because of returning YES or NO on is_big
         return {
             "id": self.id,
