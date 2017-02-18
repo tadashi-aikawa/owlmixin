@@ -30,6 +30,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: T
 
         Usage:
+
             >>> from owlmixin.samples import Human, Food
             >>> human = Human.from_dict({
             ...     "id": 1,
@@ -100,6 +101,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[T]
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dict(None)
         """
@@ -141,6 +143,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[TList[T]]
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts(None)
         """
@@ -183,6 +186,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[TDict[T]]
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts_by_key(None)
         """

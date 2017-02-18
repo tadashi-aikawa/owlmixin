@@ -39,6 +39,7 @@ class DictTransformer():
         :rtype: dict
 
         Usage:
+
             >>> from owlmixin.samples import Human, Food
             >>> human_dict = {
             ...     "id": 1,
@@ -84,6 +85,7 @@ class DictsTransformer():
         :rtype: list[dict]
 
         Usage:
+
             >>> from owlmixin.samples import Human, Food
             >>> human_dicts = [
             ...     {
@@ -140,6 +142,7 @@ class JsonTransformer():
         :rtype: unicode
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
@@ -163,6 +166,7 @@ class JsonTransformer():
         :rtype: unicode
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
@@ -206,6 +210,7 @@ class YamlTransformer():
         :rtype: unicode
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
@@ -246,6 +251,7 @@ class CsvTransformer():
         :rtype: unicode
 
         Usage:
+
             >>> from owlmixin.samples import Human
             >>> humans = Human.from_dicts([
             ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
