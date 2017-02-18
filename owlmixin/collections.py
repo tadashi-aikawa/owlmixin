@@ -5,18 +5,18 @@ from __future__ import division, absolute_import, unicode_literals
 import functools
 from typing import TypeVar, Generic
 
-from .transform import DictTransformable, \
-    DictsTransformable, \
-    JsonTransformable, \
-    YamlTransformable, \
-    CsvTransformable
+from .transformers import DictTransformer, \
+    DictsTransformer, \
+    JsonTransformer, \
+    YamlTransformer, \
+    CsvTransformer
 
 T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 
 
-class TList(list, DictsTransformable, JsonTransformable, YamlTransformable, CsvTransformable, Generic[T]):
+class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, Generic[T]):
     def __add__(self, values):
         # type: (TList[T]) -> TList[T]
         return TList(values + list(self))
@@ -217,9 +217,9 @@ class TList(list, DictsTransformable, JsonTransformable, YamlTransformable, CsvT
         return any([func(x) for x in self])
 
 
-class TDict(dict, DictTransformable, JsonTransformable, YamlTransformable, Generic[T]):
+class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T]):
     @property
-    def dict(self):
+    def _dict(self):
         return dict(self)
 
     def map(self, func):

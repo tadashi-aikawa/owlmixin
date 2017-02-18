@@ -10,7 +10,7 @@ def traverse(value, ignore_none=True):
         return traverse_dict(value, ignore_none)
     elif isinstance(value, list):
         return traverse_list(value, ignore_none)
-    elif isinstance(value, DictTransformable):
+    elif isinstance(value, DictTransformer):
         return value.to_dict(ignore_none)
     else:
         return value
@@ -26,8 +26,8 @@ def traverse_list(instance_list, ignore_none):
     return [traverse(i, ignore_none) for i in instance_list]
 
 
-class DictTransformable():
-    """ `@property dict` can overridden
+class DictTransformer():
+    """ `@property _dict` can overridden
     """
 
     def to_dict(self, ignore_none=True):
@@ -68,11 +68,11 @@ class DictTransformable():
             False
 
         """
-        return traverse_dict(self.dict, ignore_none)
+        return traverse_dict(self._dict, ignore_none)
 
 
-class DictsTransformable():
-    """ `_to_dicts()` can overridden
+class DictsTransformer():
+    """ `@property _dict` can overridden
     """
 
     def to_dicts(self, ignore_none=True):
@@ -125,8 +125,8 @@ class DictsTransformable():
         return traverse_list(self, ignore_none)
 
 
-class JsonTransformable():
-    """ `@property dict` can overridden
+class JsonTransformer():
+    """ `@property _dict` can overridden
     """
 
     def to_json(self, indent=None, ignore_none=True):
@@ -193,8 +193,8 @@ class JsonTransformable():
         return self.to_json(4, ignore_none)
 
 
-class YamlTransformable():
-    """ `@property dict` can overridden
+class YamlTransformer():
+    """ `@property _dict` can overridden
     """
 
     def to_yaml(self, ignore_none=True):
@@ -229,8 +229,8 @@ class YamlTransformable():
         return util.dump_yaml(traverse(self, ignore_none))
 
 
-class CsvTransformable():
-    """ `@property dict` can overridden
+class CsvTransformer():
+    """ `@property _dict` can overridden
     """
 
     def to_csv(self, fieldnames, with_header=False, crlf=False):

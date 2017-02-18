@@ -6,7 +6,7 @@ from typing import TypeVar, List, Dict, Optional
 
 from .collections import TList, TDict
 from . import util
-from .transform import DictTransformable, JsonTransformable, YamlTransformable, traverse_dict
+from .transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
 
 
 __version__ = '1.0.0rc9'
@@ -14,10 +14,10 @@ __version__ = '1.0.0rc9'
 T = TypeVar('T', bound='OwlMixin')
 
 
-class OwlMixin(DictTransformable, JsonTransformable, YamlTransformable):
+class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
     @property
-    def dict(self):
+    def _dict(self):
         return self.__dict__
 
     @classmethod

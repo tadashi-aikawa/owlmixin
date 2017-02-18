@@ -1,6 +1,3 @@
-OwlMixin
-========
-
 .. note::
 
     Usage on each methods are valid on the premise that the following classes is defined in advance.
@@ -47,13 +44,3 @@ OwlMixin
         def __init__(self, id, name):
             self.id = id  # type: int
             self.name = name  # type: unicode
-
-.. automodule:: owlmixin
-    :members:
-    :undoc-members:
-.. automodule:: owlmixin.collections
-    :members:
-    :undoc-members:
-.. automodule:: owlmixin.transform
-    :members:
-    :undoc-members:
