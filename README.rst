@@ -71,9 +71,9 @@ Example
         "name": "apple"
     }
     >>> print(jiro.to_dict())
-    {'favorite': [{'color': None, 'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
+    {'name': 'jiro', 'id': 10, 'favorite': [{'name': 'apple', 'id': 1}, {'name': 'orange', 'id': 2, 'color': 'white'}]}
     >>> print(jiro.to_dict(ignore_none=False))
-    {'favorite': [{'id': 1, 'name': 'apple'}, {'color': 'white', 'id': 2, 'name': 'orange'}], 'id': 10, 'name': 'jiro'}
+    {'name': 'jiro', 'id': 10, 'favorite': [{'name': 'apple', 'id': 1, 'color': None}, {'name': 'orange', 'id': 2, 'color': 'white'}]}
 
 
 You can also use methods chains as following.
@@ -111,10 +111,36 @@ You can also use methods chains as following.
     ...         .to_csv(fieldnames=["id", "message"], with_header=True)
     >>> print(r)
     id,message
-    1062897,★45252   gitignore
-    36502,★15888   git
-    36560369,★2931   my-git
-    18484639,★212   git
+    1062897,★46515   gitignore
+    16752620,★17762   gogs
+    36502,★16272   git
+    401025,★9879   hub
+    817345,★9542   git-extras
+    9350746,★6178   gitbucket
+    901662,★5962   libgit2
+    3721219,★4666   githug
+    16899487,★4560   gitql
+    1951148,★4318   legit
+    13021798,★4307   git-lfs
+    8310356,★4074   vim-gitgutter
+    140656,★3956   tig
+    2499845,★3757   lolcommits
+    33088032,★3489   git-style-guide
+    7266492,★2889   bfg-repo-cleaner
+    43998576,★2653   git-recipes
+    655492,★2453   magit
+    21125024,★2144   husky
+    85953,★1995   gitextensions
+    15400220,★1785   progit2
+    43623432,★1553   git-fire
+    22106110,★1380   git-cheat-sheet
+    44739044,★1127   go-git
+    15342073,★986   training-kit
+    58859,★858   gitosis
+    63418718,★561   git-tips
+    15783450,★404   patchwork
+    18484639,★216   git
+    3720815,★101   git
 
 
 API Reference
