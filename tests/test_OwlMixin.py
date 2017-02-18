@@ -8,7 +8,7 @@ from mock import patch
 import pytest
 
 from owlmixin import OwlMixin
-from owlmixin.collections import TDict, TList
+from owlmixin.owlcollections import TDict, TList
 
 # For python 3.5.0-3.5.1
 try:

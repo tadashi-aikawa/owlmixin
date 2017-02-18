@@ -5,7 +5,7 @@ from __future__ import division, absolute_import, unicode_literals
 from typing import List, Optional
 
 from owlmixin import OwlMixin
-from owlmixin.collections import TDict
+from owlmixin.owlcollections import TDict
 
 # For python 3.5.0-3.5.1
 try:

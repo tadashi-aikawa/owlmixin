@@ -3,7 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from typing import Optional
-from owlmixin.collections import TList, TDict
+from owlmixin.owlcollections import TList, TDict
 from owlmixin import OwlMixin
 
 

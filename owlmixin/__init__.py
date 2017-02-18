@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import TypeVar, List, Dict, Optional
 
-from owlmixin.collections import TList, TDict
+from owlmixin.owlcollections import TList, TDict
 from owlmixin import util
 from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
 

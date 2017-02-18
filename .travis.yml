@@ -15,7 +15,7 @@ install:
   - '[ $SPHINX_TARGET ] && pip install sphinx || echo "Skip"'
 script:
   - py.test -vv --cov=owlmixin tests/
-  - '[ $SPHINX_TARGET ] && (python -m doctest owlmixin/{__init__.py,transformers.py,collections.py} -v
+  - '[ $SPHINX_TARGET ] && (python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py} -v
 ) || echo "Skip doctest"'
   - '[ $SPHINX_TARGET ] && (cd docs && make html linkcheck) || echo "Skip sphinx build"'
 after_success:
