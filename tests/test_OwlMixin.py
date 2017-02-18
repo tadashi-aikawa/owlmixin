@@ -7,7 +7,8 @@ from mock import patch
 
 import pytest
 
-from owlmixin import OwlMixin, TList, TDict
+from owlmixin import OwlMixin
+from owlmixin.owlcollections import TDict, TList
 
 # For python 3.5.0-3.5.1
 try:
@@ -44,7 +45,8 @@ class Animal(OwlMixin):
         # Unfortunately, this is number (0: True / 1:False)
         self.is_big = int(is_big) == 1  # type: bool
 
-    def _to_dict(self):
+    @property
+    def _dict(self):
         # Override because of returning YES or NO on is_big
         return {
             "id": self.id,
@@ -238,10 +240,6 @@ class TestToDict:
             }
         }
 
-    def test_error(self):
-        with pytest.raises(RuntimeError):
-            Human.from_dict(SAMPLE_HUMAN).favorite_spots.to_dict()
-
 
 class TestToDicts:
     def test_normal(self):
@@ -272,10 +270,6 @@ class TestToDicts:
                 "address": None
             }
         ]
-
-    def test_error(self):
-        with pytest.raises(RuntimeError):
-            Human.from_dict(SAMPLE_HUMAN).to_dicts()
 
 
 class TestFromDicts:
@@ -596,6 +590,7 @@ class TestFromYamlf:
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
+
 
 class TestFromYamlToList:
     def test_normal(self):

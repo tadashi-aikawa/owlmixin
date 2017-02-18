@@ -5,7 +5,8 @@ from __future__ import division, absolute_import, unicode_literals
 import pytest
 from typing import List, Optional
 
-from owlmixin import OwlMixin, TList
+from owlmixin import OwlMixin
+from owlmixin.owlcollections import TList
 
 # For python 3.5.0-3.5.1
 try:
