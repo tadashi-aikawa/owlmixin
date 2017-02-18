@@ -37,7 +37,8 @@ Example
 .. code-block:: python
 
     from typing import Text, Optional
-    from owlmixin import OwlMixin, TList
+    from owlmixin import OwlMixin
+    from owlmixin.owlcollections import TList
 
     class Food(OwlMixin):
         def __init__(self, id, name, color=None):
@@ -80,7 +81,8 @@ You can also use methods chains as following.
 .. code-block:: python
 
     from typing import Optional
-    from owlmixin import OwlMixin, TList
+    from owlmixin import OwlMixin
+    from owlmixin.owlcollections import TList
 
     # `**extra` is necessary to allow extra elements.
     # Note that you must define all properties in github response json if you don't use `**extra`
