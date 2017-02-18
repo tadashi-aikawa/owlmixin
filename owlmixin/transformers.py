@@ -2,7 +2,7 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
-from . import util
+from owlmixin import util
 
 
 def traverse(value, ignore_none=True):
@@ -39,7 +39,7 @@ class DictTransformer():
         :rtype: dict
 
         Usage:
-
+            >>> from owlmixin.samples import Human, Food
             >>> human_dict = {
             ...     "id": 1,
             ...     "name": "Tom",
@@ -84,7 +84,7 @@ class DictsTransformer():
         :rtype: list[dict]
 
         Usage:
-
+            >>> from owlmixin.samples import Human, Food
             >>> human_dicts = [
             ...     {
             ...         "id": 1,
@@ -106,19 +106,19 @@ class DictsTransformer():
 
         You can include None properties by specifying None for ignore_none
 
-            >>> f = Food.from_dict({"name": "Apple"}).to_dict(ignore_none=False)
-            >>> f["name"]
+            >>> f = Food.from_dicts([{"name": "Apple"}]).to_dicts(ignore_none=False)
+            >>> f[0]["name"]
             'Apple'
-            >>> "names_by_lang" in f
+            >>> "names_by_lang" in f[0]
             True
-            >>> f["names_by_lang"]
+            >>> f[0]["names_by_lang"]
 
         As default
 
-            >>> f = Food.from_dict({"name": "Apple"}).to_dict()
-            >>> f["name"]
+            >>> f = Food.from_dicts([{"name": "Apple"}]).to_dicts()
+            >>> f[0]["name"]
             'Apple'
-            >>> "names_by_lang" in f
+            >>> "names_by_lang" in f[0]
             False
 
         """
@@ -140,7 +140,7 @@ class JsonTransformer():
         :rtype: unicode
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
@@ -163,7 +163,7 @@ class JsonTransformer():
         :rtype: unicode
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
@@ -206,7 +206,7 @@ class YamlTransformer():
         :rtype: unicode
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
@@ -246,7 +246,7 @@ class CsvTransformer():
         :rtype: unicode
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> humans = Human.from_dicts([
             ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
             ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}

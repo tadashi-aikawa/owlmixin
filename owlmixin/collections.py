@@ -5,7 +5,7 @@ from __future__ import division, absolute_import, unicode_literals
 import functools
 from typing import TypeVar, Generic
 
-from .transformers import DictTransformer, \
+from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
     JsonTransformer, \
     YamlTransformer, \
@@ -230,13 +230,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> sorted(TDict(machines_by_no).map(lambda k, v: v.name))
-            ['777', 'Atom', 'Doraemon']
+            >>> sorted(TDict(k1=1, k2=2, k3=3).map(lambda k, v: v*2))
+            [2, 4, 6]
         """
         return TList([func(k, v) for k, v in self.items()])
 
@@ -248,15 +243,10 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).map_values(lambda x: x.name) == {
-            ...     "no1": "Atom",
-            ...     "no2": "Doraemon",
-            ...     "no3": "777"
+            >>> TDict(k1=1, k2=2, k3=3).map_values(lambda x: x*2) == {
+            ...     "k1": 2,
+            ...     "k2": 4,
+            ...     "k3": 6
             ... }
             True
         """
@@ -270,13 +260,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).filter(lambda k, v: v.id < 3).order_by(lambda v: v.id).to_json()
-            '[{"id": 1,"name": "Atom"},{"id": 2,"name": "Doraemon"}]'
+            >>> TDict(k1=1, k2=2, k3=3).filter(lambda k, v: v < 2)
+            [1]
         """
         return TList([v for k, v in self.items() if func(k, v)])
 
@@ -288,13 +273,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).reject(lambda k, v: v.id < 3).to_json()
-            '[{"id": 3,"name": "777"}]'
+            >>> TDict(k1=1, k2=2, k3=3).reject(lambda k, v: v < 3)
+            [3]
         """
         return TList([v for k, v in self.items() if not func(k, v)])
 
@@ -304,12 +284,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).map_values(lambda x: x.id).sum()
+            >>> TDict(k1=1, k2=2, k3=3).sum()
             6
         """
         return sum(self.values())
@@ -322,13 +297,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).sum_by(lambda k, v: v.id)
-            6
+            >>> TDict(k1=1, k2=2, k3=3).sum_by(lambda k, v: v*2)
+            12
         """
         return self.map(func).sum()
 
@@ -338,12 +308,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).size()
+            >>> TDict(k1=1, k2=2, k3=3).size()
             3
         """
         return len(self)
@@ -356,13 +321,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).find(lambda k, v: v.id == 2).to_json()
-            '{"id": 2,"name": "Doraemon"}'
+            >>> TDict(k1=1, k2=2, k3=3).find(lambda k, v: v == 2)
+            2
         """
         for k, v in self.items():
             if func(k, v):
@@ -374,13 +334,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).to_values().order_by(lambda x: x.id).to_json()
-            '[{"id": 1,"name": "Atom"},{"id": 2,"name": "Doraemon"},{"id": 3,"name": "777"}]'
+            >>> TDict(k1=1, k2=2, k3=3).to_values().order_by(lambda x: x)
+            [1, 2, 3]
         """
         return TList(self.values())
 
@@ -392,14 +347,9 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).all(lambda k, v: v.id > 0)
+            >>> TDict(k1=1, k2=2, k3=3).all(lambda k, v: v > 0)
             True
-            >>> TDict(machines_by_no).all(lambda k, v: v.id > 1)
+            >>> TDict(k1=1, k2=2, k3=3).all(lambda k, v: v > 1)
             False
         """
         return all([func(k, v) for k, v in self.items()])
@@ -412,14 +362,9 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
         Usage:
 
-            >>> machines_by_no = Machine.from_dicts_by_key({
-            ...     "no1": {"id": 1, "name": "Atom"},
-            ...     "no2": {"id": 2, "name": "Doraemon"},
-            ...     "no3": {"id": 3, "name": "777"}
-            ... })
-            >>> TDict(machines_by_no).any(lambda k, v: v.id > 2)
+            >>> TDict(k1=1, k2=2, k3=3).any(lambda k, v: v > 2)
             True
-            >>> TDict(machines_by_no).any(lambda k, v: v.id > 3)
+            >>> TDict(k1=1, k2=2, k3=3).any(lambda k, v: v > 3)
             False
         """
         return any([func(k, v) for k, v in self.items()])

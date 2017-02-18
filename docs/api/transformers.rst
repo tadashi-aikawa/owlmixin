@@ -1,8 +1,8 @@
-OwlMixin
-========
+Transformers
+============
 
 .. include:: ./test-setup.rst
 
-.. autoclass:: owlmixin.OwlMixin
+.. automodule:: owlmixin.transformers
     :members:
     :inherited-members:

@@ -4,10 +4,9 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import TypeVar, List, Dict, Optional
 
-from .collections import TList, TDict
-from . import util
-from .transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
-
+from owlmixin.collections import TList, TDict
+from owlmixin import util
+from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
 
 __version__ = '1.0.0rc9'
 
@@ -15,7 +14,6 @@ T = TypeVar('T', bound='OwlMixin')
 
 
 class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
-
     @property
     def _dict(self):
         return self.__dict__
@@ -32,7 +30,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: T
 
         Usage:
-
+            >>> from owlmixin.samples import Human, Food
             >>> human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
@@ -102,9 +100,8 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[T]
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> Human.from_optional_dict(None)
-            >>> None
         """
         return d and cls.from_dict(d, force_snake_case)
 
@@ -121,6 +118,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> humans = Human.from_dicts([
             ...    {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
             ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
@@ -143,9 +141,8 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[TList[T]]
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts(None)
-            >>> None
         """
         return ds and cls.from_dicts(ds, force_snake_case)
 
@@ -162,6 +159,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> humans_by_name = Human.from_dicts_by_key({
             ...    'Tom':  {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
             ...    'John': {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
@@ -185,9 +183,8 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :rtype: Optional[TDict[T]]
 
         Usage:
-
+            >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts_by_key(None)
-            >>> None
         """
         return ds and cls.from_dicts_by_key(ds, force_snake_case)
 
@@ -204,6 +201,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> human = Human.from_json('''{
             ...     "id": 1,
             ...     "name": "Tom",
@@ -249,6 +247,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> humans = Human.from_json_to_list('''[
             ...    {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
             ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
@@ -288,6 +287,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> human = Human.from_yaml('''
             ... id: 1
             ... name: Tom
@@ -335,6 +335,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
         Usage:
 
+            >>> from owlmixin.samples import Human
             >>> humans = Human.from_yaml_to_list('''
             ... - id: 1
             ...   name: Tom
