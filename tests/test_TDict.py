@@ -63,7 +63,7 @@ class TestFilter:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).filter(lambda k, v: v.address).to_dict() == [
+        assert Spot.from_dicts_by_key(d).filter(lambda k, v: v.address).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 
@@ -75,7 +75,7 @@ class TestReject:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address).to_dict() == [
+        assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 
@@ -137,7 +137,7 @@ class TestToValues:
 
         # Sort for test
         assert sorted(
-            Spot.from_dicts_by_key(d).to_values().to_dict(ignore_none=True),
+            Spot.from_dicts_by_key(d).to_values().to_dicts(ignore_none=True),
             key=lambda x: x["names"][0]
         ) == [
            {"names": ["spot1"]},

@@ -29,7 +29,8 @@ OwlMixin
 .. testsetup:: *
 
     from typing import Optional
-    from owlmixin import OwlMixin, TList, TDict
+    from owlmixin import OwlMixin
+    from owlmixin.collections import TList, TDict
 
     class Food(OwlMixin):
         def __init__(self, name, names_by_lang=None, **extra):
@@ -48,5 +49,11 @@ OwlMixin
             self.name = name  # type: unicode
 
 .. automodule:: owlmixin
+    :members:
+    :undoc-members:
+.. automodule:: owlmixin.collections
+    :members:
+    :undoc-members:
+.. automodule:: owlmixin.transform
     :members:
     :undoc-members:

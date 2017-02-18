@@ -20,9 +20,6 @@ class OwlMixin(DictTransformable, JsonTransformable, YamlTransformable):
     def dict(self):
         return self.__dict__
 
-    def _to_dict(self, ignore_none=True):
-        return traverse_dict(self.dict, ignore_none)
-
     @classmethod
     def from_dict(cls, d, force_snake_case=True):
         """From dict to instance

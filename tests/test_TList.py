@@ -49,16 +49,16 @@ class Test__Add__:
         se = Spot.from_dicts(e)
         actual = sd + se
 
-        assert sd.to_dict() == [
+        assert sd.to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]}
         ]
-        assert se.to_dict() ==  [
+        assert se.to_dicts() ==  [
             {"names": ["spot31", "spot32"]}
         ]
 
         assert isinstance(actual, TList)
-        assert actual.to_dict() == [
+        assert actual.to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
             {"names": ["spot31", "spot32"]}
@@ -153,7 +153,7 @@ class TestFilter:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).filter(lambda s: s.address).to_dict() == [
+        assert Spot.from_dicts(d).filter(lambda s: s.address).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 
@@ -165,7 +165,7 @@ class TestReject:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).reject(lambda s: s.address).to_dict() == [
+        assert Spot.from_dicts(d).reject(lambda s: s.address).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 
@@ -200,7 +200,7 @@ class TestOrderBy:
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}}
         ]
 
-        assert Spot.from_dicts(d).order_by(lambda x: len(x.names)).to_dict() == [
+        assert Spot.from_dicts(d).order_by(lambda x: len(x.names)).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22", "spot23"]},
@@ -215,7 +215,7 @@ class TestOrderBy:
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}}
         ]
 
-        assert Spot.from_dicts(d).order_by(lambda x: len(x.names), reverse=True).to_dict() == [
+        assert Spot.from_dicts(d).order_by(lambda x: len(x.names), reverse=True).to_dicts() == [
             {"names": ["spot31", "spot32", "spot33", "spot34"]},
             {"names": ["spot21", "spot22", "spot23"]},
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
@@ -234,7 +234,7 @@ class TestConcat:
             {"names": ["spot31", "spot32"]}
         ]
 
-        assert Spot.from_dicts(d).concat(Spot.from_dicts(e)).to_dict() == [
+        assert Spot.from_dicts(d).concat(Spot.from_dicts(e)).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
             {"names": ["spot31", "spot32"]}

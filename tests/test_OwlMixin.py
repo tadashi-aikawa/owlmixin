@@ -244,7 +244,7 @@ class TestToDict:
 class TestToDicts:
     def test_normal(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dict() == [
+        assert spots.to_dicts() == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -258,7 +258,7 @@ class TestToDicts:
 
     def test_ignore_none_false(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dict(ignore_none=False) == [
+        assert spots.to_dicts(ignore_none=False) == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -354,7 +354,7 @@ class TestFromCsvf:
     def test_normal_without_header(self):
         rs = Animal.from_csvf("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
 
-        assert rs.to_dict() == [
+        assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -363,7 +363,7 @@ class TestFromCsvf:
     def test_normal_with_header(self):
         rs = Animal.from_csvf("tests/csv/animals_with_header.csv")
 
-        assert rs.to_dict() == [
+        assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -372,7 +372,7 @@ class TestFromCsvf:
     def test_normal_separated_by_tab(self):
         rs = Animal.from_csvf("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
 
-        assert rs.to_dict() == [
+        assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -381,7 +381,7 @@ class TestFromCsvf:
     def test_normal_shiftjis(self):
         rs = Animal.from_csvf("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
 
-        assert rs.to_dict() == [
+        assert rs.to_dicts() == [
             {"id": 1, "name": "a 犬", "is_big": "NO"},
             {"id": 2, "name": "a 猫", "is_big": "NO"},
             {"id": 3, "name": "a ライオン", "is_big": "YES"},
@@ -503,7 +503,7 @@ class TestFromJsonToList:
         ]
         """)
 
-        assert r.to_dict() == [
+        assert r.to_dicts() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -516,7 +516,7 @@ class TestFromJsonToList:
 
 class TestFromJsonfToList:
     def test_utf8(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dict() == [
+        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dicts() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -527,7 +527,7 @@ class TestFromJsonfToList:
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dict() == [
+        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dicts() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -604,7 +604,7 @@ class TestFromYamlToList:
                 - spot22
         """)
 
-        assert r.to_dict() == [
+        assert r.to_dicts() == [
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -617,13 +617,13 @@ class TestFromYamlToList:
 
 class TestFromYamlfToList:
     def test_utf8(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dict() == [
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["スポット21", "スポット22"]}
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dict() == [
+        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["スポット21", "スポット22"]}
         ]

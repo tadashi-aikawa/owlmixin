@@ -5,49 +5,21 @@ from __future__ import division, absolute_import, unicode_literals
 import functools
 from typing import TypeVar, Generic
 
-from . import util
-from .transform import DictTransformable, JsonTransformable, YamlTransformable
-
+from .transform import DictTransformable, \
+    DictsTransformable, \
+    JsonTransformable, \
+    YamlTransformable, \
+    CsvTransformable
 
 T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 
 
-class TList(list, DictTransformable, JsonTransformable, YamlTransformable, Generic[T]):
+class TList(list, DictsTransformable, JsonTransformable, YamlTransformable, CsvTransformable, Generic[T]):
     def __add__(self, values):
         # type: (TList[T]) -> TList[T]
         return TList(values + list(self))
-
-    def to_csv(self, fieldnames, with_header=False, crlf=False):
-        """From sequence of text to csv string
-
-        :param fieldnames: Order of columns by property name
-        :type fieldnames: Sequence[unicode]
-        :param with_header: Add headers at the first line if True
-        :type with_header: bool
-        :param crlf: Add CRLF line break at the end of line if True, else add LF
-        :type crlf: bool
-        :return: Csv string
-        :rtype: unicode
-
-        Usage:
-
-            >>> humans = Human.from_dicts([
-            ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
-            ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
-            ... ])
-            >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites']))
-            Tom,1,[{'name': 'Apple'}]
-            John,2,[{'name': 'Orange'}]
-            <BLANKLINE>
-            >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites'], with_header=True))
-            name,id,favorites
-            Tom,1,[{'name': 'Apple'}]
-            John,2,[{'name': 'Orange'}]
-            <BLANKLINE>
-        """
-        return util.dump_csv(self._to_dict(), fieldnames, with_header, crlf)
 
     def map(self, func):
         """
@@ -246,6 +218,9 @@ class TList(list, DictTransformable, JsonTransformable, YamlTransformable, Gener
 
 
 class TDict(dict, DictTransformable, JsonTransformable, YamlTransformable, Generic[T]):
+    @property
+    def dict(self):
+        return dict(self)
 
     def map(self, func):
         """
