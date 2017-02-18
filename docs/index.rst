@@ -7,7 +7,7 @@ Github and README: https://github.com/tadashi-aikawa/owlmixin
     :maxdepth: 4
 
     api/owlmixin
-    api/collections
+    api/owlcollections
 
 
 Indices and tables

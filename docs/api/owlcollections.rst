@@ -6,7 +6,7 @@ Collections
 TList
 -----
 
-.. autoclass:: owlmixin.collections.TList
+.. autoclass:: owlmixin.owlcollections.TList
     :members:
     :inherited-members:
     :exclude-members:
@@ -26,7 +26,7 @@ TList
 TDict
 -----
 
-.. autoclass:: owlmixin.collections.TDict
+.. autoclass:: owlmixin.owlcollections.TDict
     :members:
     :inherited-members:
     :exclude-members:
