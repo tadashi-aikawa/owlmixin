@@ -135,10 +135,10 @@ API Reference
     :alt: Code Climate
 .. |pypi| image::   https://img.shields.io/pypi/v/owlmixin.svg
 .. |docs| image:: https://readthedocs.org/projects/owlmixin/badge/?version=stable
-    :target: http://owlmixin.readthedocs.io/en/stable/api.html?badge=stable
+    :target: http://owlmixin.readthedocs.io/en/stable/
     :alt: Documentation Status
 .. |docslatest| image:: https://readthedocs.org/projects/owlmixin/badge/?version=latest
-    :target: http://owlmixin.readthedocs.io/en/latest/api.html?badge=latest
+    :target: http://owlmixin.readthedocs.io/en/latest/
     :alt: Documentation Status
 .. |versions| image:: https://img.shields.io/pypi/pyversions/owlmixin.svg
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
