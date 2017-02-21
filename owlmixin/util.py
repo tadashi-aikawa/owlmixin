@@ -108,7 +108,7 @@ def to_snake(value):
     :param unicode value:
     :rtype: unicode
     """
-    return re.sub(r'((?<!^)[A-Z])', "_\\1", value).lower().replace("-", "_")
+    return re.sub(r'((?<!^)[A-Z])', "_\\1", value.strip('<>-')).lower().replace("-", "_")
 
 
 def load_json(json_str):

@@ -77,3 +77,8 @@ class TestToSnake:
 
     def test_snake(self):
         assert util.to_snake("snake_case_is_same") == "snake_case_is_same"
+
+    def test_docopt(self):
+        assert util.to_snake("<file_list>") == "file_list"
+        assert util.to_snake("-o") == "o"
+        assert util.to_snake("--detail-option") == "detail_option"

@@ -49,18 +49,21 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
             >>> human.favorites[0].names_by_lang["de"]
             'Apfel'
 
-        Automatic camel case conversion:
+        If you don't set `force_snake=False` explicitly, keys are transformed to snake case as following.
 
             >>> human = Human.from_dict({
-            ...     "id": 1,
-            ...     "name": "Tom",
+            ...     "--id": 1,
+            ...     "<name>": "Tom",
             ...     "favorites": [
-            ...         {"name": "Apple", "namesByLang": {"en": "Apple", "de": "Apfel"}},
-            ...         {"name": "Orange"}
+            ...         {"name": "Apple", "namesByLang": {"en": "Apple"}}
             ...     ]
             ... })
-            >>> human.favorites[0].names_by_lang["de"]
-            'Apfel'
+            >>> human.id
+            1
+            >>> human.name
+            'Tom'
+            >>> human.favorites[0].names_by_lang["en"]
+            'Apple'
 
         You can allow extra parameters (like ``hogehoge``) if the class has ``**extra`` argument.
 
@@ -85,7 +88,6 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
             Traceback (most recent call last):
                 ...
             TypeError: __init__() got an unexpected keyword argument 'hogehoge'
-
         """
         return cls(**util.replace_keys(d, {"self": "_self"}, force_snake_case))
 
