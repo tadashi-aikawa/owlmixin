@@ -3,6 +3,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import functools
+from itertools import chain
 from typing import TypeVar, Generic
 
 from owlmixin.transformers import DictTransformer, \
@@ -33,6 +34,30 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             [2, 3, 4, 5, 6]
         """
         return TList(map(func, self))
+
+    def flatten(self):
+        """
+        :rtype: TList[U]
+
+        Usage:
+
+            >>> TList([[1, 2], [3, 4]]).flatten()
+            [1, 2, 3, 4]
+        """
+        return TList(chain.from_iterable(self))
+
+    def flat_map(self, func):
+        """
+        :param func:
+        :type func: T -> U
+        :rtype: TList[U]
+
+        Usage:
+
+            >>> TList([[1, 2], [3, 4]]).flat_map(lambda x: x+1)
+            [2, 3, 4, 5]
+        """
+        return self.flatten().map(func)
 
     def filter(self, func):
         """
