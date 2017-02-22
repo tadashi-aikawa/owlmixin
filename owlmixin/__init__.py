@@ -8,7 +8,7 @@ from owlmixin.owlcollections import TList, TDict
 from owlmixin import util
 from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
 
-__version__ = '1.0.0rc12'
+__version__ = '1.0.0rc13'
 
 T = TypeVar('T', bound='OwlMixin')
 
