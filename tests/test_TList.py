@@ -360,3 +360,19 @@ class TestAny:
         ]
 
         assert Spot.from_dicts(d).any(lambda x: len(x.names) > 2) is False
+
+
+class TestIntersection:
+    def test_normal(self):
+        assert TList([1, 2, 3, 4, 5]).intersection([2, 4, 6]) == [2, 4]
+
+    def test_empty(self):
+        assert TList([1, 2, 3, 4, 5]).intersection([7, 8]) == []
+
+
+class TestNotIntersection:
+    def test_normal(self):
+        assert TList([1, 2, 3, 4, 5]).not_intersection([2, 4, 6]) == [1, 3, 5]
+
+    def test_empty(self):
+        assert TList([1, 2, 3, 4, 5]).not_intersection([1, 2, 3, 4, 5]) == []

@@ -241,6 +241,32 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return any([func(x) for x in self])
 
+    def intersection(self, values):
+        """
+        :param values:
+        :type values: List[T]
+        :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).intersection([2, 4, 6])
+            [2, 4]
+        """
+        return self.filter(lambda x: x in values)
+
+    def not_intersection(self, values):
+        """
+        :param values:
+        :type values: List[T]
+        :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).not_intersection([2, 4, 6])
+            [1, 3, 5]
+        """
+        return self.reject(lambda x: x in values)
+
 
 class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T]):
     @property
