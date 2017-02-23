@@ -54,10 +54,10 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
         Usage:
 
-            >>> TList([[1, 2], [3, 4]]).flat_map(lambda x: x+1)
-            [2, 3, 4, 5]
+            >>> TList([1, 2, 3]).flat_map(lambda x: [x, x+1])
+            [1, 2, 2, 3, 3, 4]
         """
-        return self.flatten().map(func)
+        return self.map(func).flatten()
 
     def filter(self, func):
         """

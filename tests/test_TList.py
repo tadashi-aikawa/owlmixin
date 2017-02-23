@@ -153,12 +153,12 @@ class TestFlatten:
 
 class TestFlatMap:
     def test_normal(self):
-        d = [
-            Human.from_dicts([{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]),
-            Human.from_dicts([{"id": 3, "name": "三郎"}, {"id": 4, "name": "四郎", "ruby": "しろう"}])
-        ]
+        ds = Human.from_dicts([
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ])
 
-        assert TList(d).flat_map(lambda x: x.id) == [1, 2, 3, 4]
+        assert ds.flat_map(lambda x: [x.id, x.name]) == [1, '一郎', 2, '二郎']
 
 
 class TestFilter:
