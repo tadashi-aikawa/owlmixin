@@ -9,6 +9,7 @@ import pytest
 
 from owlmixin import OwlMixin
 from owlmixin.owlcollections import TDict, TList
+from owlmixin.owlenum import OwlEnum
 
 # For python 3.5.0-3.5.1
 try:
@@ -17,15 +18,22 @@ except ImportError:
     pass
 
 
+class Color(OwlEnum):
+    RED = "red"
+    GREEN = "green"
+    BLUE = "blue"
+
+
 class Address(OwlMixin):
     def __init__(self, name):
         self.name = name  # type: Text
 
 
 class Spot(OwlMixin):
-    def __init__(self, names, address=None):
+    def __init__(self, names, address=None, color=None):
         self.names = names  # type: List[Text]
         self.address = Address.from_optional_dict(address)  # type: Optional[Address]
+        self.color = color and Color(color)  # type: Color
 
 
 class Human(OwlMixin):
@@ -65,7 +73,10 @@ SAMPLE_HUMAN = {
                 "name": "address1"
             }
         },
-        {"names": ["spot21", "spot22"]}
+        {
+            "names": ["spot21", "spot22"],
+            "color": "red"
+        }
     ],
     "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
     "friends_by_short_name": {
@@ -101,11 +112,13 @@ class TestFromDict:
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
         assert r.favorite_spots[0].address.name == "address1"
+        assert r.favorite_spots[0].color is None
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
         assert r.favorite_spots[1].names[1] == "spot22"
         assert r.favorite_spots[1].address is None
+        assert r.favorite_spots[1].color == Color.RED
 
         assert r.favorite_animal.id == 1
         assert r.favorite_animal.name == "a dog"
@@ -145,11 +158,13 @@ class TestFromOptionalDict:
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
         assert r.favorite_spots[0].address.name == "address1"
+        assert r.favorite_spots[0].color is None
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
         assert r.favorite_spots[1].names[1] == "spot22"
         assert r.favorite_spots[1].address is None
+        assert r.favorite_spots[1].color == Color.RED
 
         assert r.favorite_animal.id == 1
         assert r.favorite_animal.name == "a dog"
@@ -185,7 +200,7 @@ class TestToDict:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"], "color": Color.RED}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
@@ -214,8 +229,8 @@ class TestToDict:
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "address": None}
+                {"names": ["spot1"], "address": {"name": "address1"}, "color": None},
+                {"names": ["spot21", "spot22"], "address": None, "color": Color.RED}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
@@ -223,7 +238,7 @@ class TestToDict:
                     "id": 100,
                     "name": "TOSHIKI",
                     "favorite_spots": [
-                        {"names": ["toshi_spot"], "address": None}
+                        {"names": ["toshi_spot"], "address": None, "color": None}
                     ],
                     "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
                     "friends_by_short_name": None
@@ -232,10 +247,40 @@ class TestToDict:
                     "id": 200,
                     "name": "HIDEKI",
                     "favorite_spots": [
-                        {"names": ["hide_spot"], "address": None}
+                        {"names": ["hide_spot"], "address": None, "color": None}
                     ],
                     "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
                     "friends_by_short_name": None
+                }
+            }
+        }
+
+    def test_force_value(self):
+        r = Human.from_dict(SAMPLE_HUMAN)
+        assert r.to_dict(force_value=True) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"], "color": "red"}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_spots": [
+                        {"names": ["toshi_spot"]}
+                    ],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"]}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
                 }
             }
         }
@@ -252,7 +297,8 @@ class TestToDicts:
                 }
             },
             {
-                "names": ["spot21", "spot22"]
+                "names": ["spot21", "spot22"],
+                "color": Color.RED
             }
         ]
 
@@ -263,11 +309,28 @@ class TestToDicts:
                 "names": ["spot1"],
                 "address": {
                     "name": "address1"
+                },
+                "color": None
+            },
+            {
+                "names": ["spot21", "spot22"],
+                "address": None,
+                "color": Color.RED
+            }
+        ]
+
+    def test_force_value(self):
+        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+        assert spots.to_dicts(force_value=True) == [
+            {
+                "names": ["spot1"],
+                "address": {
+                    "name": "address1"
                 }
             },
             {
                 "names": ["spot21", "spot22"],
-                "address": None
+                "color": "red"
             }
         ]
 
@@ -279,7 +342,7 @@ class TestFromDicts:
         assert len(r) == 2
         assert type(r) == TList
         assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"]}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "color": Color.RED}
 
 
 class TestFromOptionalDicts:
@@ -289,7 +352,7 @@ class TestFromOptionalDicts:
         assert len(r) == 2
         assert type(r) == TList
         assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"]}
+        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "color": Color.RED}
 
     def test_none(self):
         assert Human.from_optional_dicts(None) is None
@@ -636,14 +699,14 @@ class TestToJson:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"], "color": "red"}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
         })
 
         assert r.to_json(ignore_none=True) == """{
 "favorite_animal": {"id": 1,"is_big": "NO","name": "a dog"},
-"favorite_spots": [{"address": {"name": "address1"},"names": ["spot1"]},{"names": ["spot21","spot22"]}],
+"favorite_spots": [{"address": {"name": "address1"},"names": ["spot1"]},{"color": "red","names": ["spot21","spot22"]}],
 "id": 1,
 "name": "メンバ1"
 }
@@ -668,7 +731,7 @@ class TestToPrettyJson:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"], "color": "red"}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 1},
         })
@@ -690,6 +753,7 @@ class TestToPrettyJson:
             ]
         },
         {
+            "color": "red",
             "names": [
                 "spot21",
                 "spot22"
@@ -709,7 +773,7 @@ class TestToYaml:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"], "color": "red"}
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
         })
@@ -724,7 +788,8 @@ favorite_spots:
       name: address1
     names:
       - spot1
-  - names:
+  - color: red
+    names:
       - spot21
       - spot22
 id: 1
@@ -734,7 +799,7 @@ name: メンバ1
     def test_normal_from_list(self):
         r = Spot.from_dicts([
             {"names": ["spot1"], "address": {"name": "address1"}},
-            {"names": ["spot21", "spot22"]}
+            {"names": ["spot21", "spot22"], "color": "red"}
         ])
 
         assert r.to_yaml(ignore_none=True) == """
@@ -742,7 +807,8 @@ name: メンバ1
     name: address1
   names:
     - spot1
-- names:
+- color: red
+  names:
     - spot21
     - spot22
 """.lstrip()

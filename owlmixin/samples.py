@@ -4,7 +4,14 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import Optional
 from owlmixin.owlcollections import TList, TDict
+from owlmixin.owlenum import OwlEnum
 from owlmixin import OwlMixin
+
+
+class Color(OwlEnum):
+    RED = "red"
+    GREEN = "green"
+    BLUE = "blue"
 
 
 class Food(OwlMixin):

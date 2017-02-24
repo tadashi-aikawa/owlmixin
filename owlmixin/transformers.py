@@ -5,36 +5,45 @@ from __future__ import division, absolute_import, unicode_literals
 from owlmixin import util
 
 
-def traverse(value, ignore_none=True):
-    if isinstance(value, dict):
-        return traverse_dict(value, ignore_none)
+def traverse(value, ignore_none=True, force_value=False):
+    if force_value and isinstance(value, ValueTransformer):
+        return value.to_value()
+    elif isinstance(value, dict):
+        return traverse_dict(value, ignore_none, force_value)
     elif isinstance(value, list):
-        return traverse_list(value, ignore_none)
+        return traverse_list(value, ignore_none, force_value)
     elif isinstance(value, DictTransformer):
-        return value.to_dict(ignore_none)
+        return value.to_dict(ignore_none, force_value)
     else:
         return value
 
 
-def traverse_dict(instance_dict, ignore_none):
-    return {k: traverse(v, ignore_none) for
+def traverse_dict(instance_dict, ignore_none, force_value=False):
+    return {k: traverse(v, ignore_none, force_value) for
             k, v in instance_dict.items()
             if not (ignore_none and v is None)}
 
 
-def traverse_list(instance_list, ignore_none):
-    return [traverse(i, ignore_none) for i in instance_list]
+def traverse_list(instance_list, ignore_none, force_value=False):
+    return [traverse(i, ignore_none, force_value) for i in instance_list]
+
+
+class ValueTransformer():
+    def to_value(self):
+        return str(self)
 
 
 class DictTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dict(self, ignore_none=True):
+    def to_dict(self, ignore_none=True, force_value=False):
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
         :type ignore_none: bool
+        :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
+        :type force_value: bool
         :return: Dict
         :rtype: dict
 
@@ -69,18 +78,20 @@ class DictTransformer():
             False
 
         """
-        return traverse_dict(self._dict, ignore_none)
+        return traverse_dict(self._dict, ignore_none, force_value)
 
 
 class DictsTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dicts(self, ignore_none=True):
+    def to_dicts(self, ignore_none=True, force_value=False):
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
         :type ignore_none: bool
+        :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
+        :type force_value: bool
         :return: List[Dict]
         :rtype: list[dict]
 
@@ -124,7 +135,7 @@ class DictsTransformer():
             False
 
         """
-        return traverse_list(self, ignore_none)
+        return traverse_list(self, ignore_none, force_value)
 
 
 class JsonTransformer():
@@ -155,7 +166,7 @@ class JsonTransformer():
             >>> human.to_json()
             '{"favorites": [{"name": "Apple","names_by_lang": {"de": "Apfel","en": "Apple"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
         """
-        return util.dump_json(traverse(self, ignore_none), indent)
+        return util.dump_json(traverse(self, ignore_none, force_value=True), indent)
 
     def to_pretty_json(self, ignore_none=True):
         """From instance to pretty json string
@@ -231,7 +242,7 @@ class YamlTransformer():
             name: Tom
             <BLANKLINE>
         """
-        return util.dump_yaml(traverse(self, ignore_none))
+        return util.dump_yaml(traverse(self, ignore_none, force_value=True))
 
 
 class CsvTransformer():
@@ -267,4 +278,4 @@ class CsvTransformer():
             John,2,[{'name': 'Orange'}]
             <BLANKLINE>
         """
-        return util.dump_csv(traverse(self), fieldnames, with_header, crlf)
+        return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf)
