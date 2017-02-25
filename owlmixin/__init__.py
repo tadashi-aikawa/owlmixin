@@ -106,8 +106,9 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dict(None)
+            >>> Human.from_optional_dict({})
         """
-        return d and cls.from_dict(d, force_snake_case)
+        return cls.from_dict(d, force_snake_case) if d else None
 
     @classmethod
     def from_dicts(cls, ds, force_snake_case=True):
@@ -148,8 +149,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts(None)
+            >>> Human.from_optional_dicts([])
+            []
         """
-        return ds and cls.from_dicts(ds, force_snake_case)
+        return cls.from_dicts(ds, force_snake_case) if ds is not None else None
 
     @classmethod
     def from_dicts_by_key(cls, ds, force_snake_case=True):
@@ -191,8 +194,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
 
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dicts_by_key(None)
+            >>> Human.from_optional_dicts_by_key({})
+            {}
         """
-        return ds and cls.from_dicts_by_key(ds, force_snake_case)
+        return cls.from_dicts_by_key(ds, force_snake_case) if ds is not None else None
 
     @classmethod
     def from_json(cls, data, force_snake_case=True):

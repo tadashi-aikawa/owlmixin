@@ -191,6 +191,9 @@ class TestFromOptionalDict:
     def test_none(self):
         assert Human.from_optional_dict(None) is None
 
+    def test_empty(self):
+        assert Human.from_optional_dict({}) is None
+
 
 class TestToDict:
     def test_normal(self):
@@ -357,6 +360,11 @@ class TestFromOptionalDicts:
     def test_none(self):
         assert Human.from_optional_dicts(None) is None
 
+    def test_empty(self):
+        r = Human.from_optional_dicts([])
+        assert isinstance(r, TList) is True
+        assert len(r) == 0
+
 
 class TestFromDictsByKey:
     def test_normal(self):
@@ -411,6 +419,11 @@ class TestFromOptionalDictsByKey:
 
     def test_none(self):
         assert Human.from_optional_dicts_by_key(None) is None
+
+    def test_empty(self):
+        r = Human.from_optional_dicts_by_key({})
+        assert isinstance(r, TDict) is True
+        assert len(r) == 0
 
 
 class TestFromCsvf:
