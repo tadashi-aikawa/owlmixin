@@ -35,6 +35,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(map(func, self))
 
+    def emap(self, func):
+        """
+        :param func:
+        :type func: T, int -> U
+        :rtype: TList[U]
+
+        Usage:
+
+            >>> TList([10, 20, 30, 40, 50]).emap(lambda x, i: (x+1, i))
+            [(11, 0), (21, 1), (31, 2), (41, 3), (51, 4)]
+        """
+        return TList([func(x, i) for i, x in enumerate(self)])
+
     def flatten(self):
         """
         :rtype: TList[U]

@@ -146,6 +146,18 @@ class TestMap:
         ]
 
 
+class TestEMap:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).emap(lambda s, i: (i+1, s.names)) == [
+            (1, ["spot1"]), (2, ["spot21", "spot22"])
+        ]
+
+
 class TestFlatten:
     def test_normal(self):
         assert TList([[1, 2], [3, 4]]).flatten() == [1, 2, 3, 4]
