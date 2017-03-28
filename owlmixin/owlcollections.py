@@ -98,6 +98,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([x for x in self if not func(x)])
 
+    def partial(self, func):
+        """
+        :param func:
+        :type func: T -> bool
+        :rtype: tuple(TList[T], TList[T])
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).partial(lambda x: x > 3)
+            ([4, 5], [1, 2, 3])
+        """
+        return self.filter(func), self.reject(func)
+
     def group_by(self, to_key):
         """
         :param to_key:

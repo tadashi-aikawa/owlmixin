@@ -197,6 +197,23 @@ class TestReject:
         ]
 
 
+class TestPartial:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        fulfilled, rejected = Spot.from_dicts(d).partial(lambda s: s.address)
+
+        assert fulfilled.to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}}
+        ]
+        assert rejected.to_dicts() == [
+            {"names": ["spot21", "spot22"]}
+        ]
+
+
 class TestGroupBy:
     def test_normal(self):
         d = [
