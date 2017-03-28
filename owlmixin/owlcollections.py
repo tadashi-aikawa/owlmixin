@@ -133,18 +133,22 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values):
+    def concat(self, values, first=False):
         """
         :param values:
         :type values: TList[T]
+        :param first:
+        :type first: bool
         :rtype: TList[T]
 
         Usage:
 
             >>> TList([1, 2]).concat(TList([3, 4]))
             [1, 2, 3, 4]
+            >>> TList([1, 2]).concat(TList([3, 4]), first=True)
+            [3, 4, 1, 2]
         """
-        return self + values
+        return values + self if first else self + values
 
     def reduce(self, func, init_value):
         """

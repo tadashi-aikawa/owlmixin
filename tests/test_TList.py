@@ -267,6 +267,21 @@ class TestConcat:
             {"names": ["spot31", "spot32"]}
         ]
 
+    def test_first(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        e = [
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).concat(Spot.from_dicts(e), first=True).to_dicts() == [
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
 
 class TestReduce:
     def test_normal(self):
