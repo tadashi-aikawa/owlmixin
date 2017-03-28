@@ -35,6 +35,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(map(func, self))
 
+    def emap(self, func):
+        """
+        :param func:
+        :type func: T, int -> U
+        :rtype: TList[U]
+
+        Usage:
+
+            >>> TList([10, 20, 30, 40, 50]).emap(lambda x, i: (x+1, i))
+            [(11, 0), (21, 1), (31, 2), (41, 3), (51, 4)]
+        """
+        return TList([func(x, i) for i, x in enumerate(self)])
+
     def flatten(self):
         """
         :rtype: TList[U]
@@ -85,6 +98,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([x for x in self if not func(x)])
 
+    def partial(self, func):
+        """
+        :param func:
+        :type func: T -> bool
+        :rtype: tuple(TList[T], TList[T])
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).partial(lambda x: x > 3)
+            ([4, 5], [1, 2, 3])
+        """
+        return self.filter(func), self.reject(func)
+
     def group_by(self, to_key):
         """
         :param to_key:
@@ -120,18 +146,22 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values):
+    def concat(self, values, first=False):
         """
         :param values:
         :type values: TList[T]
+        :param first:
+        :type first: bool
         :rtype: TList[T]
 
         Usage:
 
             >>> TList([1, 2]).concat(TList([3, 4]))
             [1, 2, 3, 4]
+            >>> TList([1, 2]).concat(TList([3, 4]), first=True)
+            [3, 4, 1, 2]
         """
-        return self + values
+        return values + self if first else self + values
 
     def reduce(self, func, init_value):
         """

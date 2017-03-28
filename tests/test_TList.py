@@ -146,6 +146,18 @@ class TestMap:
         ]
 
 
+class TestEMap:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        assert Spot.from_dicts(d).emap(lambda s, i: (i+1, s.names)) == [
+            (1, ["spot1"]), (2, ["spot21", "spot22"])
+        ]
+
+
 class TestFlatten:
     def test_normal(self):
         assert TList([[1, 2], [3, 4]]).flatten() == [1, 2, 3, 4]
@@ -181,6 +193,23 @@ class TestReject:
         ]
 
         assert Spot.from_dicts(d).reject(lambda s: s.address).to_dicts() == [
+            {"names": ["spot21", "spot22"]}
+        ]
+
+
+class TestPartial:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        fulfilled, rejected = Spot.from_dicts(d).partial(lambda s: s.address)
+
+        assert fulfilled.to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}}
+        ]
+        assert rejected.to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 
@@ -255,6 +284,21 @@ class TestConcat:
             {"names": ["spot31", "spot32"]}
         ]
 
+    def test_first(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+
+        e = [
+            {"names": ["spot31", "spot32"]}
+        ]
+
+        assert Spot.from_dicts(d).concat(Spot.from_dicts(e), first=True).to_dicts() == [
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
 
 class TestReduce:
     def test_normal(self):
