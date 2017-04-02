@@ -20,6 +20,7 @@ class OwlEnum(ValueTransformer, Enum):
 
 class OwlObjectEnum(ValueTransformer, Enum):
     """ This class is similar to OwlEnum except that can have additional object.
+    TODO: Not exec doctest
     """
     def __init__(self, symbol, obj):
         self.symbol = symbol
