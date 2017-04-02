@@ -2,7 +2,13 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+from owlmixin import OwlMixin
 from owlmixin.owlenum import OwlObjectEnum
+
+
+class Sample(OwlMixin):
+    def __init__(self, color):
+        self.color = Color.from_symbol(color)
 
 
 class Color(OwlObjectEnum):
@@ -42,3 +48,13 @@ class TestProperty:
 class TestFunction:
     def test_normal(self):
         assert Color.BLUE.coloring("sky") == "Blue: sky"
+
+
+class TestOwlMixin:
+    def test_to_dict(self):
+        assert Sample.from_dict({"color": "blue"}).to_dict() == {
+            "color": Color.BLUE
+        }
+
+    def test_to_json(self):
+        assert Sample.from_dict({"color": "blue"}).to_json() == '{"color": "blue"}'
