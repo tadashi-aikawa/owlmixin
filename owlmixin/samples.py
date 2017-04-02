@@ -4,8 +4,16 @@ from __future__ import division, absolute_import, unicode_literals
 
 from typing import Optional
 from owlmixin.owlcollections import TList, TDict
-from owlmixin.owlenum import OwlEnum
+from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import OwlMixin
+
+
+class Animal(OwlObjectEnum):  # pragma: no cover
+    DOG = ("dog", "bow-wow")
+    CAT = ("cat", "mewing")
+
+    def crow(self):
+        return self.object
 
 
 class Color(OwlEnum):  # pragma: no cover

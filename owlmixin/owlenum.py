@@ -3,8 +3,12 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from enum import Enum
+from typing import TypeVar
 
 from owlmixin.transformers import ValueTransformer
+
+
+T = TypeVar('T', bound='OwlObjectEnum')
 
 
 class OwlEnum(ValueTransformer, Enum):
@@ -12,3 +16,31 @@ class OwlEnum(ValueTransformer, Enum):
     """
     def to_value(self):
         return self.value
+
+
+class OwlObjectEnum(ValueTransformer, Enum):
+    """ This class is similar to OwlEnum except that can have additional object.
+    """
+    def __init__(self, symbol, obj):
+        self.symbol = symbol
+        self.object = obj
+
+    @classmethod
+    def from_symbol(cls, symbol):
+        """Create instance from symbol
+
+        :param symbol: unique symbol
+        :type symbol: unicode
+        :return: This instance
+        :rtype: T
+
+        Usage:
+
+            >>> from owlmixin.samples import Animal
+            >>> Animal.from_symbol('cat').crow()
+            mewing
+        """
+        return [x for x in cls.__members__.values() if x.value[0] == symbol][0]
+
+    def to_value(self):
+        return self.symbol
