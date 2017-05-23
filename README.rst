@@ -30,9 +30,6 @@ Example
 | You don't need to use ``typing`` necessarily, but I recommend to use this to make your codes more robust.
 | See `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_.
 
-.. warning::
-
-    If you use python 3.5.0 or 3.5.1, please use ``# type: str`` instead of ``# type: Text``
 
 .. code-block:: python
 

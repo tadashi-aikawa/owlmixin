@@ -12,8 +12,8 @@ import json
 import yaml
 from yaml import Loader, SafeLoader
 
-import unicodecsv as csv
-from unicodecsv import register_dialect, Dialect, QUOTE_MINIMAL
+import csv
+from csv import register_dialect, Dialect, QUOTE_MINIMAL
 from typing import List, Optional, Dict
 
 
@@ -35,9 +35,6 @@ class LfDialect(Dialect):
     lineterminator = '\n'
     quoting = QUOTE_MINIMAL
 register_dialect("lf", LfDialect)
-
-
-PYTHON2 = sys.version_info < (3, 0)
 
 
 class MyDumper(yaml.SafeDumper):
@@ -154,13 +151,13 @@ def load_csvf(fpath, fieldnames, encoding):
     :param unicode encoding:
     :rtype: List[dict]
     """
-    with open(fpath, 'rb') as f:
+    with open(fpath, mode='r', encoding=encoding) as f:
         snippet = f.read(8192)
         f.seek(0)
 
-        dialect = csv.Sniffer().sniff(snippet if PYTHON2 else snippet.decode(encoding))
+        dialect = csv.Sniffer().sniff(snippet)
         dialect.skipinitialspace = True
-        return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect, encoding=encoding))
+        return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect))
 
 
 def load_json_url(url):
@@ -183,15 +180,15 @@ def dump_csv(data, fieldnames, with_header=False, crlf=False):
         # XXX: Double quotation behaves strangely... so replace (why?)
         return dump_json(v).replace('"', "'") if isinstance(v, (dict, list)) else v
 
-    with io.BytesIO() as sio:
+    with io.StringIO() as sio:
         dialect = 'crlf' if crlf else 'lf'
-        writer = csv.DictWriter(sio, fieldnames=fieldnames, encoding='utf8', dialect=dialect)
+        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect)
         if with_header:
             writer.writeheader()
         for x in data:
             writer.writerow({k: force_str(v) for k, v in x.items()})
         sio.seek(0)
-        return sio.read().decode('utf8')
+        return sio.read()
 
 
 def dump_json(data, indent=None):
