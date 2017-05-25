@@ -11,4 +11,4 @@ favorite_spots:
 favorite_animal:
   id: 1
   name: "a dog"
-  is_big: 0
+  is_big: false

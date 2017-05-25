@@ -1,37 +1,26 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
 import pytest
 from typing import List, Optional
 
-from owlmixin import OwlMixin
+from owlmixin import OwlMixin, Option
 from owlmixin.owlcollections import TList
-
-# For python 3.5.0-3.5.1
-try:
-    from typing import Text
-except ImportError:
-    pass
 
 
 class Address(OwlMixin):
-    def __init__(self, name):
-        self.name = name  # type: Text
+    name: str
 
 
 class Spot(OwlMixin):
-    def __init__(self, names, address=None):
-        self.names = names  # type: List[Text]
-        self.address = Address.from_optional_dict(address)  # type: Optional[Address]
+    names: TList[str]
+    address: Option[Address]
 
 
 class Human(OwlMixin):
-    def __init__(self, id, name, ruby=None, address=None):
-        self.id = id  # type: int
-        self.name = name  # type: Text
-        self.ruby = ruby  # type: Optional[Text]
-        self.address = address  # type: Optional[Address]
+    id: int
+    name: str
+    ruby: Option[str]
+    address: Option[Address]
 
 
 class Test__Add__:
@@ -180,7 +169,7 @@ class TestFilter:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).filter(lambda s: s.address).to_dicts() == [
+        assert Spot.from_dicts(d).filter(lambda s: s.address.get()).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 
@@ -192,7 +181,7 @@ class TestReject:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).reject(lambda s: s.address).to_dicts() == [
+        assert Spot.from_dicts(d).reject(lambda s: s.address.get()).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 
@@ -204,7 +193,7 @@ class TestPartial:
             {"names": ["spot21", "spot22"]}
         ]
 
-        fulfilled, rejected = Spot.from_dicts(d).partial(lambda s: s.address)
+        fulfilled, rejected = Spot.from_dicts(d).partial(lambda s: s.address.get())
 
         assert fulfilled.to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}

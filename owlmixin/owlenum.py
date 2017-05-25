@@ -14,7 +14,7 @@ T = TypeVar('T', bound='OwlObjectEnum')
 class OwlEnum(ValueTransformer, Enum):
     """ This class is similar to Enum except that can dump as json or yaml
     """
-    def to_value(self):
+    def to_value(self, ignore_none, force_value):
         return self.value
 
 
@@ -43,5 +43,5 @@ class OwlObjectEnum(ValueTransformer, Enum):
         """
         return [x for x in cls.__members__.values() if x.value[0] == symbol][0]
 
-    def to_value(self):
+    def to_value(self, ignore_none, force_value):
         return self.symbol

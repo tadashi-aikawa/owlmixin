@@ -1,5 +1,5 @@
 {
-    "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+    "favorite_animal": {"id": 1, "name": "a dog", "is_big": false},
     "favorite_spots": [
         {
             "names": ["spot1"],

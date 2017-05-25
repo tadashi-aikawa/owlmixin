@@ -1,11 +1,7 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
-from typing import List, Optional
-
-from owlmixin import OwlMixin
-from owlmixin.owlcollections import TDict
+from owlmixin import OwlMixin, Option
+from owlmixin.owlcollections import TDict, TList
 
 # For python 3.5.0-3.5.1
 try:
@@ -15,14 +11,12 @@ except ImportError:
 
 
 class Address(OwlMixin):
-    def __init__(self, name):
-        self.name = name  # type: Text
+    name: str
 
 
 class Spot(OwlMixin):
-    def __init__(self, names, address=None):
-        self.names = names  # type: List[Text]
-        self.address = Address.from_optional_dict(address)  # type: Optional[Address]
+    names: TList[str]
+    address: Option[Address]
 
 
 class TestMap:
@@ -63,7 +57,7 @@ class TestFilter:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).filter(lambda k, v: v.address).to_dicts() == [
+        assert Spot.from_dicts_by_key(d).filter(lambda k, v: v.address.get()).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 
@@ -75,7 +69,7 @@ class TestReject:
             "b": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address).to_dicts() == [
+        assert Spot.from_dicts_by_key(d).reject(lambda k, v: v.address.get()).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 

@@ -1,13 +1,23 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
 from owlmixin import util
+from owlmixin.owloption import Option
+
+
+class ValueTransformer():
+    def to_value(self, ignore_none, force_value):
+        return str(self)
+
+
+def is_ignore(v):
+    return v is None or (isinstance(v, Option) and v.is_none())
 
 
 def traverse(value, ignore_none=True, force_value=False):
     if force_value and isinstance(value, ValueTransformer):
-        return value.to_value()
+        return value.to_value(ignore_none, force_value)
+    elif isinstance(value, Option):
+        return traverse(value.get(), ignore_none, force_value)
     elif isinstance(value, dict):
         return traverse_dict(value, ignore_none, force_value)
     elif isinstance(value, list):
@@ -21,23 +31,18 @@ def traverse(value, ignore_none=True, force_value=False):
 def traverse_dict(instance_dict, ignore_none, force_value=False):
     return {k: traverse(v, ignore_none, force_value) for
             k, v in instance_dict.items()
-            if not (ignore_none and v is None)}
+            if not (ignore_none and is_ignore(v))}
 
 
 def traverse_list(instance_list, ignore_none, force_value=False):
-    return [traverse(i, ignore_none, force_value) for i in instance_list]
-
-
-class ValueTransformer():
-    def to_value(self):
-        return str(self)
+    return [traverse(i, ignore_none, force_value) for i in instance_list if not (ignore_none and is_ignore(i))]
 
 
 class DictTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dict(self, ignore_none=True, force_value=False):
+    def to_dict(self, ignore_none=True, force_value=True):
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
@@ -85,7 +90,7 @@ class DictsTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dicts(self, ignore_none=True, force_value=False):
+    def to_dicts(self, ignore_none=True, force_value=True):
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True

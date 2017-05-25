@@ -1,16 +1,26 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
 from typing import TypeVar, List, Dict, Optional
 
 from owlmixin.owlcollections import TList, TDict
+from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import util
-from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict
+from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict, Option
 
 __version__ = '1.2.0'
 
 T = TypeVar('T', bound='OwlMixin')
+
+
+def _is_generic(type):
+    return hasattr(type, '__origin__')
+
+
+def assert_type(value, type_):
+    assert isinstance(value, type_), f'''
+    Invalid type. Expected: {type_}. Actual: {type(value)}
+    value = {value}
+    '''
 
 
 class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
@@ -19,7 +29,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         return self.__dict__
 
     @classmethod
-    def from_dict(cls, d, force_snake_case=True):
+    def from_dict(cls, d, force_snake_case=True, force_cast=False) -> T:
         """From dict to instance
 
         :param d: Dict
@@ -89,10 +99,54 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
                 ...
             TypeError: __init__() got an unexpected keyword argument 'hogehoge'
         """
-        return cls(**util.replace_keys(d, {"self": "_self"}, force_snake_case))
+        if isinstance(d, cls):
+            return d
+
+        x = cls()
+        d = util.replace_keys(d, {"self": "_self"}, force_snake_case)
+
+        def traverse(type_, value):
+            if hasattr(type_, '__forward_arg__'):
+                # XXX: Only if `_ForwardRef` includes myself
+                type_ = cls
+            if isinstance(value, type_):
+                return value
+
+            if not _is_generic(type_):
+                if issubclass(type_, OwlMixin):
+                    return type_.from_dict(value, force_snake_case)
+                elif issubclass(type_, OwlEnum):
+                    return type_(value)
+                elif issubclass(type_, OwlObjectEnum):
+                    return type_.from_symbol(value)
+                else:
+                    if force_cast:
+                        return type_(value)
+                    else:
+                        assert_type(value, type_)
+                        return value
+
+            o_type = type_.__origin__
+            g_type = type_.__args__
+
+            if o_type == TList:
+                assert_type(value, list)
+                return TList([traverse(g_type[0], v) for v in value])
+            elif o_type == TDict:
+                assert_type(value, dict)
+                return TDict({k: traverse(g_type[0], v) for k, v in value.items()})
+            elif o_type == Option:
+                return Option(None) if value is None else Option(traverse(g_type[0], value))
+            else:
+                assert False, f"This generics is not supported {o_type}"
+
+        for n, t in cls.__annotations__.items():
+            setattr(x, n, traverse(t, d.get(n)))
+
+        return x
 
     @classmethod
-    def from_optional_dict(cls, d, force_snake_case=True):
+    def from_optional_dict(cls, d, force_snake_case=True) -> Option[T]:
         """From dict to instance. If d is None, return None.
 
         :param d: Dict
@@ -100,7 +154,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :type force_snake_case: bool
         :return: Instance
-        :rtype: Optional[T]
+        :rtype: Option[T]
 
         Usage:
 
@@ -108,10 +162,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
             >>> Human.from_optional_dict(None)
             >>> Human.from_optional_dict({})
         """
-        return cls.from_dict(d, force_snake_case) if d else None
+        return Option(cls.from_dict(d, force_snake_case) if d else None)
 
     @classmethod
-    def from_dicts(cls, ds, force_snake_case=True):
+    def from_dicts(cls, ds, force_snake_case=True, force_cast=False):
         """From list of dict to list of instance
 
         :param ds: List of dict
@@ -133,7 +187,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
             >>> humans[1].name
             'John'
         """
-        return TList([cls.from_dict(d, force_snake_case) for d in ds])
+        return TList([cls.from_dict(d, force_snake_case, force_cast) for d in ds])
 
     @classmethod
     def from_optional_dicts(cls, ds, force_snake_case=True):
@@ -396,7 +450,8 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
         :return: List of Instance
         :rtype: TList[T]
         """
-        return cls.from_dicts(util.load_csvf(fpath, fieldnames, encoding), force_snake_case=force_snake_case)
+        return cls.from_dicts(util.load_csvf(fpath, fieldnames, encoding),
+                              force_snake_case=force_snake_case, force_cast=True)
 
     @classmethod
     def from_json_url(cls, url, force_snake_case=True):
