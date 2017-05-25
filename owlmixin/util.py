@@ -182,7 +182,7 @@ def dump_csv(data, fieldnames, with_header=False, crlf=False):
 
     with io.StringIO() as sio:
         dialect = 'crlf' if crlf else 'lf'
-        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect)
+        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect, extrasaction='ignore')
         if with_header:
             writer.writeheader()
         for x in data:

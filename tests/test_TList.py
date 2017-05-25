@@ -66,6 +66,17 @@ class TestToCsv:
 2,二郎,じろう
 """.lstrip()
 
+    def test_ignore_extra_params(self):
+        d = [
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ]
+
+        assert Human.from_dicts(d).to_csv(["id", "name"]) == """
+1,一郎
+2,二郎
+""".lstrip()
+
     def test_with_header(self):
         d = [
             {"id": 1, "name": "一郎"},
