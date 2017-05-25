@@ -49,43 +49,6 @@ Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
-class O:
-    """
-    Warning: This class is trial now
-    """
-    def __init__(self, value):
-        self.value = value
-
-    def then(self, func):
-        """
-        :param Any -> Any func:
-        :rtype: Or
-        """
-        return Or(func(self.value)) if self.value is not None else Or(self.value)
-
-    def then_or_none(self, func):
-        """
-        :param Any -> Any func:
-        :rtype: Optional[Any]
-        """
-        return func(self.value) if self.value is not None else None
-
-
-class Or:
-    """
-    Warning: This class is trial now
-    """
-    def __init__(self, value):
-        self.value = value
-
-    def or_(self, default_value=None):
-        """
-        :param Any default_value:
-        :rtype: Any
-        """
-        return self.value if self.value is not None else default_value
-
-
 def replace_keys(d, keymap, force_snake_case):
     """
     :param dict d:
