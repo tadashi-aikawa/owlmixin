@@ -24,6 +24,42 @@ def assert_type(value, type_):
     '''
 
 
+def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
+    if hasattr(type_, '__forward_arg__'):
+        # XXX: Only if `_ForwardRef` includes myself
+        type_ = cls
+    if isinstance(value, type_):
+        return value
+
+    if not _is_generic(type_):
+        if issubclass(type_, OwlMixin):
+            return type_.from_dict(value, force_snake_case)
+        elif issubclass(type_, OwlEnum):
+            return type_(value)
+        elif issubclass(type_, OwlObjectEnum):
+            return type_.from_symbol(value)
+        else:
+            if force_cast:
+                return type_(value)
+            else:
+                assert_type(value, type_)
+                return value
+
+    o_type = type_.__origin__
+    g_type = type_.__args__
+
+    if o_type == TList:
+        assert_type(value, list)
+        return TList([traverse(g_type[0], v, cls, force_snake_case, force_cast) for v in value])
+    elif o_type == TDict:
+        assert_type(value, dict)
+        return TDict({k: traverse(g_type[0], v, cls, force_snake_case, force_cast) for k, v in value.items()})
+    elif o_type == Option:
+        return Option(None) if value is None else Option(traverse(g_type[0], value, cls, force_snake_case, force_cast))
+    else:
+        assert False, f"This generics is not supported {o_type}"
+
+
 class OwlMeta(type):
     def __new__(meta, name, bases, class_dict):
         cls = type.__new__(meta, name, bases, class_dict)
@@ -110,49 +146,14 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         if isinstance(d, cls):
             return d
 
-        x = cls()
+        instance = cls()
         d = util.replace_keys(d, {"self": "_self"}, force_snake_case)
-
-        def traverse(type_, value):
-            if hasattr(type_, '__forward_arg__'):
-                # XXX: Only if `_ForwardRef` includes myself
-                type_ = cls
-            if isinstance(value, type_):
-                return value
-
-            if not _is_generic(type_):
-                if issubclass(type_, OwlMixin):
-                    return type_.from_dict(value, force_snake_case)
-                elif issubclass(type_, OwlEnum):
-                    return type_(value)
-                elif issubclass(type_, OwlObjectEnum):
-                    return type_.from_symbol(value)
-                else:
-                    if force_cast:
-                        return type_(value)
-                    else:
-                        assert_type(value, type_)
-                        return value
-
-            o_type = type_.__origin__
-            g_type = type_.__args__
-
-            if o_type == TList:
-                assert_type(value, list)
-                return TList([traverse(g_type[0], v) for v in value])
-            elif o_type == TDict:
-                assert_type(value, dict)
-                return TDict({k: traverse(g_type[0], v) for k, v in value.items()})
-            elif o_type == Option:
-                return Option(None) if value is None else Option(traverse(g_type[0], value))
-            else:
-                assert False, f"This generics is not supported {o_type}"
 
         for n, t in cls.__annotations__.items():
             f = cls._methods_dict.get(f'_{cls.__name__}___{n}')
-            setattr(x, n, traverse(t, f(d.get(n)) if f else d.get(n)))
+            setattr(instance, n, traverse(t, f(d.get(n)) if f else d.get(n), cls, force_snake_case, force_cast))
 
-        return x
+        return instance
 
     @classmethod
     def from_optional_dict(cls, d, force_snake_case=True) -> Option[T]:
