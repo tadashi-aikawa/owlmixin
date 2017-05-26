@@ -19,8 +19,12 @@ class Color(OwlEnum):
 
 class Paper(OwlMixin):
     name: str
-    width: int
+    width: str
     height: int
+
+    @classmethod
+    def ___width(cls, v: int) -> str:
+        return f'{v} px'
 
 
 class Address(OwlMixin):
@@ -448,36 +452,36 @@ class TestFromCsvf:
         rs = Paper.from_csvf("tests/csv/papers_without_header.csv", ("name", "width", "height"))
 
         assert rs.to_dicts() == [
-            {"name": "紙1", "width": 100, "height": 10},
-            {"name": "紙2", "width": 200, "height": 20},
-            {"name": "紙3", "width": 300, "height": 30}
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_with_header(self):
         rs = Paper.from_csvf("tests/csv/papers_with_header.csv")
 
         assert rs.to_dicts() == [
-            {"name": "紙1", "width": 100, "height": 10},
-            {"name": "紙2", "width": 200, "height": 20},
-            {"name": "紙3", "width": 300, "height": 30}
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_separated_by_tab(self):
         rs = Paper.from_csvf("tests/csv/papers_tab_separated.csv", ("name", "width", "height"))
 
         assert rs.to_dicts() == [
-            {"name": "紙1", "width": 100, "height": 10},
-            {"name": "紙2", "width": 200, "height": 20},
-            {"name": "紙3", "width": 300, "height": 30}
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_shiftjis(self):
         rs = Paper.from_csvf("tests/csv/papers_shiftjis.csv", encoding='shift-jis')
 
         assert rs.to_dicts() == [
-            {"name": "紙1", "width": 100, "height": 10},
-            {"name": "紙2", "width": 200, "height": 20},
-            {"name": "紙3", "width": 300, "height": 30}
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
 

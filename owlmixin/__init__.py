@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from typing import TypeVar, List, Dict, Optional
+import inspect
 
 from owlmixin.owlcollections import TList, TDict
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
@@ -23,7 +24,14 @@ def assert_type(value, type_):
     '''
 
 
-class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
+class OwlMeta(type):
+    def __new__(meta, name, bases, class_dict):
+        cls = type.__new__(meta, name, bases, class_dict)
+        cls._members_dict = dict(inspect.getmembers(cls, inspect.ismethod))
+        return cls
+
+
+class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlMeta):
     @property
     def _dict(self):
         return self.__dict__
@@ -141,7 +149,8 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer):
                 assert False, f"This generics is not supported {o_type}"
 
         for n, t in cls.__annotations__.items():
-            setattr(x, n, traverse(t, d.get(n)))
+            f = cls._members_dict.get(f'_{cls.__name__}___{n}')
+            setattr(x, n, traverse(t, f(d.get(n)) if f else d.get(n)))
 
         return x
 
