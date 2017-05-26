@@ -27,7 +27,7 @@ def assert_type(value, type_):
 class OwlMeta(type):
     def __new__(meta, name, bases, class_dict):
         cls = type.__new__(meta, name, bases, class_dict)
-        cls._members_dict = dict(inspect.getmembers(cls, inspect.ismethod))
+        cls._methods_dict = dict(inspect.getmembers(cls, inspect.ismethod))
         return cls
 
 
@@ -149,7 +149,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
                 assert False, f"This generics is not supported {o_type}"
 
         for n, t in cls.__annotations__.items():
-            f = cls._members_dict.get(f'_{cls.__name__}___{n}')
+            f = cls._methods_dict.get(f'_{cls.__name__}___{n}')
             setattr(x, n, traverse(t, f(d.get(n)) if f else d.get(n)))
 
         return x
