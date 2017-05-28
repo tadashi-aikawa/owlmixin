@@ -17,10 +17,34 @@ def _is_generic(type):
     return hasattr(type, '__origin__')
 
 
+def assert_none(value, type_, cls):
+    assert value is not None, f'''
+.        ∧,,_∧      ,___________________
+     ⊂ ( ･ω･ )つ-  <  Required error!!  |
+   ／／/     /::/     `-------------------
+   |::|/⊂ヽノ|::|」
+／￣￣旦￣￣￣／|
+＿＿＿＿＿＿／  | |
+|------ー----ー|／
+    
+* Type {type_} must not be None.
+* Class: {cls}
+    '''
+
+
 def assert_type(value, type_):
     assert isinstance(value, type_), f'''
-    Invalid type. Expected: {type_}. Actual: {type(value)}
-    value = {value}
+.        ∧,,_∧      ,_______________________
+     ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
+   ／／/     /::/     `-----------------------
+   |::|/⊂ヽノ|::|」
+／￣￣旦￣￣￣／|
+＿＿＿＿＿＿／  | |
+|------ー----ー|／
+    
+* Expected: {type_}
+* Actual: {type(value)}
+* value: {value}
     '''
 
 
@@ -32,6 +56,7 @@ def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
         return value
 
     if not _is_generic(type_):
+        assert_none(value, type_, cls)
         if issubclass(type_, OwlMixin):
             return type_.from_dict(value, force_snake_case)
         elif issubclass(type_, OwlEnum):
@@ -49,9 +74,11 @@ def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
     g_type = type_.__args__
 
     if o_type == TList:
+        assert_none(value, type_, cls)
         assert_type(value, list)
         return TList([traverse(g_type[0], v, cls, force_snake_case, force_cast) for v in value])
     elif o_type == TDict:
+        assert_none(value, type_, cls)
         assert_type(value, dict)
         return TDict({k: traverse(g_type[0], v, cls, force_snake_case, force_cast) for k, v in value.items()})
     elif o_type == Option:
