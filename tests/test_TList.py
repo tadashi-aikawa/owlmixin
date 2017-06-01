@@ -3,7 +3,7 @@
 import pytest
 from typing import List, Optional
 
-from owlmixin import OwlMixin, Option
+from owlmixin import OwlMixin, TOption
 from owlmixin.owlcollections import TList
 
 
@@ -13,14 +13,14 @@ class Address(OwlMixin):
 
 class Spot(OwlMixin):
     names: TList[str]
-    address: Option[Address]
+    address: TOption[Address]
 
 
 class Human(OwlMixin):
     id: int
     name: str
-    ruby: Option[str]
-    address: Option[Address]
+    ruby: TOption[str]
+    address: TOption[Address]
 
 
 class Test__Add__:

@@ -6,7 +6,7 @@ import inspect
 from owlmixin.owlcollections import TList, TDict
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import util
-from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict, Option
+from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict, TOption
 
 __version__ = '1.2.0'
 
@@ -117,8 +117,8 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool):
         assert_none(value, type_, cls, name)
         assert_type(value, dict, name)
         return TDict({k: traverse(g_type[0], name, v, cls, force_snake_case, force_cast) for k, v in value.items()})
-    elif o_type == Option:
-        return Option(None) if value is None else Option(traverse(g_type[0], name, value, cls, force_snake_case, force_cast))
+    elif o_type == TOption:
+        return TOption(None) if value is None else TOption(traverse(g_type[0], name, value, cls, force_snake_case, force_cast))
     else:
         assert False, f"This generics is not supported {o_type}"
 
@@ -248,7 +248,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_optional_dict(cls, d: Optional[dict],
-                           force_snake_case: bool=True,force_cast: bool=False, restrict: bool=True) -> Option[T]:
+                           force_snake_case: bool=True,force_cast: bool=False, restrict: bool=True) -> TOption[T]:
         """From dict to optional instance.
 
         :param d: Dict
@@ -284,10 +284,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             -----------------------------------------------------------------------
             <BLANKLINE>
         """
-        return Option(cls.from_dict(d,
-                                    force_snake_case=force_snake_case,
-                                    force_cast=force_cast,
-                                    restrict=restrict) if d is not None else None)
+        return TOption(cls.from_dict(d,
+                                     force_snake_case=force_snake_case,
+                                     force_cast=force_cast,
+                                     restrict=restrict) if d is not None else None)
 
     @classmethod
     def from_dicts(cls, ds: List[dict],
@@ -319,7 +319,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_optional_dicts(cls, ds: Optional[List[dict]],
-                            force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> Option[TList[T]]:
+                            force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> TOption[TList[T]]:
         """From list of dict to optional list of instance.
 
         :param ds: List of dict
@@ -336,10 +336,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> Human.from_optional_dicts([]).get()
             []
         """
-        return Option(cls.from_dicts(ds,
-                                     force_snake_case=force_snake_case,
-                                     force_cast=force_cast,
-                                     restrict=restrict) if ds is not None else None)
+        return TOption(cls.from_dicts(ds,
+                                      force_snake_case=force_snake_case,
+                                      force_cast=force_cast,
+                                      restrict=restrict) if ds is not None else None)
 
     @classmethod
     def from_dicts_by_key(cls, ds: dict,
@@ -371,7 +371,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_optional_dicts_by_key(cls, ds: Optional[dict],
-                                   force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> Option[TDict[T]]:
+                                   force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> TOption[TDict[T]]:
         """From dict of dict to optional dict of instance.
 
         :param ds: Dict of dict
@@ -388,10 +388,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> Human.from_optional_dicts_by_key({}).get()
             {}
         """
-        return Option(cls.from_dicts_by_key(ds,
-                                            force_snake_case=force_snake_case,
-                                            force_cast=force_cast,
-                                            restrict=restrict) if ds is not None else None)
+        return TOption(cls.from_dicts_by_key(ds,
+                                             force_snake_case=force_snake_case,
+                                             force_cast=force_cast,
+                                             restrict=restrict) if ds is not None else None)
 
     @classmethod
     def from_json(cls, data: str, force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> T:

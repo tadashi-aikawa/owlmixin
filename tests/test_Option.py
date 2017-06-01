@@ -1,14 +1,14 @@
 # coding: utf-8
 
 import pytest
-from owlmixin import OwlMixin, Option, TList
+from owlmixin import OwlMixin, TOption, TList
 
 
 class Spot(OwlMixin):
     id: int
     name: str
-    note: Option[str]
-    children: Option[TList['Spot']]
+    note: TOption[str]
+    children: TOption[TList['Spot']]
 
 
 class TestOption:

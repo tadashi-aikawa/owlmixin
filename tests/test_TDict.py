@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from owlmixin import OwlMixin, Option
+from owlmixin import OwlMixin, TOption
 from owlmixin.owlcollections import TDict, TList
 
 # For python 3.5.0-3.5.1
@@ -16,7 +16,7 @@ class Address(OwlMixin):
 
 class Spot(OwlMixin):
     names: TList[str]
-    address: Option[Address]
+    address: TOption[Address]
 
 
 class TestMap:

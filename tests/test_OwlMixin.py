@@ -7,7 +7,7 @@ import pytest
 
 from owlmixin import OwlMixin
 from owlmixin.owlcollections import TDict, TList
-from owlmixin.transformers import Option
+from owlmixin.transformers import TOption
 from owlmixin.owlenum import OwlEnum
 
 
@@ -33,8 +33,8 @@ class Address(OwlMixin):
 
 class Spot(OwlMixin):
     names: TList[str]
-    address: Option[Address]
-    color: Option[Color]
+    address: TOption[Address]
+    color: TOption[Color]
 
 
 class Animal(OwlMixin):
@@ -57,7 +57,7 @@ class Human(OwlMixin):
     name: str
     favorite_spots: TList[Spot]
     favorite_animal: Animal
-    friends_by_short_name: Option[TDict['Human']]
+    friends_by_short_name: TOption[TDict['Human']]
 
 
 SAMPLE_HUMAN = {
@@ -372,7 +372,7 @@ class TestFromDicts:
 
 class TestFromOptionalDicts:
     def test_normal(self):
-        r: Option[TList[Spot]] = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
+        r: TOption[TList[Spot]] = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
 
         assert len(r.get()) == 2
         assert type(r.get()) == TList
@@ -416,7 +416,7 @@ class TestFromDictsByKey:
 
 class TestFromOptionalDictsByKey:
     def test_normal(self):
-        r: Option[TDict[Human]] = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
+        r: TOption[TDict[Human]] = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
 
         assert len(r.get()) == 2
         assert type(r.get()) == TDict

@@ -6,7 +6,7 @@ from typing import Generic, TypeVar
 T = TypeVar('T')
 
 
-class Option(Generic[T]):
+class TOption(Generic[T]):
     def __init__(self, value):
         self.value = value
 

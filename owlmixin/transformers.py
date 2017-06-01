@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from owlmixin import util
-from owlmixin.owloption import Option
+from owlmixin.owloption import TOption
 
 
 class ValueTransformer():
@@ -10,13 +10,13 @@ class ValueTransformer():
 
 
 def is_ignore(v):
-    return v is None or (isinstance(v, Option) and v.is_none())
+    return v is None or (isinstance(v, TOption) and v.is_none())
 
 
 def traverse(value, ignore_none=True, force_value=False):
     if force_value and isinstance(value, ValueTransformer):
         return value.to_value(ignore_none, force_value)
-    elif isinstance(value, Option):
+    elif isinstance(value, TOption):
         return traverse(value.get(), ignore_none, force_value)
     elif isinstance(value, dict):
         return traverse_dict(value, ignore_none, force_value)
