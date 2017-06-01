@@ -1,6 +1,2 @@
-typing
 pyyaml
 requests
-unicodecsv
-mock
-enum34

@@ -6,11 +6,6 @@ from owlmixin import OwlMixin
 from owlmixin.owlenum import OwlObjectEnum
 
 
-class Sample(OwlMixin):
-    def __init__(self, color):
-        self.color = Color.from_symbol(color)
-
-
 class Color(OwlObjectEnum):
     RED = (
         "red",
@@ -35,6 +30,10 @@ class Color(OwlObjectEnum):
         return self.object["coloring"](message)
 
 
+class Sample(OwlMixin):
+    color: Color
+
+
 class TestFromSymbol:
     def test_normal(self):
         assert Color.from_symbol("blue") is Color.BLUE
@@ -53,6 +52,9 @@ class TestFunction:
 class TestOwlMixin:
     def test_to_dict(self):
         assert Sample.from_dict({"color": "blue"}).to_dict() == {
+            "color": "blue"
+        }
+        assert Sample.from_dict({"color": "blue"}).to_dict(force_value=False) == {
             "color": Color.BLUE
         }
 

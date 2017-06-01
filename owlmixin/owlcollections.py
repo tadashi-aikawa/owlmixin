@@ -98,6 +98,28 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([x for x in self if not func(x)])
 
+    def head(self, size_: int) -> 'TList[T]':
+        """
+        :param size_:
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).head(3)
+            [1, 2, 3]
+        """
+        return TList(self[:size_])
+
+    def tail(self, size_: int) -> 'TList[T]':
+        """
+        :param size_:
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).tail(3)
+            [3, 4, 5]
+        """
+        return TList(self[self.size()-size_:])
+
     def partial(self, func):
         """
         :param func:

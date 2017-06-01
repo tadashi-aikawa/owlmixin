@@ -1,21 +1,14 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
-from typing import List, Optional
+from typing import List, Optional, Dict
 from mock import patch
 
 import pytest
 
 from owlmixin import OwlMixin
 from owlmixin.owlcollections import TDict, TList
+from owlmixin.transformers import TOption
 from owlmixin.owlenum import OwlEnum
-
-# For python 3.5.0-3.5.1
-try:
-    from typing import Text
-except ImportError:
-    pass
 
 
 class Color(OwlEnum):
@@ -24,34 +17,30 @@ class Color(OwlEnum):
     BLUE = "blue"
 
 
+class Paper(OwlMixin):
+    name: str
+    width: str
+    height: int
+
+    @classmethod
+    def ___width(cls, v: int) -> str:
+        return f'{v} px'
+
+
 class Address(OwlMixin):
-    def __init__(self, name):
-        self.name = name  # type: Text
+    name: str
 
 
 class Spot(OwlMixin):
-    def __init__(self, names, address=None, color=None):
-        self.names = names  # type: List[Text]
-        self.address = Address.from_optional_dict(address)  # type: Optional[Address]
-        self.color = color and Color(color)  # type: Color
-
-
-class Human(OwlMixin):
-    def __init__(self, id, name, favorite_spots, favorite_animal, friends_by_short_name=None):
-        self.id = id  # type: int
-        self.name = name  # type: Text
-        self.favorite_spots = Spot.from_dicts(favorite_spots)  # type: TList[Spot]
-        self.favorite_animal = Animal.from_dict(favorite_animal)  # type: Animal
-        self.friends_by_short_name = Human.from_optional_dicts_by_key(friends_by_short_name)
-        """:type: Optional[TDict[Text, Human]]"""
+    names: TList[str]
+    address: TOption[Address]
+    color: TOption[Color]
 
 
 class Animal(OwlMixin):
-    def __init__(self, id, name, is_big):
-        self.id = int(id)  # type: int
-        self.name = name  # type: Text
-        # Unfortunately, this is number (0: True / 1:False)
-        self.is_big = int(is_big) == 1  # type: bool
+    id: int
+    name: str
+    is_big: bool
 
     @property
     def _dict(self):
@@ -61,6 +50,14 @@ class Animal(OwlMixin):
             "name": self.name,
             "is_big": "YES" if self.is_big else "NO"
         }
+
+
+class Human(OwlMixin):
+    id: int
+    name: str
+    favorite_spots: TList[Spot]
+    favorite_animal: Animal
+    friends_by_short_name: TOption[TDict['Human']]
 
 
 SAMPLE_HUMAN = {
@@ -78,7 +75,7 @@ SAMPLE_HUMAN = {
             "color": "red"
         }
     ],
-    "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+    "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
     "friends_by_short_name": {
         "toshi": {
             "id": 100,
@@ -86,7 +83,7 @@ SAMPLE_HUMAN = {
             "favorite_spots": [
                 {"names": ["toshi_spot"]}
             ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": 0}
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False}
         },
         "hide": {
             "id": 200,
@@ -94,7 +91,7 @@ SAMPLE_HUMAN = {
             "favorite_spots": [
                 {"names": ["hide_spot"]}
             ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": 1}
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True}
         }
     }
 }
@@ -103,7 +100,7 @@ SAMPLE_HUMAN = {
 
 class TestFromDict:
     def test_normal(self):
-        r = Human.from_dict(SAMPLE_HUMAN)
+        r: Human = Human.from_dict(SAMPLE_HUMAN)
 
         assert r.id == 1
         assert r.name == "メンバ1"
@@ -111,36 +108,48 @@ class TestFromDict:
 
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
-        assert r.favorite_spots[0].address.name == "address1"
-        assert r.favorite_spots[0].color is None
+        assert r.favorite_spots[0].address.get().name == "address1"
+        assert r.favorite_spots[0].color.is_none()
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
         assert r.favorite_spots[1].names[1] == "spot22"
-        assert r.favorite_spots[1].address is None
-        assert r.favorite_spots[1].color == Color.RED
+        assert r.favorite_spots[1].address.is_none()
+        assert r.favorite_spots[1].color.get() == Color.RED
 
         assert r.favorite_animal.id == 1
         assert r.favorite_animal.name == "a dog"
         assert r.favorite_animal.is_big is False
 
-        assert len(r.friends_by_short_name) == 2
+        assert len(r.friends_by_short_name.get()) == 2
 
-        assert r.friends_by_short_name["toshi"].id == 100
-        assert r.friends_by_short_name["toshi"].name == "TOSHIKI"
-        assert len(r.friends_by_short_name["toshi"].favorite_spots) == 1
-        assert r.friends_by_short_name["toshi"].favorite_spots[0].names[0] == "toshi_spot"
-        assert r.friends_by_short_name["toshi"].favorite_animal.id == 2
-        assert r.friends_by_short_name["toshi"].favorite_animal.name == "a cat"
-        assert r.friends_by_short_name["toshi"].favorite_animal.is_big is False
+        assert r.friends_by_short_name.get()["toshi"].id == 100
+        assert r.friends_by_short_name.get()["toshi"].name == "TOSHIKI"
+        assert len(r.friends_by_short_name.get()["toshi"].favorite_spots) == 1
+        assert r.friends_by_short_name.get()["toshi"].favorite_spots[0].names[0] == "toshi_spot"
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.id == 2
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.name == "a cat"
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.is_big is False
 
-        assert r.friends_by_short_name["hide"].id == 200
-        assert r.friends_by_short_name["hide"].name == "HIDEKI"
-        assert len(r.friends_by_short_name["hide"].favorite_spots) == 1
-        assert r.friends_by_short_name["hide"].favorite_spots[0].names[0] == "hide_spot"
-        assert r.friends_by_short_name["hide"].favorite_animal.id == 3
-        assert r.friends_by_short_name["hide"].favorite_animal.name == "a lion"
-        assert r.friends_by_short_name["hide"].favorite_animal.is_big is True
+        assert r.friends_by_short_name.get()["hide"].id == 200
+        assert r.friends_by_short_name.get()["hide"].name == "HIDEKI"
+        assert len(r.friends_by_short_name.get()["hide"].favorite_spots) == 1
+        assert r.friends_by_short_name.get()["hide"].favorite_spots[0].names[0] == "hide_spot"
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.id == 3
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.name == "a lion"
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.is_big is True
+
+    def test_from_instance(self):
+        r: Human = Human.from_dict(SAMPLE_HUMAN)
+        assert r.to_dict() == Human.from_dict(r).to_dict()
+
+        assert r.to_dict() == Human.from_dict({
+            'id': r.id,
+            'name': r.name,
+            'favorite_spots': r.favorite_spots,
+            'favorite_animal': r.favorite_animal,
+            'friends_by_short_name': r.friends_by_short_name
+        }).to_dict()
 
     def test_none(self):
         with pytest.raises(AttributeError):
@@ -149,7 +158,7 @@ class TestFromDict:
 
 class TestFromOptionalDict:
     def test_normal(self):
-        r = Human.from_optional_dict(SAMPLE_HUMAN)
+        r: Human = Human.from_optional_dict(SAMPLE_HUMAN).get()
 
         assert r.id == 1
         assert r.name == "メンバ1"
@@ -157,110 +166,56 @@ class TestFromOptionalDict:
 
         assert len(r.favorite_spots[0].names) == 1
         assert r.favorite_spots[0].names[0] == "spot1"
-        assert r.favorite_spots[0].address.name == "address1"
-        assert r.favorite_spots[0].color is None
+        assert r.favorite_spots[0].address.get().name == "address1"
+        assert r.favorite_spots[0].color.is_none()
 
         assert len(r.favorite_spots[1].names) == 2
         assert r.favorite_spots[1].names[0] == "spot21"
         assert r.favorite_spots[1].names[1] == "spot22"
-        assert r.favorite_spots[1].address is None
-        assert r.favorite_spots[1].color == Color.RED
+        assert r.favorite_spots[1].address.is_none()
+        assert r.favorite_spots[1].color.get() == Color.RED
 
         assert r.favorite_animal.id == 1
         assert r.favorite_animal.name == "a dog"
         assert r.favorite_animal.is_big is False
 
-        assert len(r.friends_by_short_name) == 2
+        assert len(r.friends_by_short_name.get()) == 2
 
-        assert r.friends_by_short_name["toshi"].id == 100
-        assert r.friends_by_short_name["toshi"].name == "TOSHIKI"
-        assert len(r.friends_by_short_name["toshi"].favorite_spots) == 1
-        assert r.friends_by_short_name["toshi"].favorite_spots[0].names[0] == "toshi_spot"
-        assert r.friends_by_short_name["toshi"].favorite_animal.id == 2
-        assert r.friends_by_short_name["toshi"].favorite_animal.name == "a cat"
-        assert r.friends_by_short_name["toshi"].favorite_animal.is_big is False
+        assert r.friends_by_short_name.get()["toshi"].id == 100
+        assert r.friends_by_short_name.get()["toshi"].name == "TOSHIKI"
+        assert len(r.friends_by_short_name.get()["toshi"].favorite_spots) == 1
+        assert r.friends_by_short_name.get()["toshi"].favorite_spots[0].names[0] == "toshi_spot"
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.id == 2
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.name == "a cat"
+        assert r.friends_by_short_name.get()["toshi"].favorite_animal.is_big is False
 
-        assert r.friends_by_short_name["hide"].id == 200
-        assert r.friends_by_short_name["hide"].name == "HIDEKI"
-        assert len(r.friends_by_short_name["hide"].favorite_spots) == 1
-        assert r.friends_by_short_name["hide"].favorite_spots[0].names[0] == "hide_spot"
-        assert r.friends_by_short_name["hide"].favorite_animal.id == 3
-        assert r.friends_by_short_name["hide"].favorite_animal.name == "a lion"
-        assert r.friends_by_short_name["hide"].favorite_animal.is_big is True
+        assert r.friends_by_short_name.get()["hide"].id == 200
+        assert r.friends_by_short_name.get()["hide"].name == "HIDEKI"
+        assert len(r.friends_by_short_name.get()["hide"].favorite_spots) == 1
+        assert r.friends_by_short_name.get()["hide"].favorite_spots[0].names[0] == "hide_spot"
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.id == 3
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.name == "a lion"
+        assert r.friends_by_short_name.get()["hide"].favorite_animal.is_big is True
 
     def test_none(self):
-        assert Human.from_optional_dict(None) is None
+        assert Human.from_optional_dict(None).is_none()
 
     def test_empty(self):
-        assert Human.from_optional_dict({}) is None
+        with pytest.raises(AttributeError):
+            Human.from_optional_dict({})
 
 
 class TestToDict:
     def test_normal(self):
-        r = Human.from_dict(SAMPLE_HUMAN)
+        r: Human = Human.from_dict(SAMPLE_HUMAN)
+
+        # Assert Option
+        assert r.favorite_spots[0].address.get().name == 'address1'
+        assert r.favorite_spots[0].color.is_none()
+        assert r.favorite_spots[1].address.is_none()
+        assert r.favorite_spots[1].color.get() == Color.RED
+
         assert r.to_dict() == {
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": Color.RED}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
-            "friends_by_short_name": {
-                "toshi": {
-                    "id": 100,
-                    "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"]}
-                    ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
-                },
-                "hide": {
-                    "id": 200,
-                    "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"]}
-                    ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-                }
-            }
-        }
-
-    def test_ignore_none_false(self):
-        r = Human.from_dict(SAMPLE_HUMAN)
-        assert r.to_dict(ignore_none=False) == {
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}, "color": None},
-                {"names": ["spot21", "spot22"], "address": None, "color": Color.RED}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
-            "friends_by_short_name": {
-                "toshi": {
-                    "id": 100,
-                    "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"], "address": None, "color": None}
-                    ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-                    "friends_by_short_name": None
-                },
-                "hide": {
-                    "id": 200,
-                    "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"], "address": None, "color": None}
-                    ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-                    "friends_by_short_name": None
-                }
-            }
-        }
-
-    def test_force_value(self):
-        r = Human.from_dict(SAMPLE_HUMAN)
-        assert r.to_dict(force_value=True) == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
@@ -288,43 +243,85 @@ class TestToDict:
             }
         }
 
+    def test_ignore_none_false(self):
+        r = Human.from_dict(SAMPLE_HUMAN)
+
+        # Assert Option
+        assert r.favorite_spots[0].address.get().name == 'address1'
+        assert r.favorite_spots[0].color.is_none()
+        assert r.favorite_spots[1].address.is_none()
+        assert r.favorite_spots[1].color.get() == Color.RED
+
+        assert r.to_dict(ignore_none=False) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}, "color": None},
+                {"names": ["spot21", "spot22"], "address": None, "color": "red"}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_spots": [
+                        {"names": ["toshi_spot"], "address": None, "color": None}
+                    ],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
+                    "friends_by_short_name": None
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"], "address": None, "color": None}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                    "friends_by_short_name": None
+                }
+            }
+        }
+
+    def test_force_value_false(self):
+        r = Human.from_dict(SAMPLE_HUMAN)
+        assert r.to_dict(force_value=False) == {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_spots": [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"], "color": Color.RED}
+            ],
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_spots": [
+                        {"names": ["toshi_spot"]}
+                    ],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"]}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
+                }
+            }
+        }
+
 
 class TestToDicts:
     def test_normal(self):
-        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+        spots: TList[Spot] = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+
+        # Assert Option
+        assert spots[0].color.is_none()
+        assert spots[1].color.get() == Color.RED
+
         assert spots.to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {
-                    "name": "address1"
-                }
-            },
-            {
-                "names": ["spot21", "spot22"],
-                "color": Color.RED
-            }
-        ]
-
-    def test_ignore_none_false(self):
-        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dicts(ignore_none=False) == [
-            {
-                "names": ["spot1"],
-                "address": {
-                    "name": "address1"
-                },
-                "color": None
-            },
-            {
-                "names": ["spot21", "spot22"],
-                "address": None,
-                "color": Color.RED
-            }
-        ]
-
-    def test_force_value(self):
-        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
-        assert spots.to_dicts(force_value=True) == [
             {
                 "names": ["spot1"],
                 "address": {
@@ -337,6 +334,43 @@ class TestToDicts:
             }
         ]
 
+    def test_ignore_none_false(self):
+        spots: TList[Spot] = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+
+        # Assert Option
+        assert spots[0].color.is_none()
+        assert spots[1].color.get() == Color.RED
+
+        assert spots.to_dicts(ignore_none=False) == [
+            {
+                "names": ["spot1"],
+                "address": {
+                    "name": "address1"
+                },
+                "color": None
+            },
+            {
+                "names": ["spot21", "spot22"],
+                "address": None,
+                "color": "red"
+            }
+        ]
+
+    def test_force_value_false(self):
+        spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
+        assert spots.to_dicts(force_value=False) == [
+            {
+                "names": ["spot1"],
+                "address": {
+                    "name": "address1"
+                }
+            },
+            {
+                "names": ["spot21", "spot22"],
+                "color": Color.RED
+            }
+        ]
+
 
 class TestFromDicts:
     def test_normal(self):
@@ -344,26 +378,26 @@ class TestFromDicts:
 
         assert len(r) == 2
         assert type(r) == TList
-        assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "color": Color.RED}
+        assert r[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
+        assert r[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
 
 
 class TestFromOptionalDicts:
     def test_normal(self):
-        r = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
+        r: TOption[TList[Spot]] = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
 
-        assert len(r) == 2
-        assert type(r) == TList
-        assert r[0].to_dict() == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict() == {"names": ["spot21", "spot22"], "color": Color.RED}
+        assert len(r.get()) == 2
+        assert type(r.get()) == TList
+        assert r.get()[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
+        assert r.get()[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
 
     def test_none(self):
-        assert Human.from_optional_dicts(None) is None
+        assert Human.from_optional_dicts(None).is_none()
 
     def test_empty(self):
         r = Human.from_optional_dicts([])
-        assert isinstance(r, TList) is True
-        assert len(r) == 0
+        assert isinstance(r.get(), TList)
+        assert len(r.get()) == 0
 
 
 class TestFromDictsByKey:
@@ -394,11 +428,11 @@ class TestFromDictsByKey:
 
 class TestFromOptionalDictsByKey:
     def test_normal(self):
-        r = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
+        r: TOption[TDict[Human]] = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
 
-        assert len(r) == 2
-        assert type(r) == TDict
-        assert r.to_dict() == {
+        assert len(r.get()) == 2
+        assert type(r.get()) == TDict
+        assert r.get().to_dict() == {
             "toshi": {
                 "id": 100,
                 "name": "TOSHIKI",
@@ -418,49 +452,49 @@ class TestFromOptionalDictsByKey:
         }
 
     def test_none(self):
-        assert Human.from_optional_dicts_by_key(None) is None
+        assert Human.from_optional_dicts_by_key(None).is_none()
 
     def test_empty(self):
         r = Human.from_optional_dicts_by_key({})
-        assert isinstance(r, TDict) is True
-        assert len(r) == 0
+        assert isinstance(r.get(), TDict)
+        assert len(r.get()) == 0
 
 
 class TestFromCsvf:
     def test_normal_without_header(self):
-        rs = Animal.from_csvf("tests/csv/animals_without_header.csv", ("id", "name", "is_big"))
+        rs = Paper.from_csvf("tests/csv/papers_without_header.csv", ("name", "width", "height"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a 犬", "is_big": "NO"},
-            {"id": 2, "name": "a 猫", "is_big": "NO"},
-            {"id": 3, "name": "a ライオン", "is_big": "YES"},
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_with_header(self):
-        rs = Animal.from_csvf("tests/csv/animals_with_header.csv")
+        rs = Paper.from_csvf("tests/csv/papers_with_header.csv")
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a 犬", "is_big": "NO"},
-            {"id": 2, "name": "a 猫", "is_big": "NO"},
-            {"id": 3, "name": "a ライオン", "is_big": "YES"},
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_separated_by_tab(self):
-        rs = Animal.from_csvf("tests/csv/animals_tab_separated.csv", ("id", "name", "is_big"))
+        rs = Paper.from_csvf("tests/csv/papers_tab_separated.csv", ("name", "width", "height"))
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a 犬", "is_big": "NO"},
-            {"id": 2, "name": "a 猫", "is_big": "NO"},
-            {"id": 3, "name": "a ライオン", "is_big": "YES"},
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
     def test_normal_shiftjis(self):
-        rs = Animal.from_csvf("tests/csv/animals_shiftjis.csv", encoding='shift-jis')
+        rs = Paper.from_csvf("tests/csv/papers_shiftjis.csv", encoding='shift-jis')
 
         assert rs.to_dicts() == [
-            {"id": 1, "name": "a 犬", "is_big": "NO"},
-            {"id": 2, "name": "a 猫", "is_big": "NO"},
-            {"id": 3, "name": "a ライオン", "is_big": "YES"},
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30}
         ]
 
 
@@ -468,7 +502,7 @@ class TestFromCsvf:
 class TestFromJsonUrl:
     def test_normal(self, load_json_url):
         load_json_url.return_value = {
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
             "favorite_spots": [
                 {
                     "names": ["spot1"],
@@ -501,7 +535,7 @@ class TestFromJsonUrl:
 class TestFromJson:
     def test_normal(self):
         r = Human.from_json("""{
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": false},
             "favorite_spots": [
                 {
                     "names": ["spot1"],
@@ -630,7 +664,7 @@ class TestFromYaml:
             favorite_animal:
               id: 1
               name: "a dog"
-              is_big: 0
+              is_big: false
         """)
 
         assert r.to_dict() == {
@@ -714,7 +748,7 @@ class TestToJson:
                 {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"], "color": "red"}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False}
         })
 
         assert r.to_json(ignore_none=True) == """{
@@ -746,7 +780,7 @@ class TestToPrettyJson:
                 {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"], "color": "red"}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 1},
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": True},
         })
 
         assert r.to_pretty_json(ignore_none=True) == """
@@ -788,7 +822,7 @@ class TestToYaml:
                 {"names": ["spot1"], "address": {"name": "address1"}},
                 {"names": ["spot21", "spot22"], "color": "red"}
             ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": 0}
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False}
         })
 
         assert r.to_yaml(ignore_none=True) == """
