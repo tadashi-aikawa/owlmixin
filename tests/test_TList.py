@@ -197,6 +197,38 @@ class TestReject:
         ]
 
 
+class TestHead:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).head(3).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]}
+        ]
+
+
+class TestTail:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).tail(3).to_dicts() == [
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+
 class TestPartial:
     def test_normal(self):
         d = [
