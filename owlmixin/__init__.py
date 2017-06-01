@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from typing import TypeVar, List, Dict, Optional, Tuple, Sequence
+from typing import TypeVar, List, Dict, Optional, Tuple, Sequence, Type
 import inspect
 
 from owlmixin.owlcollections import TList, TDict
@@ -31,9 +31,9 @@ def assert_extra(cls_properties, arg_dict, cls):
 
 You have to remove the unknown properties or haven't to set `restrict=True`.
 -----------------------------------------------------------------------
-| Unknown | {sorted(extra_keys)}
------------------------------------------------------------------------
 | Class   | {cls}
+-----------------------------------------------------------------------
+| Unknown | {sorted(extra_keys)}
 -----------------------------------------------------------------------
     ''')
 
@@ -51,17 +51,18 @@ def assert_none(value, type_, cls, name):
 
 The following type must not to be empty !!  You have to specify anything.
 -----------------------------------------------------------------------
-| Type     | {type_}
------------------------------------------------------------------------
 | Class    | {cls}
 -----------------------------------------------------------------------
 | Property | {name}
 -----------------------------------------------------------------------
+| Type     | {type_}
+-----------------------------------------------------------------------
     ''')
 
 
-def assert_type(value, type_, name):
-    if not isinstance(value, type_):
+def assert_types(value, types: tuple, cls, name):
+    if not isinstance(value, types):
+        expected_typestr = " or ".join((str(t) for t in types))
         raise TypeError(f'''
 .        ∧,,_∧      ,_______________________
      ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
@@ -73,28 +74,29 @@ def assert_type(value, type_, name):
     
 You have to specify value which has correct type or set `force_cast=True`.
 -----------------------------------------------------------------------
-| Expected  | {type_}
+| Class     | {cls}
 -----------------------------------------------------------------------
-| Actual    | {type(value)}
+| Property  | {name}
 -----------------------------------------------------------------------
 | Value     | {value}
 -----------------------------------------------------------------------
-| Property  | {name}
+| Expected  | {expected_typestr}
+-----------------------------------------------------------------------
+| Actual    | {type(value)}
 -----------------------------------------------------------------------
     ''')
 
 
-def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool):
+def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool):
     if hasattr(type_, '__forward_arg__'):
         # XXX: Only if `_ForwardRef` includes myself
         type_ = cls
-    if isinstance(value, type_):
-        return value
 
     if not _is_generic(type_):
         assert_none(value, type_, cls, name)
         if issubclass(type_, OwlMixin):
-            return type_.from_dict(value, force_snake_case)
+            assert_types(value, (type_, dict), cls, name)
+            return type_.from_dict(value, force_snake_case, force_cast, restrict)
         elif issubclass(type_, OwlEnum):
             return type_(value)
         elif issubclass(type_, OwlObjectEnum):
@@ -103,7 +105,7 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool):
             if force_cast:
                 return type_(value)
             else:
-                assert_type(value, type_, name)
+                assert_types(value, (type_,), cls, name)
                 return value
 
     o_type = type_.__origin__
@@ -111,14 +113,20 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool):
 
     if o_type == TList:
         assert_none(value, type_, cls, name)
-        assert_type(value, list, name)
-        return TList([traverse(g_type[0], name, v, cls, force_snake_case, force_cast) for v in value])
+        assert_types(value, (list,), cls, name)
+        return TList([traverse(g_type[0], f'{name}.{i}', v, cls, force_snake_case, force_cast, restrict)
+                      for i, v in enumerate(value)])
     elif o_type == TDict:
         assert_none(value, type_, cls, name)
-        assert_type(value, dict, name)
-        return TDict({k: traverse(g_type[0], name, v, cls, force_snake_case, force_cast) for k, v in value.items()})
+        assert_types(value, (dict,), cls, name)
+        return TDict({k: traverse(g_type[0], f'{name}.{k}', v, cls, force_snake_case, force_cast, restrict)
+                      for k, v in value.items()})
     elif o_type == TOption:
-        return TOption(None) if value is None else TOption(traverse(g_type[0], name, value, cls, force_snake_case, force_cast))
+        v = value.get() if type(value) == TOption else value
+        return TOption(
+            traverse(g_type[0], name, v, cls, force_snake_case, force_cast, restrict) if v else None
+        )
+
     else:
         assert False, f"This generics is not supported {o_type}"
 
@@ -215,9 +223,66 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             <BLANKLINE>
             You have to remove the unknown properties or haven't to set `restrict=True`.
             -----------------------------------------------------------------------
+            | Class   | <class 'owlmixin.samples.Human'>
+            -----------------------------------------------------------------------
             | Unknown | ['hogehoge1', 'hogehoge2']
             -----------------------------------------------------------------------
-            | Class   | <class 'owlmixin.samples.Human'>
+            <BLANKLINE>
+
+        If you specify wrong type...
+
+            >>> human: Human = Human.from_dict({
+            ...     "id": 1,
+            ...     "name": "ichiro",
+            ...     "favorites": ["apple", "orange"]
+            ... })  # doctest: +NORMALIZE_WHITESPACE
+            Traceback (most recent call last):
+                ...
+            TypeError:
+            .        ∧,,_∧      ,_______________________
+                 ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
+               ／／/     /::/     `-----------------------
+               |::|/⊂ヽノ|::|」
+            ／￣￣旦￣￣￣／|
+            ＿＿＿＿＿＿／  | |
+            |------ー----ー|／
+            <BLANKLINE>
+            You have to specify value which has correct type or set `force_cast=True`.
+            -----------------------------------------------------------------------
+            | Class     | <class 'owlmixin.samples.Human'>
+            -----------------------------------------------------------------------
+            | Property  | favorites.0
+            -----------------------------------------------------------------------
+            | Value     | apple
+            -----------------------------------------------------------------------
+            | Expected  | <class 'owlmixin.samples.Food'> or <class 'dict'>
+            -----------------------------------------------------------------------
+            | Actual    | <class 'str'>
+            -----------------------------------------------------------------------
+            <BLANKLINE>
+
+        If you don't specify required params... (ex. name)
+            >>> human: Human = Human.from_dict({
+            ...     "id": 1
+            ... })  # doctest: +NORMALIZE_WHITESPACE
+            Traceback (most recent call last):
+                ...
+            AttributeError:
+            .        ∧,,_∧      ,___________________
+                 ⊂ ( ･ω･ )つ-  <  Required error!!  |
+               ／／/     /::/     `-------------------
+               |::|/⊂ヽノ|::|」
+            ／￣￣旦￣￣￣／|
+            ＿＿＿＿＿＿／  | |
+            |------ー----ー|／
+            <BLANKLINE>
+            The following type must not to be empty !!  You have to specify anything.
+            -----------------------------------------------------------------------
+            | Class    | <class 'owlmixin.samples.Human'>
+            -----------------------------------------------------------------------
+            | Property | name
+            -----------------------------------------------------------------------
+            | Type     | <class 'str'>
             -----------------------------------------------------------------------
             <BLANKLINE>
         """
@@ -241,8 +306,9 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
                         value=f(d.get(n)) if f else d.get(n),
                         cls=cls,
                         force_snake_case=force_snake_case,
-                        force_cast=force_cast)
-                    )
+                        force_cast=force_cast,
+                        restrict=restrict
+                    ))
 
         return instance
 
@@ -276,11 +342,11 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             <BLANKLINE>
             The following type must not to be empty !!  You have to specify anything.
             -----------------------------------------------------------------------
-            | Type     | <class 'int'>
-            -----------------------------------------------------------------------
             | Class    | <class 'owlmixin.samples.Human'>
             -----------------------------------------------------------------------
             | Property | id
+            -----------------------------------------------------------------------
+            | Type     | <class 'int'>
             -----------------------------------------------------------------------
             <BLANKLINE>
         """

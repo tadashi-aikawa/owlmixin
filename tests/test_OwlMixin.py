@@ -139,6 +139,18 @@ class TestFromDict:
         assert r.friends_by_short_name.get()["hide"].favorite_animal.name == "a lion"
         assert r.friends_by_short_name.get()["hide"].favorite_animal.is_big is True
 
+    def test_from_instance(self):
+        r: Human = Human.from_dict(SAMPLE_HUMAN)
+        assert r.to_dict() == Human.from_dict(r).to_dict()
+
+        assert r.to_dict() == Human.from_dict({
+            'id': r.id,
+            'name': r.name,
+            'favorite_spots': r.favorite_spots,
+            'favorite_animal': r.favorite_animal,
+            'friends_by_short_name': r.friends_by_short_name
+        }).to_dict()
+
     def test_none(self):
         with pytest.raises(AttributeError):
             Human.from_dict(None)

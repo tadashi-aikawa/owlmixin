@@ -15,3 +15,6 @@ class TOption(Generic[T]):
 
     def is_none(self):
         return self.value is None
+
+    def __repr__(self):
+        return f'Option --> {self.get()}'

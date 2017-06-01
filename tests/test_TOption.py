@@ -11,7 +11,7 @@ class Spot(OwlMixin):
     children: TOption[TList['Spot']]
 
 
-class TestOption:
+class TestTOption:
     def test_normal(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'Note1'})
         assert r.id == 1
