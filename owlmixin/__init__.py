@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from typing import TypeVar, List, Dict, Optional
+from typing import TypeVar, List, Dict, Optional, Tuple, Sequence
 import inspect
 
 from owlmixin.owlcollections import TList, TDict
@@ -17,8 +17,30 @@ def _is_generic(type):
     return hasattr(type, '__origin__')
 
 
-def assert_none(value, type_, cls):
-    assert value is not None, f'''
+def assert_extra(cls_properties, arg_dict, cls):
+    extra_keys: set = set(arg_dict.keys()) - set([n for n, t in cls_properties])
+    if extra_keys:
+        raise AttributeError(f'''
+.        ∧,,_∧      ,______________________
+     ⊂ ( ･ω･ )つ-  <  Unknown properties!!  |
+   ／／/     /::/     `----------------------
+   |::|/⊂ヽノ|::|」
+／￣￣旦￣￣￣／|
+＿＿＿＿＿＿／  | |
+|------ー----ー|／
+
+You have to remove the unknown properties or haven't to set `restrict=True`.
+-----------------------------------------------------------------------
+| Unknown | {sorted(extra_keys)}
+-----------------------------------------------------------------------
+| Class   | {cls}
+-----------------------------------------------------------------------
+    ''')
+
+
+def assert_none(value, type_, cls, name):
+    if value is None:
+        raise AttributeError(f'''
 .        ∧,,_∧      ,___________________
      ⊂ ( ･ω･ )つ-  <  Required error!!  |
    ／／/     /::/     `-------------------
@@ -26,14 +48,21 @@ def assert_none(value, type_, cls):
 ／￣￣旦￣￣￣／|
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
-    
-* Type {type_} must not be None.
-* Class: {cls}
-    '''
+
+The following type must not to be empty !!  You have to specify anything.
+-----------------------------------------------------------------------
+| Type     | {type_}
+-----------------------------------------------------------------------
+| Class    | {cls}
+-----------------------------------------------------------------------
+| Property | {name}
+-----------------------------------------------------------------------
+    ''')
 
 
-def assert_type(value, type_):
-    assert isinstance(value, type_), f'''
+def assert_type(value, type_, name):
+    if not isinstance(value, type_):
+        raise TypeError(f'''
 .        ∧,,_∧      ,_______________________
      ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
    ／／/     /::/     `-----------------------
@@ -42,13 +71,20 @@ def assert_type(value, type_):
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
     
-* Expected: {type_}
-* Actual: {type(value)}
-* value: {value}
-    '''
+You have to specify value which has correct type or set `force_cast=True`.
+-----------------------------------------------------------------------
+| Expected  | {type_}
+-----------------------------------------------------------------------
+| Actual    | {type(value)}
+-----------------------------------------------------------------------
+| Value     | {value}
+-----------------------------------------------------------------------
+| Property  | {name}
+-----------------------------------------------------------------------
+    ''')
 
 
-def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
+def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool):
     if hasattr(type_, '__forward_arg__'):
         # XXX: Only if `_ForwardRef` includes myself
         type_ = cls
@@ -56,7 +92,7 @@ def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
         return value
 
     if not _is_generic(type_):
-        assert_none(value, type_, cls)
+        assert_none(value, type_, cls, name)
         if issubclass(type_, OwlMixin):
             return type_.from_dict(value, force_snake_case)
         elif issubclass(type_, OwlEnum):
@@ -67,22 +103,22 @@ def traverse(type_, value, cls, force_snake_case: bool, force_cast: bool):
             if force_cast:
                 return type_(value)
             else:
-                assert_type(value, type_)
+                assert_type(value, type_, name)
                 return value
 
     o_type = type_.__origin__
     g_type = type_.__args__
 
     if o_type == TList:
-        assert_none(value, type_, cls)
-        assert_type(value, list)
-        return TList([traverse(g_type[0], v, cls, force_snake_case, force_cast) for v in value])
+        assert_none(value, type_, cls, name)
+        assert_type(value, list, name)
+        return TList([traverse(g_type[0], name, v, cls, force_snake_case, force_cast) for v in value])
     elif o_type == TDict:
-        assert_none(value, type_, cls)
-        assert_type(value, dict)
-        return TDict({k: traverse(g_type[0], v, cls, force_snake_case, force_cast) for k, v in value.items()})
+        assert_none(value, type_, cls, name)
+        assert_type(value, dict, name)
+        return TDict({k: traverse(g_type[0], name, v, cls, force_snake_case, force_cast) for k, v in value.items()})
     elif o_type == Option:
-        return Option(None) if value is None else Option(traverse(g_type[0], value, cls, force_snake_case, force_cast))
+        return Option(None) if value is None else Option(traverse(g_type[0], name, value, cls, force_snake_case, force_cast))
     else:
         assert False, f"This generics is not supported {o_type}"
 
@@ -100,12 +136,13 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         return self.__dict__
 
     @classmethod
-    def from_dict(cls, d: dict, force_snake_case: bool=True, force_cast: bool=False) -> T:
+    def from_dict(cls, d: dict, force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> T:
         """From dict to instance
 
         :param d: Dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
 
         Usage:
@@ -144,30 +181,45 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> human.favorites[0].names_by_lang.get()["en"]
             'Apple'
 
-        You can allow extra parameters (like ``hogehoge``).
+        You can allow extra parameters (like ``hogehoge``) if you set `restrict=False`.
 
             >>> apple: Food = Food.from_dict({
             ...     "name": "Apple",
             ...     "hogehoge": "ooooooooooooooooooooo",
-            ... })
+            ... }, restrict=False)
             >>> apple.to_dict()
             {'name': 'Apple'}
 
-        FIXME:
-        You can prohibit extra parameters (like ``hogehoge``) if the class does not have ``**extra`` argument.
+        You can prohibit extra parameters (like ``hogehoge``) if you set `restrict=True` (which is default).
 
             >>> human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
-            ...     "hogehoge": "ooooooooooooooooooooo",
+            ...     "hogehoge1": "ooooooooooooooooooooo",
+            ...     "hogehoge2": ["aaaaaaaaaaaaaaaaaa", "iiiiiiiiiiiiiiiii"],
             ...     "favorites": [
             ...         {"name": "Apple", "namesByLang": {"en": "Apple", "de": "Apfel"}},
             ...         {"name": "Orange"}
             ...     ]
-            ... })
+            ... })  # doctest: +NORMALIZE_WHITESPACE
             Traceback (most recent call last):
                 ...
-            TypeError: __init__() got an unexpected keyword argument 'hogehoge'
+            AttributeError:
+            .        ∧,,_∧      ,______________________
+                 ⊂ ( ･ω･ )つ-  <  Unknown properties!!  |
+               ／／/     /::/     `----------------------
+               |::|/⊂ヽノ|::|」
+            ／￣￣旦￣￣￣／|
+            ＿＿＿＿＿＿／  | |
+            |------ー----ー|／
+            <BLANKLINE>
+            You have to remove the unknown properties or haven't to set `restrict=True`.
+            -----------------------------------------------------------------------
+            | Unknown | ['hogehoge1', 'hogehoge2']
+            -----------------------------------------------------------------------
+            | Class   | <class 'owlmixin.samples.Human'>
+            -----------------------------------------------------------------------
+            <BLANKLINE>
         """
         if isinstance(d, cls):
             return d
@@ -175,19 +227,34 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         instance: T = cls()
         d = util.replace_keys(d, {"self": "_self"}, force_snake_case)
 
-        for n, t in cls.__annotations__.items():
+        properties = cls.__annotations__.items()
+
+        if restrict:
+            assert_extra(properties, d, cls)
+
+        for n, t in properties:
             f = cls._methods_dict.get(f'_{cls.__name__}___{n}')
-            setattr(instance, n, traverse(t, f(d.get(n)) if f else d.get(n), cls, force_snake_case, force_cast))
+            setattr(instance, n,
+                    traverse(
+                        type_=t,
+                        name=n,
+                        value=f(d.get(n)) if f else d.get(n),
+                        cls=cls,
+                        force_snake_case=force_snake_case,
+                        force_cast=force_cast)
+                    )
 
         return instance
 
     @classmethod
-    def from_optional_dict(cls, d: Optional[dict], force_snake_case: bool=True, force_cast: bool=False) -> Option[T]:
+    def from_optional_dict(cls, d: Optional[dict],
+                           force_snake_case: bool=True,force_cast: bool=False, restrict: bool=True) -> Option[T]:
         """From dict to optional instance.
 
         :param d: Dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
 
         Usage:
@@ -195,10 +262,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> from owlmixin.samples import Human
             >>> Human.from_optional_dict(None).is_none()
             True
-            >>> Human.from_optional_dict({}).get()
+            >>> Human.from_optional_dict({}).get()  # doctest: +NORMALIZE_WHITESPACE
             Traceback (most recent call last):
                 ...
-            AssertionError:
+            AttributeError:
             .        ∧,,_∧      ,___________________
                  ⊂ ( ･ω･ )つ-  <  Required error!!  |
                ／／/     /::/     `-------------------
@@ -207,19 +274,30 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            * Type <class 'int'> must not be None.
-            * Class: <class 'owlmixin.samples.Human'>
+            The following type must not to be empty !!  You have to specify anything.
+            -----------------------------------------------------------------------
+            | Type     | <class 'int'>
+            -----------------------------------------------------------------------
+            | Class    | <class 'owlmixin.samples.Human'>
+            -----------------------------------------------------------------------
+            | Property | id
+            -----------------------------------------------------------------------
             <BLANKLINE>
         """
-        return Option(cls.from_dict(d, force_snake_case, force_cast) if d is not None else None)
+        return Option(cls.from_dict(d,
+                                    force_snake_case=force_snake_case,
+                                    force_cast=force_cast,
+                                    restrict=restrict) if d is not None else None)
 
     @classmethod
-    def from_dicts(cls, ds: List[dict], force_snake_case: bool=True, force_cast: bool=False) -> TList[T]:
+    def from_dicts(cls, ds: List[dict],
+                   force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> TList[T]:
         """From list of dict to list of instance
 
         :param ds: List of dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
 
         Usage:
@@ -234,15 +312,20 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> humans[1].name
             'John'
         """
-        return TList([cls.from_dict(d, force_snake_case, force_cast) for d in ds])
+        return TList([cls.from_dict(d,
+                                    force_snake_case=force_snake_case,
+                                    force_cast=force_cast,
+                                    restrict=restrict) for d in ds])
 
     @classmethod
-    def from_optional_dicts(cls, ds: Optional[List[dict]], force_snake_case: bool=True, force_cast: bool=False) -> Option[TList[T]]:
+    def from_optional_dicts(cls, ds: Optional[List[dict]],
+                            force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> Option[TList[T]]:
         """From list of dict to optional list of instance.
 
         :param ds: List of dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
 
         Usage:
@@ -253,15 +336,20 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> Human.from_optional_dicts([]).get()
             []
         """
-        return Option(cls.from_dicts(ds, force_snake_case, force_cast) if ds is not None else None)
+        return Option(cls.from_dicts(ds,
+                                     force_snake_case=force_snake_case,
+                                     force_cast=force_cast,
+                                     restrict=restrict) if ds is not None else None)
 
     @classmethod
-    def from_dicts_by_key(cls, ds: dict, force_snake_case: bool=True, force_cast: bool=False) -> TDict[T]:
+    def from_dicts_by_key(cls, ds: dict,
+                          force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> TDict[T]:
         """From dict of dict to dict of instance
 
         :param ds: Dict of dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Dict of instance
 
         Usage:
@@ -276,15 +364,20 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> humans_by_name['John'].name
             'John'
         """
-        return TDict({k: cls.from_dict(v, force_snake_case, force_cast) for k, v in ds.items()})
+        return TDict({k: cls.from_dict(v,
+                                       force_snake_case=force_snake_case,
+                                       force_cast=force_cast,
+                                       restrict=restrict) for k, v in ds.items()})
 
     @classmethod
-    def from_optional_dicts_by_key(cls, ds: Optional[dict], force_snake_case=True, force_cast: bool=False) -> Option[TDict[T]]:
+    def from_optional_dicts_by_key(cls, ds: Optional[dict],
+                                   force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> Option[TDict[T]]:
         """From dict of dict to optional dict of instance.
 
         :param ds: Dict of dict
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Dict of instance
 
         Usage:
@@ -295,15 +388,19 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> Human.from_optional_dicts_by_key({}).get()
             {}
         """
-        return Option(cls.from_dicts_by_key(ds, force_snake_case, force_cast) if ds is not None else None)
+        return Option(cls.from_dicts_by_key(ds,
+                                            force_snake_case=force_snake_case,
+                                            force_cast=force_cast,
+                                            restrict=restrict) if ds is not None else None)
 
     @classmethod
-    def from_json(cls, data: str, force_snake_case=True, force_cast: bool=False) -> T:
+    def from_json(cls, data: str, force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> T:
         """From json string to instance
 
         :param data: Json string
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
 
         Usage:
@@ -324,27 +421,37 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> human.favorites[0].names_by_lang.get()["de"]
             'Apfel'
         """
-        return cls.from_dict(util.load_json(data), force_snake_case, force_cast)
+        return cls.from_dict(util.load_json(data),
+                             force_snake_case=force_snake_case,
+                             force_cast=force_cast,
+                             restrict=restrict)
 
     @classmethod
-    def from_jsonf(cls, fpath: str, encoding: str='utf8', force_snake_case=True, force_cast: bool=False) -> T:
+    def from_jsonf(cls, fpath: str, encoding: str='utf8',
+                   force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> T:
         """From json file path to instance
 
         :param fpath: Json file path
         :param encoding: Json file encoding
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
         """
-        return cls.from_dict(util.load_jsonf(fpath, encoding), force_snake_case, force_cast)
+        return cls.from_dict(util.load_jsonf(fpath, encoding),
+                             force_snake_case=force_snake_case,
+                             force_cast=force_cast,
+                             restrict=restrict)
 
     @classmethod
-    def from_json_to_list(cls, data: str, force_snake_case=True, force_cast: bool=False) -> TList[T]:
+    def from_json_to_list(cls, data: str,
+                          force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> TList[T]:
         """From json string to list of instance
 
         :param data: Json string
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
 
         Usage:
@@ -359,27 +466,36 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> humans[1].name
             'John'
         """
-        return cls.from_dicts(util.load_json(data), force_snake_case, force_cast)
+        return cls.from_dicts(util.load_json(data),
+                              force_snake_case=force_snake_case,
+                              force_cast=force_cast,
+                              restrict=restrict)
 
     @classmethod
-    def from_jsonf_to_list(cls, fpath: str, encoding: str='utf8', force_snake_case=True, force_cast: bool=False) -> TList[T]:
+    def from_jsonf_to_list(cls, fpath: str, encoding: str='utf8',
+                           force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> TList[T]:
         """From json file path to list of instance
 
         :param fpath: Json file path
         :param encoding: Json file encoding
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
         """
-        return cls.from_dicts(util.load_jsonf(fpath, encoding), force_snake_case, force_cast)
+        return cls.from_dicts(util.load_jsonf(fpath, encoding),
+                              force_snake_case=force_snake_case,
+                              force_cast=force_cast,
+                              restrict=restrict)
 
     @classmethod
-    def from_yaml(cls, data: str, force_snake_case=True, force_cast: bool=False) -> T:
+    def from_yaml(cls, data: str, force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> T:
         """From yaml string to instance
 
         :param data: Yaml string
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
 
         Usage:
@@ -402,27 +518,37 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> human.favorites[0].names_by_lang.get()["de"]
             'Apfel'
         """
-        return cls.from_dict(util.load_yaml(data), force_snake_case, force_cast)
+        return cls.from_dict(util.load_yaml(data),
+                             force_snake_case=force_snake_case,
+                             force_cast=force_cast,
+                             restrict=restrict)
 
     @classmethod
-    def from_yamlf(cls, fpath: str, encoding: str='utf8', force_snake_case=True, force_cast: bool=False) -> T:
+    def from_yamlf(cls, fpath: str, encoding: str='utf8',
+                   force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> T:
         """From yaml file path to instance
 
         :param fpath: Yaml file path
         :param encoding: Yaml file encoding
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
         """
-        return cls.from_dict(util.load_yamlf(fpath, encoding), force_snake_case, force_cast)
+        return cls.from_dict(util.load_yamlf(fpath, encoding),
+                             force_snake_case=force_snake_case,
+                             force_cast=force_cast,
+                             restrict=restrict)
 
     @classmethod
-    def from_yaml_to_list(cls, data: str, force_snake_case=True, force_cast: bool=False) -> TList[T]:
+    def from_yaml_to_list(cls, data: str,
+                          force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> TList[T]:
         """From yaml string to list of instance
 
         :param data: Yaml string
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
 
         Usage:
@@ -445,41 +571,56 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> humans[0].favorites[0].name
             'Apple'
         """
-        return cls.from_dicts(util.load_yaml(data), force_snake_case, force_cast)
+        return cls.from_dicts(util.load_yaml(data),
+                              force_snake_case=force_snake_case,
+                              force_cast=force_cast,
+                              restrict=restrict)
 
     @classmethod
-    def from_yamlf_to_list(cls, fpath: str, encoding: str='utf8', force_snake_case=True, force_cast: bool=False) -> TList[T]:
+    def from_yamlf_to_list(cls, fpath: str, encoding: str='utf8',
+                           force_snake_case=True, force_cast: bool=False, restrict: bool=True) -> TList[T]:
         """From yaml file path to list of instance
 
         :param fpath: Yaml file path
         :param encoding: Yaml file encoding
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of instance
         """
-        return cls.from_dicts(util.load_yamlf(fpath, encoding), force_snake_case, force_cast)
+        return cls.from_dicts(util.load_yamlf(fpath, encoding),
+                              force_snake_case=force_snake_case,
+                              force_cast=force_cast,
+                              restrict=restrict)
 
     @classmethod
-    def from_csvf(cls, fpath: str, fieldnames: Optional[List[str]]=None, encoding: str='utf8',
-                  force_snake_case: bool=True) -> TList[T]:
+    def from_csvf(cls, fpath: str, fieldnames: Optional[Sequence[str]]=None, encoding: str='utf8',
+                  force_snake_case: bool=True, restrict: bool=True) -> TList[T]:
         """From csv file path to list of instance
 
         :param fpath: Csv file path
         :param fieldnames: Specify csv header names if not included in the file
         :param encoding: Csv file encoding
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param restrict: Prohibit extra parameters if True
         :return: List of Instance
         """
         return cls.from_dicts(util.load_csvf(fpath, fieldnames, encoding),
-                              force_snake_case=force_snake_case, force_cast=True)
+                              force_snake_case=force_snake_case,
+                              force_cast=True,
+                              restrict=restrict)
 
     @classmethod
-    def from_json_url(cls, url: str, force_snake_case=True, force_cast: bool=False) -> T:
+    def from_json_url(cls, url: str, force_snake_case=True, force_cast: bool=False, restrict: bool=False) -> T:
         """From url which returns json to instance
 
         :param url: Url which returns json
         :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
         :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
         :return: Instance
         """
-        return cls.from_dict(util.load_json_url(url), force_snake_case, force_cast)
+        return cls.from_dict(util.load_json_url(url),
+                             force_snake_case=force_snake_case,
+                             force_cast=force_cast,
+                             restrict=restrict)

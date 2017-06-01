@@ -31,7 +31,7 @@ class TestOption:
         assert r.note.is_none()
 
     def test_name_is_empty(self):
-        with pytest.raises(AssertionError) as e:
+        with pytest.raises(AttributeError) as e:
             Spot.from_dict({'id': 1})
 
     def test_has_children(self):
@@ -47,7 +47,7 @@ class TestOption:
         assert r.children.get()[1].name == 'Name12'
 
     def test_has_children_whose_name_is_empty(self):
-        with pytest.raises(AssertionError) as e:
+        with pytest.raises(AttributeError) as e:
             Spot.from_dict({'id': 1, 'name': 'Name1', 'children': [
                 {'id': 11, 'name': 'Name11'},
                 {'id': 12}
@@ -64,7 +64,7 @@ class TestOption:
         ]
 
     def test_list_name_is_empty(self):
-        with pytest.raises(AssertionError) as e:
+        with pytest.raises(AttributeError) as e:
             Spot.from_dicts([
                 {'id': 1, 'name': 'Name1'},
                 {'id': 2}

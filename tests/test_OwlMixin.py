@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from typing import List, Optional
+from typing import List, Optional, Dict
 from mock import patch
 
 import pytest
@@ -189,7 +189,8 @@ class TestFromOptionalDict:
         assert Human.from_optional_dict(None).is_none()
 
     def test_empty(self):
-        assert Human.from_optional_dict({}).is_none()
+        with pytest.raises(AttributeError):
+            Human.from_optional_dict({})
 
 
 class TestToDict:
@@ -371,20 +372,20 @@ class TestFromDicts:
 
 class TestFromOptionalDicts:
     def test_normal(self):
-        r = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
+        r: Option[TList[Spot]] = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
 
-        assert len(r) == 2
-        assert type(r) == TList
-        assert r[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
+        assert len(r.get()) == 2
+        assert type(r.get()) == TList
+        assert r.get()[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
+        assert r.get()[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
 
     def test_none(self):
-        assert Human.from_optional_dicts(None) is None
+        assert Human.from_optional_dicts(None).is_none()
 
     def test_empty(self):
         r = Human.from_optional_dicts([])
-        assert isinstance(r, TList) is True
-        assert len(r) == 0
+        assert isinstance(r.get(), TList)
+        assert len(r.get()) == 0
 
 
 class TestFromDictsByKey:
@@ -415,11 +416,11 @@ class TestFromDictsByKey:
 
 class TestFromOptionalDictsByKey:
     def test_normal(self):
-        r = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
+        r: Option[TDict[Human]] = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
 
-        assert len(r) == 2
-        assert type(r) == TDict
-        assert r.to_dict() == {
+        assert len(r.get()) == 2
+        assert type(r.get()) == TDict
+        assert r.get().to_dict() == {
             "toshi": {
                 "id": 100,
                 "name": "TOSHIKI",
@@ -439,12 +440,12 @@ class TestFromOptionalDictsByKey:
         }
 
     def test_none(self):
-        assert Human.from_optional_dicts_by_key(None) is None
+        assert Human.from_optional_dicts_by_key(None).is_none()
 
     def test_empty(self):
         r = Human.from_optional_dicts_by_key({})
-        assert isinstance(r, TDict) is True
-        assert len(r) == 0
+        assert isinstance(r.get(), TDict)
+        assert len(r.get()) == 0
 
 
 class TestFromCsvf:
