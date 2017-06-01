@@ -96,7 +96,7 @@ You can also use methods chains as following.
 
 .. note::
 
-    Below sample code uses [kachayev/fn.py](https://github.com/kachayev/fn.py), great package!!
+    Below sample code uses `kachayev/fn.py <https://github.com/kachayev/fn.py>`_, great package!!
 
 
 .. code-block:: python
