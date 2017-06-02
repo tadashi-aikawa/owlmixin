@@ -139,9 +139,6 @@ class OwlMeta(type):
 
 
 class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlMeta):
-    @property
-    def _dict(self):
-        return self.__dict__
 
     @classmethod
     def from_dict(cls, d: dict, force_snake_case: bool=True, force_cast: bool=False, restrict: bool=True) -> T:

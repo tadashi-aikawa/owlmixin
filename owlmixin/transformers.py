@@ -43,6 +43,10 @@ class DictTransformer():
     """ `@property _dict` can overridden
     """
 
+    @property
+    def _dict(self):
+        return self.__dict__
+
     def to_dict(self, ignore_none: bool=True, force_value: bool=True) -> dict:
         """From instance to dict
 
