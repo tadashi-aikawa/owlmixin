@@ -1,4 +1,5 @@
 # coding: utf-8
+from typing import List, Sequence
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -42,15 +43,12 @@ class DictTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dict(self, ignore_none=True, force_value=True):
+    def to_dict(self, ignore_none: bool=True, force_value: bool=True) -> dict:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
-        :type ignore_none: bool
         :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
-        :type force_value: bool
         :return: Dict
-        :rtype: dict
 
         Usage:
 
@@ -90,15 +88,12 @@ class DictsTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dicts(self, ignore_none=True, force_value=True):
+    def to_dicts(self, ignore_none: bool=True, force_value: bool=True) -> List[dict]:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
-        :type ignore_none: bool
         :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
-        :type force_value: bool
         :return: List[Dict]
-        :rtype: list[dict]
 
         Usage:
 
@@ -147,15 +142,12 @@ class JsonTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_json(self, indent=None, ignore_none=True):
+    def to_json(self, indent: int=None, ignore_none: bool=True) -> str:
         """From instance to json string
 
         :param indent: Number of indentation
-        :type indent: Optional[int]
         :param ignore_none: Properties which is None are excluded if True
-        :type ignore_none: bool
         :return: Json string
-        :rtype: unicode
 
         Usage:
 
@@ -173,13 +165,11 @@ class JsonTransformer():
         """
         return util.dump_json(traverse(self, ignore_none, force_value=True), indent)
 
-    def to_pretty_json(self, ignore_none=True):
+    def to_pretty_json(self, ignore_none: bool=True) -> str:
         """From instance to pretty json string
 
         :param ignore_none: Properties which is None are excluded if True
-        :type ignore_none: bool
         :return: Json string
-        :rtype: unicode
 
         Usage:
 
@@ -217,13 +207,11 @@ class YamlTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_yaml(self, ignore_none=True):
+    def to_yaml(self, ignore_none: bool=True) -> str:
         """From instance to yaml string
 
         :param ignore_none: Properties which is None are excluded if True
-        :type ignore_none: bool
         :return: Yaml string
-        :rtype: unicode
 
         Usage:
 
@@ -254,17 +242,13 @@ class CsvTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_csv(self, fieldnames, with_header=False, crlf=False):
+    def to_csv(self, fieldnames: Sequence[str], with_header: bool=False, crlf: bool=False) -> str:
         """From sequence of text to csv string
 
         :param fieldnames: Order of columns by property name
-        :type fieldnames: Sequence[unicode]
         :param with_header: Add headers at the first line if True
-        :type with_header: bool
         :param crlf: Add CRLF line break at the end of line if True, else add LF
-        :type crlf: bool
         :return: Csv string
-        :rtype: unicode
 
         Usage:
 
