@@ -69,3 +69,23 @@ class TestTOption:
                 {'id': 1, 'name': 'Name1'},
                 {'id': 2}
             ])
+
+
+class TestIsNone:
+    def test_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
+        assert r.note.is_none()
+
+    def test_not_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
+        assert not r.note.is_none()
+
+
+class TestGetOr:
+    def test_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
+        assert r.note.get_or('hoge') == 'hoge'
+
+    def test_not_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
+        assert r.note.get_or('hoge') == 'note1'
