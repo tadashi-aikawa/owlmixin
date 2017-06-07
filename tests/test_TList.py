@@ -229,6 +229,37 @@ class TestTail:
         ]
 
 
+class TestUniq:
+    def test_normal(self):
+        """ Don't forget `d[0] != d[1]`
+        """
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).uniq().to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+
+class TestUniqBy:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).uniq_by(lambda x: x.to_dict()).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+
 class TestPartial:
     def test_normal(self):
         d = [

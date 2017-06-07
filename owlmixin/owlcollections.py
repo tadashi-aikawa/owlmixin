@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 import functools
 from itertools import chain
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Any, Callable
 
 from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
@@ -111,14 +111,38 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
     def tail(self, size_: int) -> 'TList[T]':
         """
-        :param size_:
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).tail(3)
             [3, 4, 5]
         """
         return TList(self[self.size()-size_:])
+
+    def uniq(self) -> 'TList[T]':
+        """
+        Usage:
+
+            >>> TList([1, 2, 3, 2, 1]).uniq()
+            [1, 2, 3]
+        """
+        rs = TList()
+        for e in self:
+            if e not in rs:
+                rs.append(e)
+        return rs
+
+    def uniq_by(self, func: Callable[[T], Any]) -> 'TList[T]':
+        """
+        Usage:
+
+            >>> TList([1, 2, 3, -2, -1]).uniq_by(lambda x: x**2)
+            [1, 2, 3]
+        """
+        rs = TList()
+        for e in self:
+            if func(e) not in rs.map(func):
+                rs.append(e)
+        return rs
 
     def partial(self, func):
         """
