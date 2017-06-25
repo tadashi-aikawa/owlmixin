@@ -94,7 +94,9 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
 
     if not _is_generic(type_):
         assert_none(value, type_, cls, name)
-        if issubclass(type_, OwlMixin):
+        if type_ is any:
+            return value
+        elif issubclass(type_, OwlMixin):
             assert_types(value, (type_, dict), cls, name)
             return type_.from_dict(value, force_snake_case, force_cast, restrict)
         elif issubclass(type_, OwlEnum):

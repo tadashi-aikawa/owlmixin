@@ -17,6 +17,10 @@ class Color(OwlEnum):
     BLUE = "blue"
 
 
+class OnlyAny(OwlMixin):
+    hoge: any
+
+
 class Paper(OwlMixin):
     name: str
     width: str
@@ -150,6 +154,10 @@ class TestFromDict:
             'favorite_animal': r.favorite_animal,
             'friends_by_short_name': r.friends_by_short_name
         }).to_dict()
+
+    def test_from_dict_includes_any(self):
+        r: OnlyAny = OnlyAny.from_dict({'hoge': {'huga': [1, 2, 3]}})
+        assert r.hoge == {'huga': [1, 2, 3]}
 
     def test_none(self):
         with pytest.raises(AttributeError):
