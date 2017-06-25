@@ -7,6 +7,7 @@ import pytest
 
 from owlmixin import OwlMixin
 from owlmixin.owlcollections import TDict, TList
+from owlmixin.samples import Japanese
 from owlmixin.transformers import TOption
 from owlmixin.owlenum import OwlEnum
 
@@ -154,6 +155,16 @@ class TestFromDict:
             'favorite_animal': r.favorite_animal,
             'friends_by_short_name': r.friends_by_short_name
         }).to_dict()
+
+    def test_from_dict_use_default_value(self):
+        r: Japanese = Japanese.from_dict({'name': 'taro'})
+        assert r.name == 'taro'
+        assert r.language == 'japanese'
+
+    def test_from_dict_not_use_default_value(self):
+        r: Japanese = Japanese.from_dict({'name': 'tom', 'language': 'english'})
+        assert r.name == 'tom'
+        assert r.language == 'english'
 
     def test_from_dict_includes_any(self):
         r: OnlyAny = OnlyAny.from_dict({'hoge': {'huga': [1, 2, 3]}})

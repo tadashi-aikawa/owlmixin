@@ -154,7 +154,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
         Usage:
 
-            >>> from owlmixin.samples import Human, Food
+            >>> from owlmixin.samples import Human, Food, Japanese
             >>> human: Human = Human.from_dict({
             ...     "id": 1,
             ...     "name": "Tom",
@@ -171,6 +171,16 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             'Apple'
             >>> human.favorites[0].names_by_lang.get()["de"]
             'Apfel'
+
+        You can use default value
+
+            >>> taro: Japanese = Japanese.from_dict({
+            ...     "name": 'taro'
+            ... })  # doctest: +NORMALIZE_WHITESPACE
+            >>> taro.name
+            'taro'
+            >>> taro.language
+            'japanese'
 
         If you don't set `force_snake=False` explicitly, keys are transformed to snake case as following.
 
@@ -261,6 +271,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             <BLANKLINE>
 
         If you don't specify required params... (ex. name)
+
             >>> human: Human = Human.from_dict({
             ...     "id": 1
             ... })  # doctest: +NORMALIZE_WHITESPACE
@@ -298,11 +309,13 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
         for n, t in properties:
             f = cls._methods_dict.get(f'_{cls.__name__}___{n}')
+            arg_v = f(d.get(n)) if f else d.get(n)
+            def_v = getattr(instance, n, None)
             setattr(instance, n,
                     traverse(
                         type_=t,
                         name=n,
-                        value=f(d.get(n)) if f else d.get(n),
+                        value=def_v if arg_v is None else arg_v,
                         cls=cls,
                         force_snake_case=force_snake_case,
                         force_cast=force_cast,

@@ -33,3 +33,8 @@ class Human(OwlMixin):  # pragma: no cover
 class Machine(OwlMixin):  # pragma: no cover
     id: int
     name: str
+
+
+class Japanese(OwlMixin):  # pragma: no cover
+    name: str
+    language: str = 'japanese'
