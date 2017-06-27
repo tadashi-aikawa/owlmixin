@@ -89,3 +89,44 @@ class TestGetOr:
     def test_not_none(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
         assert r.note.get_or('hoge') == 'note1'
+
+
+class TestNoExpressionError:
+    def test(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
+
+        with pytest.raises(NotImplementedError):
+            if r.note:
+                pass
+        with pytest.raises(NotImplementedError):
+            if not r.note:
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note == 'hoge':
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note != 'hoge':
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note > 0:
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note >= 0:
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note < 0:
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note <= 0:
+                pass
+        with pytest.raises(NotImplementedError):
+            if r.note in ['a', 'i', 'u']:
+                pass
+
+        # Want to add below...
+        # with pytest.raises(NotImplementedError):
+        #     if r.note is None:
+        #         pass
+        # with pytest.raises(NotImplementedError):
+        #     if r.note is not None:
+        #         pass
