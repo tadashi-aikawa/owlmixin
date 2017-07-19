@@ -241,6 +241,16 @@ class YamlTransformer():
         """
         return util.dump_yaml(traverse(self, ignore_none, force_value=True))
 
+    def to_yamlf(self, fpath: str, encoding: str='utf8', ignore_none: bool=True) -> str:
+        """From instance to yaml file
+
+        :param ignore_none: Properties which is None are excluded if True
+        :param fpath: Yaml file path
+        :param encoding: Yaml file encoding
+        :return: Yaml file path
+        """
+        return util.save_yamlf(traverse(self, ignore_none, force_value=True), fpath, encoding)
+
 
 class CsvTransformer():
     """ `@property _dict` can overridden

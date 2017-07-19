@@ -14,7 +14,7 @@ from yaml import Loader, SafeLoader
 
 import csv
 from csv import register_dialect, Dialect, QUOTE_MINIMAL
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Union
 
 
 class CrLfDialect(Dialect):
@@ -178,3 +178,15 @@ def dump_yaml(data):
                      allow_unicode=True,
                      default_flow_style=False,
                      Dumper=MyDumper)
+
+
+def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
+    """
+    :param data: list | dict data
+    :param fpath: write path
+    :param encoding: encoding
+    :rtype: written path
+    """
+    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+        f.write(dump_yaml(data))
+        return fpath
