@@ -29,7 +29,7 @@ setup(
     author='tadashi-aikawa',
     author_email='syou.maman@gmail.com',
     maintainer='tadashi-aikawa',
-    maintainer_email='tadashi-aikawa',
+    maintainer_email='syou.maman@gmail.com',
     url='https://github.com/tadashi-aikawa/owlmixin.git',
     keywords='data class mixin instance dict json yaml csv convert parse each other functional',
     packages=find_packages(exclude=['tests*']),
