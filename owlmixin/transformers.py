@@ -282,3 +282,16 @@ class CsvTransformer():
             <BLANKLINE>
         """
         return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf)
+
+    def to_csvf(self, fpath: str, fieldnames: Sequence[str], encoding: str='utf8',
+                with_header: bool=False, crlf: bool=False) -> str:
+        """From instance to yaml file
+
+        :param fpath: Csv file path
+        :param fieldnames: Order of columns by property name
+        :param encoding: Csv file encoding
+        :param with_header: Add headers at the first line if True
+        :param crlf: Add CRLF line break at the end of line if True, else add LF
+        :return: Csv file path
+        """
+        return util.save_csvf(traverse(self, force_value=True), fieldnames, fpath, encoding, with_header, crlf)

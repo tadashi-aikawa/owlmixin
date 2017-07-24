@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 
 import pytest
 from typing import List, Optional
@@ -132,6 +133,22 @@ id,name,ruby
 ['spot1'],{'name': 'address1'}
 "['spot21','spot22']",
 """.lstrip()
+
+
+class TestToCsvf:
+    """
+    Requirements: `from_csvf` and `from_csvf_to_list` are fine
+    """
+    def test_normal(self, tmpdir):
+        r: TList[Human] = Human.from_dicts([
+            {"id": 1, "name": "一郎"},
+            {"id": 2, "name": "二郎", "ruby": "じろう"}
+        ])
+
+        fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.csv")
+
+        assert r.to_csvf(fpath, fieldnames=['name', 'id', 'ruby'], encoding='euc-jp', with_header=False) == fpath
+        assert Human.from_csvf(fpath, fieldnames=['name', 'id', 'ruby'], encoding='euc-jp').to_dicts() == r.to_dicts()
 
 
 class TestMap:

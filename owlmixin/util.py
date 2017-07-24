@@ -4,7 +4,6 @@
 from __future__ import division, absolute_import
 
 import io
-import sys
 import re
 import requests
 import codecs
@@ -14,7 +13,7 @@ from yaml import Loader, SafeLoader
 
 import csv
 from csv import register_dialect, Dialect, QUOTE_MINIMAL
-from typing import List, Optional, Dict, Union
+from typing import List, Optional, Dict, Union, Sequence
 
 
 class CrLfDialect(Dialect):
@@ -152,6 +151,21 @@ def dump_csv(data, fieldnames, with_header=False, crlf=False):
             writer.writerow({k: force_str(v) for k, v in x.items()})
         sio.seek(0)
         return sio.read()
+
+
+def save_csvf(data: list, fieldnames: Sequence[str], fpath: str, encoding: str, with_header=False, crlf=False) -> str:
+    """
+    :param data:
+    :param fieldnames:
+    :param fpath: write path
+    :param encoding: encoding
+    :param with_header:
+    :param crlf:
+    :rtype: written path
+    """
+    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+        f.write(dump_csv(data, fieldnames, with_header=with_header, crlf=crlf))
+        return fpath
 
 
 def dump_json(data, indent=None):
