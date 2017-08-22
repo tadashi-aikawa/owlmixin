@@ -1,8 +1,9 @@
 # coding: utf-8
 
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Callable
 
 T = TypeVar('T')
+U = TypeVar('U')
 
 
 class TOption(Generic[T]):
@@ -46,6 +47,17 @@ class TOption(Generic[T]):
             True
         """
         return self.value is None
+
+    def map(self, func: Callable[[T], U]) -> 'TOption[T]':
+        """
+        Usage:
+
+            >>> TOption(3).map(lambda x: x+1).get()
+            4
+            >>> TOption(None).map(lambda x: x+1).get_or(999)
+            999
+        """
+        return self if self.is_none() else TOption(func(self.value))
 
     def __repr__(self):
         return f'Option --> {self.get()}'

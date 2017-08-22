@@ -91,6 +91,16 @@ class TestGetOr:
         assert r.note.get_or('hoge') == 'note1'
 
 
+class TestMap:
+    def test_not_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
+        assert r.note.map(lambda x: x*2).get_or('hoge') == 'note1note1'
+
+    def test_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
+        assert r.note.map(lambda x: x*2).get_or('hoge') == 'hoge'
+
+
 class TestNoExpressionError:
     def test(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
