@@ -5,10 +5,10 @@ from __future__ import division, absolute_import
 
 import io
 import re
-import requests
 import codecs
 import json
 import yaml
+from urllib.request import urlopen
 from yaml import Loader, SafeLoader
 
 import csv
@@ -127,7 +127,7 @@ def load_json_url(url):
     :param unicode url:
     :rtype: dict | list
     """
-    return requests.get(url).json()
+    return json.loads(urlopen(url).read())
 
 
 def dump_csv(data, fieldnames, with_header=False, crlf=False):
