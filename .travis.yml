@@ -6,7 +6,9 @@ language:
 matrix:
   include:
   - python: "3.6"
-    env: SPHINX_TARGET="yes"
+    env:
+      SPHINX_TARGET: "yes"
+      TEST_REPORT_TARGET: "yes"
   - python: "3.7-dev"
 install:
   - pip install -r requirements.txt
@@ -17,7 +19,7 @@ before_script:
   - chmod +x ./cc-test-reporter
 script:
   - py.test -vv --cov-report=xml --cov=. tests/
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - '[ $TEST_REPORT_TARGET ] && ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || echo "Skip send test report"'
   - '[ $SPHINX_TARGET ] && (python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py} -v
 ) || echo "Skip doctest"'
   - '[ $SPHINX_TARGET ] && (cd docs && make html linkcheck) || echo "Skip sphinx build"'
