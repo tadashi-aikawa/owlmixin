@@ -6,10 +6,14 @@ OwlMixin
 
 Mixin which converts ``data class instance`` and others each other more simple.
 
-.. warning::
+-- :warning: **Attention** :warning: --
+ 
+Please migrate from 1.x to 2.x
 
-    `OwlMixin >= 2.0.0` support python 3.6 and upper only, and has many breaking changes since `OwlMixin` < 2.0.0
-
+* ``OwlMixin >= 2.0.0`` support python 3.6 and upper only.
+* ``OwlMixin >= 2.0.0`` has many breaking changes for many improvements.
+* ``OwlMixin >= 2.0.0`` documentation site has not completed yet (but you can trust pydoc always!)
+* ``OwlMixin < 2.0.0`` has **vulnerability** fixed only ``OwlMixin >= 2.0.0a12``.
 
 Motivation
 ==========
@@ -149,8 +153,7 @@ Don't you think smart?
 API Reference
 =============
 
-* |docslatest| for master
-* |docs| for current stable version
+TODO
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
@@ -163,11 +166,5 @@ API Reference
     :target: https://codeclimate.com/github/tadashi-aikawa/owlmixin
     :alt: Code Climate
 .. |pypi| image::   https://img.shields.io/pypi/v/owlmixin.svg
-.. |docs| image:: https://readthedocs.org/projects/owlmixin/badge/?version=stable
-    :target: http://owlmixin.readthedocs.io/en/stable/
-    :alt: Documentation Status
-.. |docslatest| image:: https://readthedocs.org/projects/owlmixin/badge/?version=latest
-    :target: http://owlmixin.readthedocs.io/en/latest/
-    :alt: Documentation Status
 .. |versions| image:: https://img.shields.io/pypi/pyversions/owlmixin.svg
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
