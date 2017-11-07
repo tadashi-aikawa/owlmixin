@@ -2,7 +2,7 @@
 OwlMixin
 ========
 
-|pypi| |docslatest| |travis| |coverage| |complexity| |versions| |license|
+|pypi| |travis| |coverage| |complexity| |versions| |license|
 
 Mixin which converts ``data class instance`` and others each other more simple.
 
