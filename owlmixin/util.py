@@ -9,7 +9,7 @@ import codecs
 import json
 import yaml
 from urllib.request import urlopen
-from yaml import Loader, SafeLoader
+from yaml import SafeLoader
 
 import csv
 from csv import register_dialect, Dialect, QUOTE_MINIMAL
@@ -44,7 +44,6 @@ class MyDumper(yaml.SafeDumper):
 def construct_yaml_str(self, node):
     return self.construct_scalar(node)
 
-Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
 
@@ -93,7 +92,7 @@ def load_yaml(yaml_str):
     :param unicode yaml_str:
     :rtype: dict | list
     """
-    return yaml.load(yaml_str)
+    return yaml.safe_load(yaml_str)
 
 
 def load_yamlf(fpath, encoding):
@@ -103,7 +102,7 @@ def load_yamlf(fpath, encoding):
     :rtype: dict | list
     """
     with codecs.open(fpath, encoding=encoding) as f:
-        return yaml.load(f)
+        return yaml.safe_load(f)
 
 
 def load_csvf(fpath, fieldnames, encoding):

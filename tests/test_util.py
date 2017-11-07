@@ -2,7 +2,10 @@
 
 from __future__ import division, absolute_import, unicode_literals
 
+from yaml.constructor import ConstructorError
 from owlmixin import util
+
+import pytest
 
 
 class TestReplaceKeys:
@@ -82,3 +85,38 @@ class TestToSnake:
         assert util.to_snake("<file_list>") == "file_list"
         assert util.to_snake("-o") == "o"
         assert util.to_snake("--detail-option") == "detail_option"
+
+
+class TestLoadYaml:
+    def test(self):
+        actual = util.load_yaml('''
+id: 1
+names:
+  - tadashi
+  - aikawa
+        ''')
+        assert actual == {
+            "id": 1,
+            "names": ['tadashi', 'aikawa']
+        }
+
+    def test_yaml_load_vulnerability(self):
+        with pytest.raises(ConstructorError):
+            util.load_yaml('!!python/object/apply:os.system ["calc.exe"]')
+
+
+class TestLoadYamlf:
+    def test(self):
+        assert util.load_yamlf('tests/yaml/spots_utf8.yaml', 'utf-8') == [
+            {
+                "address": {"name": "address1"},
+                "names": ["spot1"]
+            },
+            {
+                "names": ["スポット21", "スポット22"]
+            }
+        ]
+
+    def test_yaml_load_vulnerability(self):
+        with pytest.raises(ConstructorError):
+            util.load_yamlf('tests/yaml/vulnerability.yaml', 'utf-8')
