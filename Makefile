@@ -34,5 +34,6 @@ _clean-package: ## Clean package documentation
 package-docs: build-docs _clean-package ## Package documentation
 		@echo Start package documentation
 		@cp -r sphinx-docs/_build/html/* docs/
+		@touch docs/.nojekyll
 		@echo End package documentation
 
