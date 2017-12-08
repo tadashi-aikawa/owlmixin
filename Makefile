@@ -16,8 +16,23 @@ init: ## Install dependencies and create envirionment
 		@pipenv install -d
 		@echo End install packages
 
-docs: ## Build documentation
+_clean-docs: ## Clean documentation
+		@echo Start clean documentation
+		@cd sphinx-docs && pipenv run make clean
+		@echo End clean documentation
+
+build-docs: _clean-docs ## Build documentation
 		@echo Start build documentation
-		@cd docs && pipenv run make html linkcheck
+		@cd sphinx-docs && pipenv run make html linkcheck
 		@echo End build documentation
+
+_clean-package: ## Clean package documentation
+		@echo Start clean documentation
+		@rm -rf docs/*
+		@echo End clean documentation
+
+package-docs: build-docs _clean-package ## Package documentation
+		@echo Start package documentation
+		@cp -r sphinx-docs/_build/html/* docs/
+		@echo End package documentation
 

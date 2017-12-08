@@ -1,0 +1,587 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>owlmixin.owlcollections &#8212; owlmixin 2.0.0a12 documentation</title>
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0a12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.0.0a12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for owlmixin.owlcollections</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">DictTransformer</span><span class="p">,</span> \
+    <span class="n">DictsTransformer</span><span class="p">,</span> \
+    <span class="n">JsonTransformer</span><span class="p">,</span> \
+    <span class="n">YamlTransformer</span><span class="p">,</span> \
+    <span class="n">CsvTransformer</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TList"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList">[docs]</a><span class="k">class</span> <span class="nc">TList</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">DictsTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">CsvTransformer</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="c1"># type: (TList[T]) -&gt; TList[T]</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="n">values</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+<div class="viewcode-block" id="TList.map"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; U</span>
+<span class="sd">        :rtype: TList[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).map(lambda x: x+1)</span>
+<span class="sd">            [2, 3, 4, 5, 6]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TList.emap"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.emap">[docs]</a>    <span class="k">def</span> <span class="nf">emap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T, int -&gt; U</span>
+<span class="sd">        :rtype: TList[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([10, 20, 30, 40, 50]).emap(lambda x, i: (x+1, i))</span>
+<span class="sd">            [(11, 0), (21, 1), (31, 2), (41, 3), (51, 4)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="TList.flatten"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.flatten">[docs]</a>    <span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: TList[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([[1, 2], [3, 4]]).flatten()</span>
+<span class="sd">            [1, 2, 3, 4]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TList.flat_map"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.flat_map">[docs]</a>    <span class="k">def</span> <span class="nf">flat_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; U</span>
+<span class="sd">        :rtype: TList[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3]).flat_map(lambda x: [x, x+1])</span>
+<span class="sd">            [1, 2, 2, 3, 3, 4]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TList.filter"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).filter(lambda x: x &gt; 3)</span>
+<span class="sd">            [4, 5]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="TList.reject"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.reject">[docs]</a>    <span class="k">def</span> <span class="nf">reject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).reject(lambda x: x &gt; 3)</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="TList.head"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.head">[docs]</a>    <span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;TList[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param size_:</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).head(3)</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="bp">self</span><span class="p">[:</span><span class="n">size_</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TList.tail"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.tail">[docs]</a>    <span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;TList[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).tail(3)</span>
+<span class="sd">            [3, 4, 5]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="n">size_</span><span class="p">:])</span></div>
+
+<div class="viewcode-block" id="TList.uniq"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.uniq">[docs]</a>    <span class="k">def</span> <span class="nf">uniq</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;TList[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 2, 1]).uniq()</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">TList</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">:</span>
+                <span class="n">rs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rs</span></div>
+
+<div class="viewcode-block" id="TList.uniq_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.uniq_by">[docs]</a>    <span class="k">def</span> <span class="nf">uniq_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TList[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, -2, -1]).uniq_by(lambda x: x**2)</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">TList</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rs</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+                <span class="n">rs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rs</span></div>
+
+<div class="viewcode-block" id="TList.partial"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.partial">[docs]</a>    <span class="k">def</span> <span class="nf">partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: tuple(TList[T], TList[T])</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).partial(lambda x: x &gt; 3)</span>
+<span class="sd">            ([4, 5], [1, 2, 3])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">func</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.group_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.group_by">[docs]</a>    <span class="k">def</span> <span class="nf">group_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param to_key:</span>
+<span class="sd">        :type to_key: T -&gt; unicode</span>
+<span class="sd">        :rtype: TDict[TList[T]]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()</span>
+<span class="sd">            &#39;{&quot;0&quot;: [2,4],&quot;1&quot;: [1,3,5]}&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">to_key</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">TList</span><span class="p">())</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TList.order_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.order_by">[docs]</a>    <span class="k">def</span> <span class="nf">order_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; any</span>
+<span class="sd">        :param reverse: Sort by descend order if True, else by ascend</span>
+<span class="sd">        :type reverse: bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10)</span>
+<span class="sd">            [40, 31, 12, 25, 57]</span>
+<span class="sd">            &gt;&gt;&gt; TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10, reverse=True)</span>
+<span class="sd">            [57, 25, 12, 31, 40]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">func</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TList.concat"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.concat">[docs]</a>    <span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param values:</span>
+<span class="sd">        :type values: TList[T]</span>
+<span class="sd">        :param first:</span>
+<span class="sd">        :type first: bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2]).concat(TList([3, 4]))</span>
+<span class="sd">            [1, 2, 3, 4]</span>
+<span class="sd">            &gt;&gt;&gt; TList([1, 2]).concat(TList([3, 4]), first=True)</span>
+<span class="sd">            [3, 4, 1, 2]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">values</span> <span class="o">+</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">first</span> <span class="k">else</span> <span class="bp">self</span> <span class="o">+</span> <span class="n">values</span></div>
+
+<div class="viewcode-block" id="TList.reduce"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.reduce">[docs]</a>    <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">init_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (U, T) -&gt; U</span>
+<span class="sd">        :param init_value:</span>
+<span class="sd">        :type init_value: U</span>
+<span class="sd">        :rtype: U</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).reduce(lambda t, x: t + 2*x, 100)</span>
+<span class="sd">            130</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">init_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.sum"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.sum">[docs]</a>    <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: int | float</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).sum()</span>
+<span class="sd">            15</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.sum_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.sum_by">[docs]</a>    <span class="k">def</span> <span class="nf">sum_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; int | float</span>
+<span class="sd">        :rtype: int | float</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).sum_by(lambda x: x*2)</span>
+<span class="sd">            30</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TList.size"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: int</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).size()</span>
+<span class="sd">            5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.join"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.join">[docs]</a>    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joint</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param joint:</span>
+<span class="sd">        :type joint: unicode</span>
+<span class="sd">        :rtype: unicode</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]).join(&quot;-&quot;)</span>
+<span class="sd">            &#39;A-B-C&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.find"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: T</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).find(lambda x: x &gt; 3)</span>
+<span class="sd">            4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">x</span></div>
+
+<div class="viewcode-block" id="TList.all"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: T</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).all(lambda x: x &gt; 0)</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).all(lambda x: x &gt; 1)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TList.any"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.any">[docs]</a>    <span class="k">def</span> <span class="nf">any</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; bool</span>
+<span class="sd">        :rtype: T</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).any(lambda x: x &gt; 4)</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).any(lambda x: x &gt; 5)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TList.intersection"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.intersection">[docs]</a>    <span class="k">def</span> <span class="nf">intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param values:</span>
+<span class="sd">        :type values: List[T]</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).intersection([2, 4, 6])</span>
+<span class="sd">            [2, 4]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.not_intersection"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.not_intersection">[docs]</a>    <span class="k">def</span> <span class="nf">not_intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param values:</span>
+<span class="sd">        :type values: List[T]</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3, 4, 5]).not_intersection([2, 4, 6])</span>
+<span class="sd">            [1, 3, 5]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TDict"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict">[docs]</a><span class="k">class</span> <span class="nc">TDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">DictTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TDict.map"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; U</span>
+<span class="sd">        :rtype: TList[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; sorted(TDict(k1=1, k2=2, k3=3).map(lambda k, v: v*2))</span>
+<span class="sd">            [2, 4, 6]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
+
+<div class="viewcode-block" id="TDict.map_values"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.map_values">[docs]</a>    <span class="k">def</span> <span class="nf">map_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: T -&gt; U</span>
+<span class="sd">        :rtype: TDict[U]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).map_values(lambda x: x*2) == {</span>
+<span class="sd">            ...     &quot;k1&quot;: 2,</span>
+<span class="sd">            ...     &quot;k2&quot;: 4,</span>
+<span class="sd">            ...     &quot;k3&quot;: 6</span>
+<span class="sd">            ... }</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></div>
+
+<div class="viewcode-block" id="TDict.filter"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).filter(lambda k, v: v &lt; 2)</span>
+<span class="sd">            [1]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="TDict.reject"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.reject">[docs]</a>    <span class="k">def</span> <span class="nf">reject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; bool</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).reject(lambda k, v: v &lt; 3)</span>
+<span class="sd">            [3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="TDict.sum"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.sum">[docs]</a>    <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: int | float</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).sum()</span>
+<span class="sd">            6</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TDict.sum_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.sum_by">[docs]</a>    <span class="k">def</span> <span class="nf">sum_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; (int | float)</span>
+<span class="sd">        :rtype: int | float</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).sum_by(lambda k, v: v*2)</span>
+<span class="sd">            12</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TDict.size"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: int</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).size()</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TDict.find"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; bool</span>
+<span class="sd">        :rtype: T</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).find(lambda k, v: v == 2)</span>
+<span class="sd">            2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="TDict.to_values"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.to_values">[docs]</a>    <span class="k">def</span> <span class="nf">to_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: TList[T]</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).to_values().order_by(lambda x: x)</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TDict.all"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; bool</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).all(lambda k, v: v &gt; 0)</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).all(lambda k, v: v &gt; 1)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
+
+<div class="viewcode-block" id="TDict.any"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.any">[docs]</a>    <span class="k">def</span> <span class="nf">any</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param func:</span>
+<span class="sd">        :type func: (K, T) -&gt; bool</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).any(lambda k, v: v &gt; 2)</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).any(lambda k, v: v &gt; 3)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.0.0a12 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, tadashi-aikawa.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>
