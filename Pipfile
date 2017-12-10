@@ -8,6 +8,12 @@ name = "pypi"
 [dev-packages]
 
 sphinx = "*"
+pytest = "*"
+mock = "*"
+pytest-cov = "*"
+pipenv = "*"
+wheel = "*"
+twine = "*"
 
 
 [packages]
