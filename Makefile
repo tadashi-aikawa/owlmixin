@@ -45,7 +45,7 @@ package: _clean-package ## Package OwlMixin
 
 release: package ## Release OwlMixin (set RELEASE_VERSION, PYPI_PASSWORD)
 		@echo Start $@
-		@twine upload dist/owlmixin-$(RELEASE_VERSION)-py3-none-any.whl 
+		@pipenv run twine upload dist/owlmixin-$(RELEASE_VERSION)-py3-none-any.whl 
 			--config-file ".pypirc"
 			-u tadashi-aikawa \
 			-p $(PYPI_PASSWORD)
