@@ -43,12 +43,9 @@ package: _clean-package ## Package OwlMixin
 		@pipenv run python setup.py bdist_wheel
 		@echo End $@
 
-release: package ## Release OwlMixin (set RELEASE_VERSION, PYPI_PASSWORD)
+release: package ## Release OwlMixin (set RELEASE_VERSION and env TWINE_USERNAME, TWINE_PASSWORD)
 		@echo Start $@
-		@pipenv run twine upload dist/owlmixin-$(RELEASE_VERSION)-py3-none-any.whl 
-			--config-file ".pypirc"
-			-u tadashi-aikawa \
-			-p $(PYPI_PASSWORD)
+		@pipenv run twine upload dist/owlmixin-$(RELEASE_VERSION)-py3-none-any.whl
 		@echo End $@
 
 test: ## Unit test
