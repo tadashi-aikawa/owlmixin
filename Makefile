@@ -3,37 +3,58 @@ SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
 
-.PHONY: $(shell egrep -oh ^[a-zA-Z_-]+: $(MAKEFILE_LIST) | sed 's/://')
+.PHONY: $(shell egrep -oh ^[a-zA-Z0-9][a-zA-Z0-9_-]+: $(MAKEFILE_LIST) | sed 's/://')
 
 help: ## Print this help
 	@echo 'Usage: make [target]'
 	@echo ''
 	@echo 'Targets:'
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9][a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 init: ## Install dependencies and create envirionment
-		@echo Start install packages
+		@echo Start $@
 		@pipenv install -d
-		@echo End install packages
+		@echo End $@
 
 _clean-docs: ## Clean documentation
-		@echo Start clean documentation
 		@cd sphinx-docs && pipenv run make clean
-		@echo End clean documentation
 
 build-docs: _clean-docs ## Build documentation
-		@echo Start build documentation
+		@echo Start $@
 		@cd sphinx-docs && pipenv run make html linkcheck
-		@echo End build documentation
+		@echo End $@
 
-_clean-package: ## Clean package documentation
-		@echo Start clean documentation
+_clean-package-docs: ## Clean package documentation
 		@rm -rf docs/*
-		@echo End clean documentation
 
-package-docs: build-docs _clean-package ## Package documentation
-		@echo Start package documentation
+package-docs: build-docs _clean-package-docs ## Package documentation
+		@echo Start $@
 		@cp -r sphinx-docs/_build/html/* docs/
 		@touch docs/.nojekyll
-		@echo End package documentation
+		@echo End $@
+
+_clean-package: ## Clean package
+		@echo Start $@
+		@rm -rf build dist owlmixin.egg-info
+		@echo End $@
+
+package: _clean-package ## Package OwlMixin
+		@echo Start $@
+		@pipenv run python setup.py bdist_wheel
+		@echo End $@
+
+release: package ## Release OwlMixin (set RELEASE_VERSION and env TWINE_USERNAME, TWINE_PASSWORD)
+		@echo Start $@
+		@pipenv run twine upload dist/owlmixin-$(RELEASE_VERSION)-py3-none-any.whl
+		@echo End $@
+
+test: ## Unit test
+		@echo Start $@
+		@pipenv run py.test -vv --cov-report=xml --cov=. tests/
+		@echo End $@
+
+doctest: ## Doc test
+		@echo Start $@
+		@pipenv run python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py} -v
+		@echo End $@
 

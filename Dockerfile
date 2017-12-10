@@ -1,5 +1,4 @@
-FROM python:3.6-onbuild
+FROM python:3.6
 
-RUN pip install -U setuptools pip wheel twine
+RUN pip install -U pipenv
 
-CMD ["sh", "release.sh"]
