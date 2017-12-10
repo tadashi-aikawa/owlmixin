@@ -8,7 +8,7 @@ from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import util
 from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict, TOption
 
-__version__ = '2.0.0rc1'
+__version__ = '2.0.0'
 
 T = TypeVar('T', bound='OwlMixin')
 

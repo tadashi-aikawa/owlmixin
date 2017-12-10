@@ -39,7 +39,7 @@ setup(
     install_requires=requirements,
     extras_require={'test': test_requirements},
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
