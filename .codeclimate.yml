@@ -29,3 +29,6 @@ ratings:
     - "**.rb"
 exclude_paths:
   - tests/
+  - docs/
+  - sphinx-docs/
+
