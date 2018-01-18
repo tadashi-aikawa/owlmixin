@@ -500,3 +500,11 @@ class TestNotIntersection:
 
     def test_empty(self):
         assert TList([1, 2, 3, 4, 5]).not_intersection([1, 2, 3, 4, 5]) == []
+
+
+class TestReverse:
+    def test_normal(self):
+        assert TList([1, 2, 3]).reverse() == [3, 2, 1]
+
+    def test_empty(self):
+        assert TList([]).reverse() == []

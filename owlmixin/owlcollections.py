@@ -343,6 +343,17 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.reject(lambda x: x in values)
 
+    def reverse(self) -> 'TList[T]':
+        """
+        :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3]).reverse()
+            [3, 2, 1]
+        """
+        return TList(reversed(self))
+
 
 class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T]):
     @property
