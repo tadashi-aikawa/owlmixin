@@ -230,6 +230,21 @@ class TestHead:
         ]
 
 
+class TestHeadWhile:
+    def test_normal(self):
+        d = [
+            {"names": ["spot11", "spot12"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31"]},
+            {"names": ["spot41", "spot42"], "address": {"name": "address1"}}
+        ]
+
+        assert [
+            {"names": ["spot11", "spot12"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+        ] == Spot.from_dicts(d).head_while(lambda x: x.names.size() > 1).to_dicts()
+
+
 class TestTail:
     def test_normal(self):
         d = [

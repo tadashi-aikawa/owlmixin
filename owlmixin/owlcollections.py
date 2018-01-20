@@ -109,6 +109,24 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(self[:size_])
 
+    def head_while(self, func: Callable[[T], bool] ) -> 'TList[T]':
+        """
+        :param func:
+        :type func: T -> bool
+
+        Usage:
+
+            >>> TList([1, 2, 30, 4, 50]).head_while(lambda x: x < 10)
+            [1, 2]
+        """
+        r = TList()
+        for x in self:
+            if not func(x):
+                return r
+            else:
+                r.append(x)
+        return r
+
     def tail(self, size_: int) -> 'TList[T]':
         """
         Usage:
