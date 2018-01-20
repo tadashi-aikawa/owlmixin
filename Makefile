@@ -58,7 +58,10 @@ release: init test doctest _package-docs ## Release (set version) (Not push anyw
 		@echo '1. Recreate `owlmixin/version.py`'
 		@echo "__version__ = '$(version)'" > owlmixin/version.py
 
-		@echo '2. Staging and commit'
+		@echo '2. Package documentation'
+		@make _package-docs
+
+		@echo '3. Staging and commit'
 		git add owlmixin/version.py
 		git add docs
 		git commit -m ':package: Version $(version)'
