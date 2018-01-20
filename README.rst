@@ -159,18 +159,29 @@ Don't you think smart?
 For developer
 ============
 
-Release
--------
+Requires pipenv and make.
 
-0. `make test doctest`
-1. Increments version in __init__.py
-2. `make package-docs`
-3. `git commit -av` with message ':package: Version $(version)'
-4. `git tag $(version) -m $(version)`
-5. `make release RELEASE_VERSION=$(version)` which means uploading PyPI!
-6. Install new version and confirm
-7. Make PR, $(version) => master
-8. Merge PR
+Commands
+--------
+
+.. sourcecode::
+
+    # Create env
+    $ make init
+
+    # Build documentation and run server locally
+    $ make serve-docs
+
+
+Version up
+----------
+
+.. sourcecode::
+
+    $ make release version=x.y.z
+    $ git push
+    $ make publish version=x.y.z
+
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
