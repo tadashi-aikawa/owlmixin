@@ -25,7 +25,7 @@ setup(
     name='owlmixin',
     version=re.search(
         r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
-        open('owlmixin/__init__.py').read()).group(1),
+        open('owlmixin/version.py').read()).group(1),
     description='Mixin which converts ``data class instance`` and others each other more simple.',
     long_description=load_readme(),
     license='MIT',

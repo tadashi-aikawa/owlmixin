@@ -7,6 +7,10 @@ import io
 import re
 import codecs
 import json
+import os
+from math import floor, ceil
+from unicodedata import east_asian_width
+
 import yaml
 from urllib.request import urlopen
 from yaml import SafeLoader
@@ -203,3 +207,49 @@ def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
     with codecs.open(fpath, mode='w', encoding=encoding) as f:
         f.write(dump_yaml(data))
         return fpath
+
+
+def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
+    """
+    :param data:
+    :param fieldnames:
+    :return: Table string
+    """
+    def min3(num: int) -> int:
+        return 3 if num < 4 else num
+
+    width_by_col: Dict[str, int] = {
+        f: min3(max([string_width(str(d.get(f))) for d in data])) for f in fieldnames
+    }
+
+    def fill_spaces(word: str, width: int, center=False):
+        """ aaa, 4 => ' aaa  ' """
+        to_fills: int = width - string_width(word)
+        return f" {' '*floor(to_fills/2)}{word}{' '*ceil(to_fills/2)} " if center \
+            else f" {word}{' '*to_fills} "
+
+    def to_record(r: dict) -> str:
+        return f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
+
+    return f"""
+|{'|'.join([fill_spaces(x, width_by_col.get(x), center=True) for x in fieldnames])}|
+|{'|'.join([fill_spaces(width_by_col.get(x)*"-", width_by_col.get(x)) for x in fieldnames])}|
+{os.linesep.join([to_record(x) for x in data])}
+""".lstrip()
+
+
+def string_width(word: str) -> int:
+    """
+    :param word:
+    :return: Widths of word
+
+    Usage:
+
+        >>> string_width('abc')
+        3
+        >>> string_width('Ａbしー')
+        7
+        >>> string_width('')
+        0
+    """
+    return sum(map(lambda x: 2 if east_asian_width(x) in 'FWA' else 1, word))

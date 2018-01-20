@@ -295,3 +295,30 @@ class CsvTransformer():
         :return: Csv file path
         """
         return util.save_csvf(traverse(self, force_value=True), fieldnames, fpath, encoding, with_header, crlf)
+
+
+class TableTransformer():
+    """ `@property _dict` can overridden
+    """
+
+    def to_table(self, fieldnames: Sequence[str]) -> str:
+        """From sequence of text to csv string
+
+        :param fieldnames: Order of columns by property name
+        :return: Table string
+
+        Usage:
+
+            >>> from owlmixin.samples import Human
+            >>> humans = Human.from_dicts([
+            ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
+            ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ])
+            >>> print(humans.to_table(fieldnames=['name', 'id', 'favorites']))
+            | name | id  |      favorites       |
+            | ---- | --- | -------------------- |
+            | Tom  | 1   | [{'name': 'Apple'}]  |
+            | John | 2   | [{'name': 'Orange'}] |
+            <BLANKLINE>
+        """
+        return util.dump_table(traverse(self, force_value=True), fieldnames)

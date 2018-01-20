@@ -10,14 +10,15 @@ from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
     JsonTransformer, \
     YamlTransformer, \
-    CsvTransformer
+    CsvTransformer, \
+    TableTransformer
 
 T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 
 
-class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, Generic[T]):
+class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]):
     def __add__(self, values):
         # type: (TList[T]) -> TList[T]
         return TList(values + list(self))
@@ -108,6 +109,24 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             [1, 2, 3]
         """
         return TList(self[:size_])
+
+    def head_while(self, func: Callable[[T], bool] ) -> 'TList[T]':
+        """
+        :param func:
+        :type func: T -> bool
+
+        Usage:
+
+            >>> TList([1, 2, 30, 4, 50]).head_while(lambda x: x < 10)
+            [1, 2]
+        """
+        r = TList()
+        for x in self:
+            if not func(x):
+                return r
+            else:
+                r.append(x)
+        return r
 
     def tail(self, size_: int) -> 'TList[T]':
         """
@@ -342,6 +361,17 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             [1, 3, 5]
         """
         return self.reject(lambda x: x in values)
+
+    def reverse(self) -> 'TList[T]':
+        """
+        :rtype: TList[T]
+
+        Usage:
+
+            >>> TList([1, 2, 3]).reverse()
+            [3, 2, 1]
+        """
+        return TList(reversed(self))
 
 
 class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T]):

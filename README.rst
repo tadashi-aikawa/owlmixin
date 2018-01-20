@@ -12,8 +12,8 @@ Please migrate from 1.x to 2.x
 
 * ``OwlMixin >= 2.0.0`` support python 3.6 and upper only.
 * ``OwlMixin >= 2.0.0`` has many breaking changes for many improvements.
-* ``OwlMixin >= 2.0.0`` documentation site has not completed yet (but you can trust pydoc always!)
 * ``OwlMixin < 2.0.0`` has **vulnerability** fixed only ``OwlMixin >= 2.0.0a12``.
+
 
 Motivation
 ==========
@@ -159,18 +159,29 @@ Don't you think smart?
 For developer
 ============
 
-Release
--------
+Requires pipenv and make.
 
-0. `make test doctest`
-1. Increments version in __init__.py
-2. `make package-docs`
-3. `git commit -av` with message ':package: Versino $(version)'
-4. `git tag $(version) -m $(version)`
-5. `make release` which means uploading PyPI!
-6. Install new version and confirm
-7. Make PR, $(version) => master
-8. Merge PR
+Commands
+--------
+
+.. sourcecode::
+
+    # Create env
+    $ make init
+
+    # Build documentation and run server locally
+    $ make serve-docs
+
+
+Version up
+----------
+
+.. sourcecode::
+
+    $ make release version=x.y.z
+    $ git push
+    $ make publish version=x.y.z
+
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
