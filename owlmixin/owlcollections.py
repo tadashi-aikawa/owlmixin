@@ -10,14 +10,15 @@ from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
     JsonTransformer, \
     YamlTransformer, \
-    CsvTransformer
+    CsvTransformer, \
+    TableTransformer
 
 T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 
 
-class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, Generic[T]):
+class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]):
     def __add__(self, values):
         # type: (TList[T]) -> TList[T]
         return TList(values + list(self))
