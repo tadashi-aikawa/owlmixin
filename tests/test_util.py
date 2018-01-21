@@ -125,15 +125,15 @@ class TestLoadYamlf:
 class TestDumpTable:
     def test(self):
         expected = """
-| id  |   name   |
-| --- | -------- |
-| 1   | Ichiro   |
-| 2   | イチロー |
-| 3   | いchiro  |
+| id  |   name   | とてもながい名前 |
+| --- | -------- | ---------------- |
+| 1   | Ichiro   | None             |
+| 2   | イチロー | None             |
+| 3   | いchiro  |                  |
 """.lstrip()
 
         assert expected == util.dump_table([
             {'id': 1, 'name': 'Ichiro'},
             {'id': 2, 'name': 'イチロー'},
-            {'id': 3, 'name': 'いchiro'},
-        ], ['id', 'name'])
+            {'id': 3, 'name': 'いchiro', 'とてもながい名前': ''},
+        ], ['id', 'name', 'とてもながい名前'])
