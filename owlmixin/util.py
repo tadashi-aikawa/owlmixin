@@ -219,7 +219,7 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
         return 3 if num < 4 else num
 
     width_by_col: Dict[str, int] = {
-        f: min3(max([string_width(str(d.get(f))) for d in data])) for f in fieldnames
+        f: min3(max([string_width(str(d.get(f))) for d in data] + [string_width(f)])) for f in fieldnames
     }
 
     def fill_spaces(word: str, width: int, center=False):
