@@ -8,15 +8,17 @@ class Spot(OwlMixin):
     id: int
     name: str
     note: TOption[str]
+    rank: TOption[int]
     children: TOption[TList['Spot']]
 
 
 class TestTOption:
     def test_normal(self):
-        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'Note1'})
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'Note1', 'rank': 1})
         assert r.id == 1
         assert r.name == 'Name1'
         assert r.note.get() == 'Note1'
+        assert r.rank.get() == 1
 
     def test_note_is_empty(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
@@ -24,11 +26,24 @@ class TestTOption:
         assert r.name == 'Name1'
         assert r.note.is_none()
 
+    def test_note_is_empty_string(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': ''})
+        assert r.id == 1
+        assert r.name == 'Name1'
+        # Fot `from_csvf`
+        assert r.note.is_none()
+
     def test_note_is_none(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': None})
         assert r.id == 1
         assert r.name == 'Name1'
         assert r.note.is_none()
+
+    def test_rank_is_zero(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'rank': 0})
+        assert r.id == 1
+        assert r.name == 'Name1'
+        assert r.rank.get() == 0
 
     def test_name_is_empty(self):
         with pytest.raises(AttributeError) as e:

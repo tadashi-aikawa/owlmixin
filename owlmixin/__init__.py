@@ -126,9 +126,10 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
                       for k, v in value.items()})
     elif o_type == TOption:
         v = value.get() if type(value) == TOption else value
-        return TOption(
-            traverse(g_type[0], name, v, cls, force_snake_case, force_cast, restrict) if v else None
-        )
+        # TODO: Fot `from_csvf`... need to more simple!!
+        if (type(v) == str and v) or (type(v) != str and v is not None):
+            return TOption(traverse(g_type[0], name, v, cls, force_snake_case, force_cast, restrict))
+        return TOption(None)
 
     else:
         assert False, f"This generics is not supported {o_type}"

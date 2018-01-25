@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
 import functools
 from itertools import chain
 from typing import TypeVar, Generic, Any, Callable
