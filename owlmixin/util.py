@@ -1,8 +1,6 @@
 # coding: utf-8
 
 # Need not unicode_literals
-from __future__ import division, absolute_import
-
 import io
 import re
 import codecs

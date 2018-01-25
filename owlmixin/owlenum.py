@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import division, absolute_import, unicode_literals
-
 from enum import Enum
 from typing import TypeVar
 
