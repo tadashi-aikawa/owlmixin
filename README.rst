@@ -10,7 +10,7 @@ Mixin which converts ``data class instance`` and others each other more simple.
  
 Please migrate from 1.x to 2.x
 
-* ``OwlMixin >= 2.0.0`` support python 3.6 and upper only.
+* ``OwlMixin >= 2.0.0`` support python 3.6 only.
 * ``OwlMixin >= 2.0.0`` has many breaking changes for many improvements.
 * ``OwlMixin < 2.0.0`` has **vulnerability** fixed only ``OwlMixin >= 2.0.0a12``.
 
