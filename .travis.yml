@@ -9,7 +9,6 @@ matrix:
     env:
       SPHINX_TARGET: "yes"
       TEST_REPORT_TARGET: "yes"
-  - python: "3.7-dev"
 install:
   - pip install pipenv
   - make init
