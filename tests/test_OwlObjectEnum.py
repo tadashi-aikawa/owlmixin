@@ -32,6 +32,11 @@ class Sample(OwlMixin):
     color: Color
 
 
+class TestFromValue:
+    def test_normal(self):
+        assert Color.from_value("blue") is Color.BLUE
+
+
 class TestFromSymbol:
     def test_normal(self):
         assert Color.from_symbol("blue") is Color.BLUE
