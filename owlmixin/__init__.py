@@ -7,7 +7,7 @@ import owlmixin.version
 from owlmixin.owlcollections import TList, TDict
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import util
-from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, traverse_dict, TOption
+from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, ValueTransformer, traverse_dict, TOption
 
 T = TypeVar('T', bound='OwlMixin')
 
@@ -100,10 +100,8 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
         elif issubclass(type_, OwlMixin):
             assert_types(value, (type_, dict), cls, name)
             return type_.from_dict(value, force_snake_case, force_cast, restrict)
-        elif issubclass(type_, OwlEnum):
-            return type_(value)
-        elif issubclass(type_, OwlObjectEnum):
-            return type_.from_symbol(value)
+        elif issubclass(type_, ValueTransformer):
+            return type_.from_value(value)
         else:
             if force_cast:
                 return type_(value)

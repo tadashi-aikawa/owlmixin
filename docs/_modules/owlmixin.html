@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin &#8212; owlmixin 2.1.2 documentation</title>
+    <title>owlmixin &#8212; owlmixin 2.2.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.1.2',
+        VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -38,7 +38,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -58,7 +58,7 @@
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
-<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">DictTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">traverse_dict</span><span class="p">,</span> <span class="n">TOption</span>
+<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">DictTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">,</span> <span class="n">traverse_dict</span><span class="p">,</span> <span class="n">TOption</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s1">&#39;OwlMixin&#39;</span><span class="p">)</span>
 
@@ -151,10 +151,8 @@
         <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
             <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlEnum</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">type_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlObjectEnum</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_symbol</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">force_cast</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">type_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -782,13 +780,13 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>
