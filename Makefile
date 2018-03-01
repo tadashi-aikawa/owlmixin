@@ -64,7 +64,7 @@ _package: _clean-package ## Package OwlMixin
 		@pipenv run python setup.py bdist_wheel
 		@echo End $@
 
-release: init test doctest _package-docs ## Release (set version) (Not push anywhere)
+release: init test doctest _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
 		@echo '1. Recreate `owlmixin/version.py`'
 		@echo "__version__ = '$(version)'" > owlmixin/version.py
 
