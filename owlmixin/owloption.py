@@ -7,6 +7,8 @@ U = TypeVar('U')
 
 
 class TOption(Generic[T]):
+    none = None
+
     def __init__(self, value):
         self.value = value
 

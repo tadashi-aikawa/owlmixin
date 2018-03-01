@@ -13,6 +13,8 @@ help: ## Print this help
 	@echo 'Targets:'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9][a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
+version := $(shell git rev-parse --abbrev-ref HEAD)
+
 #------
 
 init: ## Install dependencies and create envirionment
@@ -52,28 +54,6 @@ doctest: ## Doc test
 		@pipenv run python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
 		@echo End $@
 
-release: init test doctest _package-docs ## Release (set version) (Not push anywhere)
-		@echo Start $@
-
-		@echo '1. Recreate `owlmixin/version.py`'
-		@echo "__version__ = '$(version)'" > owlmixin/version.py
-
-		@echo '2. Package documentation'
-		@make _package-docs
-
-		@echo '3. Staging and commit'
-		git add owlmixin/version.py
-		git add docs
-		git commit -m ':package: Version $(version)'
-		
-		@echo '4. Tags'
-		git tag $(version) -m $(version)
-		
-		@echo 'Success All!!'
-		@echo 'Now you should only do `git push`!!'
-
-		@echo End $@
-
 _clean-package: ## Clean package
 		@echo Start $@
 		@rm -rf build dist owlmixin.egg-info
@@ -84,8 +64,29 @@ _package: _clean-package ## Package OwlMixin
 		@pipenv run python setup.py bdist_wheel
 		@echo End $@
 
-publish: _package ## ReciwPublish to PyPI (set version and env TWINE_USERNAME, TWINE_PASSWORD)
-		@echo Start $@
+release: init test doctest _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
+		@echo '1. Recreate `owlmixin/version.py`'
+		@echo "__version__ = '$(version)'" > owlmixin/version.py
+
+		@echo '2. Package documentation'
+		@make _package-docs
+
+		@echo '3. Staging and commit'
+		git add owlmixin/version.py
+		git add docs
+		git commit -m ':package: Version $(version)'
+
+		@echo '4. Tags'
+		git tag $(version) -m v$(version)
+
+		@echo '5. Push'
+		git push
+
+		@echo '6. Deploy'
+		@echo 'Packageing...'
+		@pipenv run python setup.py bdist_wheel
+		@echo 'Deploying...'
 		@pipenv run twine upload dist/owlmixin-$(version)-py3-none-any.whl
-		@echo End $@
+
+		@echo 'Success All!!'
 
