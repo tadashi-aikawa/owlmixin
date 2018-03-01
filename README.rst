@@ -7,7 +7,7 @@ OwlMixin
 Mixin which converts ``data class instance`` and others each other more simple.
 
 -- :warning: **Attention** :warning: --
- 
+
 Please migrate from 1.x to 2.x
 
 * ``OwlMixin >= 2.0.0`` support python 3.6 only.
@@ -176,12 +176,15 @@ Commands
 Version up
 ----------
 
+Before release, you need to
+
+1. Confirm that your branch name equals release version
+
+Then
+
 .. sourcecode::
 
     $ make release version=x.y.z
-    $ git push
-    $ make publish version=x.y.z
-
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
