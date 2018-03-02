@@ -85,9 +85,6 @@ class TestTOption:
                 {'id': 2}
             ])
 
-    def test_none(self):
-        assert TOption.none is None
-
 
 class TestIsNone:
     def test_none(self):

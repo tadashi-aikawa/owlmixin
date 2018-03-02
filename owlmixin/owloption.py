@@ -7,8 +7,6 @@ U = TypeVar('U')
 
 
 class TOption(Generic[T]):
-    none = None
-
     def __init__(self, value):
         self.value = value
 
@@ -138,3 +136,4 @@ class TOption(Generic[T]):
 
     def __xor__(self, other):
         self.__raise_no_conditional_expression('__xor__')
+
