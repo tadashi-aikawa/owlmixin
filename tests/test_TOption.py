@@ -116,6 +116,44 @@ class TestMap:
         assert r.note.map(lambda x: x*2).get_or('hoge') == 'hoge'
 
 
+class TestFlatMap:
+    def test_not_none(self):
+        r: Spot = Spot.from_dict({
+            'id': 1,
+            'name': 'Name1',
+            'note': 'note1',
+            'children': [
+                {
+                    'id': 11,
+                    'name': 'Name11',
+                    'note': 'note11',
+                }
+            ]
+        })
+        assert r.children.flat_map(lambda x: x[0].note).get_or('hoge') == 'note11'
+
+    def test_none(self):
+        r: Spot = Spot.from_dict({
+            'id': 1,
+            'name': 'Name1',
+            'note': 'note1',
+        })
+        assert r.children.flat_map(lambda x: x[0].note).get_or('hoge') == 'hoge'
+
+    def test_none_deep(self):
+        r: Spot = Spot.from_dict({
+            'id': 1,
+            'name': 'Name1',
+            'note': 'note1',
+            'children': [
+                {
+                    'id': 11,
+                    'name': 'Name11',
+                }
+            ]
+        })
+        assert r.children.flat_map(lambda x: x[0].note).get_or('hoge') == 'hoge'
+
 class TestNoExpressionError:
     def test(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
