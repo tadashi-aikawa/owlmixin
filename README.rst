@@ -184,7 +184,7 @@ Then
 
 .. sourcecode::
 
-    $ make release version=x.y.z
+    $ make release
 
 
 .. |travis| image:: https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master
