@@ -263,6 +263,11 @@ class TestToDict:
             }
         }
 
+    def test_str_format(self):
+        r: Human = Human.from_dict(SAMPLE_HUMAN)
+
+        assert r.str_format('{id}: {name}') == '1: メンバ1'
+
     def test_ignore_none_false(self):
         r = Human.from_dict(SAMPLE_HUMAN)
 
