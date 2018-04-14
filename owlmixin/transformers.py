@@ -47,6 +47,27 @@ class DictTransformer():
     def _dict(self):
         return self.__dict__
 
+    def str_format(self, format_: str) -> str:
+        """From instance to str with formatting
+
+        :param format_: format string
+        :return: str
+
+        Usage:
+
+            >>> from owlmixin.samples import Human, Food
+            >>> human_dict = {
+            ...     "id": 1,
+            ...     "name": "Tom",
+            ...     "favorites": [
+            ...         {"name": "Apple", "names_by_lang": {"en": "Apple"}}
+            ...     ]
+            ... }
+            >>> Human.from_dict(human_dict).str_format('{id}: {name}')
+            '1: Tom'
+        """
+        return format_.format(**self.to_dict())
+
     def to_dict(self, ignore_none: bool=True, force_value: bool=True) -> dict:
         """From instance to dict
 
@@ -55,7 +76,6 @@ class DictTransformer():
         :return: Dict
 
         Usage:
-
             >>> from owlmixin.samples import Human, Food
             >>> human_dict = {
             ...     "id": 1,
