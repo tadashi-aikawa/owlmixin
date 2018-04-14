@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin.transformers &#8212; owlmixin 2.3.0 documentation</title>
+    <title>owlmixin.transformers &#8212; owlmixin 2.4.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3.0',
+        VERSION:     '2.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -38,7 +38,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.4.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -99,6 +99,27 @@
     <span class="k">def</span> <span class="nf">_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span>
 
+    <span class="k">def</span> <span class="nf">str_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;From instance to str with formatting</span>
+
+<span class="sd">        :param format_: format string</span>
+<span class="sd">        :return: str</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human, Food</span>
+<span class="sd">            &gt;&gt;&gt; human_dict = {</span>
+<span class="sd">            ...     &quot;id&quot;: 1,</span>
+<span class="sd">            ...     &quot;name&quot;: &quot;Tom&quot;,</span>
+<span class="sd">            ...     &quot;favorites&quot;: [</span>
+<span class="sd">            ...         {&quot;name&quot;: &quot;Apple&quot;, &quot;names_by_lang&quot;: {&quot;en&quot;: &quot;Apple&quot;}}</span>
+<span class="sd">            ...     ]</span>
+<span class="sd">            ... }</span>
+<span class="sd">            &gt;&gt;&gt; Human.from_dict(human_dict).str_format(&#39;{id}: {name}&#39;)</span>
+<span class="sd">            &#39;1: Tom&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">format_</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
     <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to dict</span>
 
@@ -107,7 +128,6 @@
 <span class="sd">        :return: Dict</span>
 
 <span class="sd">        Usage:</span>
-
 <span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human, Food</span>
 <span class="sd">            &gt;&gt;&gt; human_dict = {</span>
 <span class="sd">            ...     &quot;id&quot;: 1,</span>
@@ -401,7 +421,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.4.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
