@@ -178,3 +178,35 @@ class TestAny:
         }
 
         assert Spot.from_dicts_by_key(d).any(lambda k, v: len(k) == len(v.names)) is False
+
+
+class TestAssign:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        d2 = {
+            "c": {"names": ["spot3"]},
+            "d": {"names": ["spot4"]}
+        }
+
+        spots_by_key: TDict[Spot] = Spot.from_dicts_by_key(d)
+        actual: TDict[Spot] = spots_by_key.assign(d2)
+
+        assert {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot3"]},
+            "d": {"names": ["spot4"]}
+        } == actual.to_dict()
+
+        actual['a'] = None
+        assert actual['a'] is None
+        assert d['a'] is not None
+        assert spots_by_key['a'] is not None
+
+
+

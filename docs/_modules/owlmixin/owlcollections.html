@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin.owlcollections &#8212; owlmixin 2.4.0 documentation</title>
+    <title>owlmixin.owlcollections &#8212; owlmixin 2.5.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.4.0',
+        VERSION:     '2.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -38,7 +38,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.4.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -54,7 +54,7 @@
 
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">DictTransformer</span><span class="p">,</span> \
     <span class="n">DictsTransformer</span><span class="p">,</span> \
@@ -574,7 +574,21 @@
 <span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).any(lambda k, v: v &gt; 3)</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div></div>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
+
+<div class="viewcode-block" id="TDict.assign"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.assign">[docs]</a>    <span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TDict[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param dict_:</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2).assign({&#39;k3&#39;: 3})</span>
+<span class="sd">            {&#39;k1&#39;: 1, &#39;k2&#39;: 2, &#39;k3&#39;: 3}</span>
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2).assign(TDict({&#39;k2&#39;: 3}))</span>
+<span class="sd">            {&#39;k1&#39;: 1, &#39;k2&#39;: 3}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_</span><span class="p">})</span></div></div>
+
 </pre></div>
 
           </div>
@@ -602,7 +616,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.4.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.5.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
