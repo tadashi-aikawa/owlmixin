@@ -2,7 +2,7 @@
 
 import functools
 from itertools import chain
-from typing import TypeVar, Generic, Any, Callable
+from typing import TypeVar, Generic, Any, Callable, Dict
 
 from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
@@ -523,3 +523,17 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
             False
         """
         return any([func(k, v) for k, v in self.items()])
+
+    def assign(self, dict_: Dict[str, T]) -> 'TDict[T]':
+        """
+        :param dict_:
+
+        Usage:
+
+            >>> TDict(k1=1, k2=2).assign({'k3': 3})
+            {'k1': 1, 'k2': 2, 'k3': 3}
+            >>> TDict(k1=1, k2=2).assign(TDict({'k2': 3}))
+            {'k1': 1, 'k2': 3}
+        """
+        return TDict({**self, **dict_})
+
