@@ -18,75 +18,83 @@ version := $(shell git rev-parse --abbrev-ref HEAD)
 #------
 
 init: ## Install dependencies and create envirionment
-		@echo Start $@
-		@pipenv install -d
-		@echo End $@
+	@echo Start $@
+	@pipenv install -d
+	@echo End $@
 
 _clean-docs: ## Clean documentation
-		@cd sphinx-docs && pipenv run make clean
+	@cd sphinx-docs && pipenv run make clean
 
 build-docs: _clean-docs ## Build documentation
-		@echo Start $@
-		@cd sphinx-docs && pipenv run make html linkcheck
-		@echo End $@
+	@echo Start $@
+	@cd sphinx-docs && pipenv run make html linkcheck
+	@echo End $@
 
 serve-docs: build-docs ## Serve documentation
-		@echo Start $@
-		@cd sphinx-docs/_build/html && pipenv run python -m http.server
-		@echo End $@
+	@echo Start $@
+	@cd sphinx-docs/_build/html && pipenv run python -m http.server
+	@echo End $@
 
 _clean-package-docs: ## Clean package documentation
-		@rm -rf docs/*
+	@rm -rf docs/*
 
 _package-docs: build-docs _clean-package-docs ## Package documentation
-		@echo Start $@
-		@cp -r sphinx-docs/_build/html/* docs/
-		@touch docs/.nojekyll
-		@echo End $@
+	@echo Start $@
+	@cp -r sphinx-docs/_build/html/* docs/
+	@touch docs/.nojekyll
+	@echo End $@
 
 test: ## Unit test
-		@echo Start $@
-		@pipenv run py.test -vv --cov-report=xml --cov=. tests/
-		@echo End $@
+	@echo Start $@
+	@pipenv run py.test -vv --cov-report=xml --cov=. tests/
+	@echo End $@
 
 doctest: ## Doc test
-		@echo Start $@
-		@pipenv run python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
-		@echo End $@
+	@echo Start $@
+	@pipenv run python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
+	@echo End $@
 
 _clean-package: ## Clean package
-		@echo Start $@
-		@rm -rf build dist owlmixin.egg-info
-		@echo End $@
+	@echo Start $@
+	@rm -rf build dist owlmixin.egg-info
+	@echo End $@
 
 _package: _clean-package ## Package OwlMixin
-		@echo Start $@
-		@pipenv run python setup.py bdist_wheel
-		@echo End $@
+	@echo Start $@
+	@pipenv run python setup.py bdist_wheel
+	@echo End $@
 
-release: init test doctest _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
-		@echo '1. Recreate `owlmixin/version.py`'
-		@echo "__version__ = '$(version)'" > owlmixin/version.py
+release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
 
-		@echo '2. Package documentation'
-		@make _package-docs
+	@echo '0. Install packages from lockfile and test'
+	@pipenv install --deploy
+	@make test
+	@make doctest
 
-		@echo '3. Staging and commit'
-		git add owlmixin/version.py
-		git add docs
-		git commit -m ':package: Version $(version)'
+	@echo '1. Recreate `owlmixin/version.py`'
+	@echo "__version__ = '$(version)'" > owlmixin/version.py
 
-		@echo '4. Tags'
-		git tag v$(version) -m v$(version)
+	@echo '2. Package documentation'
+	@make _package-docs
 
-		@echo '5. Push'
-		git push
+	@echo '3. Staging and commit'
+	git add owlmixin/version.py
+	git add docs
+	git commit -m ':package: Version $(version)'
 
-		@echo '6. Deploy'
-		@echo 'Packageing...'
-		@pipenv run python setup.py bdist_wheel
-		@echo 'Deploying...'
-		@pipenv run twine upload dist/owlmixin-$(version)-py3-none-any.whl
+	@echo '4. Tags'
+	git tag v$(version) -m v$(version)
 
-		@echo 'Success All!!'
+	@echo '5. Push'
+	git push
+
+	@echo '6. Deploy'
+	@echo 'Packageing...'
+	@pipenv run python setup.py bdist_wheel
+	@echo 'Deploying...'
+	@pipenv run twine upload dist/owlmixin-$(version)-py3-none-any.whl
+
+	@echo 'Success All!!'
+	@echo 'Create a pull request and merge to master!!'
+	@echo 'https://github.com/tadashi-aikawa/owlmixin/compare/$(version)?expand=1'
 
