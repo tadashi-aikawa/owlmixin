@@ -796,6 +796,30 @@ class TestToJson:
 """.replace("\n", "")
 
 
+class TestToJsonf:
+    """
+    Requirements: `from_jsonf` and `from_jsonf_to_list` are fine
+    """
+    def test_normal_from_dict(self, tmpdir):
+        r = Spot.from_dict({"names": ["spot1"], "address": {"name": "あどれす"}})
+
+        fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.json")
+
+        assert r.to_jsonf(fpath, encoding='euc-jp', ignore_none=True) == fpath
+        assert Spot.from_jsonf(fpath, encoding='euc-jp').to_dict() == r.to_dict()
+
+    def test_normal_from_list(self, tmpdir):
+        r = Spot.from_dicts([
+            {"names": ["spot1"], "address": {"name": "あどれす"}},
+            {"names": ["spot21", "spot22"], "color": "red"}
+        ])
+
+        fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.json")
+
+        assert r.to_jsonf(fpath, encoding='sjis', ignore_none=True) == fpath
+        assert Spot.from_jsonf_to_list(fpath, encoding='sjis').to_dicts() == r.to_dicts()
+
+
 class TestToPrettyJson:
     def test_normal(self):
         r = Human.from_dict({
