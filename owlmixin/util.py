@@ -25,6 +25,8 @@ class CrLfDialect(Dialect):
     skipinitialspace = True
     lineterminator = '\r\n'
     quoting = QUOTE_MINIMAL
+
+
 register_dialect("crlf", CrLfDialect)
 
 
@@ -35,6 +37,8 @@ class LfDialect(Dialect):
     skipinitialspace = True
     lineterminator = '\n'
     quoting = QUOTE_MINIMAL
+
+
 register_dialect("lf", LfDialect)
 
 
@@ -45,6 +49,7 @@ class MyDumper(yaml.SafeDumper):
 
 def construct_yaml_str(self, node):
     return self.construct_scalar(node)
+
 
 SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
 
@@ -59,7 +64,7 @@ def replace_keys(d, keymap, force_snake_case):
     return {
         to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k):
             v for k, v in d.items()
-        }
+    }
 
 
 def to_snake(value):
@@ -180,6 +185,19 @@ def dump_json(data, indent=None):
                       ensure_ascii=False,
                       sort_keys=True,
                       separators=(',', ': '))
+
+
+def save_jsonf(data: Union[list, dict], fpath: str, encoding: str, indent=None) -> str:
+    """
+    :param data: list | dict data
+    :param fpath: write path
+    :param encoding: encoding
+    :param indent:
+    :rtype: written path
+    """
+    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+        f.write(dump_json(data, indent))
+        return fpath
 
 
 def dump_yaml(data):

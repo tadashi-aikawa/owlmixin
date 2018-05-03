@@ -189,6 +189,17 @@ class JsonTransformer():
         """
         return util.dump_json(traverse(self, ignore_none, force_value=True), indent)
 
+    def to_jsonf(self, fpath: str, encoding: str='utf8', indent: int=None, ignore_none: bool=True) -> str:
+        """From instance to json file
+
+        :param fpath: Json file path
+        :param encoding: Json file encoding
+        :param indent: Number of indentation
+        :param ignore_none: Properties which is None are excluded if True
+        :return: Json file path
+        """
+        return util.save_jsonf(traverse(self, ignore_none, force_value=True), fpath, encoding, indent)
+
     def to_pretty_json(self, ignore_none: bool=True) -> str:
         """From instance to pretty json string
 
