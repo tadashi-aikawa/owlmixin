@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>OwlMixin &#8212; owlmixin 2.6.0 documentation</title>
+    <title>OwlMixin &#8212; owlmixin 2.7.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '2.6.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -31,8 +23,7 @@
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
-  </head>
-  <body>
+  </head><body>
 
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -46,7 +37,7 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.6.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.7.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -60,7 +51,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
@@ -107,30 +98,6 @@
 <dt id="owlmixin.OwlMixin">
 <em class="property">class </em><code class="descclassname">owlmixin.</code><code class="descname">OwlMixin</code><a class="reference internal" href="../_modules/owlmixin.html#OwlMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_csvf">
-<em class="property">classmethod </em><code class="descname">from_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: typing.Union[typing.Sequence[str], NoneType] = None, encoding: str = 'utf8', force_snake_case: bool = True, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf" title="Permalink to this definition">¶</a></dt>
-<dd><p>From csv file path to list of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Csv file path</li>
-<li><strong>fieldnames</strong> – Specify csv header names if not included in the file</li>
-<li><strong>encoding</strong> – Csv file encoding</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of Instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_dict">
 <em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>d: dict</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict to instance</p>
@@ -152,7 +119,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span><span class="p">,</span> <span class="n">Japanese</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span><span class="p">,</span> <span class="n">Japanese</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -172,7 +139,7 @@
 </pre></div>
 </div>
 <p>You can use default value</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">&#39;taro&#39;</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">name</span>
@@ -182,7 +149,7 @@
 </pre></div>
 </div>
 <p>If you don’t set <cite>force_snake=False</cite> explicitly, keys are transformed to snake case as following.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;--id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;&lt;name&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -197,8 +164,8 @@
 <span class="go">&#39;Apple&#39;</span>
 </pre></div>
 </div>
-<p>You can allow extra parameters (like <code class="docutils literal"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=False</cite>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span><span class="p">:</span> <span class="n">Food</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<p>You can allow extra parameters (like <code class="docutils literal notranslate"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span><span class="p">:</span> <span class="n">Food</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;hogehoge&quot;</span><span class="p">:</span> <span class="s2">&quot;ooooooooooooooooooooo&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">},</span> <span class="n">restrict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -206,8 +173,8 @@
 <span class="go">{&#39;name&#39;: &#39;Apple&#39;}</span>
 </pre></div>
 </div>
-<p>You can prohibit extra parameters (like <code class="docutils literal"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=True</cite> (which is default).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<p>You can prohibit extra parameters (like <code class="docutils literal notranslate"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=True</cite> (which is default).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;hogehoge1&quot;</span><span class="p">:</span> <span class="s2">&quot;ooooooooooooooooooooo&quot;</span><span class="p">,</span>
@@ -237,7 +204,7 @@
 </pre></div>
 </div>
 <p>If you specify wrong type…</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ichiro&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">]</span>
@@ -268,7 +235,7 @@
 </pre></div>
 </div>
 <p>If you don’t specify required params… (ex. name)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gt">Traceback (most recent call last):</span>
@@ -295,225 +262,8 @@
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_dicts">
-<em class="property">classmethod </em><code class="descname">from_dicts</code><span class="sig-paren">(</span><em>ds: typing.List[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts" title="Permalink to this definition">¶</a></dt>
-<dd><p>From list of dict to list of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ds</strong> – List of dict</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
-<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
-<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
-<span class="gp">... </span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Tom&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;John&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_dicts_by_key">
-<em class="property">classmethod </em><code class="descname">from_dicts_by_key</code><span class="sig-paren">(</span><em>ds: dict</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts_by_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>From dict of dict to dict of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ds</strong> – Dict of dict</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict of instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">:</span> <span class="n">TDict</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">({</span>
-<span class="gp">... </span>   <span class="s1">&#39;Tom&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>  <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
-<span class="gp">... </span>   <span class="s1">&#39;John&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
-<span class="gp">... </span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">[</span><span class="s1">&#39;Tom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Tom&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;John&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_json">
-<em class="property">classmethod </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>From json string to instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> – Json string</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;{</span>
-<span class="gp">... </span><span class="s1">    &quot;id&quot;: 1,</span>
-<span class="gp">... </span><span class="s1">    &quot;name&quot;: &quot;Tom&quot;,</span>
-<span class="gp">... </span><span class="s1">    &quot;favorites&quot;: [</span>
-<span class="gp">... </span><span class="s1">        {&quot;name&quot;: &quot;Apple&quot;, &quot;names_by_lang&quot;: {&quot;en&quot;: &quot;Apple&quot;, &quot;de&quot;: &quot;Apfel&quot;}},</span>
-<span class="gp">... </span><span class="s1">        {&quot;name&quot;: &quot;Orange&quot;}</span>
-<span class="gp">... </span><span class="s1">    ]</span>
-<span class="gp">... </span><span class="s1">}&#39;&#39;&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">id</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Tom&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">names_by_lang</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="s2">&quot;de&quot;</span><span class="p">]</span>
-<span class="go">&#39;Apfel&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_json_to_list">
-<em class="property">classmethod </em><code class="descname">from_json_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_to_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>From json string to list of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> – Json string</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;[</span>
-<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
-<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
-<span class="gp">... </span><span class="s1">]&#39;&#39;&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Tom&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;John&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_json_url">
-<em class="property">classmethod </em><code class="descname">from_json_url</code><span class="sig-paren">(</span><em>url: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>From url which returns json to instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>url</strong> – Url which returns json</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_jsonf">
-<em class="property">classmethod </em><code class="descname">from_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf" title="Permalink to this definition">¶</a></dt>
-<dd><p>From json file path to instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Json file path</li>
-<li><strong>encoding</strong> – Json file encoding</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_jsonf_to_list">
-<em class="property">classmethod </em><code class="descname">from_jsonf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf_to_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>From json file path to list of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Json file path</li>
-<li><strong>encoding</strong> – Json file encoding</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dict">
-<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: typing.Union[dict, NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: Union[dict, NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict to optional instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -533,7 +283,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  
@@ -561,8 +311,43 @@
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_dicts">
+<em class="property">classmethod </em><code class="descname">from_dicts</code><span class="sig-paren">(</span><em>ds: List[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>From list of dict to list of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ds</strong> – List of dict</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: typing.Union[typing.List[dict], NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: Union[typing.List[dict], NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From list of dict to optional list of instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -582,7 +367,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">([])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -592,8 +377,43 @@
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_dicts_by_key">
+<em class="property">classmethod </em><code class="descname">from_dicts_by_key</code><span class="sig-paren">(</span><em>ds: dict</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts_by_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>From dict of dict to dict of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ds</strong> – Dict of dict</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict of instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">:</span> <span class="n">TDict</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">({</span>
+<span class="gp">... </span>   <span class="s1">&#39;Tom&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>  <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
+<span class="gp">... </span>   <span class="s1">&#39;John&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">[</span><span class="s1">&#39;Tom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts_by_key">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: typing.Union[dict, NoneType], force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: Union[dict, NoneType], force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict of dict to optional dict of instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -613,13 +433,137 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts_by_key</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts_by_key</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">{}</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_json">
+<em class="property">classmethod </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json string to instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Json string</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;{</span>
+<span class="gp">... </span><span class="s1">    &quot;id&quot;: 1,</span>
+<span class="gp">... </span><span class="s1">    &quot;name&quot;: &quot;Tom&quot;,</span>
+<span class="gp">... </span><span class="s1">    &quot;favorites&quot;: [</span>
+<span class="gp">... </span><span class="s1">        {&quot;name&quot;: &quot;Apple&quot;, &quot;names_by_lang&quot;: {&quot;en&quot;: &quot;Apple&quot;, &quot;de&quot;: &quot;Apfel&quot;}},</span>
+<span class="gp">... </span><span class="s1">        {&quot;name&quot;: &quot;Orange&quot;}</span>
+<span class="gp">... </span><span class="s1">    ]</span>
+<span class="gp">... </span><span class="s1">}&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">id</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">names_by_lang</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="s2">&quot;de&quot;</span><span class="p">]</span>
+<span class="go">&#39;Apfel&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_jsonf">
+<em class="property">classmethod </em><code class="descname">from_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json file path to instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fpath</strong> – Json file path</li>
+<li><strong>encoding</strong> – Json file encoding</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_json_to_list">
+<em class="property">classmethod </em><code class="descname">from_json_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_to_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json string to list of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Json string</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;[</span>
+<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
+<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
+<span class="gp">... </span><span class="s1">]&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_jsonf_to_list">
+<em class="property">classmethod </em><code class="descname">from_jsonf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf_to_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json file path to list of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fpath</strong> – Json file path</li>
+<li><strong>encoding</strong> – Json file encoding</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
@@ -644,7 +588,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="gp">... </span><span class="s1">id: 1</span>
 <span class="gp">... </span><span class="s1">name: Tom</span>
@@ -661,49 +605,6 @@
 <span class="go">&#39;Tom&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">names_by_lang</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="s2">&quot;de&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apfel&#39;</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_yaml_to_list">
-<em class="property">classmethod </em><code class="descname">from_yaml_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml_to_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>From yaml string to list of instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> – Yaml string</li>
-<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
-<li><strong>force_cast</strong> – Cast forcibly if True</li>
-<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="gp">... </span><span class="s1">- id: 1</span>
-<span class="gp">... </span><span class="s1">  name: Tom</span>
-<span class="gp">... </span><span class="s1">  favorites:</span>
-<span class="gp">... </span><span class="s1">    - name: Apple</span>
-<span class="gp">... </span><span class="s1">- id: 2</span>
-<span class="gp">... </span><span class="s1">  name: John</span>
-<span class="gp">... </span><span class="s1">  favorites:</span>
-<span class="gp">... </span><span class="s1">    - name: Orange</span>
-<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Tom&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;John&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Apple&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -733,6 +634,49 @@
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_yaml_to_list">
+<em class="property">classmethod </em><code class="descname">from_yaml_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml_to_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>From yaml string to list of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Yaml string</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">- id: 1</span>
+<span class="gp">... </span><span class="s1">  name: Tom</span>
+<span class="gp">... </span><span class="s1">  favorites:</span>
+<span class="gp">... </span><span class="s1">    - name: Apple</span>
+<span class="gp">... </span><span class="s1">- id: 2</span>
+<span class="gp">... </span><span class="s1">  name: John</span>
+<span class="gp">... </span><span class="s1">  favorites:</span>
+<span class="gp">... </span><span class="s1">    - name: Orange</span>
+<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Apple&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_yamlf_to_list">
 <em class="property">classmethod </em><code class="descname">from_yamlf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From yaml file path to list of instance</p>
@@ -756,6 +700,53 @@
 </table>
 </dd></dl>
 
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_csvf">
+<em class="property">classmethod </em><code class="descname">from_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Union[typing.Sequence[str], NoneType] = None, encoding: str = 'utf8', force_snake_case: bool = True, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf" title="Permalink to this definition">¶</a></dt>
+<dd><p>From csv file path to list of instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fpath</strong> – Csv file path</li>
+<li><strong>fieldnames</strong> – Specify csv header names if not included in the file</li>
+<li><strong>encoding</strong> – Csv file encoding</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of Instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_json_url">
+<em class="property">classmethod </em><code class="descname">from_json_url</code><span class="sig-paren">(</span><em>url: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>From url which returns json to instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>url</strong> – Url which returns json</li>
+<li><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</li>
+<li><strong>force_cast</strong> – Cast forcibly if True</li>
+<li><strong>restrict</strong> – Prohibit extra parameters if True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="owlmixin.OwlMixin.str_format">
 <code class="descname">str_format</code><span class="sig-paren">(</span><em>format_: str</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.str_format" title="Permalink to this definition">¶</a></dt>
@@ -771,7 +762,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -806,7 +797,7 @@
 </table>
 <dl class="docutils">
 <dt>Usage:</dt>
-<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -821,7 +812,7 @@
 </dd>
 </dl>
 <p>You can include None properties by specifying None for ignore_none</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
@@ -830,7 +821,7 @@
 </pre></div>
 </div>
 <p>As default</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
@@ -859,7 +850,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -912,7 +903,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -957,7 +948,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1017,14 +1008,23 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="owlcollections.html"
                         title="next chapter">Collections</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/owlmixin.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1043,12 +1043,12 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.6.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.7.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
   </body>
 </html>
