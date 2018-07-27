@@ -50,6 +50,20 @@ class TestMapValues:
         }
 
 
+class TestMapValues2:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+
+        # Sort for test
+        assert Spot.from_dicts_by_key(d).map_values2(lambda k, v: f"len({k}.name) -> {len(v.names)}").to_dict() == {
+            "a": "len(a.name) -> 1",
+            "b": "len(b.name) -> 2"
+        }
+
+
 class TestFilter:
     def test_normal(self):
         d = {

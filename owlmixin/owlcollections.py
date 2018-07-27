@@ -407,6 +407,23 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({k: func(v) for k, v in self.items()})
 
+    def map_values2(self, func):
+        """
+        :param func:
+        :type func: (K, T) -> U
+        :rtype: TDict[U]
+
+        Usage:
+
+            >>> TDict(k1=1, k2=2, k3=3).map_values2(lambda k, v: f'{k} -> {v*2}') == {
+            ...     "k1": "k1 -> 2",
+            ...     "k2": "k2 -> 4",
+            ...     "k3": "k3 -> 6"
+            ... }
+            True
+        """
+        return TDict({k: func(k, v) for k, v in self.items()})
+
     def filter(self, func):
         """
         :param func:
