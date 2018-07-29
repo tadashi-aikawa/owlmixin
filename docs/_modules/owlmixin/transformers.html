@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin.transformers &#8212; owlmixin 2.7.0 documentation</title>
+    <title>owlmixin.transformers &#8212; owlmixin 2.8.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -21,7 +29,8 @@
 <link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
-  </head><body>
+  </head>
+  <body>
 
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -29,7 +38,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.7.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.8.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -57,29 +66,34 @@
     <span class="k">return</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">TOption</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">is_none</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">TOption</span><span class="p">))</span> <span class="k">else</span> <span class="n">v</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">==</span> <span class="p">[]</span> <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">==</span> <span class="p">{})</span>
+
+
+<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">force_value</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TOption</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">traverse</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">traverse</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">traverse_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">traverse_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">traverse_list</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">traverse_list</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">DictTransformer</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">value</span>
 
 
-<span class="k">def</span> <span class="nf">traverse_dict</span><span class="p">(</span><span class="n">instance_dict</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span> <span class="k">for</span>
+<span class="k">def</span> <span class="nf">traverse_dict</span><span class="p">(</span><span class="n">instance_dict</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span> <span class="k">for</span>
             <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">instance_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_none</span> <span class="ow">and</span> <span class="n">is_ignore</span><span class="p">(</span><span class="n">v</span><span class="p">))}</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_empty</span> <span class="ow">and</span> <span class="n">is_empty</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_none</span> <span class="ow">and</span> <span class="n">is_ignore</span><span class="p">(</span><span class="n">v</span><span class="p">))}</span>
 
 
-<span class="k">def</span> <span class="nf">traverse_list</span><span class="p">(</span><span class="n">instance_list</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">traverse</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">instance_list</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_none</span> <span class="ow">and</span> <span class="n">is_ignore</span><span class="p">(</span><span class="n">i</span><span class="p">))]</span>
+<span class="k">def</span> <span class="nf">traverse_list</span><span class="p">(</span><span class="n">instance_list</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">traverse</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">instance_list</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_none</span> <span class="ow">and</span> <span class="n">is_ignore</span><span class="p">(</span><span class="n">i</span><span class="p">))]</span>
 
 
 <span class="k">class</span> <span class="nc">DictTransformer</span><span class="p">():</span>
@@ -111,11 +125,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">format_</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to dict</span>
 
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
 <span class="sd">        :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: Dict</span>
 
 <span class="sd">        Usage:</span>
@@ -130,7 +145,7 @@
 <span class="sd">            &gt;&gt;&gt; Human.from_dict(human_dict).to_dict() == human_dict</span>
 <span class="sd">            True</span>
 
-<span class="sd">        You can include None properties by specifying None for ignore_none</span>
+<span class="sd">        You can include None properties by specifying False for ignore_none</span>
 
 <span class="sd">            &gt;&gt;&gt; f = Food.from_dict({&quot;name&quot;: &quot;Apple&quot;}).to_dict(ignore_none=False)</span>
 <span class="sd">            &gt;&gt;&gt; f[&quot;name&quot;]</span>
@@ -147,19 +162,29 @@
 <span class="sd">            &gt;&gt;&gt; &quot;names_by_lang&quot; in f</span>
 <span class="sd">            False</span>
 
+<span class="sd">        You can exclude Empty properties by specifying True for ignore_empty</span>
+
+<span class="sd">            &gt;&gt;&gt; f = Human.from_dict({&quot;id&quot;: 1, &quot;name&quot;: &quot;Ichiro&quot;, &quot;favorites&quot;: []}).to_dict()</span>
+<span class="sd">            &gt;&gt;&gt; f[&quot;favorites&quot;]</span>
+<span class="sd">            []</span>
+<span class="sd">            &gt;&gt;&gt; f = Human.from_dict({&quot;id&quot;: 1, &quot;name&quot;: &quot;Ichiro&quot;, &quot;favorites&quot;: []}).to_dict(ignore_empty=True)</span>
+<span class="sd">            &gt;&gt;&gt; &quot;favorites&quot; in f</span>
+<span class="sd">            False</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">traverse_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">traverse_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">DictsTransformer</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; `@property _dict` can overridden</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">to_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">to_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_value</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From instance to dict</span>
 
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
 <span class="sd">        :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: List[Dict]</span>
 
 <span class="sd">        Usage:</span>
@@ -184,7 +209,7 @@
 <span class="sd">            &gt;&gt;&gt; Human.from_dicts(human_dicts).to_dicts() == human_dicts</span>
 <span class="sd">            True</span>
 
-<span class="sd">        You can include None properties by specifying None for ignore_none</span>
+<span class="sd">        You can include None properties by specifying False for ignore_none</span>
 
 <span class="sd">            &gt;&gt;&gt; f = Food.from_dicts([{&quot;name&quot;: &quot;Apple&quot;}]).to_dicts(ignore_none=False)</span>
 <span class="sd">            &gt;&gt;&gt; f[0][&quot;name&quot;]</span>
@@ -201,19 +226,29 @@
 <span class="sd">            &gt;&gt;&gt; &quot;names_by_lang&quot; in f[0]</span>
 <span class="sd">            False</span>
 
+<span class="sd">        You can exclude Empty properties by specifying True for ignore_empty</span>
+
+<span class="sd">            &gt;&gt;&gt; f = Human.from_dicts([{&quot;id&quot;: 1, &quot;name&quot;: &quot;Ichiro&quot;, &quot;favorites&quot;: []}]).to_dicts()</span>
+<span class="sd">            &gt;&gt;&gt; f[0][&quot;favorites&quot;]</span>
+<span class="sd">            []</span>
+<span class="sd">            &gt;&gt;&gt; f = Human.from_dicts([{&quot;id&quot;: 1, &quot;name&quot;: &quot;Ichiro&quot;, &quot;favorites&quot;: []}]).to_dicts(ignore_empty=True)</span>
+<span class="sd">            &gt;&gt;&gt; &quot;favorites&quot; in f[0]</span>
+<span class="sd">            False</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">traverse_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">traverse_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">JsonTransformer</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; `@property _dict` can overridden</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to json string</span>
 
 <span class="sd">        :param indent: Number of indentation</span>
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: Json string</span>
 
 <span class="sd">        Usage:</span>
@@ -230,23 +265,25 @@
 <span class="sd">            &gt;&gt;&gt; human.to_json()</span>
 <span class="sd">            &#39;{&quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;,&quot;names_by_lang&quot;: {&quot;de&quot;: &quot;Apfel&quot;,&quot;en&quot;: &quot;Apple&quot;}},{&quot;name&quot;: &quot;Orange&quot;}],&quot;id&quot;: 1,&quot;name&quot;: &quot;Tom&quot;}&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_json</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">indent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_json</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="n">ignore_empty</span><span class="p">),</span> <span class="n">indent</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">to_jsonf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_jsonf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to json file</span>
 
 <span class="sd">        :param fpath: Json file path</span>
 <span class="sd">        :param encoding: Json file encoding</span>
 <span class="sd">        :param indent: Number of indentation</span>
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: Json file path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_jsonf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_jsonf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="n">ignore_empty</span><span class="p">),</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">to_pretty_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_pretty_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to pretty json string</span>
 
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: Json string</span>
 
 <span class="sd">        Usage:</span>
@@ -278,17 +315,18 @@
 <span class="sd">                &quot;name&quot;: &quot;Tom&quot;</span>
 <span class="sd">            }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">YamlTransformer</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; `@property _dict` can overridden</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">to_yaml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_yaml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to yaml string</span>
 
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
+<span class="sd">        :param ignore_empty: Properties which is empty are excluded if True</span>
 <span class="sd">        :return: Yaml string</span>
 
 <span class="sd">        Usage:</span>
@@ -313,9 +351,9 @@
 <span class="sd">            name: Tom</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_yaml</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_yaml</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="n">ignore_empty</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">to_yamlf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_yamlf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to yaml file</span>
 
 <span class="sd">        :param ignore_none: Properties which is None are excluded if True</span>
@@ -323,7 +361,7 @@
 <span class="sd">        :param encoding: Yaml file encoding</span>
 <span class="sd">        :return: Yaml file path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_yamlf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_yamlf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_empty</span><span class="o">=</span><span class="n">ignore_empty</span><span class="p">),</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">CsvTransformer</span><span class="p">():</span>
@@ -405,14 +443,12 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -425,14 +461,14 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.7.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.8.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>
