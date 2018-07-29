@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Collections &#8212; owlmixin 2.7.0 documentation</title>
+    <title>Collections &#8212; owlmixin 2.8.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -23,7 +31,8 @@
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
-  </head><body>
+  </head>
+  <body>
 
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -37,7 +46,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.7.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -51,7 +60,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
@@ -113,7 +122,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[2, 3, 4, 5, 6]</span>
 </pre></div>
 </div>
@@ -133,7 +142,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">emap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">emap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
 <span class="go">[(11, 0), (21, 1), (31, 2), (41, 3), (51, 4)]</span>
 </pre></div>
 </div>
@@ -151,7 +160,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 4]</span>
 </pre></div>
 </div>
@@ -171,7 +180,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
 <span class="go">[1, 2, 2, 3, 3, 4]</span>
 </pre></div>
 </div>
@@ -191,7 +200,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[4, 5]</span>
 </pre></div>
 </div>
@@ -211,7 +220,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
@@ -229,7 +238,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
@@ -237,7 +246,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.head_while">
-<code class="descname">head_while</code><span class="sig-paren">(</span><em>func: Callable[T, bool]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.head_while"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.head_while" title="Permalink to this definition">¶</a></dt>
+<code class="descname">head_while</code><span class="sig-paren">(</span><em>func: typing.Callable[T, bool]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.head_while"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.head_while" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -247,7 +256,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">head_while</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">head_while</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
 <span class="go">[1, 2]</span>
 </pre></div>
 </div>
@@ -257,7 +266,7 @@
 <dt id="owlmixin.owlcollections.TList.tail">
 <code class="descname">tail</code><span class="sig-paren">(</span><em>size_: int</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.tail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[3, 4, 5]</span>
 </pre></div>
 </div>
@@ -267,7 +276,7 @@
 <dt id="owlmixin.owlcollections.TList.uniq">
 <code class="descname">uniq</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.uniq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.uniq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">uniq</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">uniq</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
@@ -275,9 +284,9 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.uniq_by">
-<code class="descname">uniq_by</code><span class="sig-paren">(</span><em>func: Callable[T, Any]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.uniq_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.uniq_by" title="Permalink to this definition">¶</a></dt>
+<code class="descname">uniq_by</code><span class="sig-paren">(</span><em>func: typing.Callable[T, typing.Any]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.uniq_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.uniq_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">uniq_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">uniq_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
@@ -297,7 +306,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">([4, 5], [1, 2, 3])</span>
 </pre></div>
 </div>
@@ -317,7 +326,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
 <span class="go">&#39;{&quot;0&quot;: [2,4],&quot;1&quot;: [1,3,5]}&#39;</span>
 </pre></div>
 </div>
@@ -342,7 +351,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">57</span><span class="p">])</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">57</span><span class="p">])</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
 <span class="go">[40, 31, 12, 25, 57]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">57</span><span class="p">])</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">[57, 25, 12, 31, 40]</span>
@@ -369,7 +378,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TList</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TList</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
 <span class="go">[1, 2, 3, 4]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TList</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span> <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">[3, 4, 1, 2]</span>
@@ -396,7 +405,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="go">130</span>
 </pre></div>
 </div>
@@ -414,7 +423,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="go">15</span>
 </pre></div>
 </div>
@@ -434,7 +443,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">30</span>
 </pre></div>
 </div>
@@ -452,7 +461,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="go">5</span>
 </pre></div>
 </div>
@@ -472,7 +481,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
 <span class="go">&#39;A-B-C&#39;</span>
 </pre></div>
 </div>
@@ -492,7 +501,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">4</span>
 </pre></div>
 </div>
@@ -512,7 +521,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">False</span>
@@ -534,7 +543,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">False</span>
@@ -556,7 +565,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="go">[2, 4]</span>
 </pre></div>
 </div>
@@ -576,7 +585,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">not_intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">not_intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="go">[1, 3, 5]</span>
 </pre></div>
 </div>
@@ -584,7 +593,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_csv">
-<code class="descname">to_csv</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csv" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_csv</code><span class="sig-paren">(</span><em>fieldnames: typing.Sequence[str], with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>From sequence of text to csv string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -603,7 +612,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
 <span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
 <span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
@@ -622,7 +631,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_csvf">
-<code class="descname">to_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Sequence[str], encoding: str = 'utf8', with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csvf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: typing.Sequence[str], encoding: str = 'utf8', with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csvf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -646,7 +655,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_dicts">
-<code class="descname">to_dicts</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em><span class="sig-paren">)</span> &#x2192; List[dict]<a class="headerlink" href="#owlmixin.owlcollections.TList.to_dicts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_dicts</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; typing.List[dict]<a class="headerlink" href="#owlmixin.owlcollections.TList.to_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -655,6 +664,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
 <li><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -664,7 +674,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dicts</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -685,8 +695,8 @@
 <span class="go">True</span>
 </pre></div>
 </div>
-<p>You can include None properties by specifying None for ignore_none</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>You can include None properties by specifying False for ignore_none</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -695,10 +705,19 @@
 </pre></div>
 </div>
 <p>As default</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>You can exclude Empty properties by specifying True for ignore_empty</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;favorites&quot;</span><span class="p">]</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]}])</span><span class="o">.</span><span class="n">to_dicts</span><span class="p">(</span><span class="n">ignore_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;favorites&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -706,7 +725,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -715,6 +734,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>indent</strong> – Number of indentation</li>
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -724,7 +744,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -741,7 +761,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_jsonf">
-<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_jsonf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -752,6 +772,7 @@
 <li><strong>encoding</strong> – Json file encoding</li>
 <li><strong>indent</strong> – Number of indentation</li>
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -764,20 +785,25 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_pretty_json">
-<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_pretty_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_pretty_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to pretty json string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_none</strong> – Properties which is None are excluded if True</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Json string</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -809,7 +835,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_table">
-<code class="descname">to_table</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str]</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_table" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_table</code><span class="sig-paren">(</span><em>fieldnames: typing.Sequence[str]</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>From sequence of text to csv string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -822,7 +848,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
 <span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
 <span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
@@ -838,20 +864,25 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_yaml">
-<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yaml" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_none</strong> – Properties which is None are excluded if True</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Yaml string</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml string</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -875,7 +906,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_yamlf">
-<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yamlf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -917,7 +948,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">[2, 4, 6]</span>
 </pre></div>
 </div>
@@ -937,7 +968,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;k1&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;k2&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;k3&quot;</span><span class="p">:</span> <span class="mi">6</span>
@@ -961,7 +992,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values2</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{k}</span><span class="s1"> -&gt; {v*2}&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values2</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{k}</span><span class="s1"> -&gt; {v*2}&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;k1&quot;</span><span class="p">:</span> <span class="s2">&quot;k1 -&gt; 2&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;k2&quot;</span><span class="p">:</span> <span class="s2">&quot;k2 -&gt; 4&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;k3&quot;</span><span class="p">:</span> <span class="s2">&quot;k3 -&gt; 6&quot;</span>
@@ -985,7 +1016,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">[1]</span>
 </pre></div>
 </div>
@@ -1005,7 +1036,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[3]</span>
 </pre></div>
 </div>
@@ -1023,7 +1054,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="go">6</span>
 </pre></div>
 </div>
@@ -1043,7 +1074,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">12</span>
 </pre></div>
 </div>
@@ -1061,7 +1092,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="go">3</span>
 </pre></div>
 </div>
@@ -1081,7 +1112,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">2</span>
 </pre></div>
 </div>
@@ -1099,7 +1130,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_values</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_values</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
@@ -1119,7 +1150,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">False</span>
@@ -1141,7 +1172,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">False</span>
@@ -1151,7 +1182,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.assign">
-<code class="descname">assign</code><span class="sig-paren">(</span><em>dict_: Dict[str, T]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.assign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.assign" title="Permalink to this definition">¶</a></dt>
+<code class="descname">assign</code><span class="sig-paren">(</span><em>dict_: typing.Dict[str, T]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.assign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.assign" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1161,7 +1192,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">({</span><span class="s1">&#39;k3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">({</span><span class="s1">&#39;k3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
 <span class="go">{&#39;k1&#39;: 1, &#39;k2&#39;: 2, &#39;k3&#39;: 3}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TDict</span><span class="p">({</span><span class="s1">&#39;k2&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}))</span>
 <span class="go">{&#39;k1&#39;: 1, &#39;k2&#39;: 3}</span>
@@ -1184,7 +1215,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1200,7 +1231,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_dict">
-<code class="descname">to_dict</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_dict</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1209,6 +1240,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
 <li><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -1219,7 +1251,7 @@
 </table>
 <dl class="docutils">
 <dt>Usage:</dt>
-<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1233,8 +1265,8 @@
 </div>
 </dd>
 </dl>
-<p>You can include None properties by specifying None for ignore_none</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>You can include None properties by specifying False for ignore_none</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
@@ -1243,10 +1275,19 @@
 </pre></div>
 </div>
 <p>As default</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>You can exclude Empty properties by specifying True for ignore_empty</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;favorites&quot;</span><span class="p">]</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;favorites&quot;</span> <span class="ow">in</span> <span class="n">f</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -1254,7 +1295,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1263,6 +1304,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>indent</strong> – Number of indentation</li>
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -1272,7 +1314,7 @@
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1289,7 +1331,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_jsonf">
-<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_jsonf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1300,6 +1342,7 @@
 <li><strong>encoding</strong> – Json file encoding</li>
 <li><strong>indent</strong> – Number of indentation</li>
 <li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
 </ul>
 </td>
 </tr>
@@ -1312,20 +1355,25 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_pretty_json">
-<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_pretty_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_pretty_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to pretty json string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_none</strong> – Properties which is None are excluded if True</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Json string</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1357,20 +1405,25 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_yaml">
-<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yaml" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_none</strong> – Properties which is None are excluded if True</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
+<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Yaml string</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml string</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1394,7 +1447,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_yamlf">
-<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yamlf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1440,23 +1493,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="owlenum.html"
                         title="next chapter">OwlEnum</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api/owlcollections.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1475,12 +1519,12 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.7.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

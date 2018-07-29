@@ -66,7 +66,7 @@ class Human(OwlMixin):
     friends_by_short_name: TOption[TDict['Human']]
 
 
-SAMPLE_HUMAN = {
+SAMPLE_HUMAN: dict = {
     "id": 1,
     "name": "メンバ1",
     "favorite_spots": [
@@ -101,7 +101,29 @@ SAMPLE_HUMAN = {
         }
     }
 }
-""":type: dict"""
+
+SAMPLE_HUMAN2: dict = {
+    "id": 1,
+    "name": "メンバ1",
+    "favorite_spots": [],
+    "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+    "friends_by_short_name": {
+        "toshi": {
+            "id": 100,
+            "name": "TOSHIKI",
+            "favorite_spots": [],
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False}
+        },
+        "hide": {
+            "id": 200,
+            "name": "HIDEKI",
+            "favorite_spots": [
+                {"names": ["hide_spot"]}
+            ],
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True}
+        }
+    }
+}
 
 
 class TestFromDict:
@@ -307,6 +329,37 @@ class TestToDict:
             }
         }
 
+    def test_ignore_empty_true(self):
+        r = Human.from_dict(SAMPLE_HUMAN2)
+
+        # Assert Option
+        assert r.favorite_spots == []
+        assert r.friends_by_short_name.get()['toshi'].favorite_spots == []
+        assert r.friends_by_short_name.get()['hide'].favorite_spots != []
+
+        expected = {
+            "id": 1,
+            "name": "メンバ1",
+            "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
+            "friends_by_short_name": {
+                "toshi": {
+                    "id": 100,
+                    "name": "TOSHIKI",
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
+                },
+                "hide": {
+                    "id": 200,
+                    "name": "HIDEKI",
+                    "favorite_spots": [
+                        {"names": ["hide_spot"]}
+                    ],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                }
+            }
+        }
+
+        assert expected == r.to_dict(ignore_empty=True)
+
     def test_force_value_false(self):
         r = Human.from_dict(SAMPLE_HUMAN)
         assert r.to_dict(force_value=False) == {
@@ -380,6 +433,31 @@ class TestToDicts:
                 "color": "red"
             }
         ]
+
+    def test_ignore_empty_true(self):
+        friends: TList[Human] = Human.from_dict(SAMPLE_HUMAN2).friends_by_short_name.get().to_values()
+
+        # Assert Option
+        assert friends[0].favorite_spots == []
+        assert friends[1].favorite_spots != []
+
+        expected = [
+            {
+                "id": 100,
+                "name": "TOSHIKI",
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
+            },
+            {
+                "id": 200,
+                "name": "HIDEKI",
+                "favorite_spots": [
+                    {"names": ["hide_spot"]}
+                ],
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+            }
+        ]
+
+        assert expected == friends.to_dicts(ignore_empty=True)
 
     def test_force_value_false(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots

@@ -14,29 +14,34 @@ def is_ignore(v):
     return v is None or (isinstance(v, TOption) and v.is_none())
 
 
-def traverse(value, ignore_none=True, force_value=False):
+def is_empty(v):
+    p = v.get() if (isinstance(v, TOption)) else v
+    return (isinstance(v, list) and p == [] ) or (isinstance(v, dict) and p == {})
+
+
+def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
     if force_value and isinstance(value, ValueTransformer):
         return value.to_value(ignore_none, force_value)
     elif isinstance(value, TOption):
-        return traverse(value.get(), ignore_none, force_value)
+        return traverse(value.get(), ignore_none, force_value, ignore_empty)
     elif isinstance(value, dict):
-        return traverse_dict(value, ignore_none, force_value)
+        return traverse_dict(value, ignore_none, force_value, ignore_empty)
     elif isinstance(value, list):
-        return traverse_list(value, ignore_none, force_value)
+        return traverse_list(value, ignore_none, force_value, ignore_empty)
     elif isinstance(value, DictTransformer):
-        return value.to_dict(ignore_none, force_value)
+        return value.to_dict(ignore_none, force_value, ignore_empty)
     else:
         return value
 
 
-def traverse_dict(instance_dict, ignore_none, force_value=False):
-    return {k: traverse(v, ignore_none, force_value) for
+def traverse_dict(instance_dict, ignore_none, force_value=False, ignore_empty=False):
+    return {k: traverse(v, ignore_none, force_value, ignore_empty) for
             k, v in instance_dict.items()
-            if not (ignore_none and is_ignore(v))}
+            if not (ignore_empty and is_empty(v)) and not (ignore_none and is_ignore(v))}
 
 
-def traverse_list(instance_list, ignore_none, force_value=False):
-    return [traverse(i, ignore_none, force_value) for i in instance_list if not (ignore_none and is_ignore(i))]
+def traverse_list(instance_list, ignore_none, force_value=False, ignore_empty=False):
+    return [traverse(i, ignore_none, force_value, ignore_empty) for i in instance_list if not (ignore_none and is_ignore(i))]
 
 
 class DictTransformer():
@@ -68,11 +73,12 @@ class DictTransformer():
         """
         return format_.format(**self.to_dict())
 
-    def to_dict(self, ignore_none: bool=True, force_value: bool=True) -> dict:
+    def to_dict(self, ignore_none: bool=True, force_value: bool=True, ignore_empty: bool=False) -> dict:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
         :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: Dict
 
         Usage:
@@ -87,7 +93,7 @@ class DictTransformer():
             >>> Human.from_dict(human_dict).to_dict() == human_dict
             True
 
-        You can include None properties by specifying None for ignore_none
+        You can include None properties by specifying False for ignore_none
 
             >>> f = Food.from_dict({"name": "Apple"}).to_dict(ignore_none=False)
             >>> f["name"]
@@ -104,19 +110,29 @@ class DictTransformer():
             >>> "names_by_lang" in f
             False
 
+        You can exclude Empty properties by specifying True for ignore_empty
+
+            >>> f = Human.from_dict({"id": 1, "name": "Ichiro", "favorites": []}).to_dict()
+            >>> f["favorites"]
+            []
+            >>> f = Human.from_dict({"id": 1, "name": "Ichiro", "favorites": []}).to_dict(ignore_empty=True)
+            >>> "favorites" in f
+            False
+
         """
-        return traverse_dict(self._dict, ignore_none, force_value)
+        return traverse_dict(self._dict, ignore_none, force_value, ignore_empty)
 
 
 class DictsTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dicts(self, ignore_none: bool=True, force_value: bool=True) -> List[dict]:
+    def to_dicts(self, ignore_none: bool=True, force_value: bool=True, ignore_empty: bool=False) -> List[dict]:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
         :param force_value: Transform to value using to_value (default: str()) of ValueTransformer which inherited if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: List[Dict]
 
         Usage:
@@ -141,7 +157,7 @@ class DictsTransformer():
             >>> Human.from_dicts(human_dicts).to_dicts() == human_dicts
             True
 
-        You can include None properties by specifying None for ignore_none
+        You can include None properties by specifying False for ignore_none
 
             >>> f = Food.from_dicts([{"name": "Apple"}]).to_dicts(ignore_none=False)
             >>> f[0]["name"]
@@ -158,19 +174,29 @@ class DictsTransformer():
             >>> "names_by_lang" in f[0]
             False
 
+        You can exclude Empty properties by specifying True for ignore_empty
+
+            >>> f = Human.from_dicts([{"id": 1, "name": "Ichiro", "favorites": []}]).to_dicts()
+            >>> f[0]["favorites"]
+            []
+            >>> f = Human.from_dicts([{"id": 1, "name": "Ichiro", "favorites": []}]).to_dicts(ignore_empty=True)
+            >>> "favorites" in f[0]
+            False
+
         """
-        return traverse_list(self, ignore_none, force_value)
+        return traverse_list(self, ignore_none, force_value, ignore_empty)
 
 
 class JsonTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_json(self, indent: int=None, ignore_none: bool=True) -> str:
+    def to_json(self, indent: int=None, ignore_none: bool=True, ignore_empty: bool=False) -> str:
         """From instance to json string
 
         :param indent: Number of indentation
         :param ignore_none: Properties which is None are excluded if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: Json string
 
         Usage:
@@ -187,23 +213,25 @@ class JsonTransformer():
             >>> human.to_json()
             '{"favorites": [{"name": "Apple","names_by_lang": {"de": "Apfel","en": "Apple"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
         """
-        return util.dump_json(traverse(self, ignore_none, force_value=True), indent)
+        return util.dump_json(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), indent)
 
-    def to_jsonf(self, fpath: str, encoding: str='utf8', indent: int=None, ignore_none: bool=True) -> str:
+    def to_jsonf(self, fpath: str, encoding: str='utf8', indent: int=None, ignore_none: bool=True, ignore_empty: bool=False) -> str:
         """From instance to json file
 
         :param fpath: Json file path
         :param encoding: Json file encoding
         :param indent: Number of indentation
         :param ignore_none: Properties which is None are excluded if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: Json file path
         """
-        return util.save_jsonf(traverse(self, ignore_none, force_value=True), fpath, encoding, indent)
+        return util.save_jsonf(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding, indent)
 
-    def to_pretty_json(self, ignore_none: bool=True) -> str:
+    def to_pretty_json(self, ignore_none: bool=True, ignore_empty: bool=False) -> str:
         """From instance to pretty json string
 
         :param ignore_none: Properties which is None are excluded if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: Json string
 
         Usage:
@@ -235,17 +263,18 @@ class JsonTransformer():
                 "name": "Tom"
             }
         """
-        return self.to_json(4, ignore_none)
+        return self.to_json(4, ignore_none, ignore_empty)
 
 
 class YamlTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_yaml(self, ignore_none: bool=True) -> str:
+    def to_yaml(self, ignore_none: bool=True, ignore_empty: bool=False) -> str:
         """From instance to yaml string
 
         :param ignore_none: Properties which is None are excluded if True
+        :param ignore_empty: Properties which is empty are excluded if True
         :return: Yaml string
 
         Usage:
@@ -270,9 +299,9 @@ class YamlTransformer():
             name: Tom
             <BLANKLINE>
         """
-        return util.dump_yaml(traverse(self, ignore_none, force_value=True))
+        return util.dump_yaml(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty))
 
-    def to_yamlf(self, fpath: str, encoding: str='utf8', ignore_none: bool=True) -> str:
+    def to_yamlf(self, fpath: str, encoding: str='utf8', ignore_none: bool=True, ignore_empty: bool=False) -> str:
         """From instance to yaml file
 
         :param ignore_none: Properties which is None are excluded if True
@@ -280,7 +309,7 @@ class YamlTransformer():
         :param encoding: Yaml file encoding
         :return: Yaml file path
         """
-        return util.save_yamlf(traverse(self, ignore_none, force_value=True), fpath, encoding)
+        return util.save_yamlf(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding)
 
 
 class CsvTransformer():
