@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>OwlMixin &#8212; owlmixin 2.8.1 documentation</title>
+    <title>OwlMixin &#8212; owlmixin 2.8.2 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -141,7 +141,7 @@
 <p>You can use default value</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">&#39;taro&#39;</span>
-<span class="gp">... </span><span class="p">})</span>  
+<span class="gp">... </span><span class="p">})</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;taro&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">language</span>
@@ -183,7 +183,7 @@
 <span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;namesByLang&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Apfel&quot;</span><span class="p">}},</span>
 <span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}</span>
 <span class="gp">... </span>    <span class="p">]</span>
-<span class="gp">... </span><span class="p">})</span>  
+<span class="gp">... </span><span class="p">})</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AttributeError</span>:
@@ -194,13 +194,14 @@
 <span class="go">／￣￣旦￣￣￣／|</span>
 <span class="go">＿＿＿＿＿＿／  | |</span>
 <span class="go">|------ー----ー|／</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">You have to remove the unknown properties or haven&#39;t to set `restrict=True`.</span>
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Class   | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Unknown | [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]</span>
 <span class="go">-----------------------------------------------------------------------</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <p>If you specify wrong type…</p>
@@ -208,7 +209,7 @@
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ichiro&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">})</span>  
+<span class="gp">... </span><span class="p">})</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">TypeError</span>:
@@ -219,7 +220,7 @@
 <span class="go">／￣￣旦￣￣￣／|</span>
 <span class="go">＿＿＿＿＿＿／  | |</span>
 <span class="go">|------ー----ー|／</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">You have to specify value which has correct type or set `force_cast=True`.</span>
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Class     | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
@@ -232,12 +233,13 @@
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Actual    | &lt;class &#39;str&#39;&gt;</span>
 <span class="go">-----------------------------------------------------------------------</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 <p>If you don’t specify required params… (ex. name)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span>
-<span class="gp">... </span><span class="p">})</span>  
+<span class="gp">... </span><span class="p">})</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AttributeError</span>:
@@ -248,7 +250,7 @@
 <span class="go">／￣￣旦￣￣￣／|</span>
 <span class="go">＿＿＿＿＿＿／  | |</span>
 <span class="go">|------ー----ー|／</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">The following type must not to be empty !!  You have to specify anything.</span>
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Class    | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
@@ -257,13 +259,14 @@
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Type     | &lt;class &#39;str&#39;&gt;</span>
 <span class="go">-----------------------------------------------------------------------</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dict">
-<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: Union[dict, NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: Optional[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict to optional instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -286,7 +289,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AttributeError</span>:
@@ -297,7 +300,7 @@
 <span class="go">／￣￣旦￣￣￣／|</span>
 <span class="go">＿＿＿＿＿＿／  | |</span>
 <span class="go">|------ー----ー|／</span>
-
+<span class="go">&lt;BLANKLINE&gt;</span>
 <span class="go">The following type must not to be empty !!  You have to specify anything.</span>
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Class    | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
@@ -306,6 +309,7 @@
 <span class="go">-----------------------------------------------------------------------</span>
 <span class="go">| Type     | &lt;class &#39;int&#39;&gt;</span>
 <span class="go">-----------------------------------------------------------------------</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -347,7 +351,7 @@
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: Union[typing.List[dict], NoneType], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: Optional[List[dict]], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From list of dict to optional list of instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -413,7 +417,7 @@
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts_by_key">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: Union[dict, NoneType], force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: Optional[dict], force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict of dict to optional dict of instance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -702,7 +706,7 @@
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_csvf">
-<em class="property">classmethod </em><code class="descname">from_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Union[typing.Sequence[str], NoneType] = None, encoding: str = 'utf8', force_snake_case: bool = True, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_csvf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>fieldnames: Optional[Sequence[str]] = None</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case: bool = True</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From csv file path to list of instance</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -988,6 +992,7 @@
 <span class="go">  - name: Orange</span>
 <span class="go">id: 1</span>
 <span class="go">name: Tom</span>
+<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1065,12 +1070,12 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.8.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>
