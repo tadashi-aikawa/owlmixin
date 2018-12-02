@@ -17,7 +17,7 @@ test_requirements = convert_deps_to_pip(pfile['dev-packages'], r=False)
 
 
 def load_readme():
-    with open(os.path.join(here, 'README.rst')) as f:
+    with open(os.path.join(here, 'README.md')) as f:
         return f.read()
 
 
