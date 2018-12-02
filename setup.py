@@ -28,7 +28,7 @@ setup(
         open('owlmixin/version.py').read()).group(1),
     description='Mixin which converts ``data class instance`` and others each other more simple.',
     long_description=load_readme(),
-    long_description_content_type=”text/markdown”,
+    long_description_content_type="text/markdown",
     license='MIT',
     author='tadashi-aikawa',
     author_email='syou.maman@gmail.com',
