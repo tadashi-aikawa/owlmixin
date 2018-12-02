@@ -54,6 +54,11 @@ class Test__Add__:
             {"names": ["spot31", "spot32"]}
         ]
 
+    def test_exchange_rule(self):
+        assert [1, 2] == TList([1]) + TList([2])
+        assert [1, 2] == [1] + TList([2])
+        assert [1, 2] == TList([1]) + [2]
+
 
 class TestToCsv:
     def test_normal(self):
