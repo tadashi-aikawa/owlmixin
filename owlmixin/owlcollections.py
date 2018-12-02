@@ -17,9 +17,8 @@ K = TypeVar('K')
 
 
 class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]):
-    def __add__(self, values):
-        # type: (TList[T]) -> TList[T]
-        return TList(values + list(self))
+    def __add__(self, values: list) -> 'TList[T]':
+        return TList(list(self) + values)
 
     def map(self, func):
         """
