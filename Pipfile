@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [dev-packages]
-
 sphinx = "*"
 pytest = "*"
 mock = "*"
@@ -15,13 +12,12 @@ pipenv = "*"
 wheel = "*"
 twine = "*"
 
-
 [packages]
-
-pyyaml = "*"
+pyyaml = ">=4.2b1"
 debtcollector = "*"
 
-
 [requires]
-
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
