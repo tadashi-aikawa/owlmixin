@@ -6,13 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin.owlcollections &#8212; owlmixin 2.8.3 documentation</title>
+    <title>owlmixin.owlcollections &#8212; owlmixin 2.9.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -29,7 +30,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.8.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.9.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -594,7 +595,25 @@
 <span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2).assign(TDict({&#39;k2&#39;: 3}))</span>
 <span class="sd">            {&#39;k1&#39;: 1, &#39;k2&#39;: 3}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_</span><span class="p">})</span></div></div>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="TDict.pick_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.pick_by">[docs]</a>    <span class="k">def</span> <span class="nf">pick_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TDict[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).pick_by(lambda k, v: v &gt; 2)</span>
+<span class="sd">            {&#39;k3&#39;: 3}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)})</span></div>
+
+<div class="viewcode-block" id="TDict.omit_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TDict.omit_by">[docs]</a>    <span class="k">def</span> <span class="nf">omit_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TDict[T]&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TDict(k1=1, k2=2, k3=3).omit_by(lambda k, v: v &gt; 2)</span>
+<span class="sd">            {&#39;k1&#39;: 1, &#39;k2&#39;: 2}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)})</span></div></div>
 
 </pre></div>
 
@@ -625,14 +644,14 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.8.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 2.9.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
     </div>
   </body>
 </html>

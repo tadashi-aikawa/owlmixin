@@ -223,4 +223,33 @@ class TestAssign:
         assert spots_by_key['a'] is not None
 
 
+class TestPickBy:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        actual: TDict[Spot] = Spot.from_dicts_by_key(d).pick_by(lambda k, v: len(v.names) > 1 and k in ["a", "b"])
+
+        assert {
+            "b": {"names": ["spot21", "spot22"]}
+        } == actual.to_dict()
+
+
+class TestOmitBy:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"]},
+            "b": {"names": ["spot21", "spot22"]},
+            "c": {"names": ["spot31", "spot32"]}
+        }
+
+        actual: TDict[Spot] = Spot.from_dicts_by_key(d).omit_by(lambda k, v: len(v.names) > 1 and k in ["a", "b"])
+
+        assert {
+            "a": {"names": ["spot1"]},
+            "c": {"names": ["spot31", "spot32"]}
+        } == actual.to_dict()
 
