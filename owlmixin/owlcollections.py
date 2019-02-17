@@ -553,3 +553,21 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({**self, **dict_})
 
+    def pick_by(self, func: Callable[[K, T], bool]) -> 'TDict[T]':
+        """
+        Usage:
+
+            >>> TDict(k1=1, k2=2, k3=3).pick_by(lambda k, v: v > 2)
+            {'k3': 3}
+        """
+        return TDict({k: v for k, v in self.items() if func(k, v)})
+
+    def omit_by(self, func: Callable[[K, T], bool]) -> 'TDict[T]':
+        """
+        Usage:
+
+            >>> TDict(k1=1, k2=2, k3=3).omit_by(lambda k, v: v > 2)
+            {'k1': 1, 'k2': 2}
+        """
+        return TDict({k: v for k, v in self.items() if not func(k, v)})
+
