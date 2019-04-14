@@ -43,7 +43,7 @@ class Test__Add__:
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]}
         ]
-        assert se.to_dicts() ==  [
+        assert se.to_dicts() == [
             {"names": ["spot31", "spot32"]}
         ]
 
@@ -144,6 +144,7 @@ class TestToCsvf:
     """
     Requirements: `from_csvf` and `from_csvf_to_list` are fine
     """
+
     def test_normal(self, tmpdir):
         r: TList[Human] = Human.from_dicts([
             {"id": 1, "name": "一郎"},
@@ -175,7 +176,7 @@ class TestEMap:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).emap(lambda s, i: (i+1, s.names)) == [
+        assert Spot.from_dicts(d).emap(lambda s, i: (i + 1, s.names)) == [
             (1, ["spot1"]), (2, ["spot21", "spot22"])
         ]
 
@@ -245,9 +246,9 @@ class TestHeadWhile:
         ]
 
         assert [
-            {"names": ["spot11", "spot12"], "address": {"name": "address1"}},
-            {"names": ["spot21", "spot22"]},
-        ] == Spot.from_dicts(d).head_while(lambda x: x.names.size() > 1).to_dicts()
+                   {"names": ["spot11", "spot12"], "address": {"name": "address1"}},
+                   {"names": ["spot21", "spot22"]},
+               ] == Spot.from_dicts(d).head_while(lambda x: x.names.size() > 1).to_dicts()
 
 
 class TestTail:
@@ -335,6 +336,21 @@ class TestGroupBy:
         }
 
 
+class TestKeyBy:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+            {"names": ["spot4"], "address": {"name": "address1"}}
+        ]
+
+        assert Spot.from_dicts(d).key_by(lambda s: str(len(s.names))).to_dict(ignore_none=True) == {
+            "1": {"names": ["spot4"], "address": {"name": "address1"}},
+            "2": {"names": ["spot31", "spot32"]},
+        }
+
+
 class TestOrderBy:
     def test_normal(self):
         d = [
@@ -400,6 +416,7 @@ class TestConcat:
             {"names": ["spot21", "spot22"]}
         ]
 
+
 class TestReduce:
     def test_normal(self):
         d = [
@@ -407,7 +424,7 @@ class TestReduce:
             {"names": ["spot21", "spot22"]}
         ]
 
-        assert Spot.from_dicts(d).reduce(lambda r, x: r+len(x.names), 100) == 103
+        assert Spot.from_dicts(d).reduce(lambda r, x: r + len(x.names), 100) == 103
 
 
 class TestSum:
