@@ -13,7 +13,7 @@ wheel = "*"
 twine = "*"
 
 [packages]
-pyyaml = ">=4.2b1"
+pyyaml = "*"
 debtcollector = "*"
 
 [requires]
