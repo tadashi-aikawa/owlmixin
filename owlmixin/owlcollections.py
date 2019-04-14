@@ -191,6 +191,18 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             ret[k].append(v)
         return ret
 
+    def key_by(self, to_key: Callable[[T], str]) -> 'TDict[T]':
+        """
+        :param to_key: value -> key
+        Usage:
+
+            >>> TList(['a1', 'b2', 'c3']).key_by(lambda x: x[0]).to_json()
+            '{"a": "a1","b": "b2","c": "c3"}'
+            >>> TList([1, 2, 3, 4, 5]).key_by(lambda x: x % 2).to_json()
+            '{"0": 4,"1": 5}'
+        """
+        return TDict({to_key(x): x for x in self})
+
     def order_by(self, func, reverse=False):
         """
         :param func:
