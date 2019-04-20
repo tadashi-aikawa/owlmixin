@@ -8,6 +8,11 @@ OwlMixin
 [![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)]()
 
+**(ﾟ∀ﾟ) v3.0 have two breaking changes**
+
+1. Change return types of find to TOption[T]
+2. Remove OwlEnum.from_symbol (use from_value)
+
 
 Motivation
 ----------
