@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Collections &#8212; owlmixin 2.10.1 documentation</title>
+    <meta charset="utf-8" />
+    <title>Collections &#8212; owlmixin 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -38,7 +36,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -50,9 +48,9 @@
   <div class="section" id="collections">
 <h1>Collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
@@ -60,8 +58,8 @@
 
 
 <span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-    <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">)</span>
-    <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;mewing&quot;</span><span class="p">)</span>
+    <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">})</span>
+    <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;mewing&quot;</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">crow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
@@ -103,16 +101,14 @@
 <dd><dl class="method">
 <dt id="owlmixin.owlcollections.TList.map">
 <code class="descname">map</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.map" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[2, 3, 4, 5, 6]</span>
@@ -123,16 +119,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.emap">
 <code class="descname">emap</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.emap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.emap" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T</em><em>, </em><em>int -&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T</em><em>, </em><em>int -&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">emap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
 <span class="go">[(11, 0), (21, 1), (31, 2), (41, 3), (51, 4)]</span>
@@ -143,14 +137,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.flatten">
 <code class="descname">flatten</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.flatten" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 4]</span>
@@ -161,16 +152,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.flat_map">
 <code class="descname">flat_map</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.flat_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.flat_map" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
 <span class="go">[1, 2, 2, 3, 3, 4]</span>
@@ -181,16 +170,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.filter">
 <code class="descname">filter</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[4, 5]</span>
@@ -201,16 +188,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.reject">
 <code class="descname">reject</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.reject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.reject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
@@ -221,14 +206,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.head">
 <code class="descname">head</code><span class="sig-paren">(</span><em>size_: int</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.head" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> – </td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> – </p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
@@ -239,14 +221,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.head_while">
 <code class="descname">head_while</code><span class="sig-paren">(</span><em>func: Callable[T, bool]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.head_while"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.head_while" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">head_while</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
 <span class="go">[1, 2]</span>
@@ -287,16 +266,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.partial">
 <code class="descname">partial</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.partial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.partial" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple(<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T], <a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T])</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple(<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T], <a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T])</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">([4, 5], [1, 2, 3])</span>
@@ -307,16 +284,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.group_by">
 <code class="descname">group_by</code><span class="sig-paren">(</span><em>to_key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.group_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.group_by" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>to_key</strong> (<em>T -&gt; unicode</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_key</strong> (<em>T -&gt; unicode</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
 <span class="go">&#39;{&quot;0&quot;: [2,4],&quot;1&quot;: [1,3,5]}&#39;</span>
@@ -327,14 +302,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.key_by">
 <code class="descname">key_by</code><span class="sig-paren">(</span><em>to_key: Callable[T, str]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.key_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.key_by" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>to_key</strong> – value -&gt; key</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_key</strong> – value -&gt; key</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;c3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">key_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
 <span class="go">&#39;{&quot;a&quot;: &quot;a1&quot;,&quot;b&quot;: &quot;b2&quot;,&quot;c&quot;: &quot;c3&quot;}&#39;</span>
@@ -347,21 +319,17 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.order_by">
 <code class="descname">order_by</code><span class="sig-paren">(</span><em>func</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.order_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.order_by" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>func</strong> (<em>T -&gt; any</em>) – </li>
-<li><strong>reverse</strong> (<em>bool</em>) – Sort by descend order if True, else by ascend</li>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>T -&gt; any</em>) – </p></li>
+<li><p><strong>reverse</strong> (<em>bool</em>) – Sort by descend order if True, else by ascend</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">57</span><span class="p">])</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
 <span class="go">[40, 31, 12, 25, 57]</span>
@@ -374,21 +342,17 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.concat">
 <code class="descname">concat</code><span class="sig-paren">(</span><em>values</em>, <em>first=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.concat" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>values</strong> (<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList"><em>TList</em></a><em>[</em><em>T</em><em>]</em>) – </li>
-<li><strong>first</strong> (<em>bool</em>) – </li>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList"><em>TList</em></a><em>[</em><em>T</em><em>]</em>) – </p></li>
+<li><p><strong>first</strong> (<em>bool</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TList</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
 <span class="go">[1, 2, 3, 4]</span>
@@ -401,21 +365,17 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.reduce">
 <code class="descname">reduce</code><span class="sig-paren">(</span><em>func</em>, <em>init_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.reduce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.reduce" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>func</strong> (<em>(</em><em>U</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </li>
-<li><strong>init_value</strong> (<em>U</em>) – </li>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>(</em><em>U</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </p></li>
+<li><p><strong>init_value</strong> (<em>U</em>) – </p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">U</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>U</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="go">130</span>
@@ -426,14 +386,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.sum">
 <code class="descname">sum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.sum" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int | float</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int | float</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="go">15</span>
@@ -444,16 +401,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.sum_by">
 <code class="descname">sum_by</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.sum_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.sum_by" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; int | float</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int | float</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; int | float</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int | float</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">30</span>
@@ -464,14 +419,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.size">
 <code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.size" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="go">5</span>
@@ -482,16 +434,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.join">
 <code class="descname">join</code><span class="sig-paren">(</span><em>joint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.join" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>joint</strong> (<em>unicode</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">unicode</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>joint</strong> (<em>unicode</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>unicode</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
 <span class="go">&#39;A-B-C&#39;</span>
@@ -501,20 +451,12 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.find" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">T</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
+<code class="descname">find</code><span class="sig-paren">(</span><em>func: Callable[T, bool]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">4</span>
+<span class="go">Option --&gt; 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">Option --&gt; None</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -522,16 +464,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.all">
 <code class="descname">all</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.all" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">T</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>T</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
@@ -544,16 +484,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.any">
 <code class="descname">any</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.any"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.any" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">T</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>T</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">True</span>
@@ -566,16 +504,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.intersection">
 <code class="descname">intersection</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.intersection" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<em>List</em><em>[</em><em>T</em><em>]</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>List</em><em>[</em><em>T</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="go">[2, 4]</span>
@@ -586,16 +522,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.not_intersection">
 <code class="descname">not_intersection</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.not_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.not_intersection" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<em>List</em><em>[</em><em>T</em><em>]</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>List</em><em>[</em><em>T</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">not_intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="go">[1, 3, 5]</span>
@@ -607,22 +541,18 @@
 <dt id="owlmixin.owlcollections.TList.to_csv">
 <code class="descname">to_csv</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>From sequence of text to csv string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fieldnames</strong> – Order of columns by property name</li>
-<li><strong>with_header</strong> – Add headers at the first line if True</li>
-<li><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fieldnames</strong> – Order of columns by property name</p></li>
+<li><p><strong>with_header</strong> – Add headers at the first line if True</p></li>
+<li><p><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Csv string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Csv string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
@@ -646,46 +576,38 @@
 <dt id="owlmixin.owlcollections.TList.to_csvf">
 <code class="descname">to_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Sequence[str], encoding: str = 'utf8', with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csvf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Csv file path</li>
-<li><strong>fieldnames</strong> – Order of columns by property name</li>
-<li><strong>encoding</strong> – Csv file encoding</li>
-<li><strong>with_header</strong> – Add headers at the first line if True</li>
-<li><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Csv file path</p></li>
+<li><p><strong>fieldnames</strong> – Order of columns by property name</p></li>
+<li><p><strong>encoding</strong> – Csv file encoding</p></li>
+<li><p><strong>with_header</strong> – Add headers at the first line if True</p></li>
+<li><p><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Csv file path</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Csv file path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_dicts">
 <code class="descname">to_dicts</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; List[dict]<a class="headerlink" href="#owlmixin.owlcollections.TList.to_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to dict</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List[Dict]</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List[Dict]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dicts</span> <span class="o">=</span> <span class="p">[</span>
@@ -740,22 +662,18 @@
 <dt id="owlmixin.owlcollections.TList.to_json">
 <code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>indent</strong> – Number of indentation</li>
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indent</strong> – Number of indentation</p></li>
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -776,45 +694,37 @@
 <dt id="owlmixin.owlcollections.TList.to_jsonf">
 <code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Json file path</li>
-<li><strong>encoding</strong> – Json file encoding</li>
-<li><strong>indent</strong> – Number of indentation</li>
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Json file path</p></li>
+<li><p><strong>encoding</strong> – Json file encoding</p></li>
+<li><p><strong>indent</strong> – Number of indentation</p></li>
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json file path</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json file path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_pretty_json">
 <code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_pretty_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to pretty json string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -850,16 +760,14 @@
 <dt id="owlmixin.owlcollections.TList.to_table">
 <code class="descname">to_table</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str]</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>From sequence of text to csv string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fieldnames</strong> – Order of columns by property name</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Table string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fieldnames</strong> – Order of columns by property name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Table string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
@@ -880,21 +788,17 @@
 <dt id="owlmixin.owlcollections.TList.to_yaml">
 <code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Yaml string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -923,22 +827,18 @@
 <dt id="owlmixin.owlcollections.TList.to_yamlf">
 <code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>fpath</strong> – Yaml file path</li>
-<li><strong>encoding</strong> – Yaml file encoding</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>fpath</strong> – Yaml file path</p></li>
+<li><p><strong>encoding</strong> – Yaml file encoding</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml file path</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Yaml file path</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -952,16 +852,14 @@
 <dd><dl class="method">
 <dt id="owlmixin.owlcollections.TDict.map">
 <code class="descname">map</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.map" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">[2, 4, 6]</span>
@@ -972,16 +870,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.map_values">
 <code class="descname">map_values</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.map_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.map_values" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>T -&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>T -&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;k1&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
@@ -996,16 +892,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.map_values2">
 <code class="descname">map_values2</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.map_values2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.map_values2" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[U]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; U</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TDict" title="owlmixin.owlcollections.TDict">TDict</a>[U]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map_values2</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{k}</span><span class="s1"> -&gt; {v*2}&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;k1&quot;</span><span class="p">:</span> <span class="s2">&quot;k1 -&gt; 2&quot;</span><span class="p">,</span>
@@ -1020,16 +914,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.filter">
 <code class="descname">filter</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">[1]</span>
@@ -1040,16 +932,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.reject">
 <code class="descname">reject</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.reject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.reject" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reject</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">[3]</span>
@@ -1060,14 +950,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.sum">
 <code class="descname">sum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.sum" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int | float</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int | float</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="go">6</span>
@@ -1078,16 +965,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.sum_by">
 <code class="descname">sum_by</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.sum_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.sum_by" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt;</em><em> (</em><em>int | float</em><em>)</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int | float</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt;</em><em> (</em><em>int | float</em><em>)</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int | float</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">12</span>
@@ -1098,14 +983,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.size">
 <code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.size" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="go">3</span>
@@ -1115,20 +997,12 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.find" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">T</td>
-</tr>
-</tbody>
-</table>
-<p>Usage:</p>
+<code class="descname">find</code><span class="sig-paren">(</span><em>func: Callable[[K, T], bool]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">2</span>
+<span class="go">Option --&gt; 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">Option --&gt; None</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1136,14 +1010,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_values">
 <code class="descname">to_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.to_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.to_values" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#owlmixin.owlcollections.TList" title="owlmixin.owlcollections.TList">TList</a>[T]</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_values</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
 <span class="go">[1, 2, 3]</span>
@@ -1154,16 +1025,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.all">
 <code class="descname">all</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.all" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
@@ -1176,16 +1045,14 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.any">
 <code class="descname">any</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.any"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.any" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>K</em><em>, </em><em>T</em><em>) </em><em>-&gt; bool</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">True</span>
@@ -1198,14 +1065,11 @@
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.assign">
 <code class="descname">assign</code><span class="sig-paren">(</span><em>dict_: Dict[str, T]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TDict.assign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TDict.assign" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dict</strong> – </td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dict</strong> – </p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TDict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">({</span><span class="s1">&#39;k3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
 <span class="go">{&#39;k1&#39;: 1, &#39;k2&#39;: 2, &#39;k3&#39;: 3}</span>
@@ -1239,16 +1103,14 @@
 <dt id="owlmixin.owlcollections.TDict.str_format">
 <code class="descname">str_format</code><span class="sig-paren">(</span><em>format_: str</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.str_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to str with formatting</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>format</strong> – format string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>format</strong> – format string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
@@ -1268,25 +1130,20 @@
 <dt id="owlmixin.owlcollections.TDict.to_dict">
 <code class="descname">to_dict</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to dict</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>force_value</strong> – Transform to value using to_value (default: str()) of ValueTransformer which inherited if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>Usage:</dt>
-<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+<dl>
+<dt>Usage:</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1332,22 +1189,18 @@
 <dt id="owlmixin.owlcollections.TDict.to_json">
 <code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>indent</strong> – Number of indentation</li>
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indent</strong> – Number of indentation</p></li>
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -1368,45 +1221,37 @@
 <dt id="owlmixin.owlcollections.TDict.to_jsonf">
 <code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> – Json file path</li>
-<li><strong>encoding</strong> – Json file encoding</li>
-<li><strong>indent</strong> – Number of indentation</li>
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Json file path</p></li>
+<li><p><strong>encoding</strong> – Json file encoding</p></li>
+<li><p><strong>indent</strong> – Number of indentation</p></li>
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json file path</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json file path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TDict.to_pretty_json">
 <code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_pretty_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to pretty json string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Json string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -1442,21 +1287,17 @@
 <dt id="owlmixin.owlcollections.TDict.to_yaml">
 <code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml string</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>ignore_empty</strong> – Properties which is empty are excluded if True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Yaml string</p>
+</dd>
+</dl>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
@@ -1485,22 +1326,18 @@
 <dt id="owlmixin.owlcollections.TDict.to_yamlf">
 <code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TDict.to_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ignore_none</strong> – Properties which is None are excluded if True</li>
-<li><strong>fpath</strong> – Yaml file path</li>
-<li><strong>encoding</strong> – Yaml file encoding</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>fpath</strong> – Yaml file path</p></li>
+<li><p><strong>encoding</strong> – Yaml file encoding</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Yaml file path</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Yaml file path</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1542,8 +1379,6 @@
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -1564,12 +1399,12 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

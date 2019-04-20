@@ -469,7 +469,7 @@ class TestFind:
             {"names": ["spot31", "spot32", "spot33"]}
         ]
 
-        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 2).to_dict(ignore_none=True) == {
+        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 2).get().to_dict(ignore_none=True) == {
             "names": ["spot21", "spot22"]
         }
 
@@ -480,7 +480,7 @@ class TestFind:
             {"names": ["spot31", "spot32"]}
         ]
 
-        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 3) is None
+        assert Spot.from_dicts(d).find(lambda x: len(x.names) == 3).is_none()
 
 
 class TestAll:

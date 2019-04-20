@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>owlmixin &#8212; owlmixin 2.10.1 documentation</title>
+    <meta charset="utf-8" />
+    <title>owlmixin &#8212; owlmixin 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -30,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -47,6 +45,7 @@
 <span class="kn">import</span> <span class="nn">inspect</span>
 
 <span class="kn">import</span> <span class="nn">owlmixin.version</span>
+<span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="k">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
@@ -64,71 +63,17 @@
 <span class="k">def</span> <span class="nf">assert_extra</span><span class="p">(</span><span class="n">cls_properties</span><span class="p">,</span> <span class="n">arg_dict</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
     <span class="n">extra_keys</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">arg_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cls_properties</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">extra_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">.        ∧,,_∧      ,______________________</span>
-<span class="s1">     ⊂ ( ･ω･ )つ-  &lt;  Unknown properties!!  |</span>
-<span class="s1">   ／／/     /::/     `----------------------</span>
-<span class="s1">   |::|/⊂ヽノ|::|」</span>
-<span class="s1">／￣￣旦￣￣￣／|</span>
-<span class="s1">＿＿＿＿＿＿／  | |</span>
-<span class="s1">|------ー----ー|／</span>
-
-<span class="s1">You have to remove the unknown properties or haven&#39;t to set `restrict=True`.</span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Class   | </span><span class="si">{cls}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Unknown | {sorted(extra_keys)}</span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">UnknownPropertiesError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">extra_keys</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">.        ∧,,_∧      ,___________________</span>
-<span class="s1">     ⊂ ( ･ω･ )つ-  &lt;  Required error!!  |</span>
-<span class="s1">   ／／/     /::/     `-------------------</span>
-<span class="s1">   |::|/⊂ヽノ|::|」</span>
-<span class="s1">／￣￣旦￣￣￣／|</span>
-<span class="s1">＿＿＿＿＿＿／  | |</span>
-<span class="s1">|------ー----ー|／</span>
-
-<span class="s1">The following type must not to be empty !!  You have to specify anything.</span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Class    | </span><span class="si">{cls}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Property | </span><span class="si">{name}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Type     | </span><span class="si">{type_}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">RequiredError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
-        <span class="n">expected_typestr</span> <span class="o">=</span> <span class="s2">&quot; or &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">))</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">.        ∧,,_∧      ,_______________________</span>
-<span class="s1">     ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error!!  |</span>
-<span class="s1">   ／／/     /::/     `-----------------------</span>
-<span class="s1">   |::|/⊂ヽノ|::|」</span>
-<span class="s1">／￣￣旦￣￣￣／|</span>
-<span class="s1">＿＿＿＿＿＿／  | |</span>
-<span class="s1">|------ー----ー|／</span>
-<span class="s1">    </span>
-<span class="s1">You have to specify value which has correct type or set `force_cast=True`.</span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Class     | </span><span class="si">{cls}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Property  | </span><span class="si">{name}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Value     | </span><span class="si">{value}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Expected  | </span><span class="si">{expected_typestr}</span><span class="s1"></span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">| Actual    | {type(value)}</span>
-<span class="s1">-----------------------------------------------------------------------</span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidTypeError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
@@ -264,21 +209,19 @@
 <span class="sd">            ... })  # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">                ...</span>
-<span class="sd">            AttributeError:</span>
-<span class="sd">            .        ∧,,_∧      ,______________________</span>
-<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Unknown properties!!  |</span>
-<span class="sd">               ／／/     /::/     `----------------------</span>
+<span class="sd">            owlmixin.errors.UnknownPropertiesError:</span>
+<span class="sd">            .        ∧,,_∧      ,___________________</span>
+<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Unknown properties error</span>
+<span class="sd">               ／／/     /::/     `-------------------</span>
 <span class="sd">               |::|/⊂ヽノ|::|」</span>
 <span class="sd">            ／￣￣旦￣￣￣／|</span>
 <span class="sd">            ＿＿＿＿＿＿／  | |</span>
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            You have to remove the unknown properties or haven&#39;t to set `restrict=True`.</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Class   | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Unknown | [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
+<span class="sd">            `owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                * If you want to allow unknown properties, set `restrict=False`</span>
+<span class="sd">                * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 
 <span class="sd">        If you specify wrong type...</span>
@@ -290,53 +233,42 @@
 <span class="sd">            ... })  # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">                ...</span>
-<span class="sd">            TypeError:</span>
-<span class="sd">            .        ∧,,_∧      ,_______________________</span>
-<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error!!  |</span>
-<span class="sd">               ／／/     /::/     `-----------------------</span>
-<span class="sd">               |::|/⊂ヽノ|::|」</span>
-<span class="sd">            ／￣￣旦￣￣￣／|</span>
-<span class="sd">            ＿＿＿＿＿＿／  | |</span>
-<span class="sd">            |------ー----ー|／</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            You have to specify value which has correct type or set `force_cast=True`.</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Class     | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Property  | favorites.0</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Value     | apple</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Expected  | &lt;class &#39;owlmixin.samples.Food&#39;&gt; or &lt;class &#39;dict&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Actual    | &lt;class &#39;str&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            &lt;BLANKLINE&gt;</span>
-
-<span class="sd">        If you don&#39;t specify required params... (ex. name)</span>
-
-<span class="sd">            &gt;&gt;&gt; human: Human = Human.from_dict({</span>
-<span class="sd">            ...     &quot;id&quot;: 1</span>
-<span class="sd">            ... })  # doctest: +NORMALIZE_WHITESPACE</span>
-<span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">                ...</span>
-<span class="sd">            AttributeError:</span>
+<span class="sd">            owlmixin.errors.InvalidTypeError:</span>
 <span class="sd">            .        ∧,,_∧      ,___________________</span>
-<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Required error!!  |</span>
+<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error</span>
 <span class="sd">               ／／/     /::/     `-------------------</span>
 <span class="sd">               |::|/⊂ヽノ|::|」</span>
 <span class="sd">            ／￣￣旦￣￣￣／|</span>
 <span class="sd">            ＿＿＿＿＿＿／  | |</span>
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            The following type must not to be empty !!  You have to specify anything.</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Class    | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Property | name</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Type     | &lt;class &#39;str&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
+<span class="sd">            `owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.</span>
+<span class="sd">            Expected type is one of [&#39;Food&#39;, &#39;dict&#39;], but actual type is `str`</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                * If you want to force cast, set `force_cast=True`</span>
+<span class="sd">                * If you don&#39;t want to force cast, specify value which has correct type</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+
+<span class="sd">        If you don&#39;t specify required params... (ex. name</span>
+
+<span class="sd">            &gt;&gt;&gt; human: Human = Human.from_dict({</span>
+<span class="sd">            ...     &quot;id&quot;: 1</span>
+<span class="sd">            ... })  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">                ...</span>
+<span class="sd">            owlmixin.errors.RequiredError:</span>
+<span class="sd">            .        ∧,,_∧      ,___________________</span>
+<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
+<span class="sd">               ／／/     /::/     `-------------------</span>
+<span class="sd">               |::|/⊂ヽノ|::|」</span>
+<span class="sd">            ／￣￣旦￣￣￣／|</span>
+<span class="sd">            ＿＿＿＿＿＿／  | |</span>
+<span class="sd">            |------ー----ー|／</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">            `owlmixin.samples.Human#name: str` is empty!!</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                * If `name` is certainly required, specify anything.</span>
+<span class="sd">                * If `name` is optional, change type from `str` to `TOption[str]`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
@@ -386,23 +318,19 @@
 <span class="sd">            &gt;&gt;&gt; Human.from_optional_dict({}).get()  # doctest: +NORMALIZE_WHITESPACE</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">                ...</span>
-<span class="sd">            AttributeError:</span>
+<span class="sd">            owlmixin.errors.RequiredError:</span>
 <span class="sd">            .        ∧,,_∧      ,___________________</span>
-<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Required error!!  |</span>
+<span class="sd">                 ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
 <span class="sd">               ／／/     /::/     `-------------------</span>
 <span class="sd">               |::|/⊂ヽノ|::|」</span>
 <span class="sd">            ／￣￣旦￣￣￣／|</span>
 <span class="sd">            ＿＿＿＿＿＿／  | |</span>
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            The following type must not to be empty !!  You have to specify anything.</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Class    | &lt;class &#39;owlmixin.samples.Human&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Property | id</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
-<span class="sd">            | Type     | &lt;class &#39;int&#39;&gt;</span>
-<span class="sd">            -----------------------------------------------------------------------</span>
+<span class="sd">            `owlmixin.samples.Human#id: int` is empty!!</span>
+<span class="sd">            &lt;BLANKLINE&gt;</span>
+<span class="sd">                * If `id` is certainly required, specify anything.</span>
+<span class="sd">                * If `id` is optional, change type from `int` to `TOption[int]`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span>
@@ -758,8 +686,6 @@
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -774,13 +700,13 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

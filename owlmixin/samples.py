@@ -6,8 +6,8 @@ from owlmixin import OwlMixin, TOption
 
 
 class Animal(OwlObjectEnum):  # pragma: no cover
-    DOG = ("dog", "bow-wow")
-    CAT = ("cat", "mewing")
+    DOG = ("dog", {"cry": "bow-wow"})
+    CAT = ("cat", {"cry": "mewing"})
 
     def crow(self):
         return self.object

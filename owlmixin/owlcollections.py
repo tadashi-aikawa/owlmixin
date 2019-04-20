@@ -4,6 +4,7 @@ import functools
 from itertools import chain
 from typing import TypeVar, Generic, Any, Callable, Dict
 
+from owlmixin.owloption import TOption
 from owlmixin.transformers import DictTransformer, \
     DictsTransformer, \
     JsonTransformer, \
@@ -300,20 +301,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return joint.join(self)
 
-    def find(self, func):
+    def find(self, func: Callable[[T], bool]) -> TOption[T]:
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: T
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).find(lambda x: x > 3)
-            4
+            Option --> 4
+            >>> TList([1, 2, 3, 4, 5]).find(lambda x: x > 6)
+            Option --> None
         """
         for x in self:
             if func(x):
-                return x
+                return TOption(x)
+        return TOption(None)
 
     def all(self, func):
         """
@@ -496,20 +496,19 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return len(self)
 
-    def find(self, func):
+    def find(self, func: Callable[[K, T], bool]) -> TOption[T]:
         """
-        :param func:
-        :type func: (K, T) -> bool
-        :rtype: T
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).find(lambda k, v: v == 2)
-            2
+            Option --> 2
+            >>> TDict(k1=1, k2=2, k3=3).find(lambda k, v: v == 4)
+            Option --> None
         """
         for k, v in self.items():
             if func(k, v):
-                return v
+                return TOption(v)
+        return TOption(None)
 
     def to_values(self):
         """

@@ -25,6 +25,14 @@ class OwlEnum(ValueTransformer, Enum):
 
 class OwlObjectEnum(ValueTransformer, Enum):
     """ This class is similar to OwlEnum except that can have additional object.
+
+    Use case example:
+        class Animal(OwlObjectEnum):
+            DOG = ("dog", {"cry": "bow-wow"})
+            CAT = ("cat", {"cry": "mewing"})
+
+        def crow(self):
+            return self.object["cry"]
     TODO: Not exec doctest
     """
     def __init__(self, symbol, obj):
@@ -34,7 +42,7 @@ class OwlObjectEnum(ValueTransformer, Enum):
     @classmethod
     def from_value(cls, value: str) -> T:
         """Create instance from symbol
-        :param symbol: unique symbol
+        :param value: unique symbol
         :return: This instance
 
         Usage:
@@ -44,11 +52,6 @@ class OwlObjectEnum(ValueTransformer, Enum):
             mewing
         """
         return [x for x in cls.__members__.values() if x.value[0] == value][0]
-
-    @removals.remove
-    @classmethod
-    def from_symbol(cls, symbol):
-        return cls.from_value(symbol)
 
     def to_value(self, ignore_none, force_value):
         return self.symbol

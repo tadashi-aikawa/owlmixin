@@ -6,7 +6,7 @@ from mock import patch
 import os
 import pytest
 
-from owlmixin import OwlMixin
+from owlmixin import OwlMixin, RequiredError
 from owlmixin.owlcollections import TDict, TList
 from owlmixin.samples import Japanese
 from owlmixin.transformers import TOption
@@ -243,7 +243,7 @@ class TestFromOptionalDict:
         assert Human.from_optional_dict(None).is_none()
 
     def test_empty(self):
-        with pytest.raises(AttributeError):
+        with pytest.raises(RequiredError):
             Human.from_optional_dict({})
 
 

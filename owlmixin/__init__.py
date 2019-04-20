@@ -4,6 +4,7 @@ from typing import TypeVar, List, Dict, Optional, Tuple, Sequence, Type
 import inspect
 
 import owlmixin.version
+from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
 from owlmixin.owlcollections import TList, TDict
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin import util
@@ -21,71 +22,17 @@ def _is_generic(type):
 def assert_extra(cls_properties, arg_dict, cls):
     extra_keys: set = set(arg_dict.keys()) - set([n for n, t in cls_properties])
     if extra_keys:
-        raise AttributeError(f'''
-.        ∧,,_∧      ,______________________
-     ⊂ ( ･ω･ )つ-  <  Unknown properties!!  |
-   ／／/     /::/     `----------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
-
-You have to remove the unknown properties or haven't to set `restrict=True`.
------------------------------------------------------------------------
-| Class   | {cls}
------------------------------------------------------------------------
-| Unknown | {sorted(extra_keys)}
------------------------------------------------------------------------
-    ''')
+        raise UnknownPropertiesError(cls, sorted(extra_keys))
 
 
 def assert_none(value, type_, cls, name):
     if value is None:
-        raise AttributeError(f'''
-.        ∧,,_∧      ,___________________
-     ⊂ ( ･ω･ )つ-  <  Required error!!  |
-   ／／/     /::/     `-------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
-
-The following type must not to be empty !!  You have to specify anything.
------------------------------------------------------------------------
-| Class    | {cls}
------------------------------------------------------------------------
-| Property | {name}
------------------------------------------------------------------------
-| Type     | {type_}
------------------------------------------------------------------------
-    ''')
+        raise RequiredError(cls, name, type_)
 
 
 def assert_types(value, types: tuple, cls, name):
     if not isinstance(value, types):
-        expected_typestr = " or ".join((str(t) for t in types))
-        raise TypeError(f'''
-.        ∧,,_∧      ,_______________________
-     ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
-   ／／/     /::/     `-----------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
-    
-You have to specify value which has correct type or set `force_cast=True`.
------------------------------------------------------------------------
-| Class     | {cls}
------------------------------------------------------------------------
-| Property  | {name}
------------------------------------------------------------------------
-| Value     | {value}
------------------------------------------------------------------------
-| Expected  | {expected_typestr}
------------------------------------------------------------------------
-| Actual    | {type(value)}
------------------------------------------------------------------------
-    ''')
+        raise InvalidTypeError(cls, name, value, types, type(value))
 
 
 def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool):
@@ -221,21 +168,19 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ... })  # doctest: +NORMALIZE_WHITESPACE
             Traceback (most recent call last):
                 ...
-            AttributeError:
-            .        ∧,,_∧      ,______________________
-                 ⊂ ( ･ω･ )つ-  <  Unknown properties!!  |
-               ／／/     /::/     `----------------------
+            owlmixin.errors.UnknownPropertiesError:
+            .        ∧,,_∧      ,___________________
+                 ⊂ ( ･ω･ )つ-  <  Unknown properties error
+               ／／/     /::/     `-------------------
                |::|/⊂ヽノ|::|」
             ／￣￣旦￣￣￣／|
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            You have to remove the unknown properties or haven't to set `restrict=True`.
-            -----------------------------------------------------------------------
-            | Class   | <class 'owlmixin.samples.Human'>
-            -----------------------------------------------------------------------
-            | Unknown | ['hogehoge1', 'hogehoge2']
-            -----------------------------------------------------------------------
+            `owlmixin.samples.Human` has unknown properties ['hogehoge1', 'hogehoge2']!!
+            <BLANKLINE>
+                * If you want to allow unknown properties, set `restrict=False`
+                * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human
             <BLANKLINE>
 
         If you specify wrong type...
@@ -247,53 +192,42 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ... })  # doctest: +NORMALIZE_WHITESPACE
             Traceback (most recent call last):
                 ...
-            TypeError:
-            .        ∧,,_∧      ,_______________________
-                 ⊂ ( ･ω･ )つ-  <  Invalid Type error!!  |
-               ／／/     /::/     `-----------------------
-               |::|/⊂ヽノ|::|」
-            ／￣￣旦￣￣￣／|
-            ＿＿＿＿＿＿／  | |
-            |------ー----ー|／
-            <BLANKLINE>
-            You have to specify value which has correct type or set `force_cast=True`.
-            -----------------------------------------------------------------------
-            | Class     | <class 'owlmixin.samples.Human'>
-            -----------------------------------------------------------------------
-            | Property  | favorites.0
-            -----------------------------------------------------------------------
-            | Value     | apple
-            -----------------------------------------------------------------------
-            | Expected  | <class 'owlmixin.samples.Food'> or <class 'dict'>
-            -----------------------------------------------------------------------
-            | Actual    | <class 'str'>
-            -----------------------------------------------------------------------
-            <BLANKLINE>
-
-        If you don't specify required params... (ex. name)
-
-            >>> human: Human = Human.from_dict({
-            ...     "id": 1
-            ... })  # doctest: +NORMALIZE_WHITESPACE
-            Traceback (most recent call last):
-                ...
-            AttributeError:
+            owlmixin.errors.InvalidTypeError:
             .        ∧,,_∧      ,___________________
-                 ⊂ ( ･ω･ )つ-  <  Required error!!  |
+                 ⊂ ( ･ω･ )つ-  <  Invalid Type error
                ／／/     /::/     `-------------------
                |::|/⊂ヽノ|::|」
             ／￣￣旦￣￣￣／|
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            The following type must not to be empty !!  You have to specify anything.
-            -----------------------------------------------------------------------
-            | Class    | <class 'owlmixin.samples.Human'>
-            -----------------------------------------------------------------------
-            | Property | name
-            -----------------------------------------------------------------------
-            | Type     | <class 'str'>
-            -----------------------------------------------------------------------
+            `owlmixin.samples.Human#favorites.0 = apple` doesn't match expected types.
+            Expected type is one of ['Food', 'dict'], but actual type is `str`
+            <BLANKLINE>
+                * If you want to force cast, set `force_cast=True`
+                * If you don't want to force cast, specify value which has correct type
+            <BLANKLINE>
+
+        If you don't specify required params... (ex. name
+
+            >>> human: Human = Human.from_dict({
+            ...     "id": 1
+            ... })  # doctest: +NORMALIZE_WHITESPACE
+            Traceback (most recent call last):
+                ...
+            owlmixin.errors.RequiredError:
+            .        ∧,,_∧      ,___________________
+                 ⊂ ( ･ω･ )つ-  <  Required error
+               ／／/     /::/     `-------------------
+               |::|/⊂ヽノ|::|」
+            ／￣￣旦￣￣￣／|
+            ＿＿＿＿＿＿／  | |
+            |------ー----ー|／
+            <BLANKLINE>
+            `owlmixin.samples.Human#name: str` is empty!!
+            <BLANKLINE>
+                * If `name` is certainly required, specify anything.
+                * If `name` is optional, change type from `str` to `TOption[str]`
             <BLANKLINE>
         """
         if isinstance(d, cls):
@@ -343,23 +277,19 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> Human.from_optional_dict({}).get()  # doctest: +NORMALIZE_WHITESPACE
             Traceback (most recent call last):
                 ...
-            AttributeError:
+            owlmixin.errors.RequiredError:
             .        ∧,,_∧      ,___________________
-                 ⊂ ( ･ω･ )つ-  <  Required error!!  |
+                 ⊂ ( ･ω･ )つ-  <  Required error
                ／／/     /::/     `-------------------
                |::|/⊂ヽノ|::|」
             ／￣￣旦￣￣￣／|
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            The following type must not to be empty !!  You have to specify anything.
-            -----------------------------------------------------------------------
-            | Class    | <class 'owlmixin.samples.Human'>
-            -----------------------------------------------------------------------
-            | Property | id
-            -----------------------------------------------------------------------
-            | Type     | <class 'int'>
-            -----------------------------------------------------------------------
+            `owlmixin.samples.Human#id: int` is empty!!
+            <BLANKLINE>
+                * If `id` is certainly required, specify anything.
+                * If `id` is optional, change type from `int` to `TOption[int]`
             <BLANKLINE>
         """
         return TOption(cls.from_dict(d,
