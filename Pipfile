@@ -11,6 +11,8 @@ pytest-cov = "*"
 pipenv = "*"
 wheel = "*"
 twine = "*"
+# sphinx, twine vulnerables
+urllib3 = ">=1.24.2"
 
 [packages]
 pyyaml = "*"
