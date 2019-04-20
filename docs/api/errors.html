@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>OwlEnum &#8212; owlmixin 3.0.0 documentation</title>
+    <title>Errors &#8212; owlmixin 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Errors" href="errors.html" />
-    <link rel="prev" title="Collections" href="owlcollections.html" />
+    <link rel="prev" title="OwlEnum" href="owlenum.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -31,10 +30,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="errors.html" title="Errors"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="owlcollections.html" title="Collections"
+          <a href="owlenum.html" title="OwlEnum"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>
@@ -45,8 +41,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="owlenum">
-<h1>OwlEnum<a class="headerlink" href="#owlenum" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="errors">
+<h1>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
@@ -93,32 +89,82 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>OwlEnum<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="invalidtypeerror">
+<h2>InvalidTypeError<a class="headerlink" href="#invalidtypeerror" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="owlmixin.owlenum.OwlEnum">
-<em class="property">class </em><code class="descclassname">owlmixin.owlenum.</code><code class="descname">OwlEnum</code><a class="headerlink" href="#owlmixin.owlenum.OwlEnum" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class is similar to Enum except that can dump as json or yaml</p>
+<dt id="owlmixin.errors.InvalidTypeError">
+<em class="property">class </em><code class="descclassname">owlmixin.errors.</code><code class="descname">InvalidTypeError</code><span class="sig-paren">(</span><em>cls</em>, <em>prop: str</em>, <em>value: any</em>, <em>expected: list</em>, <em>actual</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#InvalidTypeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.InvalidTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class name</p></li>
+<li><p><strong>prop</strong> (<em>str</em>) – Property name</p></li>
+<li><p><strong>value</strong> (<em>any</em>) – Property value</p></li>
+<li><p><strong>expected</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Expected types</p></li>
+<li><p><strong>actual</strong> (<em>str</em>) – Actual type</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="owlmixin.errors.InvalidTypeError.with_traceback">
+<code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.InvalidTypeError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
-<div class="section" id="owlobjectenum">
-<h2>OwlObjectEnum<a class="headerlink" href="#owlobjectenum" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="unknownpropertieserror">
+<h2>UnknownPropertiesError<a class="headerlink" href="#unknownpropertieserror" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="owlmixin.owlenum.OwlObjectEnum">
-<em class="property">class </em><code class="descclassname">owlmixin.owlenum.</code><code class="descname">OwlObjectEnum</code><span class="sig-paren">(</span><em>symbol</em>, <em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.owlenum.OwlObjectEnum" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class is similar to OwlEnum except that can have additional object.</p>
-<dl class="simple">
-<dt>Use case example:</dt><dd><dl class="simple">
-<dt>class Animal(OwlObjectEnum):</dt><dd><p>DOG = (“dog”, {“cry”: “bow-wow”})
-CAT = (“cat”, {“cry”: “mewing”})</p>
-</dd>
-<dt>def crow(self):</dt><dd><p>return self.object[“cry”]</p>
+<dt id="owlmixin.errors.UnknownPropertiesError">
+<em class="property">class </em><code class="descclassname">owlmixin.errors.</code><code class="descname">UnknownPropertiesError</code><span class="sig-paren">(</span><em>cls</em>, <em>props: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#UnknownPropertiesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class name</p></li>
+<li><p><strong>props</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Unknown property names</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="method">
+<dt id="owlmixin.errors.UnknownPropertiesError.with_traceback">
+<code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="requirederror">
+<h2>RequiredError<a class="headerlink" href="#requirederror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="owlmixin.errors.RequiredError">
+<em class="property">class </em><code class="descclassname">owlmixin.errors.</code><code class="descname">RequiredError</code><span class="sig-paren">(</span><em>cls</em>, <em>prop: str</em>, <em>type_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#RequiredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.RequiredError" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class name</p></li>
+<li><p><strong>prop</strong> (<em>str</em>) – Property name</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Property type</p></li>
+</ul>
 </dd>
 </dl>
-<p>TODO: Not exec doctest</p>
+<dl class="method">
+<dt id="owlmixin.errors.RequiredError.with_traceback">
+<code class="descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.RequiredError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -132,23 +178,21 @@ CAT = (“cat”, {“cry”: “mewing”})</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">OwlEnum</a><ul>
-<li><a class="reference internal" href="#id1">OwlEnum</a></li>
-<li><a class="reference internal" href="#owlobjectenum">OwlObjectEnum</a></li>
+<li><a class="reference internal" href="#">Errors</a><ul>
+<li><a class="reference internal" href="#invalidtypeerror">InvalidTypeError</a></li>
+<li><a class="reference internal" href="#unknownpropertieserror">UnknownPropertiesError</a></li>
+<li><a class="reference internal" href="#requirederror">RequiredError</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="owlcollections.html"
-                        title="previous chapter">Collections</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="errors.html"
-                        title="next chapter">Errors</a></p>
+  <p class="topless"><a href="owlenum.html"
+                        title="previous chapter">OwlEnum</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/owlenum.rst.txt"
+      <li><a href="../_sources/api/errors.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -173,10 +217,7 @@ CAT = (“cat”, {“cry”: “mewing”})</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="errors.html" title="Errors"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="owlcollections.html" title="Collections"
+          <a href="owlenum.html" title="OwlEnum"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>

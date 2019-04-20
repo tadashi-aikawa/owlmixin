@@ -9,6 +9,7 @@ Github and README: https://github.com/tadashi-aikawa/owlmixin
     api/owlmixin
     api/owlcollections
     api/owlenum
+    api/errors
 
 
 Indices and tables

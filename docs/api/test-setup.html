@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>&lt;no title&gt; &#8212; owlmixin 2.10.1 documentation</title>
+    <meta charset="utf-8" />
+    <title>&lt;no title&gt; &#8212; owlmixin 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -30,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -40,9 +38,9 @@
           <div class="body" role="main">
             
   <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
@@ -50,8 +48,8 @@
 
 
 <span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-    <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">)</span>
-    <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;mewing&quot;</span><span class="p">)</span>
+    <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">})</span>
+    <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;mewing&quot;</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">crow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
@@ -105,8 +103,6 @@
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -121,12 +117,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 2.10.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>
