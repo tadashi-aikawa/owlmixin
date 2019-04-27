@@ -19,6 +19,23 @@ class Spot(OwlMixin):
     address: TOption[Address]
 
 
+class TestGet:
+    def test_normal(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+        assert Spot.from_dicts_by_key(d).get("a").get().to_dict() == {"names": ["spot1"],
+                                                                      "address": {"name": "address1"}}
+
+    def test_not_found(self):
+        d = {
+            "a": {"names": ["spot1"], "address": {"name": "address1"}},
+            "b": {"names": ["spot21", "spot22"]}
+        }
+        assert Spot.from_dicts_by_key(d).get("c").is_none()
+
+
 class TestMap:
     def test_normal(self):
         d = {
@@ -31,9 +48,9 @@ class TestMap:
             Spot.from_dicts_by_key(d).map(lambda k, v: v.names),
             key=len
         ) == [
-            ["spot1"],
-            ["spot21", "spot22"]
-        ]
+                   ["spot1"],
+                   ["spot21", "spot22"]
+               ]
 
 
 class TestMapValues:
@@ -100,7 +117,7 @@ class TestSumBy:
             "bb": {"names": ["spot21", "spot22"]}
         }
 
-        assert Spot.from_dicts_by_key(d).sum_by(lambda k, v: len(k)*len(v.names)) == 7
+        assert Spot.from_dicts_by_key(d).sum_by(lambda k, v: len(k) * len(v.names)) == 7
 
 
 class TestSize:
@@ -148,10 +165,10 @@ class TestToValues:
             Spot.from_dicts_by_key(d).to_values().to_dicts(ignore_none=True),
             key=lambda x: x["names"][0]
         ) == [
-           {"names": ["spot1"]},
-           {"names": ["spot21", "spot22"]},
-           {"names": ["spot31", "spot32"]}
-        ]
+                   {"names": ["spot1"]},
+                   {"names": ["spot21", "spot22"]},
+                   {"names": ["spot31", "spot32"]}
+               ]
 
 
 class TestAll:
@@ -211,11 +228,11 @@ class TestAssign:
         actual: TDict[Spot] = spots_by_key.assign(d2)
 
         assert {
-            "a": {"names": ["spot1"]},
-            "b": {"names": ["spot21", "spot22"]},
-            "c": {"names": ["spot3"]},
-            "d": {"names": ["spot4"]}
-        } == actual.to_dict()
+                   "a": {"names": ["spot1"]},
+                   "b": {"names": ["spot21", "spot22"]},
+                   "c": {"names": ["spot3"]},
+                   "d": {"names": ["spot4"]}
+               } == actual.to_dict()
 
         actual['a'] = None
         assert actual['a'] is None
@@ -234,8 +251,8 @@ class TestPickBy:
         actual: TDict[Spot] = Spot.from_dicts_by_key(d).pick_by(lambda k, v: len(v.names) > 1 and k in ["a", "b"])
 
         assert {
-            "b": {"names": ["spot21", "spot22"]}
-        } == actual.to_dict()
+                   "b": {"names": ["spot21", "spot22"]}
+               } == actual.to_dict()
 
 
 class TestOmitBy:
@@ -249,7 +266,6 @@ class TestOmitBy:
         actual: TDict[Spot] = Spot.from_dicts_by_key(d).omit_by(lambda k, v: len(v.names) > 1 and k in ["a", "b"])
 
         assert {
-            "a": {"names": ["spot1"]},
-            "c": {"names": ["spot31", "spot32"]}
-        } == actual.to_dict()
-
+                   "a": {"names": ["spot1"]},
+                   "c": {"names": ["spot31", "spot32"]}
+               } == actual.to_dict()
