@@ -21,6 +21,19 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
     def __add__(self, values: list) -> 'TList[T]':
         return TList(list(self) + values)
 
+    def get(self, index: int) -> TOption[T]:
+        """
+        :param index:
+
+        Usage:
+
+            >>> TList([1, 2, 3, 4, 5]).get(3)
+            Option --> 4
+            >>> TList([1, 2, 3, 4, 5]).get(5)
+            Option --> None
+        """
+        return TOption(self[index]) if len(self) > index else TOption(None)
+
     def map(self, func):
         """
         :param func:
@@ -108,7 +121,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(self[:size_])
 
-    def head_while(self, func: Callable[[T], bool] ) -> 'TList[T]':
+    def head_while(self, func: Callable[[T], bool]) -> 'TList[T]':
         """
         :param func:
         :type func: T -> bool
@@ -133,7 +146,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             >>> TList([1, 2, 3, 4, 5]).tail(3)
             [3, 4, 5]
         """
-        return TList(self[self.size()-size_:])
+        return TList(self[self.size() - size_:])
 
     def uniq(self) -> 'TList[T]':
         """
@@ -388,6 +401,19 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
     def _dict(self):
         return dict(self)
 
+    def get(self, key: K) -> TOption[T]:
+        """
+        :param key:
+
+        Usage:
+
+            >>> TDict(k1=1, k2=2, k3=3).get("k2")
+            Option --> 2
+            >>> TDict(k1=1, k2=2, k3=3).get("unknown")
+            Option --> None
+        """
+        return TOption(self[key]) if key in self else TOption(None)
+
     def map(self, func):
         """
         :param func:
@@ -581,4 +607,3 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
             {'k1': 1, 'k2': 2}
         """
         return TDict({k: v for k, v in self.items() if not func(k, v)})
-

@@ -18,7 +18,7 @@ from csv import register_dialect, Dialect, QUOTE_MINIMAL
 from typing import List, Optional, Dict, Union, Sequence
 
 
-class CrLfDialect(Dialect):
+class CrLfCsvDialect(Dialect):
     delimiter = ','
     quotechar = '"'
     doublequote = True
@@ -27,10 +27,16 @@ class CrLfDialect(Dialect):
     quoting = QUOTE_MINIMAL
 
 
-register_dialect("crlf", CrLfDialect)
+class CrLfTsvDialect(Dialect):
+    delimiter = '\t'
+    quotechar = '"'
+    doublequote = True
+    skipinitialspace = True
+    lineterminator = '\r\n'
+    quoting = QUOTE_MINIMAL
 
 
-class LfDialect(Dialect):
+class LfCsvDialect(Dialect):
     delimiter = ','
     quotechar = '"'
     doublequote = True
@@ -39,7 +45,25 @@ class LfDialect(Dialect):
     quoting = QUOTE_MINIMAL
 
 
-register_dialect("lf", LfDialect)
+class LfTsvDialect(Dialect):
+    delimiter = '\t'
+    quotechar = '"'
+    doublequote = True
+    skipinitialspace = True
+    lineterminator = '\n'
+    quoting = QUOTE_MINIMAL
+
+
+register_dialect("crlf_csv", CrLfCsvDialect)
+register_dialect("crlf_tsv", CrLfTsvDialect)
+register_dialect("lf_csv", LfCsvDialect)
+register_dialect("lf_tsv", LfTsvDialect)
+
+
+def get_dialect_name(crlf: bool, tsv: bool) -> str:
+    line_break = "crlf" if crlf else "lf"
+    file = "tsv" if tsv else "csv"
+    return f"{line_break}_{file}"
 
 
 class MyDumper(yaml.SafeDumper):
@@ -136,20 +160,23 @@ def load_json_url(url):
     return json.loads(urlopen(url).read())
 
 
-def dump_csv(data, fieldnames, with_header=False, crlf=False):
+def dump_csv(data: List[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False,
+             tsv: bool = False) -> str:
     """
-    :param List[dict] data:
-    :param List[unicode] fieldnames:
-    :param bool with_header:
-    :param bool crlf:
-    :rtype: unicode
+    :param data:
+    :param fieldnames:
+    :param with_header:
+    :param crlf:
+    :param tsv:
+    :return: unicode
     """
+
     def force_str(v):
         # XXX: Double quotation behaves strangely... so replace (why?)
         return dump_json(v).replace('"', "'") if isinstance(v, (dict, list)) else v
 
     with io.StringIO() as sio:
-        dialect = 'crlf' if crlf else 'lf'
+        dialect = get_dialect_name(crlf, tsv)
         writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect, extrasaction='ignore')
         if with_header:
             writer.writeheader()
@@ -159,7 +186,8 @@ def dump_csv(data, fieldnames, with_header=False, crlf=False):
         return sio.read()
 
 
-def save_csvf(data: list, fieldnames: Sequence[str], fpath: str, encoding: str, with_header=False, crlf=False) -> str:
+def save_csvf(data: list, fieldnames: Sequence[str], fpath: str, encoding: str, with_header: bool = False,
+              crlf: bool = False, tsv: bool = False) -> str:
     """
     :param data:
     :param fieldnames:
@@ -167,10 +195,11 @@ def save_csvf(data: list, fieldnames: Sequence[str], fpath: str, encoding: str, 
     :param encoding: encoding
     :param with_header:
     :param crlf:
-    :rtype: written path
+    :param tsv:
+    :return: written path
     """
     with codecs.open(fpath, mode='w', encoding=encoding) as f:
-        f.write(dump_csv(data, fieldnames, with_header=with_header, crlf=crlf))
+        f.write(dump_csv(data, fieldnames, with_header=with_header, crlf=crlf, tsv=tsv))
         return fpath
 
 
@@ -231,6 +260,7 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
     :param fieldnames:
     :return: Table string
     """
+
     def min3(num: int) -> int:
         return 3 if num < 4 else num
 
@@ -241,15 +271,15 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
     def fill_spaces(word: str, width: int, center=False):
         """ aaa, 4 => ' aaa  ' """
         to_fills: int = width - string_width(word)
-        return f" {' '*floor(to_fills/2)}{word}{' '*ceil(to_fills/2)} " if center \
-            else f" {word}{' '*to_fills} "
+        return f" {' ' * floor(to_fills / 2)}{word}{' ' * ceil(to_fills / 2)} " if center \
+            else f" {word}{' ' * to_fills} "
 
     def to_record(r: dict) -> str:
         return f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
 
     return f"""
 |{'|'.join([fill_spaces(x, width_by_col.get(x), center=True) for x in fieldnames])}|
-|{'|'.join([fill_spaces(width_by_col.get(x)*"-", width_by_col.get(x)) for x in fieldnames])}|
+|{'|'.join([fill_spaces(width_by_col.get(x) * "-", width_by_col.get(x)) for x in fieldnames])}|
 {os.linesep.join([to_record(x) for x in data])}
 """.lstrip()
 
