@@ -316,12 +316,13 @@ class CsvTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_csv(self, fieldnames: Sequence[str], with_header: bool=False, crlf: bool=False) -> str:
+    def to_csv(self, fieldnames: Sequence[str], with_header: bool=False, crlf: bool=False, tsv: bool=False) -> str:
         """From sequence of text to csv string
 
         :param fieldnames: Order of columns by property name
         :param with_header: Add headers at the first line if True
         :param crlf: Add CRLF line break at the end of line if True, else add LF
+        :param tsv: Use tabs as separator if True, else use comma
         :return: Csv string
 
         Usage:
@@ -341,10 +342,10 @@ class CsvTransformer():
             John,2,[{'name': 'Orange'}]
             <BLANKLINE>
         """
-        return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf)
+        return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf, tsv)
 
     def to_csvf(self, fpath: str, fieldnames: Sequence[str], encoding: str='utf8',
-                with_header: bool=False, crlf: bool=False) -> str:
+                with_header: bool=False, crlf: bool=False, tsv: bool=False) -> str:
         """From instance to yaml file
 
         :param fpath: Csv file path
@@ -352,9 +353,10 @@ class CsvTransformer():
         :param encoding: Csv file encoding
         :param with_header: Add headers at the first line if True
         :param crlf: Add CRLF line break at the end of line if True, else add LF
+        :param tsv: Use tabs as separator if True, else use comma
         :return: Csv file path
         """
-        return util.save_csvf(traverse(self, force_value=True), fieldnames, fpath, encoding, with_header, crlf)
+        return util.save_csvf(traverse(self, force_value=True), fieldnames, fpath, encoding, with_header, crlf, tsv)
 
 
 class TableTransformer():
