@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Collections &#8212; owlmixin 3.0.0 documentation</title>
+    <title>Collections &#8212; owlmixin 3.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -99,6 +99,23 @@
 <dt id="owlmixin.owlcollections.TList">
 <em class="property">class </em><code class="descclassname">owlmixin.owlcollections.</code><code class="descname">TList</code><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
+<dt id="owlmixin.owlcollections.TList.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>index: int</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.get" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> – </p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">Option --&gt; 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">Option --&gt; None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="owlmixin.owlcollections.TList.map">
 <code class="descname">map</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.map" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -539,7 +556,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_csv">
-<code class="descname">to_csv</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csv" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_csv</code><span class="sig-paren">(</span><em>fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>From sequence of text to csv string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -547,6 +564,7 @@
 <li><p><strong>fieldnames</strong> – Order of columns by property name</p></li>
 <li><p><strong>with_header</strong> – Add headers at the first line if True</p></li>
 <li><p><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</p></li>
+<li><p><strong>tsv</strong> – Use tabs as separator if True, else use comma</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -574,7 +592,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TList.to_csvf">
-<code class="descname">to_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Sequence[str], encoding: str = 'utf8', with_header: bool = False, crlf: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csvf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_csvf</code><span class="sig-paren">(</span><em>fpath: str, fieldnames: Sequence[str], encoding: str = 'utf8', with_header: bool = False, crlf: bool = False, tsv: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.owlcollections.TList.to_csvf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -584,6 +602,7 @@
 <li><p><strong>encoding</strong> – Csv file encoding</p></li>
 <li><p><strong>with_header</strong> – Add headers at the first line if True</p></li>
 <li><p><strong>crlf</strong> – Add CRLF line break at the end of line if True, else add LF</p></li>
+<li><p><strong>tsv</strong> – Use tabs as separator if True, else use comma</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1399,7 +1418,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

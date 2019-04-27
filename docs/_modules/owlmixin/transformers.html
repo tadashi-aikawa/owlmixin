@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin.transformers &#8212; owlmixin 3.0.0 documentation</title>
+    <title>owlmixin.transformers &#8212; owlmixin 3.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 3.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 3.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -358,12 +358,13 @@
     <span class="sd">&quot;&quot;&quot; `@property _dict` can overridden</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">with_header</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">with_header</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tsv</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From sequence of text to csv string</span>
 
 <span class="sd">        :param fieldnames: Order of columns by property name</span>
 <span class="sd">        :param with_header: Add headers at the first line if True</span>
 <span class="sd">        :param crlf: Add CRLF line break at the end of line if True, else add LF</span>
+<span class="sd">        :param tsv: Use tabs as separator if True, else use comma</span>
 <span class="sd">        :return: Csv string</span>
 
 <span class="sd">        Usage:</span>
@@ -383,10 +384,10 @@
 <span class="sd">            John,2,[{&#39;name&#39;: &#39;Orange&#39;}]</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_csv</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">with_header</span><span class="p">,</span> <span class="n">crlf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_csv</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">with_header</span><span class="p">,</span> <span class="n">crlf</span><span class="p">,</span> <span class="n">tsv</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">to_csvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                <span class="n">with_header</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">with_header</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tsv</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From instance to yaml file</span>
 
 <span class="sd">        :param fpath: Csv file path</span>
@@ -394,9 +395,10 @@
 <span class="sd">        :param encoding: Csv file encoding</span>
 <span class="sd">        :param with_header: Add headers at the first line if True</span>
 <span class="sd">        :param crlf: Add CRLF line break at the end of line if True, else add LF</span>
+<span class="sd">        :param tsv: Use tabs as separator if True, else use comma</span>
 <span class="sd">        :return: Csv file path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_csvf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">with_header</span><span class="p">,</span> <span class="n">crlf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">save_csvf</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">with_header</span><span class="p">,</span> <span class="n">crlf</span><span class="p">,</span> <span class="n">tsv</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">TableTransformer</span><span class="p">():</span>
@@ -451,7 +453,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 3.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 3.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
