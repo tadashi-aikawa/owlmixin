@@ -168,6 +168,22 @@ class TestToCsvf:
         assert Human.from_csvf(fpath, fieldnames=['name', 'id', 'ruby'], encoding='euc-jp').to_dicts() == r.to_dicts()
 
 
+class TestGet:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+        assert Spot.from_dicts(d).get(1).get().to_dict() == {"names": ["spot21", "spot22"]}
+
+    def test_not_found(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]}
+        ]
+        assert Spot.from_dicts(d).get(2).is_none()
+
+
 class TestMap:
     def test_normal(self):
         d = [
