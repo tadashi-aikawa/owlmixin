@@ -48,6 +48,19 @@ class TOption(Generic[T]):
         """
         return self.value is None
 
+    def any(self):
+        """
+        Usage:
+
+            >>> TOption(3).any()
+            True
+            >>> TOption(0).any()
+            True
+            >>> TOption(None).any()
+            False
+        """
+        return self.value is not None
+
     def map(self, func: Callable[[T], U]) -> 'TOption[T]':
         """
         Usage:
@@ -149,4 +162,3 @@ class TOption(Generic[T]):
 
     def __xor__(self, other):
         self.__raise_no_conditional_expression('__xor__')
-

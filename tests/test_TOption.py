@@ -96,6 +96,16 @@ class TestIsNone:
         assert not r.note.is_none()
 
 
+class TestAny:
+    def test_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
+        assert not r.note.any()
+
+    def test_not_none(self):
+        r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
+        assert r.note.any()
+
+
 class TestGetOr:
     def test_none(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
@@ -109,11 +119,11 @@ class TestGetOr:
 class TestMap:
     def test_not_none(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1', 'note': 'note1'})
-        assert r.note.map(lambda x: x*2).get_or('hoge') == 'note1note1'
+        assert r.note.map(lambda x: x * 2).get_or('hoge') == 'note1note1'
 
     def test_none(self):
         r: Spot = Spot.from_dict({'id': 1, 'name': 'Name1'})
-        assert r.note.map(lambda x: x*2).get_or('hoge') == 'hoge'
+        assert r.note.map(lambda x: x * 2).get_or('hoge') == 'hoge'
 
 
 class TestFlatMap:
@@ -153,6 +163,7 @@ class TestFlatMap:
             ]
         })
         assert r.children.flat_map(lambda x: x[0].note).get_or('hoge') == 'hoge'
+
 
 class TestNoExpressionError:
     def test(self):
