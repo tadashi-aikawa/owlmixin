@@ -1,9 +1,10 @@
 # coding: utf-8
 
 import warnings
-from debtcollector import removals
 from enum import Enum
 from typing import TypeVar
+
+from debtcollector import removals
 
 from owlmixin.transformers import ValueTransformer
 
@@ -15,6 +16,7 @@ warnings.simplefilter("once")
 class OwlEnum(ValueTransformer, Enum):
     """ This class is similar to Enum except that can dump as json or yaml
     """
+
     @classmethod
     def from_value(cls, value: str):
         return cls(value)
@@ -35,6 +37,7 @@ class OwlObjectEnum(ValueTransformer, Enum):
             return self.object["cry"]
     TODO: Not exec doctest
     """
+
     def __init__(self, symbol, obj):
         self.symbol = symbol
         self.object = obj
@@ -55,4 +58,3 @@ class OwlObjectEnum(ValueTransformer, Enum):
 
     def to_value(self, ignore_none, force_value):
         return self.symbol
-
