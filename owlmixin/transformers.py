@@ -10,13 +10,13 @@ class ValueTransformer():
         return str(self)
 
 
-def is_ignore(v):
+def is_ignore(v) -> bool:
     return v is None or (isinstance(v, TOption) and v.is_none())
 
 
-def is_empty(v):
+def is_empty(v) -> bool:
     p = v.get() if (isinstance(v, TOption)) else v
-    return (isinstance(v, list) and p == [] ) or (isinstance(v, dict) and p == {})
+    return (isinstance(v, list) and p == []) or (isinstance(v, dict) and p == {})
 
 
 def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
@@ -35,13 +35,17 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
 
 
 def traverse_dict(instance_dict, ignore_none, force_value=False, ignore_empty=False):
-    return {k: traverse(v, ignore_none, force_value, ignore_empty) for
-            k, v in instance_dict.items()
-            if not (ignore_empty and is_empty(v)) and not (ignore_none and is_ignore(v))}
+    return {
+        k: traverse(v, ignore_none, force_value, ignore_empty)
+        for k, v in instance_dict.items() if not (ignore_empty and is_empty(v)) and not (ignore_none and is_ignore(v))
+    }
 
 
 def traverse_list(instance_list, ignore_none, force_value=False, ignore_empty=False):
-    return [traverse(i, ignore_none, force_value, ignore_empty) for i in instance_list if not (ignore_none and is_ignore(i))]
+    return [
+        traverse(i, ignore_none, force_value, ignore_empty) for i in instance_list
+        if not (ignore_none and is_ignore(i))
+    ]
 
 
 class DictTransformer():
@@ -73,7 +77,7 @@ class DictTransformer():
         """
         return format_.format(**self.to_dict())
 
-    def to_dict(self, ignore_none: bool=True, force_value: bool=True, ignore_empty: bool=False) -> dict:
+    def to_dict(self, ignore_none: bool = True, force_value: bool = True, ignore_empty: bool = False) -> dict:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
@@ -127,7 +131,7 @@ class DictsTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_dicts(self, ignore_none: bool=True, force_value: bool=True, ignore_empty: bool=False) -> List[dict]:
+    def to_dicts(self, ignore_none: bool = True, force_value: bool = True, ignore_empty: bool = False) -> List[dict]:
         """From instance to dict
 
         :param ignore_none: Properties which is None are excluded if True
@@ -191,7 +195,7 @@ class JsonTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_json(self, indent: int=None, ignore_none: bool=True, ignore_empty: bool=False) -> str:
+    def to_json(self, indent: int = None, ignore_none: bool = True, ignore_empty: bool = False) -> str:
         """From instance to json string
 
         :param indent: Number of indentation
@@ -215,7 +219,14 @@ class JsonTransformer():
         """
         return util.dump_json(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), indent)
 
-    def to_jsonf(self, fpath: str, encoding: str='utf8', indent: int=None, ignore_none: bool=True, ignore_empty: bool=False) -> str:
+    def to_jsonf(
+        self,
+        fpath: str,
+        encoding: str = 'utf8',
+        indent: int = None,
+        ignore_none: bool = True,
+        ignore_empty: bool = False
+    ) -> str:
         """From instance to json file
 
         :param fpath: Json file path
@@ -225,9 +236,11 @@ class JsonTransformer():
         :param ignore_empty: Properties which is empty are excluded if True
         :return: Json file path
         """
-        return util.save_jsonf(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding, indent)
+        return util.save_jsonf(
+            traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding, indent
+        )
 
-    def to_pretty_json(self, ignore_none: bool=True, ignore_empty: bool=False) -> str:
+    def to_pretty_json(self, ignore_none: bool = True, ignore_empty: bool = False) -> str:
         """From instance to pretty json string
 
         :param ignore_none: Properties which is None are excluded if True
@@ -270,7 +283,7 @@ class YamlTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_yaml(self, ignore_none: bool=True, ignore_empty: bool=False) -> str:
+    def to_yaml(self, ignore_none: bool = True, ignore_empty: bool = False) -> str:
         """From instance to yaml string
 
         :param ignore_none: Properties which is None are excluded if True
@@ -301,7 +314,7 @@ class YamlTransformer():
         """
         return util.dump_yaml(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty))
 
-    def to_yamlf(self, fpath: str, encoding: str='utf8', ignore_none: bool=True, ignore_empty: bool=False) -> str:
+    def to_yamlf(self, fpath: str, encoding: str = 'utf8', ignore_none: bool = True, ignore_empty: bool = False) -> str:
         """From instance to yaml file
 
         :param ignore_none: Properties which is None are excluded if True
@@ -309,14 +322,18 @@ class YamlTransformer():
         :param encoding: Yaml file encoding
         :return: Yaml file path
         """
-        return util.save_yamlf(traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding)
+        return util.save_yamlf(
+            traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), fpath, encoding
+        )
 
 
 class CsvTransformer():
     """ `@property _dict` can overridden
     """
 
-    def to_csv(self, fieldnames: Sequence[str], with_header: bool=False, crlf: bool=False, tsv: bool=False) -> str:
+    def to_csv(
+        self, fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False
+    ) -> str:
         """From sequence of text to csv string
 
         :param fieldnames: Order of columns by property name
@@ -344,8 +361,15 @@ class CsvTransformer():
         """
         return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf, tsv)
 
-    def to_csvf(self, fpath: str, fieldnames: Sequence[str], encoding: str='utf8',
-                with_header: bool=False, crlf: bool=False, tsv: bool=False) -> str:
+    def to_csvf(
+        self,
+        fpath: str,
+        fieldnames: Sequence[str],
+        encoding: str = 'utf8',
+        with_header: bool = False,
+        crlf: bool = False,
+        tsv: bool = False
+    ) -> str:
         """From instance to yaml file
 
         :param fpath: Csv file path
