@@ -35,7 +35,7 @@ class TOption(Generic[T]):
         """
         return default if self.value is None else self.value
 
-    def is_none(self):
+    def is_none(self) -> bool:
         """
         Usage:
 
@@ -48,7 +48,7 @@ class TOption(Generic[T]):
         """
         return self.value is None
 
-    def any(self):
+    def any(self) -> bool:
         """
         Usage:
 
@@ -61,7 +61,7 @@ class TOption(Generic[T]):
         """
         return self.value is not None
 
-    def map(self, func: Callable[[T], U]) -> 'TOption[T]':
+    def map(self, func: Callable[[T], U]) -> 'TOption[U]':
         """
         Usage:
 
@@ -72,16 +72,16 @@ class TOption(Generic[T]):
         """
         return self if self.is_none() else TOption(func(self.value))
 
-    def flat_map(self, func: Callable[[T], 'TOption[T]']) -> 'TOption[T]':
+    def flat_map(self, func: Callable[[T], 'TOption[U]']) -> 'TOption[U]':
         """
         Usage:
 
-            >>> TOption(3).flat_map(lambda x: TOption(x+1)).get()
-            4
-            >>> TOption(3).flat_map(lambda x: TOption(None)).get_or(999)
-            999
-            >>> TOption(None).flat_map(lambda x: TOption(x+1)).get_or(999)
-            999
+            >>> TOption(3).flat_map(lambda x: TOption(str(x+1))).get()
+            '4'
+            >>> TOption(3).flat_map(lambda x: TOption(None)).get_or("none")
+            'none'
+            >>> TOption(None).flat_map(lambda x: TOption(str(x+1))).get_or("none")
+            'none'
         """
         return self if self.is_none() else TOption(func(self.value).get())
 
