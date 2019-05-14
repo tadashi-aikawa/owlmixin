@@ -2,7 +2,7 @@
 
 import functools
 from itertools import chain
-from typing import TypeVar, Generic, Any, Callable, Dict
+from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union
 
 from owlmixin.owloption import TOption
 from owlmixin.transformers import DictTransformer, \
@@ -23,8 +23,6 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
     def get(self, index: int) -> TOption[T]:
         """
-        :param index:
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).get(3)
@@ -34,12 +32,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TOption(self[index]) if len(self) > index else TOption(None)
 
-    def map(self, func):
+    def map(self, func: Callable[[T], U]) -> 'TList[U]':
         """
-        :param func:
-        :type func: T -> U
-        :rtype: TList[U]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).map(lambda x: x+1)
@@ -47,12 +41,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(map(func, self))
 
-    def emap(self, func):
+    def emap(self, func: Callable[[T, int], U]) -> 'TList[U]':
         """
-        :param func:
-        :type func: T, int -> U
-        :rtype: TList[U]
-
         Usage:
 
             >>> TList([10, 20, 30, 40, 50]).emap(lambda x, i: (x+1, i))
@@ -60,10 +50,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([func(x, i) for i, x in enumerate(self)])
 
-    def flatten(self):
+    def flatten(self) -> 'TList[U]':
         """
-        :rtype: TList[U]
-
         Usage:
 
             >>> TList([[1, 2], [3, 4]]).flatten()
@@ -71,12 +59,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(chain.from_iterable(self))
 
-    def flat_map(self, func):
+    def flat_map(self, func: Callable[[T], List[U]]) -> 'TList[U]':
         """
-        :param func:
-        :type func: T -> U
-        :rtype: TList[U]
-
         Usage:
 
             >>> TList([1, 2, 3]).flat_map(lambda x: [x, x+1])
@@ -84,12 +68,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.map(func).flatten()
 
-    def filter(self, func):
+    def filter(self, func: Callable[[T], bool]) -> 'TList[T]':
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).filter(lambda x: x > 3)
@@ -97,12 +77,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([x for x in self if func(x)])
 
-    def reject(self, func):
+    def reject(self, func: Callable[[T], bool]) -> 'TList[T]':
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).reject(lambda x: x > 3)
@@ -112,8 +88,6 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
     def head(self, size_: int) -> 'TList[T]':
         """
-        :param size_:
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).head(3)
@@ -123,9 +97,6 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
     def head_while(self, func: Callable[[T], bool]) -> 'TList[T]':
         """
-        :param func:
-        :type func: T -> bool
-
         Usage:
 
             >>> TList([1, 2, 30, 4, 50]).head_while(lambda x: x < 10)
@@ -174,12 +145,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
                 rs.append(e)
         return rs
 
-    def partial(self, func):
+    def partial(self, func: Callable[[T], bool]) -> Tuple['TList[T]', 'TList[T]']:
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: tuple(TList[T], TList[T])
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).partial(lambda x: x > 3)
@@ -187,12 +154,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.filter(func), self.reject(func)
 
-    def group_by(self, to_key):
+    def group_by(self, to_key: Callable[[T], str]) -> 'TDict[TList[T]]':
         """
-        :param to_key:
-        :type to_key: T -> unicode
-        :rtype: TDict[TList[T]]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
@@ -217,14 +180,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TDict({to_key(x): x for x in self})
 
-    def order_by(self, func, reverse=False):
+    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> 'TList[T]':
         """
-        :param func:
-        :type func: T -> any
-        :param reverse: Sort by descend order if True, else by ascend
-        :type reverse: bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10)
@@ -234,14 +191,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values, first=False):
+    def concat(self, values: 'List[T]', first: bool = False) -> 'TList[T]':
         """
-        :param values:
-        :type values: TList[T]
-        :param first:
-        :type first: bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2]).concat(TList([3, 4]))
@@ -251,14 +202,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return values + self if first else self + values
 
-    def reduce(self, func, init_value):
+    def reduce(self, func: Callable[[U, T], U], init_value: U) -> U:
         """
-        :param func:
-        :type func: (U, T) -> U
-        :param init_value:
-        :type init_value: U
-        :rtype: U
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).reduce(lambda t, x: t + 2*x, 100)
@@ -266,10 +211,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return functools.reduce(func, self, init_value)
 
-    def sum(self):
+    def sum(self) -> Union[int, float]:
         """
-        :rtype: int | float
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).sum()
@@ -277,12 +220,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return sum(self)
 
-    def sum_by(self, func):
+    def sum_by(self, func: Callable[[T], Union[int, float]]) -> Union[int, float]:
         """
-        :param func:
-        :type func: T -> int | float
-        :rtype: int | float
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).sum_by(lambda x: x*2)
@@ -290,10 +229,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.map(func).sum()
 
-    def size(self):
+    def size(self) -> int:
         """
-        :rtype: int
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).size()
@@ -301,12 +238,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return len(self)
 
-    def join(self, joint):
+    def join(self, joint: str) -> str:
         """
-        :param joint:
-        :type joint: unicode
-        :rtype: unicode
-
         Usage:
 
             >>> TList(['A', 'B', 'C']).join("-")
@@ -328,12 +261,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
                 return TOption(x)
         return TOption(None)
 
-    def all(self, func):
+    def all(self, func: Callable[[T], bool]) -> bool:
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: T
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).all(lambda x: x > 0)
@@ -343,12 +272,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return all([func(x) for x in self])
 
-    def any(self, func):
+    def any(self, func: Callable[[T], bool]) -> bool:
         """
-        :param func:
-        :type func: T -> bool
-        :rtype: T
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).any(lambda x: x > 4)
@@ -358,12 +283,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return any([func(x) for x in self])
 
-    def intersection(self, values):
+    def intersection(self, values: 'List[T]') -> 'TList[T]':
         """
-        :param values:
-        :type values: List[T]
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).intersection([2, 4, 6])
@@ -371,12 +292,8 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.filter(lambda x: x in values)
 
-    def not_intersection(self, values):
+    def not_intersection(self, values: 'List[T]') -> 'TList[T]':
         """
-        :param values:
-        :type values: List[T]
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2, 3, 4, 5]).not_intersection([2, 4, 6])
@@ -386,8 +303,6 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
     def reverse(self) -> 'TList[T]':
         """
-        :rtype: TList[T]
-
         Usage:
 
             >>> TList([1, 2, 3]).reverse()
@@ -398,13 +313,11 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
 class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T]):
     @property
-    def _dict(self):
+    def _dict(self) -> dict:
         return dict(self)
 
     def get(self, key: K) -> TOption[T]:
         """
-        :param key:
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).get("k2")
@@ -414,12 +327,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TOption(self[key]) if key in self else TOption(None)
 
-    def map(self, func):
+    def map(self, func: Callable[[K, T], U]) -> TList[U]:
         """
-        :param func:
-        :type func: (K, T) -> U
-        :rtype: TList[U]
-
         Usage:
 
             >>> sorted(TDict(k1=1, k2=2, k3=3).map(lambda k, v: v*2))
@@ -427,12 +336,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TList([func(k, v) for k, v in self.items()])
 
-    def map_values(self, func):
+    def map_values(self, func: Callable[[T], U]) -> 'TDict[U]':
         """
-        :param func:
-        :type func: T -> U
-        :rtype: TDict[U]
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).map_values(lambda x: x*2) == {
@@ -444,12 +349,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({k: func(v) for k, v in self.items()})
 
-    def map_values2(self, func):
+    def map_values2(self, func: Callable[[K, T], U]) -> 'TDict[U]':
         """
-        :param func:
-        :type func: (K, T) -> U
-        :rtype: TDict[U]
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).map_values2(lambda k, v: f'{k} -> {v*2}') == {
@@ -461,12 +362,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({k: func(k, v) for k, v in self.items()})
 
-    def filter(self, func):
+    def filter(self, func: Callable[[K, T], bool]) -> TList[T]:
         """
-        :param func:
-        :type func: (K, T) -> bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).filter(lambda k, v: v < 2)
@@ -474,12 +371,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TList([v for k, v in self.items() if func(k, v)])
 
-    def reject(self, func):
+    def reject(self, func: Callable[[K, T], bool]) -> TList[T]:
         """
-        :param func:
-        :type func: (K, T) -> bool
-        :rtype: TList[T]
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).reject(lambda k, v: v < 3)
@@ -487,10 +380,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TList([v for k, v in self.items() if not func(k, v)])
 
-    def sum(self):
+    def sum(self) -> Union[int, float]:
         """
-        :rtype: int | float
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).sum()
@@ -498,12 +389,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return sum(self.values())
 
-    def sum_by(self, func):
+    def sum_by(self, func: Callable[[K, T], Union[int, float]]) -> Union[int, float]:
         """
-        :param func:
-        :type func: (K, T) -> (int | float)
-        :rtype: int | float
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).sum_by(lambda k, v: v*2)
@@ -511,10 +398,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return self.map(func).sum()
 
-    def size(self):
+    def size(self) -> int:
         """
-        :rtype: int
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).size()
@@ -536,10 +421,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
                 return TOption(v)
         return TOption(None)
 
-    def to_values(self):
+    def to_values(self) -> TList[T]:
         """
-        :rtype: TList[T]
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).to_values().order_by(lambda x: x)
@@ -547,12 +430,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TList(self.values())
 
-    def all(self, func):
+    def all(self, func: Callable[[K, T], bool]) -> bool:
         """
-        :param func:
-        :type func: (K, T) -> bool
-        :rtype: bool
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).all(lambda k, v: v > 0)
@@ -562,12 +441,8 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return all([func(k, v) for k, v in self.items()])
 
-    def any(self, func):
+    def any(self, func: Callable[[K, T], bool]) -> bool:
         """
-        :param func:
-        :type func: (K, T) -> bool
-        :rtype: bool
-
         Usage:
 
             >>> TDict(k1=1, k2=2, k3=3).any(lambda k, v: v > 2)
@@ -579,8 +454,6 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
 
     def assign(self, dict_: Dict[str, T]) -> 'TDict[T]':
         """
-        :param dict_:
-
         Usage:
 
             >>> TDict(k1=1, k2=2).assign({'k3': 3})
