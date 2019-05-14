@@ -95,3 +95,6 @@ ENV/
 
 # Ctags
 /tags
+
+# pypi
+/.pypirc
