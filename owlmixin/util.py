@@ -85,10 +85,7 @@ def replace_keys(d, keymap, force_snake_case):
     :param bool force_snake_case:
     :rtype: Dict[unicode, unicode]
     """
-    return {
-        to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k):
-            v for k, v in d.items()
-    }
+    return {to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k): v for k, v in d.items()}
 
 
 def to_snake(value):
@@ -160,8 +157,9 @@ def load_json_url(url):
     return json.loads(urlopen(url).read())
 
 
-def dump_csv(data: List[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False,
-             tsv: bool = False) -> str:
+def dump_csv(
+    data: List[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False
+) -> str:
     """
     :param data:
     :param fieldnames:
@@ -186,8 +184,15 @@ def dump_csv(data: List[dict], fieldnames: Sequence[str], with_header: bool = Fa
         return sio.read()
 
 
-def save_csvf(data: list, fieldnames: Sequence[str], fpath: str, encoding: str, with_header: bool = False,
-              crlf: bool = False, tsv: bool = False) -> str:
+def save_csvf(
+    data: list,
+    fieldnames: Sequence[str],
+    fpath: str,
+    encoding: str,
+    with_header: bool = False,
+    crlf: bool = False,
+    tsv: bool = False
+) -> str:
     """
     :param data:
     :param fieldnames:
@@ -209,11 +214,7 @@ def dump_json(data, indent=None):
     :param Optional[int] indent:
     :rtype: unicode
     """
-    return json.dumps(data,
-                      indent=indent,
-                      ensure_ascii=False,
-                      sort_keys=True,
-                      separators=(',', ': '))
+    return json.dumps(data, indent=indent, ensure_ascii=False, sort_keys=True, separators=(',', ': '))
 
 
 def save_jsonf(data: Union[list, dict], fpath: str, encoding: str, indent=None) -> str:
@@ -234,12 +235,7 @@ def dump_yaml(data):
     :param list | dict data:
     :rtype: unicode
     """
-    return yaml.dump(data,
-                     indent=2,
-                     encoding=None,
-                     allow_unicode=True,
-                     default_flow_style=False,
-                     Dumper=MyDumper)
+    return yaml.dump(data, indent=2, encoding=None, allow_unicode=True, default_flow_style=False, Dumper=MyDumper)
 
 
 def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
@@ -265,7 +261,8 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
         return 3 if num < 4 else num
 
     width_by_col: Dict[str, int] = {
-        f: min3(max([string_width(str(d.get(f))) for d in data] + [string_width(f)])) for f in fieldnames
+        f: min3(max([string_width(str(d.get(f))) for d in data] + [string_width(f)]))
+        for f in fieldnames
     }
 
     def fill_spaces(word: str, width: int, center=False):
@@ -277,10 +274,11 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
     def to_record(r: dict) -> str:
         return f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
 
+    lf = "\n"
     return f"""
 |{'|'.join([fill_spaces(x, width_by_col.get(x), center=True) for x in fieldnames])}|
 |{'|'.join([fill_spaces(width_by_col.get(x) * "-", width_by_col.get(x)) for x in fieldnames])}|
-{os.linesep.join([to_record(x) for x in data])}
+{lf.join([to_record(x) for x in data])}
 """.lstrip()
 
 

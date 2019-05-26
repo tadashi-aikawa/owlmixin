@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 
 from yaml.constructor import ConstructorError
 from owlmixin import util
@@ -8,10 +9,7 @@ import pytest
 
 class TestReplaceKeys:
     def test_need_not_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
+        keymap = {"self": "_self", "before": "after"}
         d = {
             "before": 1,
             "before2": 2,
@@ -37,10 +35,7 @@ class TestReplaceKeys:
         assert util.replace_keys(d, keymap, False) == expected
 
     def test_need_must_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
+        keymap = {"self": "_self", "before": "after"}
         d = {
             "before": 1,
             "before2": 2,
@@ -93,10 +88,7 @@ names:
   - tadashi
   - aikawa
         ''')
-        assert actual == {
-            "id": 1,
-            "names": ['tadashi', 'aikawa']
-        }
+        assert actual == {"id": 1, "names": ['tadashi', 'aikawa']}
 
     def test_yaml_load_vulnerability(self):
         with pytest.raises(ConstructorError):
@@ -105,15 +97,14 @@ names:
 
 class TestLoadYamlf:
     def test(self):
-        assert util.load_yamlf('tests/yaml/spots_utf8.yaml', 'utf-8') == [
-            {
-                "address": {"name": "address1"},
-                "names": ["spot1"]
+        assert util.load_yamlf('tests/yaml/spots_utf8.yaml', 'utf-8') == [{
+            "address": {
+                "name": "address1"
             },
-            {
-                "names": ["スポット21", "スポット22"]
-            }
-        ]
+            "names": ["spot1"]
+        }, {
+            "names": ["スポット21", "スポット22"]
+        }]
 
     def test_yaml_load_vulnerability(self):
         with pytest.raises(ConstructorError):
@@ -131,7 +122,17 @@ class TestDumpTable:
 """.lstrip()
 
         assert expected == util.dump_table([
-            {'id': 1, 'name': 'Ichiro'},
-            {'id': 2, 'name': 'イチロー'},
-            {'id': 3, 'name': 'いchiro', 'とてもながい名前': ''},
+            {
+                'id': 1,
+                'name': 'Ichiro'
+            },
+            {
+                'id': 2,
+                'name': 'イチロー'
+            },
+            {
+                'id': 3,
+                'name': 'いchiro',
+                'とてもながい名前': ''
+            },
         ], ['id', 'name', 'とてもながい名前'])
