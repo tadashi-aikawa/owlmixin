@@ -4,11 +4,9 @@ import warnings
 from enum import Enum
 from typing import TypeVar
 
-from debtcollector import removals
-
 from owlmixin.transformers import ValueTransformer
 
-T = TypeVar('T', bound='OwlObjectEnum')
+T = TypeVar('T', bound='OwlObjectEnum')    # pylint: disable=invalid-name
 
 warnings.simplefilter("once")
 
