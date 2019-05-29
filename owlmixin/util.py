@@ -15,7 +15,7 @@ from yaml import SafeLoader
 
 import csv
 from csv import register_dialect, Dialect, QUOTE_MINIMAL
-from typing import List, Optional, Dict, Union, Sequence
+from typing import List, Optional, Dict, Union, Sequence, Iterable
 
 
 class CrLfCsvDialect(Dialect):
@@ -158,7 +158,7 @@ def load_json_url(url):
 
 
 def dump_csv(
-    data: List[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False
+    data: Iterable[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False
 ) -> str:
     """
     :param data:

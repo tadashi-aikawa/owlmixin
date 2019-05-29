@@ -1,5 +1,5 @@
 # coding: utf-8
-from typing import List, Sequence
+from typing import List, Sequence, Iterable
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -28,6 +28,8 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
         return traverse_dict(value, ignore_none, force_value, ignore_empty)
     elif isinstance(value, list):
         return traverse_list(value, ignore_none, force_value, ignore_empty)
+    elif isinstance(value, Iterable) and not isinstance(value, str):
+        return traverse_list(list(value), ignore_none, force_value, ignore_empty)
     elif isinstance(value, DictTransformer):
         return value.to_dict(ignore_none, force_value, ignore_empty)
     else:
@@ -348,11 +350,13 @@ class CsvTransformer():
             >>> humans = Human.from_dicts([
             ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
             ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
-            ... ])
+            ... ]).to_list()
+
             >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites']))
             Tom,1,[{'name': 'Apple'}]
             John,2,[{'name': 'Orange'}]
             <BLANKLINE>
+
             >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites'], with_header=True))
             name,id,favorites
             Tom,1,[{'name': 'Apple'}]
