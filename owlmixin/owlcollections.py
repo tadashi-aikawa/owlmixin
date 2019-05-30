@@ -312,6 +312,7 @@ class TIterator(
     TableTransformer,
     Generic[T],
 ):
+    # pylint: disable=too-many-ancestors
     __inner_iterator: Iterator
 
     def __init__(self, iterable: Iterable):
