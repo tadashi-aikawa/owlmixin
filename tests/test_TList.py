@@ -1,8 +1,8 @@
 # coding: utf-8
+# pylint: disable=no-self-use
 import os
 
 import pytest
-from typing import List, Optional
 
 from owlmixin import OwlMixin, TOption
 from owlmixin.owlcollections import TList
@@ -484,7 +484,7 @@ class TestAll:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_dicts(d).all(lambda x: len(x.names) > 0) is True
+        assert Spot.from_dicts(d).all(lambda x: x.names) is True
 
     def test_false(self):
         d = [
