@@ -29,8 +29,6 @@ class TList(
     TableTransformer,
     Generic[T],
 ):
-    # pylint: disable=too-many-public-methods
-
     def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
@@ -314,8 +312,6 @@ class TIterable(
     TableTransformer,
     Generic[T],
 ):
-    # pylint: disable=too-many-public-methods
-
     __iterable: Iterator
 
     def __init__(self, iterable: Iterable):
