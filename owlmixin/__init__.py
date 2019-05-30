@@ -6,7 +6,7 @@ from typing import TypeVar, Optional, Sequence, Iterable, List
 import owlmixin.version
 from owlmixin import util
 from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
-from owlmixin.owlcollections import TDict, TIterable, TList
+from owlmixin.owlcollections import TDict, TIterator, TList
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, ValueTransformer, traverse_dict, \
     TOption
@@ -67,10 +67,10 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
             traverse(g_type[0], f'{name}.{i}', v, cls, force_snake_case, force_cast, restrict)
             for i, v in enumerate(value)
         ])
-    elif o_type == TIterable:
+    elif o_type == TIterator:
         assert_none(value, type_, cls, name)
         assert_types(value, (Iterable, ), cls, name)
-        return TIterable(
+        return TIterator(
             traverse(g_type[0], f'{name}.{i}', v, cls, force_snake_case, force_cast, restrict)
             for i, v in enumerate(value)
         )
@@ -341,7 +341,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     @classmethod
     def from_dicts_to_iterable(
         cls, ds: Iterable[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True
-    ) -> TIterable[T]:
+    ) -> TIterator[T]:
         """From iterable dict to iterable instance
 
         :param ds: Iterable dict
@@ -353,7 +353,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         Usage:
 
             >>> from owlmixin.samples import Human
-            >>> humans: TIterable[Human] = Human.from_dicts([
+            >>> humans: TIterator[Human] = Human.from_dicts([
             ...    {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
             ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
             ... ])
@@ -362,7 +362,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             >>> humans[1].name
             'John'
         """
-        return TIterable(
+        return TIterator(
             cls.from_dict(d, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict) for d in ds
         )
 
@@ -398,7 +398,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True
-    ) -> TOption[TIterable[T]]:
+    ) -> TOption[TIterator[T]]:
         """From iterable dict to optional iterable instance.
 
         :param ds: Iterable dict
@@ -560,7 +560,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_to_iterable(cls, data: str, force_snake_case=True, force_cast: bool = False,
-                              restrict: bool = False) -> TIterable[T]:
+                              restrict: bool = False) -> TIterator[T]:
         """From json string to iterable instance
 
         :param data: Json string
@@ -572,7 +572,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         Usage:
 
             >>> from owlmixin.samples import Human
-            >>> humans: TIterable[Human] = Human.from_json_to_iterable('''[
+            >>> humans: TIterator[Human] = Human.from_json_to_iterable('''[
             ...    {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
             ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
             ... ]''')
@@ -618,7 +618,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = False
-    ) -> TIterable[T]:
+    ) -> TIterator[T]:
         """From json file path to iterable instance
 
         :param fpath: Json file path
@@ -726,7 +726,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml_to_iterable(cls, data: str, force_snake_case=True, force_cast: bool = False,
-                              restrict: bool = True) -> TIterable[T]:
+                              restrict: bool = True) -> TIterator[T]:
         """From yaml string to iterable instance
 
         :param data: Yaml string
@@ -738,7 +738,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         Usage:
 
             >>> from owlmixin.samples import Human
-            >>> humans: TIterable[Human] = Human.from_yaml_to_iterable('''
+            >>> humans: TIterator[Human] = Human.from_yaml_to_iterable('''
             ... - id: 1
             ...   name: Tom
             ...   favorites:
@@ -783,7 +783,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     @classmethod
     def from_yamlf_to_iterable(
         cls, fpath: str, encoding: str = 'utf8', force_snake_case=True, force_cast: bool = False, restrict: bool = True
-    ) -> TIterable[T]:
+    ) -> TIterator[T]:
         """From yaml file path to iterable instance
 
         :param fpath: Yaml file path
@@ -833,7 +833,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         encoding: str = 'utf8',
         force_snake_case: bool = True,
         restrict: bool = True
-    ) -> TIterable[T]:
+    ) -> TIterator[T]:
         """From csv file path to iterable instance
 
         :param fpath: Csv file path
