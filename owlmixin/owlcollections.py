@@ -1,11 +1,9 @@
 # coding: utf-8
 
 import functools
-from collections import Iterable, Iterator
+from collections import Iterable, Iterator, deque
 from itertools import chain, islice, filterfalse, takewhile, tee
 from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union
-
-import collections
 
 from owlmixin.owloption import TOption
 from owlmixin.transformers import (
@@ -31,6 +29,8 @@ class TList(
     TableTransformer,
     Generic[T],
 ):
+    # pylint: disable=too-many-public-methods
+
     def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
@@ -120,8 +120,7 @@ class TList(
         for x in self:
             if not func(x):
                 return r
-            else:
-                r.append(x)
+            r.append(x)
         return r
 
     def tail(self, size_: int) -> "TList[T]":
@@ -315,6 +314,8 @@ class TIterable(
     TableTransformer,
     Generic[T],
 ):
+    # pylint: disable=too-many-public-methods
+
     __iterable: Iterator
 
     def __init__(self, iterable: Iterable):
@@ -473,7 +474,7 @@ class TIterable(
             >>> it.to_list()
             []
         """
-        return TIterable(collections.deque(self, maxlen=size_))
+        return TIterable(deque(self, maxlen=size_))
 
     def uniq(self) -> "TIterable[T]":
         """
