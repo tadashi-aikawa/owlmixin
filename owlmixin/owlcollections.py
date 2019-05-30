@@ -8,20 +8,30 @@ from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union
 import collections
 
 from owlmixin.owloption import TOption
-from owlmixin.transformers import DictTransformer, \
-    DictsTransformer, \
-    JsonTransformer, \
-    YamlTransformer, \
-    CsvTransformer, \
-    TableTransformer
+from owlmixin.transformers import (
+    DictTransformer,
+    DictsTransformer,
+    JsonTransformer,
+    YamlTransformer,
+    CsvTransformer,
+    TableTransformer,
+)
 
-T = TypeVar('T')
-U = TypeVar('U')
-K = TypeVar('K')
+T = TypeVar("T")
+U = TypeVar("U")
+K = TypeVar("K")
 
 
-class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]):
-    def __add__(self, values: list) -> 'TList[T]':
+class TList(
+    list,
+    DictsTransformer,
+    JsonTransformer,
+    YamlTransformer,
+    CsvTransformer,
+    TableTransformer,
+    Generic[T],
+):
+    def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
     def get(self, index: int) -> TOption[T]:
@@ -34,7 +44,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TOption(self[index]) if len(self) > index else TOption(None)
 
-    def map(self, func: Callable[[T], U]) -> 'TList[U]':
+    def map(self, func: Callable[[T], U]) -> "TList[U]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).map(lambda x: x+1)
@@ -42,7 +52,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(map(func, self))
 
-    def emap(self, func: Callable[[T, int], U]) -> 'TList[U]':
+    def emap(self, func: Callable[[T, int], U]) -> "TList[U]":
         """
         Usage:
             >>> TList([10, 20, 30, 40, 50]).emap(lambda x, i: (x+1, i))
@@ -50,7 +60,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([func(x, i) for i, x in enumerate(self)])
 
-    def flatten(self) -> 'TList[U]':
+    def flatten(self) -> "TList[U]":
         """
         Usage:
             >>> TList([[1, 2], [3, 4]]).flatten()
@@ -58,7 +68,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(chain.from_iterable(self))
 
-    def flat_map(self, func: Callable[[T], List[U]]) -> 'TList[U]':
+    def flat_map(self, func: Callable[[T], List[U]]) -> "TList[U]":
         """
         Usage:
             >>> TList([1, 2, 3]).flat_map(lambda x: [x, x+1])
@@ -66,7 +76,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.map(func).flatten()
 
-    def filter(self, func: Callable[[T], bool]) -> 'TList[T]':
+    def filter(self, func: Callable[[T], bool]) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).filter(lambda x: x > 3)
@@ -74,7 +84,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList([x for x in self if func(x)])
 
-    def reject(self, func: Callable[[T], bool]) -> 'TList[T]':
+    def reject(self, func: Callable[[T], bool]) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).reject(lambda x: x > 3)
@@ -92,7 +102,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.get(0)
 
-    def take(self, size_: int) -> 'TList[T]':
+    def take(self, size_: int) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).take(3)
@@ -100,7 +110,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(self[:size_])
 
-    def take_while(self, func: Callable[[T], bool]) -> 'TList[T]':
+    def take_while(self, func: Callable[[T], bool]) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 30, 4, 50]).take_while(lambda x: x < 10)
@@ -114,15 +124,15 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
                 r.append(x)
         return r
 
-    def tail(self, size_: int) -> 'TList[T]':
+    def tail(self, size_: int) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).tail(3)
             [3, 4, 5]
         """
-        return TList(self[self.size() - size_:])
+        return TList(self[self.size() - size_ :])
 
-    def uniq(self) -> 'TList[T]':
+    def uniq(self) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 2, 1]).uniq()
@@ -134,7 +144,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
                 rs.append(e)
         return rs
 
-    def uniq_by(self, func: Callable[[T], Any]) -> 'TList[T]':
+    def uniq_by(self, func: Callable[[T], Any]) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, -2, -1]).uniq_by(lambda x: x**2)
@@ -146,7 +156,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
                 rs.append(e)
         return rs
 
-    def partition(self, func: Callable[[T], bool]) -> Tuple['TList[T]', 'TList[T]']:
+    def partition(self, func: Callable[[T], bool]) -> Tuple["TList[T]", "TList[T]"]:
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).partition(lambda x: x > 3)
@@ -154,7 +164,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.reject(func), self.filter(func)
 
-    def group_by(self, to_key: Callable[[T], str]) -> 'TDict[TList[T]]':
+    def group_by(self, to_key: Callable[[T], str]) -> "TDict[TList[T]]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
@@ -167,7 +177,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
             ret[k].append(v)
         return ret
 
-    def key_by(self, to_key: Callable[[T], str]) -> 'TDict[T]':
+    def key_by(self, to_key: Callable[[T], str]) -> "TDict[T]":
         """
         :param to_key: value -> key
         Usage:
@@ -178,7 +188,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TDict({to_key(x): x for x in self})
 
-    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> 'TList[T]':
+    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> "TList[T]":
         """
         Usage:
             >>> TList([12, 25, 31, 40, 57]).order_by(lambda x: x % 10)
@@ -188,7 +198,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values: 'List[T]', first: bool = False) -> 'TList[T]':
+    def concat(self, values: "List[T]", first: bool = False) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2]).concat(TList([3, 4]))
@@ -271,7 +281,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return any([func(x) for x in self])
 
-    def intersection(self, values: 'List[T]') -> 'TList[T]':
+    def intersection(self, values: "List[T]") -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).intersection([2, 4, 6])
@@ -279,7 +289,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.filter(lambda x: x in values)
 
-    def not_intersection(self, values: 'List[T]') -> 'TList[T]':
+    def not_intersection(self, values: "List[T]") -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).not_intersection([2, 4, 6])
@@ -287,7 +297,7 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
         """
         return self.reject(lambda x: x in values)
 
-    def reverse(self) -> 'TList[T]':
+    def reverse(self) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2, 3]).reverse()
@@ -297,7 +307,13 @@ class TList(list, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransfo
 
 
 class TIterable(
-    Iterable, DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]
+    Iterable,
+    DictsTransformer,
+    JsonTransformer,
+    YamlTransformer,
+    CsvTransformer,
+    TableTransformer,
+    Generic[T],
 ):
     __iterable: Iterator
 
@@ -316,7 +332,7 @@ class TIterable(
     def __iter__(self) -> Iterator:
         return self.__iterable
 
-    def to_list(self) -> 'TList[T]':
+    def to_list(self) -> "TList[T]":
         """
         Usage:
 
@@ -339,7 +355,7 @@ class TIterable(
         """
         return TOption(next(islice(self, index, None), None))
 
-    def map(self, func: Callable[[T], U]) -> 'TIterable[U]':
+    def map(self, func: Callable[[T], U]) -> "TIterable[U]":
         """
         Usage:
 
@@ -351,7 +367,7 @@ class TIterable(
         """
         return TIterable(map(func, self))
 
-    def emap(self, func: Callable[[T, int], U]) -> 'TIterable[U]':
+    def emap(self, func: Callable[[T, int], U]) -> "TIterable[U]":
         """
         Usage:
 
@@ -363,7 +379,7 @@ class TIterable(
         """
         return TIterable(func(x, i) for (i, x) in enumerate(self))
 
-    def filter(self, func: Callable[[T], bool]) -> 'TIterable[T]':
+    def filter(self, func: Callable[[T], bool]) -> "TIterable[T]":
         """
         Usage:
 
@@ -375,7 +391,7 @@ class TIterable(
         """
         return TIterable(filter(func, self))
 
-    def reject(self, func: Callable[[T], bool]) -> 'TIterable[T]':
+    def reject(self, func: Callable[[T], bool]) -> "TIterable[T]":
         """
         Usage:
 
@@ -387,7 +403,7 @@ class TIterable(
         """
         return TIterable(filterfalse(func, self))
 
-    def flatten(self) -> 'TIterable[U]':
+    def flatten(self) -> "TIterable[U]":
         """
         Usage:
 
@@ -399,7 +415,7 @@ class TIterable(
         """
         return TIterable(chain.from_iterable(self))
 
-    def flat_map(self, func: Callable[[T], List[U]]) -> 'TIterable[U]':
+    def flat_map(self, func: Callable[[T], List[U]]) -> "TIterable[U]":
         """
         Usage:
 
@@ -423,7 +439,7 @@ class TIterable(
         """
         return TOption(next(self.__iter__(), None))
 
-    def take(self, size_: int) -> 'TIterable[T]':
+    def take(self, size_: int) -> "TIterable[T]":
         """
         Usage:
 
@@ -435,7 +451,7 @@ class TIterable(
         """
         return TIterable(islice(self, size_))
 
-    def take_while(self, func: Callable[[T], bool]) -> 'TIterable[T]':
+    def take_while(self, func: Callable[[T], bool]) -> "TIterable[T]":
         """
         Usage:
 
@@ -447,7 +463,7 @@ class TIterable(
         """
         return TIterable(takewhile(func, self))
 
-    def tail(self, size_: int) -> 'TIterable[T]':
+    def tail(self, size_: int) -> "TIterable[T]":
         """
         Usage:
 
@@ -459,7 +475,7 @@ class TIterable(
         """
         return TIterable(collections.deque(self, maxlen=size_))
 
-    def uniq(self) -> 'TIterable[T]':
+    def uniq(self) -> "TIterable[T]":
         """
         Usage:
 
@@ -471,7 +487,7 @@ class TIterable(
         """
         return self.uniq_by()
 
-    def uniq_by(self, func: Callable[[T], Any] = None) -> 'TIterable[T]':
+    def uniq_by(self, func: Callable[[T], Any] = None) -> "TIterable[T]":
         """
         Usage:
 
@@ -498,7 +514,7 @@ class TIterable(
 
         return TIterable(make_generator())
 
-    def partition(self, func: Callable[[T], bool]) -> Tuple['TIterable[T]', 'TIterable[T]']:
+    def partition(self, func: Callable[[T], bool]) -> Tuple["TIterable[T]", "TIterable[T]"]:
         """
         Usage:
 
@@ -515,7 +531,7 @@ class TIterable(
         t1, t2 = tee(self)
         return TIterable(filterfalse(func, t1)), TIterable(filter(func, t2))
 
-    def group_by(self, to_key: Callable[[T], str]) -> 'TDict[TIterable[T]]':
+    def group_by(self, to_key: Callable[[T], str]) -> "TDict[TIterable[T]]":
         """
         Usage:
 
@@ -529,7 +545,7 @@ class TIterable(
             ret[k] = chain(ret[k], [v])
         return ret
 
-    def key_by(self, to_key: Callable[[T], str]) -> 'TDict[T]':
+    def key_by(self, to_key: Callable[[T], str]) -> "TDict[T]":
         """
         :param to_key: value -> key
         Usage:
@@ -541,7 +557,7 @@ class TIterable(
         """
         return TDict({to_key(x): x for x in self})
 
-    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> 'TIterable[T]':
+    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> "TIterable[T]":
         """
         Usage:
 
@@ -559,7 +575,7 @@ class TIterable(
         """
         return TIterable(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values: 'Iterable[T]', first: bool = False) -> 'TIterable[T]':
+    def concat(self, values: "Iterable[T]", first: bool = False) -> "TIterable[T]":
         """
         Usage:
 
@@ -649,7 +665,7 @@ class TIterable(
         """
         return any(self.map(func))
 
-    def intersection(self, values: 'Iterable[T]') -> 'TIterable[T]':
+    def intersection(self, values: "Iterable[T]") -> "TIterable[T]":
         """
         Usage:
 
@@ -661,7 +677,7 @@ class TIterable(
         """
         return self.filter(lambda x: x in values)
 
-    def not_intersection(self, values: 'Iterable[T]') -> 'TIterable[T]':
+    def not_intersection(self, values: "Iterable[T]") -> "TIterable[T]":
         """
         Usage:
 
@@ -673,7 +689,7 @@ class TIterable(
         """
         return self.reject(lambda x: x in values)
 
-    def reverse(self) -> 'TIterable[T]':
+    def reverse(self) -> "TIterable[T]":
         """
         Usage:
 
@@ -714,7 +730,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TIterable(func(k, self[k]) for k in self)
 
-    def map_values(self, func: Callable[[T], U]) -> 'TDict[U]':
+    def map_values(self, func: Callable[[T], U]) -> "TDict[U]":
         """
         Usage:
 
@@ -727,7 +743,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({k: func(v) for k, v in self.items()})
 
-    def map_values2(self, func: Callable[[K, T], U]) -> 'TDict[U]':
+    def map_values2(self, func: Callable[[K, T], U]) -> "TDict[U]":
         """
         Usage:
 
@@ -848,7 +864,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return any([func(k, v) for k, v in self.items()])
 
-    def assign(self, dict_: Dict[str, T]) -> 'TDict[T]':
+    def assign(self, dict_: Dict[str, T]) -> "TDict[T]":
         """
         Usage:
 
@@ -859,7 +875,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({**self, **dict_})
 
-    def pick_by(self, func: Callable[[K, T], bool]) -> 'TDict[T]':
+    def pick_by(self, func: Callable[[K, T], bool]) -> "TDict[T]":
         """
         Usage:
 
@@ -868,7 +884,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TDict({k: v for k, v in self.items() if func(k, v)})
 
-    def omit_by(self, func: Callable[[K, T], bool]) -> 'TDict[T]':
+    def omit_by(self, func: Callable[[K, T], bool]) -> "TDict[T]":
         """
         Usage:
 
