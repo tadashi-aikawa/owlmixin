@@ -1,12 +1,12 @@
 # coding: utf-8
 
 import inspect
-from typing import TypeVar, Optional, Sequence, Iterable
+from typing import TypeVar, Optional, Sequence, Iterable, List
 
 import owlmixin.version
 from owlmixin import util
 from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
-from owlmixin.owlcollections import TDict, TIterable
+from owlmixin.owlcollections import TDict, TIterable, TList
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin.transformers import DictTransformer, JsonTransformer, YamlTransformer, ValueTransformer, traverse_dict, \
     TOption
@@ -60,7 +60,14 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
     o_type = type_.__origin__
     g_type = type_.__args__
 
-    if o_type == TIterable:
+    if o_type == TList:
+        assert_none(value, type_, cls, name)
+        assert_types(value, (list, ), cls, name)
+        return TList([
+            traverse(g_type[0], f'{name}.{i}', v, cls, force_snake_case, force_cast, restrict)
+            for i, v in enumerate(value)
+        ])
+    elif o_type == TIterable:
         assert_none(value, type_, cls, name)
         assert_types(value, (Iterable, ), cls, name)
         return TIterable(
@@ -118,9 +125,9 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             1
             >>> human.name
             'Tom'
-            >>> human.favorites.to_list()[0].name
+            >>> human.favorites[0].name
             'Apple'
-            >>> human.favorites.to_list()[0].names_by_lang.get()["de"]
+            >>> human.favorites[0].names_by_lang.get()["de"]
             'Apfel'
 
         You can use default value
@@ -305,7 +312,34 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         )
 
     @classmethod
-    def from_dicts(
+    def from_dicts(cls, ds: List[dict], force_snake_case: bool = True, force_cast: bool = False,
+                   restrict: bool = True) -> TList[T]:
+        """From list of dict to list of instance
+
+        :param ds: List of dict
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
+
+        Usage:
+
+            >>> from owlmixin.samples import Human
+            >>> humans: TList[Human] = Human.from_dicts([
+            ...    {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
+            ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ])
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
+        """
+        return TList([
+            cls.from_dict(d, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict) for d in ds
+        ])
+
+    @classmethod
+    def from_dicts_to_iterable(
         cls, ds: Iterable[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True
     ) -> TIterable[T]:
         """From iterable dict to iterable instance
@@ -334,6 +368,31 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_optional_dicts(
+        cls, ds: Optional[List[dict]], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True
+    ) -> TOption[TList[T]]:
+        """From list of dict to optional list of instance.
+
+        :param ds: List of dict
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
+
+        Usage:
+
+            >>> from owlmixin.samples import Human
+            >>> Human.from_optional_dicts(None).is_none()
+            True
+            >>> Human.from_optional_dicts([]).get()
+            []
+        """
+        return TOption(
+            cls.from_dicts(ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict)
+            if ds is not None else None
+        )
+
+    @classmethod
+    def from_optional_dicts_to_iterable(
         cls,
         ds: Optional[Iterable[dict]],
         force_snake_case: bool = True,
@@ -357,7 +416,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             []
         """
         return TOption(
-            cls.from_dicts(ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict)
+            cls.from_dicts_to_iterable(ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict)
             if ds is not None else None
         )
 
@@ -473,6 +532,33 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         )
 
     @classmethod
+    def from_json_to_list(cls, data: str, force_snake_case=True, force_cast: bool = False,
+                          restrict: bool = False) -> TList[T]:
+        """From json string to list of instance
+
+        :param data: Json string
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
+
+        Usage:
+
+            >>> from owlmixin.samples import Human
+            >>> humans: TList[Human] = Human.from_json_to_list('''[
+            ...    {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
+            ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
+            ... ]''')
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
+        """
+        return cls.from_dicts(
+            util.load_json(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+        )
+
+    @classmethod
     def from_json_to_iterable(cls, data: str, force_snake_case=True, force_cast: bool = False,
                               restrict: bool = False) -> TIterable[T]:
         """From json string to iterable instance
@@ -490,13 +576,38 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ...    {"id": 1, "name": "Tom",  "favorites": [{"name": "Apple"}]},
             ...    {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
             ... ]''')
-            >>> humans[0].name
-            'Tom'
-            >>> humans[1].name
+            >>> humans.next_at(1).get().name
             'John'
+            >>> humans.next_at(0).is_none()
+            True
+        """
+        return cls.from_dicts_to_iterable(
+            util.load_json(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+        )
+
+    @classmethod
+    def from_jsonf_to_list(
+        cls,
+        fpath: str,
+        encoding: str = 'utf8',
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = False
+    ) -> TList[T]:
+        """From json file path to list of instance
+
+        :param fpath: Json file path
+        :param encoding: Json file encoding
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
         """
         return cls.from_dicts(
-            util.load_json(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+            util.load_jsonf(fpath, encoding),
+            force_snake_case=force_snake_case,
+            force_cast=force_cast,
+            restrict=restrict
         )
 
     @classmethod
@@ -517,7 +628,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         :param restrict: Prohibit extra parameters if True
         :return: Iterable instance
         """
-        return cls.from_dicts(
+        return cls.from_dicts_to_iterable(
             util.load_jsonf(fpath, encoding),
             force_snake_case=force_snake_case,
             force_cast=force_cast,
@@ -579,6 +690,41 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         )
 
     @classmethod
+    def from_yaml_to_list(cls, data: str, force_snake_case=True, force_cast: bool = False,
+                          restrict: bool = True) -> TList[T]:
+        """From yaml string to list of instance
+
+        :param data: Yaml string
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
+
+        Usage:
+
+            >>> from owlmixin.samples import Human
+            >>> humans: TList[Human] = Human.from_yaml_to_list('''
+            ... - id: 1
+            ...   name: Tom
+            ...   favorites:
+            ...     - name: Apple
+            ... - id: 2
+            ...   name: John
+            ...   favorites:
+            ...     - name: Orange
+            ... ''')
+            >>> humans[0].name
+            'Tom'
+            >>> humans[1].name
+            'John'
+            >>> humans[0].favorites[0].name
+            'Apple'
+        """
+        return cls.from_dicts(
+            util.load_yaml(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+        )
+
+    @classmethod
     def from_yaml_to_iterable(cls, data: str, force_snake_case=True, force_cast: bool = False,
                               restrict: bool = True) -> TIterable[T]:
         """From yaml string to iterable instance
@@ -602,15 +748,36 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ...   favorites:
             ...     - name: Orange
             ... ''')
-            >>> humans[0].name
-            'Tom'
-            >>> humans[1].name
+            >>> human1 = humans.next_at(1).get()
+            >>> human1.name
             'John'
-            >>> humans[0].favorites[0].name
-            'Apple'
+            >>> humans.next_at(0).is_none()
+            True
+            >>> human1.favorites[0].name
+            'Orange'
+        """
+        return cls.from_dicts_to_iterable(
+            util.load_yaml(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+        )
+
+    @classmethod
+    def from_yamlf_to_list(
+        cls, fpath: str, encoding: str = 'utf8', force_snake_case=True, force_cast: bool = False, restrict: bool = True
+    ) -> TList[T]:
+        """From yaml file path to list of instance
+
+        :param fpath: Yaml file path
+        :param encoding: Yaml file encoding
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param force_cast: Cast forcibly if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of instance
         """
         return cls.from_dicts(
-            util.load_yaml(data), force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+            util.load_yamlf(fpath, encoding),
+            force_snake_case=force_snake_case,
+            force_cast=force_cast,
+            restrict=restrict
         )
 
     @classmethod
@@ -626,7 +793,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         :param restrict: Prohibit extra parameters if True
         :return: Iterable instance
         """
-        return cls.from_dicts(
+        return cls.from_dicts_to_iterable(
             util.load_yamlf(fpath, encoding),
             force_snake_case=force_snake_case,
             force_cast=force_cast,
@@ -635,6 +802,31 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_csvf(
+        cls,
+        fpath: str,
+        fieldnames: Optional[Sequence[str]] = None,
+        encoding: str = 'utf8',
+        force_snake_case: bool = True,
+        restrict: bool = True
+    ) -> TList[T]:
+        """From csv file path to list of instance
+
+        :param fpath: Csv file path
+        :param fieldnames: Specify csv header names if not included in the file
+        :param encoding: Csv file encoding
+        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True
+        :param restrict: Prohibit extra parameters if True
+        :return: List of Instance
+        """
+        return cls.from_dicts(
+            util.load_csvf(fpath, fieldnames, encoding),
+            force_snake_case=force_snake_case,
+            force_cast=True,
+            restrict=restrict
+        )
+
+    @classmethod
+    def from_csvf_to_iterable(
         cls,
         fpath: str,
         fieldnames: Optional[Sequence[str]] = None,
@@ -651,7 +843,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         :param restrict: Prohibit extra parameters if True
         :return: Iterable Instance
         """
-        return cls.from_dicts(
+        return cls.from_dicts_to_iterable(
             util.load_csvf(fpath, fieldnames, encoding),
             force_snake_case=force_snake_case,
             force_cast=True,

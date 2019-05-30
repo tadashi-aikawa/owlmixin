@@ -1,5 +1,6 @@
 # coding: utf-8
-from typing import List, Sequence, Iterable
+from itertools import chain
+from typing import List, Sequence, Iterable, Iterator, Optional
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -14,9 +15,9 @@ def is_ignore(v) -> bool:
     return v is None or (isinstance(v, TOption) and v.is_none())
 
 
-def is_empty(v) -> bool:
+def evaluate(v) -> Optional[any]:
     p = v.get() if (isinstance(v, TOption)) else v
-    return (isinstance(v, list) and p == []) or (isinstance(v, dict) and p == {})
+    return list(v) if isinstance(v, Iterator) else p
 
 
 def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
@@ -37,10 +38,12 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
 
 
 def traverse_dict(instance_dict, ignore_none, force_value=False, ignore_empty=False):
-    return {
-        k: traverse(v, ignore_none, force_value, ignore_empty)
-        for k, v in instance_dict.items() if not (ignore_empty and is_empty(v)) and not (ignore_none and is_ignore(v))
-    }
+    d = {}
+    for k, v in instance_dict.items():
+        evaluated = evaluate(v)
+        if not (ignore_empty and not bool(evaluated)) and not (ignore_none and is_ignore(evaluated)):
+            d[k] = traverse(evaluated, ignore_none, force_value, ignore_empty)
+    return d
 
 
 def traverse_list(instance_list, ignore_none, force_value=False, ignore_empty=False):
@@ -350,7 +353,7 @@ class CsvTransformer():
             >>> humans = Human.from_dicts([
             ...     {"id": 1, "name": "Tom", "favorites": [{"name": "Apple"}]},
             ...     {"id": 2, "name": "John", "favorites": [{"name": "Orange"}]}
-            ... ]).to_list()
+            ... ])
 
             >>> print(humans.to_csv(fieldnames=['name', 'id', 'favorites']))
             Tom,1,[{'name': 'Apple'}]

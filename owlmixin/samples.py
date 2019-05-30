@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from owlmixin import OwlMixin, TOption
-from owlmixin.owlcollections import TDict, TIterable
+from owlmixin.owlcollections import TDict, TList
 from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 
 
@@ -27,7 +27,7 @@ class Food(OwlMixin):    # pragma: no cover
 class Human(OwlMixin):    # pragma: no cover
     id: int
     name: str
-    favorites: TIterable[Food]
+    favorites: TList[Food]
 
 
 class Machine(OwlMixin):    # pragma: no cover

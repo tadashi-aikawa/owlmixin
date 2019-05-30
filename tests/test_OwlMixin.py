@@ -515,7 +515,7 @@ class TestToDicts:
         }]
 
     def test_ignore_empty_true(self):
-        friends: TList[Human] = Human.from_dict(SAMPLE_HUMAN2).friends_by_short_name.get().to_values()
+        friends: TList[Human] = Human.from_dict(SAMPLE_HUMAN2).friends_by_short_name.get().to_list()
 
         # Assert Option
         assert friends[0].favorite_spots == []
