@@ -11,6 +11,7 @@ OwlMixin
 **(ﾟ∀ﾟ) v4.0 have ??? breaking changes**
 
 * `OwlMixin`
+  * Must use keyword arguments in `from_XXX` except for some ones
   * `from_csvf` -> `from_csvf_to_list`
 * `TList`
   * `head` -> `take`

@@ -22,12 +22,12 @@ T = TypeVar("T", bound="OwlMixin")
 __version__ = owlmixin.version.__version__
 
 
-def _is_generic(type):
-    return hasattr(type, "__origin__")
+def _is_generic(type_):
+    return hasattr(type_, "__origin__")
 
 
 def assert_extra(cls_properties, arg_dict, cls):
-    extra_keys: set = set(arg_dict.keys()) - set([n for n, t in cls_properties])
+    extra_keys: set = set(arg_dict.keys()) - {n for n, t in cls_properties}
     if extra_keys:
         raise UnknownPropertiesError(cls, sorted(extra_keys))
 
@@ -42,7 +42,10 @@ def assert_types(value, types: tuple, cls, name):
         raise InvalidTypeError(cls, name, value, types, type(value))
 
 
-def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool):
+def traverse(
+    type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool
+) -> any:
+    # pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments
     if hasattr(type_, "__forward_arg__"):
         # XXX: Only if `_ForwardRef` includes myself
         type_ = cls
@@ -51,17 +54,18 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
         assert_none(value, type_, cls, name)
         if type_ is any:
             return value
-        elif issubclass(type_, OwlMixin):
+        if issubclass(type_, OwlMixin):
             assert_types(value, (type_, dict), cls, name)
-            return type_.from_dict(value, force_snake_case, force_cast, restrict)
-        elif issubclass(type_, ValueTransformer):
+            return type_.from_dict(
+                value, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+            )
+        if issubclass(type_, ValueTransformer):
             return type_.from_value(value)
-        else:
-            if force_cast:
-                return type_(value)
-            else:
-                assert_types(value, (type_,), cls, name)
-                return value
+        if force_cast:
+            return type_(value)
+
+        assert_types(value, (type_,), cls, name)
+        return value
 
     o_type = type_.__origin__
     g_type = type_.__args__
@@ -75,14 +79,14 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
                 for i, v in enumerate(value)
             ]
         )
-    elif o_type == TIterator:
+    if o_type == TIterator:
         assert_none(value, type_, cls, name)
         assert_types(value, (Iterable,), cls, name)
         return TIterator(
             traverse(g_type[0], f"{name}.{i}", v, cls, force_snake_case, force_cast, restrict)
             for i, v in enumerate(value)
         )
-    elif o_type == TDict:
+    if o_type == TDict:
         assert_none(value, type_, cls, name)
         assert_types(value, (dict,), cls, name)
         return TDict(
@@ -93,30 +97,34 @@ def traverse(type_, name, value, cls, force_snake_case: bool, force_cast: bool, 
                 for k, v in value.items()
             }
         )
-    elif o_type == TOption:
-        v = value.get() if type(value) == TOption else value
+    if o_type == TOption:
+        v = value.get() if isinstance(value, TOption) else value
         # TODO: Fot `from_csvf`... need to more simple!!
-        if (type(v) == str and v) or (type(v) != str and v is not None):
+        if (isinstance(v, str) and v) or (not isinstance(v, str) and v is not None):
             return TOption(
                 traverse(g_type[0], name, v, cls, force_snake_case, force_cast, restrict)
             )
         return TOption(None)
 
-    else:
-        assert False, f"This generics is not supported {o_type}"
+    raise RuntimeError(f"This generics is not supported `{o_type}`")
 
 
 class OwlMeta(type):
-    def __new__(meta, name, bases, class_dict):
-        cls = type.__new__(meta, name, bases, class_dict)
-        cls._methods_dict = dict(inspect.getmembers(cls, inspect.ismethod))
-        return cls
+    def __new__(cls, name, bases, class_dict):
+        ret_cls = type.__new__(cls, name, bases, class_dict)
+        ret_cls.__methods_dict__ = dict(inspect.getmembers(ret_cls, inspect.ismethod))
+        return ret_cls
 
 
 class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlMeta):
     @classmethod
     def from_dict(
-        cls, d: dict, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True
+        cls,
+        d: dict,
+        *,
+        force_snake_case: bool = True,
+        force_cast: bool = False,
+        restrict: bool = True,
     ) -> T:
         """From dict to instance
 
@@ -269,7 +277,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             assert_extra(properties, d, cls)
 
         for n, t in properties:
-            f = cls._methods_dict.get(f"_{cls.__name__}___{n}")
+            f = cls.__methods_dict__.get(f"_{cls.__name__}___{n}")
             arg_v = f(d.get(n)) if f else d.get(n)
             def_v = getattr(instance, n, None)
             setattr(
@@ -292,6 +300,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_optional_dict(
         cls,
         d: Optional[dict],
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -339,6 +348,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_dicts(
         cls,
         ds: List[dict],
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -376,6 +386,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_iterable_dict(
         cls,
         ds: Iterable[dict],
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -411,6 +422,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_optional_dicts(
         cls,
         ds: Optional[List[dict]],
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -443,6 +455,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_optional_dicts_to_iterable(
         cls,
         ds: Optional[Iterable[dict]],
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -475,6 +488,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_dicts_by_key(
         cls,
         ds: dict,
+        *,
         force_snake_case: bool = True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -512,6 +526,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
     def from_optional_dicts_by_key(
         cls,
         ds: Optional[dict],
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -542,7 +557,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
     ) -> T:
         """From json string to instance
 
@@ -582,6 +597,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = False,
@@ -604,7 +620,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_to_list(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
     ) -> TList[T]:
         """From json string to list of instance
 
@@ -635,7 +651,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_to_iterable(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
     ) -> TIterator[T]:
         """From json string to iterable instance
 
@@ -669,6 +685,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = False,
@@ -694,6 +711,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = False,
@@ -716,7 +734,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
     ) -> T:
         """From yaml string to instance
 
@@ -758,6 +776,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -780,7 +799,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml_to_list(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
     ) -> TList[T]:
         """From yaml string to list of instance
 
@@ -819,7 +838,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml_to_iterable(
-        cls, data: str, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
     ) -> TIterator[T]:
         """From yaml string to iterable instance
 
@@ -862,6 +881,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -887,6 +907,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         cls,
         fpath: str,
         encoding: str = "utf8",
+        *,
         force_snake_case=True,
         force_cast: bool = False,
         restrict: bool = True,
@@ -913,6 +934,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         fpath: str,
         fieldnames: Optional[Sequence[str]] = None,
         encoding: str = "utf8",
+        *,
         force_snake_case: bool = True,
         restrict: bool = True,
     ) -> TList[T]:
@@ -938,6 +960,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         fpath: str,
         fieldnames: Optional[Sequence[str]] = None,
         encoding: str = "utf8",
+        *,
         force_snake_case: bool = True,
         restrict: bool = True,
     ) -> TIterator[T]:
@@ -959,7 +982,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_url(
-        cls, url: str, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls, url: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
     ) -> T:
         """From url which returns json to instance
 
