@@ -430,7 +430,13 @@ class CsvTransformer:
         :return: Csv file path
         """
         return util.save_csvf(
-            traverse(self, force_value=True), fieldnames, fpath, encoding, with_header, crlf, tsv
+            map(lambda x: traverse(x, force_value=True), self),
+            fieldnames,
+            fpath,
+            encoding,
+            with_header,
+            crlf,
+            tsv,
         )
 
 

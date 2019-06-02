@@ -134,12 +134,12 @@ def load_yamlf(fpath, encoding):
         return yaml.safe_load(f)
 
 
-def load_csvf(fpath: str, fieldnames: List[str], encoding: str) -> Iterator[str]:
+def load_csvf(fpath: str, fieldnames: List[str], encoding: str) -> Iterator[dict]:
     """
     :param fpath:
     :param fieldnames:
     :param encoding:
-    :rtype: List[dict]
+    :return Iterator of dict:
     """
     with open(fpath, mode="r", encoding=encoding) as f:
         snippet = f.read(8192)
@@ -173,7 +173,7 @@ def dump_csv(
     :param with_header:
     :param crlf:
     :param tsv:
-    :return: unicode
+    :return: Csv string
     """
 
     def force_str(v):
@@ -192,7 +192,7 @@ def dump_csv(
 
 
 def save_csvf(
-    data: list,
+    data: Iterable[any],
     fieldnames: Sequence[str],
     fpath: str,
     encoding: str,
@@ -210,9 +210,20 @@ def save_csvf(
     :param tsv:
     :return: written path
     """
+
+    def force_str(v):
+        # XXX: Double quotation behaves strangely... so replace (why?)
+        return dump_json(v).replace('"', "'") if isinstance(v, (dict, list)) else v
+
     with codecs.open(fpath, mode="w", encoding=encoding) as f:
-        f.write(dump_csv(data, fieldnames, with_header=with_header, crlf=crlf, tsv=tsv))
-        return fpath
+        dialect = get_dialect_name(crlf, tsv)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore")
+        if with_header:
+            writer.writeheader()
+        for x in data:
+            writer.writerow({k: force_str(v) for k, v in x.items()})
+
+    return fpath
 
 
 def dump_json(data, indent=None):

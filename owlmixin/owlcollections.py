@@ -831,11 +831,11 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
         """
         return TList(self[k] for k in self)
 
-    def to_iterable(self) -> TIterator[T]:
+    def to_iterator(self) -> TIterator[T]:
         """
         Usage:
 
-            >>> it = TDict(k1=1, k2=2, k3=3).to_iterable().order_by(lambda x: x)
+            >>> it = TDict(k1=1, k2=2, k3=3).to_iterator().order_by(lambda x: x)
             >>> it.to_list()
             [1, 2, 3]
             >>> it.to_list()

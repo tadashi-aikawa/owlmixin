@@ -26,7 +26,7 @@ class Human(OwlMixin):
 
 class TestToCsv:
     def test_normal(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -40,7 +40,7 @@ class TestToCsv:
         assert d.to_csv(["id", "name", "ruby"]) == ""
 
     def test_ignore_extra_params(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -54,7 +54,7 @@ class TestToCsv:
         assert d.to_csv(["id", "name"]) == ""
 
     def test_with_header(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -74,7 +74,7 @@ id,name,ruby
         )
 
     def test_with_space(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": " 一 郎 "}, {"id": 2, "name": " 二 郎 ", "ruby": "じろう"}]
         )
 
@@ -88,7 +88,7 @@ id,name,ruby
         assert d.to_csv(["id", "name", "ruby"]) == ""
 
     def test_crlf(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -102,7 +102,7 @@ id,name,ruby
         assert d.to_csv(["id", "name", "ruby"], crlf=True) == ""
 
     def test_tsv(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -116,7 +116,7 @@ id,name,ruby
         assert d.to_csv(["id", "name", "ruby"], tsv=True) == ""
 
     def test_including_dict(self):
-        d = Human.from_iterable_dict(
+        d = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "address": {"name": "住所"}}]
         )
 
@@ -130,7 +130,7 @@ id,name,ruby
         assert d.to_csv(["id", "name", "address"]) == ""
 
     def test_including_list(self):
-        d = Spot.from_iterable_dict(
+        d = Spot.from_iterable_dicts(
             [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
         )
 
@@ -151,7 +151,7 @@ class TestToCsvf:
 
     def test_normal(self, tmpdir):
         origin = [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
-        it: TIterator[Human] = Human.from_iterable_dict(origin)
+        it: TIterator[Human] = Human.from_iterable_dicts(origin)
 
         fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.csv")
 
@@ -172,20 +172,20 @@ class TestToCsvf:
 class TestNextAt:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
-        assert Spot.from_iterable_dict(d).next_at(1).get().to_dict() == {
+        assert Spot.from_iterable_dicts(d).next_at(1).get().to_dict() == {
             "names": ["spot21", "spot22"]
         }
 
     def test_not_found(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
-        assert Spot.from_iterable_dict(d).next_at(2).is_none()
+        assert Spot.from_iterable_dicts(d).next_at(2).is_none()
 
 
 class TestMap:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).map(lambda s: s.names).to_list() == [
+        assert Spot.from_iterable_dicts(d).map(lambda s: s.names).to_list() == [
             ["spot1"],
             ["spot21", "spot22"],
         ]
@@ -195,7 +195,7 @@ class TestEMap:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).emap(lambda s, i: (i + 1, s.names)).to_list() == [
+        assert Spot.from_iterable_dicts(d).emap(lambda s, i: (i + 1, s.names)).to_list() == [
             (1, ["spot1"]),
             (2, ["spot21", "spot22"]),
         ]
@@ -208,7 +208,7 @@ class TestFlatten:
 
 class TestFlatMap:
     def test_normal(self):
-        ds = Human.from_iterable_dict(
+        ds = Human.from_iterable_dicts(
             [{"id": 1, "name": "一郎"}, {"id": 2, "name": "二郎", "ruby": "じろう"}]
         )
 
@@ -219,7 +219,7 @@ class TestFilter:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).filter(lambda s: s.address.get()).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).filter(lambda s: s.address.get()).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}}
         ]
 
@@ -228,7 +228,7 @@ class TestReject:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).reject(lambda s: s.address.get()).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).reject(lambda s: s.address.get()).to_dicts() == [
             {"names": ["spot21", "spot22"]}
         ]
 
@@ -242,7 +242,7 @@ class TestHead:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).head().get().to_dict() == {
+        assert Spot.from_iterable_dicts(d).head().get().to_dict() == {
             "names": ["spot1"],
             "address": {"name": "address1"},
         }
@@ -257,7 +257,7 @@ class TestTake:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).take(3).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).take(3).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
             {"names": ["spot31", "spot32"]},
@@ -276,7 +276,7 @@ class TestTakeWhile:
         assert [
             {"names": ["spot11", "spot12"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
-        ] == Spot.from_iterable_dict(d).take_while(lambda x: x.names.size() > 1).to_dicts()
+        ] == Spot.from_iterable_dicts(d).take_while(lambda x: x.names.size() > 1).to_dicts()
 
 
 class TestTail:
@@ -288,7 +288,7 @@ class TestTail:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).tail(3).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).tail(3).to_dicts() == [
             {"names": ["spot21", "spot22"]},
             {"names": ["spot31", "spot32"]},
             {"names": ["spot4"], "address": {"name": "address1"}},
@@ -305,7 +305,7 @@ class TestUniq:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).uniq().to_dicts() == [
+        assert Spot.from_iterable_dicts(d).uniq().to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot4"], "address": {"name": "address1"}},
@@ -320,7 +320,7 @@ class TestUniqBy:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).uniq_by(lambda x: x.to_json()).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).uniq_by(lambda x: x.to_json()).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
@@ -330,7 +330,7 @@ class TestPartition:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        rejected, fulfilled = Spot.from_iterable_dict(d).partition(lambda s: s.address.get())
+        rejected, fulfilled = Spot.from_iterable_dicts(d).partition(lambda s: s.address.get())
 
         assert fulfilled.to_dicts() == [{"names": ["spot1"], "address": {"name": "address1"}}]
         assert rejected.to_dicts() == [{"names": ["spot21", "spot22"]}]
@@ -345,7 +345,7 @@ class TestGroupBy:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).group_by(lambda s: str(len(s.names))).to_dict(
+        assert Spot.from_iterable_dicts(d).group_by(lambda s: str(len(s.names))).to_dict(
             ignore_none=True
         ) == {
             "1": [
@@ -365,7 +365,7 @@ class TestKeyBy:
             {"names": ["spot4"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).key_by(lambda s: str(len(s.names))).to_dict(
+        assert Spot.from_iterable_dicts(d).key_by(lambda s: str(len(s.names))).to_dict(
             ignore_none=True
         ) == {
             "1": {"names": ["spot4"], "address": {"name": "address1"}},
@@ -382,7 +382,7 @@ class TestOrderBy:
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).order_by(lambda x: len(x.names)).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).order_by(lambda x: len(x.names)).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22", "spot23"]},
@@ -397,7 +397,7 @@ class TestOrderBy:
             {"names": ["spot41", "spot42"], "address": {"name": "address1"}},
         ]
 
-        assert Spot.from_iterable_dict(d).order_by(
+        assert Spot.from_iterable_dicts(d).order_by(
             lambda x: len(x.names), reverse=True
         ).to_dicts() == [
             {"names": ["spot31", "spot32", "spot33", "spot34"]},
@@ -413,7 +413,7 @@ class TestConcat:
 
         e = [{"names": ["spot31", "spot32"]}]
 
-        assert Spot.from_iterable_dict(d).concat(Spot.from_iterable_dict(e)).to_dicts() == [
+        assert Spot.from_iterable_dicts(d).concat(Spot.from_iterable_dicts(e)).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
             {"names": ["spot21", "spot22"]},
             {"names": ["spot31", "spot32"]},
@@ -424,8 +424,8 @@ class TestConcat:
 
         e = [{"names": ["spot31", "spot32"]}]
 
-        assert Spot.from_iterable_dict(d).concat(
-            Spot.from_iterable_dict(e), first=True
+        assert Spot.from_iterable_dicts(d).concat(
+            Spot.from_iterable_dicts(e), first=True
         ).to_dicts() == [
             {"names": ["spot31", "spot32"]},
             {"names": ["spot1"], "address": {"name": "address1"}},
@@ -437,7 +437,7 @@ class TestReduce:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).reduce(lambda r, x: r + len(x.names), 100) == 103
+        assert Spot.from_iterable_dicts(d).reduce(lambda r, x: r + len(x.names), 100) == 103
 
 
 class TestSum:
@@ -449,7 +449,7 @@ class TestSumBy:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
 
-        assert Spot.from_iterable_dict(d).sum_by(lambda x: len(x.names)) == 3
+        assert Spot.from_iterable_dicts(d).sum_by(lambda x: len(x.names)) == 3
 
 
 class TestJoin:
@@ -469,7 +469,7 @@ class TestFind:
             {"names": ["spot31", "spot32", "spot33"]},
         ]
 
-        assert Spot.from_iterable_dict(d).find(lambda x: len(x.names) == 2).get().to_dict(
+        assert Spot.from_iterable_dicts(d).find(lambda x: len(x.names) == 2).get().to_dict(
             ignore_none=True
         ) == {"names": ["spot21", "spot22"]}
 
@@ -480,7 +480,7 @@ class TestFind:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_iterable_dict(d).find(lambda x: len(x.names) == 3).is_none()
+        assert Spot.from_iterable_dicts(d).find(lambda x: len(x.names) == 3).is_none()
 
 
 class TestAll:
@@ -491,7 +491,7 @@ class TestAll:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_iterable_dict(d).all(lambda x: x.names) is True
+        assert Spot.from_iterable_dicts(d).all(lambda x: x.names) is True
 
     def test_false(self):
         d = [
@@ -500,7 +500,7 @@ class TestAll:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_iterable_dict(d).all(lambda x: len(x.names) > 1) is False
+        assert Spot.from_iterable_dicts(d).all(lambda x: len(x.names) > 1) is False
 
 
 class TestAny:
@@ -511,7 +511,7 @@ class TestAny:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_iterable_dict(d).any(lambda x: len(x.names) > 1) is True
+        assert Spot.from_iterable_dicts(d).any(lambda x: len(x.names) > 1) is True
 
     def test_false(self):
         d = [
@@ -520,7 +520,7 @@ class TestAny:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_iterable_dict(d).any(lambda x: len(x.names) > 2) is False
+        assert Spot.from_iterable_dicts(d).any(lambda x: len(x.names) > 2) is False
 
 
 class TestIntersection:

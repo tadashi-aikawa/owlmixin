@@ -1,5 +1,5 @@
 # coding: utf-8
-from typing import List
+from typing import List, Sequence
 
 
 class OwlMixinError(Exception):
@@ -30,14 +30,15 @@ class InvalidTypeError(OwlMixinError):
     :ivar List[str] expected: Expected types
     :ivar str actual: Actual type
     """
+
     title: str = "Invalid Type error"
     cls: str
     prop: str
     value: any
-    expected: List[str]
+    expected: Sequence[str]
     actual: str
 
-    def __init__(self, cls, prop: str, value: any, expected: list, actual):
+    def __init__(self, cls, prop: str, value: any, expected: Sequence[str], actual):
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
         self.value = value
@@ -61,11 +62,12 @@ class UnknownPropertiesError(OwlMixinError):
     :ivar str cls: Class name
     :ivar List[str] props: Unknown property names
     """
+
     title: str = "Unknown properties error"
     cls: str
     props: List[str]
 
-    def __init__(self, cls, props: str):
+    def __init__(self, cls, props: List[str]):
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.props = props
 
@@ -86,6 +88,7 @@ class RequiredError(OwlMixinError):
     :ivar str prop: Property name
     :ivar str type_: Property type
     """
+
     title: str = "Required error"
     cls: str
     prop: str
