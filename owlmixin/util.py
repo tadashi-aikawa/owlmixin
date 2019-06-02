@@ -1,56 +1,54 @@
 # coding: utf-8
 
+import codecs
+import csv
 # Need not unicode_literals
 import io
-import re
-import codecs
 import json
-import os
-from math import floor, ceil
-from unicodedata import east_asian_width
+import re
+from csv import register_dialect, Dialect, QUOTE_MINIMAL
+from typing import List, Dict, Union, Sequence, Iterable, Iterator
+from urllib.request import urlopen
 
 import yaml
-from urllib.request import urlopen
+from math import floor, ceil
+from unicodedata import east_asian_width
 from yaml import SafeLoader
-
-import csv
-from csv import register_dialect, Dialect, QUOTE_MINIMAL
-from typing import List, Optional, Dict, Union, Sequence, Iterable
 
 
 class CrLfCsvDialect(Dialect):
-    delimiter = ','
+    delimiter = ","
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
-    lineterminator = '\r\n'
+    lineterminator = "\r\n"
     quoting = QUOTE_MINIMAL
 
 
 class CrLfTsvDialect(Dialect):
-    delimiter = '\t'
+    delimiter = "\t"
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
-    lineterminator = '\r\n'
+    lineterminator = "\r\n"
     quoting = QUOTE_MINIMAL
 
 
 class LfCsvDialect(Dialect):
-    delimiter = ','
+    delimiter = ","
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
-    lineterminator = '\n'
+    lineterminator = "\n"
     quoting = QUOTE_MINIMAL
 
 
 class LfTsvDialect(Dialect):
-    delimiter = '\t'
+    delimiter = "\t"
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
-    lineterminator = '\n'
+    lineterminator = "\n"
     quoting = QUOTE_MINIMAL
 
 
@@ -75,7 +73,7 @@ def construct_yaml_str(self, node):
     return self.construct_scalar(node)
 
 
-SafeLoader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
+SafeLoader.add_constructor("tag:yaml.org,2002:str", construct_yaml_str)
 
 
 def replace_keys(d, keymap, force_snake_case):
@@ -85,7 +83,10 @@ def replace_keys(d, keymap, force_snake_case):
     :param bool force_snake_case:
     :rtype: Dict[unicode, unicode]
     """
-    return {to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k): v for k, v in d.items()}
+    return {
+        to_snake(keymap.get(k, k)) if force_snake_case else keymap.get(k, k): v
+        for k, v in d.items()
+    }
 
 
 def to_snake(value):
@@ -94,7 +95,7 @@ def to_snake(value):
     :param unicode value:
     :rtype: unicode
     """
-    return re.sub(r'((?<!^)[A-Z])', "_\\1", value.strip('<>-')).lower().replace("-", "_")
+    return re.sub(r"((?<!^)[A-Z])", "_\\1", value.strip("<>-")).lower().replace("-", "_")
 
 
 def load_json(json_str):
@@ -133,20 +134,22 @@ def load_yamlf(fpath, encoding):
         return yaml.safe_load(f)
 
 
-def load_csvf(fpath, fieldnames, encoding):
+def load_csvf(fpath: str, fieldnames: List[str], encoding: str) -> Iterator[str]:
     """
-    :param unicode fpath:
-    :param Optional[list[unicode]] fieldnames:
-    :param unicode encoding:
+    :param fpath:
+    :param fieldnames:
+    :param encoding:
     :rtype: List[dict]
     """
-    with open(fpath, mode='r', encoding=encoding) as f:
+    with open(fpath, mode="r", encoding=encoding) as f:
         snippet = f.read(8192)
         f.seek(0)
 
         dialect = csv.Sniffer().sniff(snippet)
         dialect.skipinitialspace = True
-        return list(csv.DictReader(f, fieldnames=fieldnames, dialect=dialect))
+        reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
+        for d in reader:
+            yield d
 
 
 def load_json_url(url):
@@ -158,7 +161,11 @@ def load_json_url(url):
 
 
 def dump_csv(
-    data: Iterable[dict], fieldnames: Sequence[str], with_header: bool = False, crlf: bool = False, tsv: bool = False
+    data: Iterable[dict],
+    fieldnames: Sequence[str],
+    with_header: bool = False,
+    crlf: bool = False,
+    tsv: bool = False,
 ) -> str:
     """
     :param data:
@@ -175,7 +182,7 @@ def dump_csv(
 
     with io.StringIO() as sio:
         dialect = get_dialect_name(crlf, tsv)
-        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect, extrasaction='ignore')
+        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore")
         if with_header:
             writer.writeheader()
         for x in data:
@@ -191,7 +198,7 @@ def save_csvf(
     encoding: str,
     with_header: bool = False,
     crlf: bool = False,
-    tsv: bool = False
+    tsv: bool = False,
 ) -> str:
     """
     :param data:
@@ -203,7 +210,7 @@ def save_csvf(
     :param tsv:
     :return: written path
     """
-    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+    with codecs.open(fpath, mode="w", encoding=encoding) as f:
         f.write(dump_csv(data, fieldnames, with_header=with_header, crlf=crlf, tsv=tsv))
         return fpath
 
@@ -214,7 +221,9 @@ def dump_json(data, indent=None):
     :param Optional[int] indent:
     :rtype: unicode
     """
-    return json.dumps(data, indent=indent, ensure_ascii=False, sort_keys=True, separators=(',', ': '))
+    return json.dumps(
+        data, indent=indent, ensure_ascii=False, sort_keys=True, separators=(",", ": ")
+    )
 
 
 def save_jsonf(data: Union[list, dict], fpath: str, encoding: str, indent=None) -> str:
@@ -225,7 +234,7 @@ def save_jsonf(data: Union[list, dict], fpath: str, encoding: str, indent=None) 
     :param indent:
     :rtype: written path
     """
-    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+    with codecs.open(fpath, mode="w", encoding=encoding) as f:
         f.write(dump_json(data, indent))
         return fpath
 
@@ -235,7 +244,9 @@ def dump_yaml(data):
     :param list | dict data:
     :rtype: unicode
     """
-    return yaml.dump(data, indent=2, encoding=None, allow_unicode=True, default_flow_style=False, Dumper=MyDumper)
+    return yaml.dump(
+        data, indent=2, encoding=None, allow_unicode=True, default_flow_style=False, Dumper=MyDumper
+    )
 
 
 def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
@@ -245,7 +256,7 @@ def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
     :param encoding: encoding
     :rtype: written path
     """
-    with codecs.open(fpath, mode='w', encoding=encoding) as f:
+    with codecs.open(fpath, mode="w", encoding=encoding) as f:
         f.write(dump_yaml(data))
         return fpath
 
@@ -268,11 +279,16 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
     def fill_spaces(word: str, width: int, center=False):
         """ aaa, 4 => ' aaa  ' """
         to_fills: int = width - string_width(word)
-        return f" {' ' * floor(to_fills / 2)}{word}{' ' * ceil(to_fills / 2)} " if center \
+        return (
+            f" {' ' * floor(to_fills / 2)}{word}{' ' * ceil(to_fills / 2)} "
+            if center
             else f" {word}{' ' * to_fills} "
+        )
 
     def to_record(r: dict) -> str:
-        return f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
+        return (
+            f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
+        )
 
     lf = "\n"
     return f"""
@@ -296,4 +312,4 @@ def string_width(word: str) -> int:
         >>> string_width('')
         0
     """
-    return sum(map(lambda x: 2 if east_asian_width(x) in 'FWA' else 1, word))
+    return sum(map(lambda x: 2 if east_asian_width(x) in "FWA" else 1, word))

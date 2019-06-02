@@ -8,10 +8,14 @@ OwlMixin
 [![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)]()
 
-**(ﾟ∀ﾟ) v3.0 have two breaking changes**
+**(ﾟ∀ﾟ) v4.0 have ??? breaking changes**
 
-1. Change return types of find to TOption[T]
-2. Remove OwlEnum.from_symbol (use from_value)
+* `OwlMixin`
+  * `from_csvf` -> `from_csvf_to_list`
+* `TList`
+  * `head` -> `take`
+  * `partial` -> `partition` (戻り値のleft/right逆)
+* csv??
 
 
 Motivation

@@ -146,7 +146,7 @@ id,name,ruby
 
 class TestToCsvf:
     """
-    Requirements: `from_csvf` and `from_csvf_to_list` are fine
+    Requirements: `from_csvf` are fine
     """
 
     def test_normal(self, tmpdir):
@@ -163,7 +163,7 @@ class TestToCsvf:
             == fpath
         )
         assert (
-            Human.from_csvf(fpath, fieldnames=["name", "id", "ruby"], encoding="euc-jp").to_dicts()
+            Human.from_csvf_to_list(fpath, fieldnames=["name", "id", "ruby"], encoding="euc-jp").to_dicts()
             == r.to_dicts()
         )
 
