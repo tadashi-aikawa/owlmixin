@@ -38,7 +38,8 @@ class InvalidTypeError(OwlMixinError):
     expected: Sequence[str]
     actual: str
 
-    def __init__(self, cls, prop: str, value: any, expected: Sequence[str], actual):
+    def __init__(self, *, cls, prop: str, value: any, expected: Sequence[str], actual):
+        super().__init__()
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
         self.value = value
@@ -67,7 +68,8 @@ class UnknownPropertiesError(OwlMixinError):
     cls: str
     props: List[str]
 
-    def __init__(self, cls, props: List[str]):
+    def __init__(self, *, cls, props: List[str]):
+        super().__init__()
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.props = props
 
@@ -94,7 +96,8 @@ class RequiredError(OwlMixinError):
     prop: str
     type_: str
 
-    def __init__(self, cls, prop: str, type_):
+    def __init__(self, *, cls, prop: str, type_):
+        super().__init__()
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
         self.type_ = f"{type_.__name__}"

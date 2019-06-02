@@ -29,17 +29,17 @@ def _is_generic(type_):
 def assert_extra(cls_properties, arg_dict, cls):
     extra_keys: set = set(arg_dict.keys()) - {n for n, t in cls_properties}
     if extra_keys:
-        raise UnknownPropertiesError(cls, sorted(extra_keys))
+        raise UnknownPropertiesError(cls=cls, props=sorted(extra_keys))
 
 
 def assert_none(value, type_, cls, name):
     if value is None:
-        raise RequiredError(cls, name, type_)
+        raise RequiredError(cls=cls, prop=name, type_=type_)
 
 
 def assert_types(value, types: tuple, cls, name):
     if not isinstance(value, types):
-        raise InvalidTypeError(cls, name, value, types, type(value))
+        raise InvalidTypeError(cls=cls, prop=name, value=value, expected=types, actual=type(value))
 
 
 def traverse(
