@@ -15,8 +15,17 @@ OwlMixin
   * `from_csvf` -> `from_csvf_to_list`
 * `TList`
   * `head` -> `take`
-  * `partial` -> `partition` (戻り値のleft/right逆)
-* csv??
+  * `partial` -> `partition` (switch left and right)
+* `transformers.XXX`
+  * Must use keyword arguments in
+    * `to_dict`
+    * `to_dicts`
+    * `to_json`
+    * `to_jsonf`
+    * `to_yaml`
+    * `to_yamlf`
+    * `to_csv`
+    * `to_csvf`
 
 
 Motivation
