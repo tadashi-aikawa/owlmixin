@@ -1,16 +1,15 @@
 # coding: utf-8
 
-from typing import List, Optional, Dict
-from mock import patch
-
 import os
+
 import pytest
+from mock import patch
 
 from owlmixin import OwlMixin, RequiredError
 from owlmixin.owlcollections import TDict, TList
+from owlmixin.owlenum import OwlEnum
 from owlmixin.samples import Japanese
 from owlmixin.transformers import TOption
-from owlmixin.owlenum import OwlEnum
 
 
 class Color(OwlEnum):
@@ -30,7 +29,7 @@ class Paper(OwlMixin):
 
     @classmethod
     def ___width(cls, v: int) -> str:
-        return f'{v} px'
+        return f"{v} px"
 
 
 class Address(OwlMixin):
@@ -51,11 +50,7 @@ class Animal(OwlMixin):
     @property
     def _dict(self):
         # Override because of returning YES or NO on is_big
-        return {
-            "id": self.id,
-            "name": self.name,
-            "is_big": "YES" if self.is_big else "NO"
-        }
+        return {"id": self.id, "name": self.name, "is_big": "YES" if self.is_big else "NO"}
 
 
 class Human(OwlMixin):
@@ -63,43 +58,31 @@ class Human(OwlMixin):
     name: str
     favorite_spots: TList[Spot]
     favorite_animal: Animal
-    friends_by_short_name: TOption[TDict['Human']]
+    friends_by_short_name: TOption[TDict["Human"]]
 
 
 SAMPLE_HUMAN: dict = {
     "id": 1,
     "name": "メンバ1",
     "favorite_spots": [
-        {
-            "names": ["spot1"],
-            "address": {
-                "name": "address1"
-            }
-        },
-        {
-            "names": ["spot21", "spot22"],
-            "color": "red"
-        }
+        {"names": ["spot1"], "address": {"name": "address1"}},
+        {"names": ["spot21", "spot22"], "color": "red"},
     ],
     "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
     "friends_by_short_name": {
         "toshi": {
             "id": 100,
             "name": "TOSHIKI",
-            "favorite_spots": [
-                {"names": ["toshi_spot"]}
-            ],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False}
+            "favorite_spots": [{"names": ["toshi_spot"]}],
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False},
         },
         "hide": {
             "id": 200,
             "name": "HIDEKI",
-            "favorite_spots": [
-                {"names": ["hide_spot"]}
-            ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True}
-        }
-    }
+            "favorite_spots": [{"names": ["hide_spot"]}],
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True},
+        },
+    },
 }
 
 SAMPLE_HUMAN2: dict = {
@@ -112,17 +95,15 @@ SAMPLE_HUMAN2: dict = {
             "id": 100,
             "name": "TOSHIKI",
             "favorite_spots": [],
-            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False}
+            "favorite_animal": {"id": 2, "name": "a cat", "is_big": False},
         },
         "hide": {
             "id": 200,
             "name": "HIDEKI",
-            "favorite_spots": [
-                {"names": ["hide_spot"]}
-            ],
-            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True}
-        }
-    }
+            "favorite_spots": [{"names": ["hide_spot"]}],
+            "favorite_animal": {"id": 3, "name": "a lion", "is_big": True},
+        },
+    },
 }
 
 
@@ -171,27 +152,32 @@ class TestFromDict:
         r: Human = Human.from_dict(SAMPLE_HUMAN)
         assert r.to_dict() == Human.from_dict(r).to_dict()
 
-        assert r.to_dict() == Human.from_dict({
-            'id': r.id,
-            'name': r.name,
-            'favorite_spots': r.favorite_spots,
-            'favorite_animal': r.favorite_animal,
-            'friends_by_short_name': r.friends_by_short_name
-        }).to_dict()
+        assert (
+            r.to_dict()
+            == Human.from_dict(
+                {
+                    "id": r.id,
+                    "name": r.name,
+                    "favorite_spots": r.favorite_spots,
+                    "favorite_animal": r.favorite_animal,
+                    "friends_by_short_name": r.friends_by_short_name,
+                }
+            ).to_dict()
+        )
 
     def test_from_dict_use_default_value(self):
-        r: Japanese = Japanese.from_dict({'name': 'taro'})
-        assert r.name == 'taro'
-        assert r.language == 'japanese'
+        r: Japanese = Japanese.from_dict({"name": "taro"})
+        assert r.name == "taro"
+        assert r.language == "japanese"
 
     def test_from_dict_not_use_default_value(self):
-        r: Japanese = Japanese.from_dict({'name': 'tom', 'language': 'english'})
-        assert r.name == 'tom'
-        assert r.language == 'english'
+        r: Japanese = Japanese.from_dict({"name": "tom", "language": "english"})
+        assert r.name == "tom"
+        assert r.language == "english"
 
     def test_from_dict_includes_any(self):
-        r: OnlyAny = OnlyAny.from_dict({'hoge': {'huga': [1, 2, 3]}})
-        assert r.hoge == {'huga': [1, 2, 3]}
+        r: OnlyAny = OnlyAny.from_dict({"hoge": {"huga": [1, 2, 3]}})
+        assert r.hoge == {"huga": [1, 2, 3]}
 
     def test_none(self):
         with pytest.raises(AttributeError):
@@ -252,7 +238,7 @@ class TestToDict:
         r: Human = Human.from_dict(SAMPLE_HUMAN)
 
         # Assert Option
-        assert r.favorite_spots[0].address.get().name == 'address1'
+        assert r.favorite_spots[0].address.get().name == "address1"
         assert r.favorite_spots[0].color.is_none()
         assert r.favorite_spots[1].address.is_none()
         assert r.favorite_spots[1].color.get() == Color.RED
@@ -262,39 +248,35 @@ class TestToDict:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": "red"}
+                {"names": ["spot21", "spot22"], "color": "red"},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
                 "toshi": {
                     "id": 100,
                     "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"]}
-                    ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                    "favorite_spots": [{"names": ["toshi_spot"]}],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
                 },
                 "hide": {
                     "id": 200,
                     "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"]}
-                    ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-                }
-            }
+                    "favorite_spots": [{"names": ["hide_spot"]}],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                },
+            },
         }
 
     def test_str_format(self):
         r: Human = Human.from_dict(SAMPLE_HUMAN)
 
-        assert r.str_format('{id}: {name}') == '1: メンバ1'
+        assert r.str_format("{id}: {name}") == "1: メンバ1"
 
     def test_ignore_none_false(self):
         r = Human.from_dict(SAMPLE_HUMAN)
 
         # Assert Option
-        assert r.favorite_spots[0].address.get().name == 'address1'
+        assert r.favorite_spots[0].address.get().name == "address1"
         assert r.favorite_spots[0].color.is_none()
         assert r.favorite_spots[1].address.is_none()
         assert r.favorite_spots[1].color.get() == Color.RED
@@ -304,29 +286,25 @@ class TestToDict:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}, "color": None},
-                {"names": ["spot21", "spot22"], "address": None, "color": "red"}
+                {"names": ["spot21", "spot22"], "address": None, "color": "red"},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
                 "toshi": {
                     "id": 100,
                     "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"], "address": None, "color": None}
-                    ],
+                    "favorite_spots": [{"names": ["toshi_spot"], "address": None, "color": None}],
                     "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
-                    "friends_by_short_name": None
+                    "friends_by_short_name": None,
                 },
                 "hide": {
                     "id": 200,
                     "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"], "address": None, "color": None}
-                    ],
+                    "favorite_spots": [{"names": ["hide_spot"], "address": None, "color": None}],
                     "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-                    "friends_by_short_name": None
-                }
-            }
+                    "friends_by_short_name": None,
+                },
+            },
         }
 
     def test_ignore_empty_true(self):
@@ -334,8 +312,8 @@ class TestToDict:
 
         # Assert Option
         assert r.favorite_spots == []
-        assert r.friends_by_short_name.get()['toshi'].favorite_spots == []
-        assert r.friends_by_short_name.get()['hide'].favorite_spots != []
+        assert r.friends_by_short_name.get()["toshi"].favorite_spots == []
+        assert r.friends_by_short_name.get()["hide"].favorite_spots != []
 
         expected = {
             "id": 1,
@@ -350,12 +328,10 @@ class TestToDict:
                 "hide": {
                     "id": 200,
                     "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"]}
-                    ],
+                    "favorite_spots": [{"names": ["hide_spot"]}],
                     "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-                }
-            }
+                },
+            },
         }
 
         assert expected == r.to_dict(ignore_empty=True)
@@ -367,27 +343,23 @@ class TestToDict:
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": Color.RED}
+                {"names": ["spot21", "spot22"], "color": Color.RED},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
             "friends_by_short_name": {
                 "toshi": {
                     "id": 100,
                     "name": "TOSHIKI",
-                    "favorite_spots": [
-                        {"names": ["toshi_spot"]}
-                    ],
-                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                    "favorite_spots": [{"names": ["toshi_spot"]}],
+                    "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
                 },
                 "hide": {
                     "id": 200,
                     "name": "HIDEKI",
-                    "favorite_spots": [
-                        {"names": ["hide_spot"]}
-                    ],
-                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-                }
-            }
+                    "favorite_spots": [{"names": ["hide_spot"]}],
+                    "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+                },
+            },
         }
 
 
@@ -400,16 +372,8 @@ class TestToDicts:
         assert spots[1].color.get() == Color.RED
 
         assert spots.to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {
-                    "name": "address1"
-                }
-            },
-            {
-                "names": ["spot21", "spot22"],
-                "color": "red"
-            }
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"], "color": "red"},
         ]
 
     def test_ignore_none_false(self):
@@ -420,22 +384,12 @@ class TestToDicts:
         assert spots[1].color.get() == Color.RED
 
         assert spots.to_dicts(ignore_none=False) == [
-            {
-                "names": ["spot1"],
-                "address": {
-                    "name": "address1"
-                },
-                "color": None
-            },
-            {
-                "names": ["spot21", "spot22"],
-                "address": None,
-                "color": "red"
-            }
+            {"names": ["spot1"], "address": {"name": "address1"}, "color": None},
+            {"names": ["spot21", "spot22"], "address": None, "color": "red"},
         ]
 
     def test_ignore_empty_true(self):
-        friends: TList[Human] = Human.from_dict(SAMPLE_HUMAN2).friends_by_short_name.get().to_values()
+        friends: TList[Human] = Human.from_dict(SAMPLE_HUMAN2).friends_by_short_name.get().to_list()
 
         # Assert Option
         assert friends[0].favorite_spots == []
@@ -450,11 +404,9 @@ class TestToDicts:
             {
                 "id": 200,
                 "name": "HIDEKI",
-                "favorite_spots": [
-                    {"names": ["hide_spot"]}
-                ],
+                "favorite_spots": [{"names": ["hide_spot"]}],
                 "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
-            }
+            },
         ]
 
         assert expected == friends.to_dicts(ignore_empty=True)
@@ -462,16 +414,8 @@ class TestToDicts:
     def test_force_value_false(self):
         spots = Human.from_dict(SAMPLE_HUMAN).favorite_spots
         assert spots.to_dicts(force_value=False) == [
-            {
-                "names": ["spot1"],
-                "address": {
-                    "name": "address1"
-                }
-            },
-            {
-                "names": ["spot21", "spot22"],
-                "color": Color.RED
-            }
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"], "color": Color.RED},
         ]
 
 
@@ -481,8 +425,14 @@ class TestFromDicts:
 
         assert len(r) == 2
         assert type(r) == TList
-        assert r[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
+        assert r[0].to_dict(force_value=False) == {
+            "names": ["spot1"],
+            "address": {"name": "address1"},
+        }
+        assert r[1].to_dict(force_value=False) == {
+            "names": ["spot21", "spot22"],
+            "color": Color.RED,
+        }
 
 
 class TestFromOptionalDicts:
@@ -491,8 +441,14 @@ class TestFromOptionalDicts:
 
         assert len(r.get()) == 2
         assert type(r.get()) == TList
-        assert r.get()[0].to_dict(force_value=False) == {"names": ["spot1"], "address": {"name": "address1"}}
-        assert r.get()[1].to_dict(force_value=False) == {"names": ["spot21", "spot22"], "color": Color.RED}
+        assert r.get()[0].to_dict(force_value=False) == {
+            "names": ["spot1"],
+            "address": {"name": "address1"},
+        }
+        assert r.get()[1].to_dict(force_value=False) == {
+            "names": ["spot21", "spot22"],
+            "color": Color.RED,
+        }
 
     def test_none(self):
         assert Human.from_optional_dicts(None).is_none()
@@ -513,25 +469,23 @@ class TestFromDictsByKey:
             "toshi": {
                 "id": 100,
                 "name": "TOSHIKI",
-                "favorite_spots": [
-                    {"names": ["toshi_spot"]}
-                ],
-                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                "favorite_spots": [{"names": ["toshi_spot"]}],
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
             },
             "hide": {
                 "id": 200,
                 "name": "HIDEKI",
-                "favorite_spots": [
-                    {"names": ["hide_spot"]}
-                ],
-                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-            }
+                "favorite_spots": [{"names": ["hide_spot"]}],
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+            },
         }
 
 
 class TestFromOptionalDictsByKey:
     def test_normal(self):
-        r: TOption[TDict[Human]] = Human.from_optional_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
+        r: TOption[TDict[Human]] = Human.from_optional_dicts_by_key(
+            SAMPLE_HUMAN["friends_by_short_name"]
+        )
 
         assert len(r.get()) == 2
         assert type(r.get()) == TDict
@@ -539,19 +493,15 @@ class TestFromOptionalDictsByKey:
             "toshi": {
                 "id": 100,
                 "name": "TOSHIKI",
-                "favorite_spots": [
-                    {"names": ["toshi_spot"]}
-                ],
-                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"}
+                "favorite_spots": [{"names": ["toshi_spot"]}],
+                "favorite_animal": {"id": 2, "name": "a cat", "is_big": "NO"},
             },
             "hide": {
                 "id": 200,
                 "name": "HIDEKI",
-                "favorite_spots": [
-                    {"names": ["hide_spot"]}
-                ],
-                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"}
-            }
+                "favorite_spots": [{"names": ["hide_spot"]}],
+                "favorite_animal": {"id": 3, "name": "a lion", "is_big": "YES"},
+            },
         }
 
     def test_none(self):
@@ -563,73 +513,117 @@ class TestFromOptionalDictsByKey:
         assert len(r.get()) == 0
 
 
-class TestFromCsvf:
+class TestFromCsvfToList:
     def test_normal_without_header(self):
-        rs = Paper.from_csvf("tests/csv/papers_without_header.csv", ("name", "width", "height"))
+        rs = Paper.from_csvf_to_list(
+            "tests/csv/papers_without_header.csv", ("name", "width", "height")
+        )
 
-        assert rs.to_dicts() == [
-            {"name": "紙1", "width": "100 px", "height": 10},
-            {"name": "紙2", "width": "200 px", "height": 20},
-            {"name": "紙3", "width": "300 px", "height": 30}
-        ]
+        for _ in range(2):
+            assert rs.to_dicts() == [
+                {"name": "紙1", "width": "100 px", "height": 10},
+                {"name": "紙2", "width": "200 px", "height": 20},
+                {"name": "紙3", "width": "300 px", "height": 30},
+            ]
 
     def test_normal_with_header(self):
-        rs = Paper.from_csvf("tests/csv/papers_with_header.csv")
+        rs = Paper.from_csvf_to_list("tests/csv/papers_with_header.csv")
 
-        assert rs.to_dicts() == [
-            {"name": "紙1", "width": "100 px", "height": 10},
-            {"name": "紙2", "width": "200 px", "height": 20},
-            {"name": "紙3", "width": "300 px", "height": 30}
-        ]
+        for _ in range(2):
+            assert rs.to_dicts() == [
+                {"name": "紙1", "width": "100 px", "height": 10},
+                {"name": "紙2", "width": "200 px", "height": 20},
+                {"name": "紙3", "width": "300 px", "height": 30},
+            ]
 
     def test_normal_separated_by_tab(self):
-        rs = Paper.from_csvf("tests/csv/papers_tab_separated.csv", ("name", "width", "height"))
+        rs = Paper.from_csvf_to_list(
+            "tests/csv/papers_tab_separated.csv", ("name", "width", "height")
+        )
 
-        assert rs.to_dicts() == [
-            {"name": "紙1", "width": "100 px", "height": 10},
-            {"name": "紙2", "width": "200 px", "height": 20},
-            {"name": "紙3", "width": "300 px", "height": 30}
-        ]
+        for _ in range(2):
+            assert rs.to_dicts() == [
+                {"name": "紙1", "width": "100 px", "height": 10},
+                {"name": "紙2", "width": "200 px", "height": 20},
+                {"name": "紙3", "width": "300 px", "height": 30},
+            ]
 
     def test_normal_shiftjis(self):
-        rs = Paper.from_csvf("tests/csv/papers_shiftjis.csv", encoding='shift-jis')
+        rs = Paper.from_csvf_to_list("tests/csv/papers_shiftjis.csv", encoding="shift-jis")
+
+        for _ in range(2):
+            assert rs.to_dicts() == [
+                {"name": "紙1", "width": "100 px", "height": 10},
+                {"name": "紙2", "width": "200 px", "height": 20},
+                {"name": "紙3", "width": "300 px", "height": 30},
+            ]
+
+
+class TestFromCsvfToIterator:
+    def test_normal_without_header(self):
+        rs = Paper.from_csvf_to_iterator(
+            "tests/csv/papers_without_header.csv", ("name", "width", "height")
+        )
 
         assert rs.to_dicts() == [
             {"name": "紙1", "width": "100 px", "height": 10},
             {"name": "紙2", "width": "200 px", "height": 20},
-            {"name": "紙3", "width": "300 px", "height": 30}
+            {"name": "紙3", "width": "300 px", "height": 30},
         ]
+        assert rs.to_dicts() == []
+
+    def test_normal_with_header(self):
+        rs = Paper.from_csvf_to_iterator("tests/csv/papers_with_header.csv")
+
+        assert rs.to_dicts() == [
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30},
+        ]
+        assert rs.to_dicts() == []
+
+    def test_normal_separated_by_tab(self):
+        rs = Paper.from_csvf_to_iterator(
+            "tests/csv/papers_tab_separated.csv", ("name", "width", "height")
+        )
+
+        assert rs.to_dicts() == [
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30},
+        ]
+        assert rs.to_dicts() == []
+
+    def test_normal_shiftjis(self):
+        rs = Paper.from_csvf_to_iterator("tests/csv/papers_shiftjis.csv", encoding="shift-jis")
+
+        assert rs.to_dicts() == [
+            {"name": "紙1", "width": "100 px", "height": 10},
+            {"name": "紙2", "width": "200 px", "height": 20},
+            {"name": "紙3", "width": "300 px", "height": 30},
+        ]
+        assert rs.to_dicts() == []
 
 
-@patch('owlmixin.util.load_json_url')
+@patch("owlmixin.util.load_json_url")
 class TestFromJsonUrl:
     def test_normal(self, load_json_url):
         load_json_url.return_value = {
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
             "favorite_spots": [
-                {
-                    "names": ["spot1"],
-                    "address": {"name": "address1"}
-                },
-                {
-                    "names": ["spot21", "spot22"]
-                }
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]},
             ],
             "id": 1,
-            "name": "メンバ1"
+            "name": "メンバ1",
         }
 
         assert Human.from_json_url("hogehoge").to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {
-                    "names": ["spot1"],
-                    "address": {"name": "address1"}
-                },
-                {
-                    "names": ["spot21", "spot22"]
-                }
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -637,7 +631,8 @@ class TestFromJsonUrl:
 
 class TestFromJson:
     def test_normal(self):
-        r = Human.from_json("""{
+        r = Human.from_json(
+            """{
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": false},
             "favorite_spots": [
                 {
@@ -651,19 +646,15 @@ class TestFromJson:
             "id": 1,
             "name": "メンバ1"
         }
-        """)
+        """
+        )
 
         assert r.to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {
-                    "names": ["spot1"],
-                    "address": {"name": "address1"}
-                },
-                {
-                    "names": ["spot21", "spot22"]
-                }
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -671,33 +662,23 @@ class TestFromJson:
 
 class TestFromJsonf:
     def test_utf8(self):
-        assert Human.from_jsonf('tests/json/human_utf8.json').to_dict() == {
+        assert Human.from_jsonf("tests/json/human_utf8.json").to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {
-                    "names": ["spot1"],
-                    "address": {"name": "address1"}
-                },
-                {
-                    "names": ["spot21", "spot22"]
-                }
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
     def test_shiftjis(self):
-        assert Human.from_jsonf('tests/json/human_shiftjis.json', encoding='sjis').to_dict() == {
+        assert Human.from_jsonf("tests/json/human_shiftjis.json", encoding="sjis").to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
-                {
-                    "names": ["spot1"],
-                    "address": {"name": "address1"}
-                },
-                {
-                    "names": ["spot21", "spot22"]
-                }
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -705,7 +686,8 @@ class TestFromJsonf:
 
 class TestFromJsonToList:
     def test_normal(self):
-        r = Spot.from_json_to_list("""[
+        r = Spot.from_json_to_list(
+            """[
             {
                 "names": ["spot1"],
                 "address": {"name": "address1"}
@@ -714,46 +696,35 @@ class TestFromJsonToList:
                 "names": ["spot21", "spot22"]
             }
         ]
-        """)
+        """
+        )
 
         assert r.to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {"name": "address1"}
-            },
-            {
-                "names": ["spot21", "spot22"]
-            }
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
         ]
 
 
 class TestFromJsonfToList:
     def test_utf8(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_utf8.json').to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {"name": "address1"}
-            },
-            {
-                "names": ["スポット21", "スポット22"]
-            }
+        assert Spot.from_jsonf_to_list("tests/json/spots_utf8.json").to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["スポット21", "スポット22"]},
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_jsonf_to_list('tests/json/spots_shiftjis.json', encoding='sjis').to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {"name": "address1"}
-            },
-            {
-                "names": ["スポット21", "スポット22"]
-            }
+        assert Spot.from_jsonf_to_list(
+            "tests/json/spots_shiftjis.json", encoding="sjis"
+        ).to_dicts() == [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["スポット21", "スポット22"]},
         ]
 
 
 class TestFromYaml:
     def test_normal(self):
-        r = Human.from_yaml("""
+        r = Human.from_yaml(
+            """
             id: 1
             name: "メンバ1"
             favorite_spots:
@@ -768,14 +739,15 @@ class TestFromYaml:
               id: 1
               name: "a dog"
               is_big: false
-        """)
+        """
+        )
 
         assert r.to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -783,23 +755,23 @@ class TestFromYaml:
 
 class TestFromYamlf:
     def test_utf8(self):
-        assert Human.from_yamlf('tests/yaml/human_utf8.yaml').to_dict() == {
+        assert Human.from_yamlf("tests/yaml/human_utf8.yaml").to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
 
     def test_shiftjis(self):
-        assert Human.from_yamlf('tests/yaml/human_shiftjis.yaml', encoding='sjis').to_dict() == {
+        assert Human.from_yamlf("tests/yaml/human_shiftjis.yaml", encoding="sjis").to_dict() == {
             "id": 1,
             "name": "メンバ1",
             "favorite_spots": [
                 {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"]}
+                {"names": ["spot21", "spot22"]},
             ],
             "favorite_animal": {"id": 1, "name": "a dog", "is_big": "NO"},
         }
@@ -807,7 +779,8 @@ class TestFromYamlf:
 
 class TestFromYamlToList:
     def test_normal(self):
-        r = Spot.from_yaml_to_list("""
+        r = Spot.from_yaml_to_list(
+            """
             - address:
                 name: address1
               names:
@@ -815,102 +788,118 @@ class TestFromYamlToList:
             - names:
                 - spot21
                 - spot22
-        """)
+        """
+        )
 
         assert r.to_dicts() == [
-            {
-                "names": ["spot1"],
-                "address": {"name": "address1"}
-            },
-            {
-                "names": ["spot21", "spot22"]
-            }
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
         ]
 
 
 class TestFromYamlfToList:
     def test_utf8(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_utf8.yaml').to_dicts() == [
+        assert Spot.from_yamlf_to_list("tests/yaml/spots_utf8.yaml").to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
-            {"names": ["スポット21", "スポット22"]}
+            {"names": ["スポット21", "スポット22"]},
         ]
 
     def test_shiftjis(self):
-        assert Spot.from_yamlf_to_list('tests/yaml/spots_shiftjis.yaml', encoding='sjis').to_dicts() == [
+        assert Spot.from_yamlf_to_list(
+            "tests/yaml/spots_shiftjis.yaml", encoding="sjis"
+        ).to_dicts() == [
             {"names": ["spot1"], "address": {"name": "address1"}},
-            {"names": ["スポット21", "スポット22"]}
+            {"names": ["スポット21", "スポット22"]},
         ]
 
 
 class TestToJson:
     def test_normal_from_dict(self):
-        r = Human.from_dict({
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": "red"}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False}
-        })
+        r = Human.from_dict(
+            {
+                "id": 1,
+                "name": "メンバ1",
+                "favorite_spots": [
+                    {"names": ["spot1"], "address": {"name": "address1"}},
+                    {"names": ["spot21", "spot22"], "color": "red"},
+                ],
+                "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+            }
+        )
 
-        assert r.to_json(ignore_none=True) == """{
+        assert (
+            r.to_json(ignore_none=True)
+            == """{
 "favorite_animal": {"id": 1,"is_big": "NO","name": "a dog"},
 "favorite_spots": [{"address": {"name": "address1"},"names": ["spot1"]},{"color": "red","names": ["spot21","spot22"]}],
 "id": 1,
 "name": "メンバ1"
 }
-""".replace("\n", "")
+""".replace(
+                "\n", ""
+            )
+        )
 
     def test_normal_from_list(self):
-        r = Spot.from_dicts([
-            {"names": ["spot1"], "address": {"name": "address1"}},
-            {"names": ["spot21", "spot22"]}
-        ])
+        r = Spot.from_dicts(
+            [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
+        )
 
-        assert r.to_json(ignore_none=True) == """[
+        assert (
+            r.to_json(ignore_none=True)
+            == """[
 {"address": {"name": "address1"},"names": ["spot1"]},{"names": ["spot21","spot22"]}
 ]
-""".replace("\n", "")
+""".replace(
+                "\n", ""
+            )
+        )
 
 
 class TestToJsonf:
     """
     Requirements: `from_jsonf` and `from_jsonf_to_list` are fine
     """
+
     def test_normal_from_dict(self, tmpdir):
         r = Spot.from_dict({"names": ["spot1"], "address": {"name": "あどれす"}})
 
         fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.json")
 
-        assert r.to_jsonf(fpath, encoding='euc-jp', ignore_none=True) == fpath
-        assert Spot.from_jsonf(fpath, encoding='euc-jp').to_dict() == r.to_dict()
+        assert r.to_jsonf(fpath, encoding="euc-jp", ignore_none=True) == fpath
+        assert Spot.from_jsonf(fpath, encoding="euc-jp").to_dict() == r.to_dict()
 
     def test_normal_from_list(self, tmpdir):
-        r = Spot.from_dicts([
-            {"names": ["spot1"], "address": {"name": "あどれす"}},
-            {"names": ["spot21", "spot22"], "color": "red"}
-        ])
+        r = Spot.from_dicts(
+            [
+                {"names": ["spot1"], "address": {"name": "あどれす"}},
+                {"names": ["spot21", "spot22"], "color": "red"},
+            ]
+        )
 
         fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.json")
 
-        assert r.to_jsonf(fpath, encoding='sjis', ignore_none=True) == fpath
-        assert Spot.from_jsonf_to_list(fpath, encoding='sjis').to_dicts() == r.to_dicts()
+        assert r.to_jsonf(fpath, encoding="sjis", ignore_none=True) == fpath
+        assert Spot.from_jsonf_to_list(fpath, encoding="sjis").to_dicts() == r.to_dicts()
 
 
 class TestToPrettyJson:
     def test_normal(self):
-        r = Human.from_dict({
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": "red"}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": True},
-        })
+        r = Human.from_dict(
+            {
+                "id": 1,
+                "name": "メンバ1",
+                "favorite_spots": [
+                    {"names": ["spot1"], "address": {"name": "address1"}},
+                    {"names": ["spot21", "spot22"], "color": "red"},
+                ],
+                "favorite_animal": {"id": 1, "name": "a dog", "is_big": True},
+            }
+        )
 
-        assert r.to_pretty_json(ignore_none=True) == """
+        assert (
+            r.to_pretty_json(ignore_none=True)
+            == """
 {
     "favorite_animal": {
         "id": 1,
@@ -938,21 +927,26 @@ class TestToPrettyJson:
     "name": "メンバ1"
 }
 """.strip()
+        )
 
 
 class TestToYaml:
     def test_normal_from_dict(self):
-        r = Human.from_dict({
-            "id": 1,
-            "name": "メンバ1",
-            "favorite_spots": [
-                {"names": ["spot1"], "address": {"name": "address1"}},
-                {"names": ["spot21", "spot22"], "color": "red"}
-            ],
-            "favorite_animal": {"id": 1, "name": "a dog", "is_big": False}
-        })
+        r = Human.from_dict(
+            {
+                "id": 1,
+                "name": "メンバ1",
+                "favorite_spots": [
+                    {"names": ["spot1"], "address": {"name": "address1"}},
+                    {"names": ["spot21", "spot22"], "color": "red"},
+                ],
+                "favorite_animal": {"id": 1, "name": "a dog", "is_big": False},
+            }
+        )
 
-        assert r.to_yaml(ignore_none=True) == """
+        assert (
+            r.to_yaml(ignore_none=True)
+            == """
 favorite_animal:
   id: 1
   is_big: 'NO'
@@ -969,14 +963,19 @@ favorite_spots:
 id: 1
 name: メンバ1
 """.lstrip()
+        )
 
     def test_normal_from_list(self):
-        r = Spot.from_dicts([
-            {"names": ["spot1"], "address": {"name": "address1"}},
-            {"names": ["spot21", "spot22"], "color": "red"}
-        ])
+        r = Spot.from_dicts(
+            [
+                {"names": ["spot1"], "address": {"name": "address1"}},
+                {"names": ["spot21", "spot22"], "color": "red"},
+            ]
+        )
 
-        assert r.to_yaml(ignore_none=True) == """
+        assert (
+            r.to_yaml(ignore_none=True)
+            == """
 - address:
     name: address1
   names:
@@ -986,27 +985,31 @@ name: メンバ1
     - spot21
     - spot22
 """.lstrip()
+        )
 
 
 class TestToYamlf:
     """
     Requirements: `from_yamlf` and `from_yamlf_to_list` are fine
     """
+
     def test_normal_from_dict(self, tmpdir):
         r = Spot.from_dict({"names": ["spot1"], "address": {"name": "あどれす"}})
 
         fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.yml")
 
-        assert r.to_yamlf(fpath, encoding='euc-jp', ignore_none=True) == fpath
-        assert Spot.from_yamlf(fpath, encoding='euc-jp').to_dict() == r.to_dict()
+        assert r.to_yamlf(fpath, encoding="euc-jp", ignore_none=True) == fpath
+        assert Spot.from_yamlf(fpath, encoding="euc-jp").to_dict() == r.to_dict()
 
     def test_normal_from_list(self, tmpdir):
-        r = Spot.from_dicts([
-            {"names": ["spot1"], "address": {"name": "あどれす"}},
-            {"names": ["spot21", "spot22"], "color": "red"}
-        ])
+        r = Spot.from_dicts(
+            [
+                {"names": ["spot1"], "address": {"name": "あどれす"}},
+                {"names": ["spot21", "spot22"], "color": "red"},
+            ]
+        )
 
         fpath = os.path.join(tmpdir.mkdir("tmp").strpath, "test.yml")
 
-        assert r.to_yamlf(fpath, encoding='sjis', ignore_none=True) == fpath
-        assert Spot.from_yamlf_to_list(fpath, encoding='sjis').to_dicts() == r.to_dicts()
+        assert r.to_yamlf(fpath, encoding="sjis", ignore_none=True) == fpath
+        assert Spot.from_yamlf_to_list(fpath, encoding="sjis").to_dicts() == r.to_dicts()

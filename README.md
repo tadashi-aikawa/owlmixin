@@ -8,10 +8,24 @@ OwlMixin
 [![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)]()
 
-**(ﾟ∀ﾟ) v3.0 have two breaking changes**
+**(ﾟ∀ﾟ) v4.0 have ??? breaking changes**
 
-1. Change return types of find to TOption[T]
-2. Remove OwlEnum.from_symbol (use from_value)
+* `OwlMixin`
+  * Must use keyword arguments in `from_XXX` and `to_XXX` except for some ones
+  * `from_csvf` -> `from_csvf_to_list`
+* `TList`
+  * `head` -> `take`
+  * `partial` -> `partition` (switch left and right)
+* `transformers.XXX`
+  * Must use keyword arguments in
+    * `to_dict`
+    * `to_dicts`
+    * `to_json`
+    * `to_jsonf`
+    * `to_yaml`
+    * `to_yamlf`
+    * `to_csv`
+    * `to_csvf`
 
 
 Motivation
@@ -41,10 +55,7 @@ Example
 -------
 
 ```python
-from owlmixin import OwlMixin
-from owlmixin.owlenum import OwlEnum
-from owlmixin.owloption import TOption
-from owlmixin.owlcollections import TList
+from owlmixin import OwlMixin, OwlEnum, TOption, TList
 
 class Color(OwlEnum):
     RED = "red"
@@ -69,7 +80,11 @@ jiro = Human.from_dict({
         {"id": 2, "name": "orange", "color": "green"}
     ]
 })
+```
 
+Then...
+
+```
 >>> jiro.id
 10
 >>> jiro.name
@@ -102,51 +117,52 @@ id,name,color
 
 You can also use methods chains as following.
 
-> Below sample code uses `kachayev/fn.py <https://github.com/kachayev/fn.py>`_, great package!!
+> Below sample code uses [kachayev/fn.py](https://github.com/kachayev/fn.py), great package!!
 
 
 ```python
->>> from owlmixin.owloption import TOption
->>> from owlmixin.owlcollections import TList
->>>
->>> from fn import _
->>>
->>>
->>> class Repository(OwlMixin):
-...     id: int
-...     name: str
-...     description: TOption[str]
-...     stargazers_count: int
-...
->>>
->>> class GithubRepository(OwlMixin):
-...     total_count: int
-...     incomplete_results: bool
-...     items: TList[Repository]
-...
->>>
+from owlmixin import OwlMixin, TOption, TIterator
+
+from fn import _
+
+
+class Repository(OwlMixin):
+    id: int
+    name: str
+    description: TOption[str]
+    stargazers_count: int
+
+
+class GithubRepository(OwlMixin):
+    total_count: int
+    incomplete_results: bool
+    items: TIterator[Repository]
+```
+
+Then...
+
+```python
 >>> print(
-...     GithubRepository \
-...         .from_json_url("https://api.github.com/search/repositories?q=git") \
-...         .items \
-...         .filter(_.stargazers_count > 100) \
-...         .order_by(_.stargazers_count, True) \
-...         .head(5) \
+...     GithubRepository
+...         .from_json_url("https://api.github.com/search/repositories?q=git")
+...         .items
+...         .filter(_.stargazers_count > 100)
+...         .order_by(_.stargazers_count, True)
+...         .take(5)
 ...         .emap(lambda v, i: {
 ...             'RANK': i+1,
 ...             'STAR': v.stargazers_count,
 ...             'NAME': v.name,
 ...             'DESCRIPTION': v.description
-...         }) \
+...         })
 ...         .to_csv(fieldnames=["RANK", "STAR", "NAME", "DESCRIPTION"], with_header=True)
 ... )
-
 RANK,STAR,NAME,DESCRIPTION
-1,50787,gitignore,A collection of useful .gitignore templates
-2,19308,gogs,Gogs is a painless self-hosted Git service.
-3,17750,git,Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.
-4,10744,hub,hub helps you win at git.
-5,10338,tips,Most commonly used git tips and tricks.
+1,84643,gitignore,A collection of useful .gitignore templates
+2,30456,gogs,Gogs is a painless self-hosted Git service.
+3,29908,git-flight-rules,Flight rules for git
+4,27704,git,Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.
+5,15541,tips,Most commonly used git tips and tricks.
 ```
 
 Don't you think smart?

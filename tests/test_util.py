@@ -1,17 +1,15 @@
 # coding: utf-8
-
-from yaml.constructor import ConstructorError
-from owlmixin import util
+# pylint: disable=no-self-use
 
 import pytest
+from yaml.constructor import ConstructorError
+
+from owlmixin import util
 
 
 class TestReplaceKeys:
     def test_need_not_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
+        keymap = {"self": "_self", "before": "after"}
         d = {
             "before": 1,
             "before2": 2,
@@ -31,16 +29,13 @@ class TestReplaceKeys:
             "UpperCamelCase": True,
             "lowerCamelCase": True,
             "snake_case": True,
-            "chain-case": True
+            "chain-case": True,
         }
 
         assert util.replace_keys(d, keymap, False) == expected
 
     def test_need_must_snake(self):
-        keymap = {
-            "self": "_self",
-            "before": "after"
-        }
+        keymap = {"self": "_self", "before": "after"}
         d = {
             "before": 1,
             "before2": 2,
@@ -49,7 +44,7 @@ class TestReplaceKeys:
             "UpperCamelCase": True,
             "lowerCamelCase": True,
             "snake_case": True,
-            "chain-case": True
+            "chain-case": True,
         }
 
         expected = {
@@ -60,7 +55,7 @@ class TestReplaceKeys:
             "upper_camel_case": True,
             "lower_camel_case": True,
             "snake_case": True,
-            "chain_case": True
+            "chain_case": True,
         }
 
         assert util.replace_keys(d, keymap, True) == expected
@@ -87,16 +82,15 @@ class TestToSnake:
 
 class TestLoadYaml:
     def test(self):
-        actual = util.load_yaml('''
+        actual = util.load_yaml(
+            """
 id: 1
 names:
   - tadashi
   - aikawa
-        ''')
-        assert actual == {
-            "id": 1,
-            "names": ['tadashi', 'aikawa']
-        }
+        """
+        )
+        assert actual == {"id": 1, "names": ["tadashi", "aikawa"]}
 
     def test_yaml_load_vulnerability(self):
         with pytest.raises(ConstructorError):
@@ -105,19 +99,14 @@ names:
 
 class TestLoadYamlf:
     def test(self):
-        assert util.load_yamlf('tests/yaml/spots_utf8.yaml', 'utf-8') == [
-            {
-                "address": {"name": "address1"},
-                "names": ["spot1"]
-            },
-            {
-                "names": ["スポット21", "スポット22"]
-            }
+        assert util.load_yamlf("tests/yaml/spots_utf8.yaml", "utf-8") == [
+            {"address": {"name": "address1"}, "names": ["spot1"]},
+            {"names": ["スポット21", "スポット22"]},
         ]
 
     def test_yaml_load_vulnerability(self):
         with pytest.raises(ConstructorError):
-            util.load_yamlf('tests/yaml/vulnerability.yaml', 'utf-8')
+            util.load_yamlf("tests/yaml/vulnerability.yaml", "utf-8")
 
 
 class TestDumpTable:
@@ -130,8 +119,11 @@ class TestDumpTable:
 | 3   | いchiro  |                  |
 """.lstrip()
 
-        assert expected == util.dump_table([
-            {'id': 1, 'name': 'Ichiro'},
-            {'id': 2, 'name': 'イチロー'},
-            {'id': 3, 'name': 'いchiro', 'とてもながい名前': ''},
-        ], ['id', 'name', 'とてもながい名前'])
+        assert expected == util.dump_table(
+            [
+                {"id": 1, "name": "Ichiro"},
+                {"id": 2, "name": "イチロー"},
+                {"id": 3, "name": "いchiro", "とてもながい名前": ""},
+            ],
+            ["id", "name", "とてもながい名前"],
+        )
