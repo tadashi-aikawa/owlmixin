@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>OwlMixin &#8212; owlmixin 3.1.1 documentation</title>
+    <title>OwlMixin &#8212; owlmixin 4.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 4.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -52,12 +52,12 @@
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
-<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">OwlMixin</span><span class="p">,</span> <span class="n">TOption</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TList</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 
 
-<span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">})</span>
     <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;mewing&quot;</span><span class="p">})</span>
 
@@ -65,29 +65,29 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
 
 
-<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">OwlEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">OwlEnum</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
     <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
     <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">Food</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Food</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">names_by_lang</span><span class="p">:</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TDict</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
 
 
-<span class="k">class</span> <span class="nc">Human</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Human</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">favorites</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Food</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">Machine</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Machine</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
 
 
-<span class="k">class</span> <span class="nc">Japanese</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Japanese</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;japanese&#39;</span>
 </pre></div>
@@ -98,7 +98,7 @@
 <em class="property">class </em><code class="descclassname">owlmixin.</code><code class="descname">OwlMixin</code><a class="reference internal" href="../_modules/owlmixin.html#OwlMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_dict">
-<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>d: dict</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>d: dict</em>, <em>*</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -248,7 +248,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dict">
-<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: Optional[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dict</code><span class="sig-paren">(</span><em>d: Optional[dict], *, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict to optional instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -290,7 +290,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_dicts">
-<em class="property">classmethod </em><code class="descname">from_dicts</code><span class="sig-paren">(</span><em>ds: List[dict], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_dicts</code><span class="sig-paren">(</span><em>ds: List[dict], *, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From list of dict to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -320,8 +320,39 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_iterable_dicts">
+<em class="property">classmethod </em><code class="descname">from_iterable_dicts</code><span class="sig-paren">(</span><em>ds: Iterable[dict], *, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_iterable_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_iterable_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>From iterable dict to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> – Iterable dict</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterator</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">([</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Tom&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: Optional[List[dict]], force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts</code><span class="sig-paren">(</span><em>ds: Optional[List[dict]], *, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TList[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>From list of dict to optional list of instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -347,8 +378,35 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_optional_iterable_dicts">
+<em class="property">classmethod </em><code class="descname">from_optional_iterable_dicts</code><span class="sig-paren">(</span><em>ds: Optional[Iterable[dict]], *, force_snake_case: bool = True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TIterator[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_iterable_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_iterable_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>From iterable dict to optional iterable instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> – Iterable dict</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable instance</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">([])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_dicts_by_key">
-<em class="property">classmethod </em><code class="descname">from_dicts_by_key</code><span class="sig-paren">(</span><em>ds: dict</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts_by_key" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_dicts_by_key</code><span class="sig-paren">(</span><em>ds: dict</em>, <em>*</em>, <em>force_snake_case: bool = True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_dicts_by_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict of dict to dict of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -379,7 +437,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_optional_dicts_by_key">
-<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: Optional[dict], force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_optional_dicts_by_key</code><span class="sig-paren">(</span><em>ds: Optional[dict], *, force_snake_case=True, force_cast: bool = False, restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[owlmixin.owlcollections.TDict[T]]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_optional_dicts_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_optional_dicts_by_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>From dict of dict to optional dict of instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -406,7 +464,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_json">
-<em class="property">classmethod </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From json string to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -443,7 +501,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_jsonf">
-<em class="property">classmethod </em><code class="descname">from_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From json file path to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -463,7 +521,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_json_to_list">
-<em class="property">classmethod </em><code class="descname">from_json_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_to_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_json_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From json string to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -493,8 +551,39 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_json_to_iterator">
+<em class="property">classmethod </em><code class="descname">from_json_to_iterator</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_to_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_to_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json string to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Json string</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable instance</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json_to_iterator</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;[</span>
+<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
+<span class="gp">... </span><span class="s1">   {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
+<span class="gp">... </span><span class="s1">]&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_jsonf_to_list">
-<em class="property">classmethod </em><code class="descname">from_jsonf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf_to_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_jsonf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From json file path to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -513,8 +602,28 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_jsonf_to_iterator">
+<em class="property">classmethod </em><code class="descname">from_jsonf_to_iterator</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_jsonf_to_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_jsonf_to_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>From json file path to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Json file path</p></li>
+<li><p><strong>encoding</strong> – Json file encoding</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_yaml">
-<em class="property">classmethod </em><code class="descname">from_yaml</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_yaml</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From yaml string to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -553,7 +662,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_yamlf">
-<em class="property">classmethod </em><code class="descname">from_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From yaml file path to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -573,7 +682,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_yaml_to_list">
-<em class="property">classmethod </em><code class="descname">from_yaml_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml_to_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_yaml_to_list</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From yaml string to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -611,8 +720,48 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_yaml_to_iterator">
+<em class="property">classmethod </em><code class="descname">from_yaml_to_iterator</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yaml_to_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yaml_to_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>From yaml string to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Yaml string</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable instance</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml_to_iterator</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">- id: 1</span>
+<span class="gp">... </span><span class="s1">  name: Tom</span>
+<span class="gp">... </span><span class="s1">  favorites:</span>
+<span class="gp">... </span><span class="s1">    - name: Apple</span>
+<span class="gp">... </span><span class="s1">- id: 2</span>
+<span class="gp">... </span><span class="s1">  name: John</span>
+<span class="gp">... </span><span class="s1">  favorites:</span>
+<span class="gp">... </span><span class="s1">    - name: Orange</span>
+<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human1</span> <span class="o">=</span> <span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human1</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;John&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="o">.</span><span class="n">next_at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">human1</span><span class="o">.</span><span class="n">favorites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Orange&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_yamlf_to_list">
-<em class="property">classmethod </em><code class="descname">from_yamlf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf_to_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_yamlf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From yaml file path to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -631,8 +780,28 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="owlmixin.OwlMixin.from_csvf">
-<em class="property">classmethod </em><code class="descname">from_csvf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>fieldnames: Optional[Sequence[str]] = None</em>, <em>encoding: str = 'utf8'</em>, <em>force_snake_case: bool = True</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf" title="Permalink to this definition">¶</a></dt>
+<dt id="owlmixin.OwlMixin.from_yamlf_to_iterator">
+<em class="property">classmethod </em><code class="descname">from_yamlf_to_iterator</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_yamlf_to_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_yamlf_to_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>From yaml file path to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Yaml file path</p></li>
+<li><p><strong>encoding</strong> – Yaml file encoding</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>force_cast</strong> – Cast forcibly if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_csvf_to_list">
+<em class="property">classmethod </em><code class="descname">from_csvf_to_list</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>fieldnames: Optional[Sequence[str]] = None</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case: bool = True</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf_to_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>From csv file path to list of instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -651,8 +820,28 @@ owlmixin.errors.RequiredError:
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="owlmixin.OwlMixin.from_csvf_to_iterator">
+<em class="property">classmethod </em><code class="descname">from_csvf_to_iterator</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>fieldnames: Optional[Sequence[str]] = None</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>force_snake_case: bool = True</em>, <em>restrict: bool = True</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[T]<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_csvf_to_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_csvf_to_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>From csv file path to iterable instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> – Csv file path</p></li>
+<li><p><strong>fieldnames</strong> – Specify csv header names if not included in the file</p></li>
+<li><p><strong>encoding</strong> – Csv file encoding</p></li>
+<li><p><strong>force_snake_case</strong> – Keys are transformed to snake case in order to compliant PEP8 if True</p></li>
+<li><p><strong>restrict</strong> – Prohibit extra parameters if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable Instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="owlmixin.OwlMixin.from_json_url">
-<em class="property">classmethod </em><code class="descname">from_json_url</code><span class="sig-paren">(</span><em>url: str</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_url" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_json_url</code><span class="sig-paren">(</span><em>url: str</em>, <em>*</em>, <em>force_snake_case=True</em>, <em>force_cast: bool = False</em>, <em>restrict: bool = False</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin.html#OwlMixin.from_json_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.OwlMixin.from_json_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>From url which returns json to instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -698,7 +887,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_dict">
-<code class="descname">to_dict</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#owlmixin.OwlMixin.to_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_dict</code><span class="sig-paren">(</span><em>*</em>, <em>ignore_none: bool = True</em>, <em>force_value: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#owlmixin.OwlMixin.to_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to dict</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -757,7 +946,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_json</code><span class="sig-paren">(</span><em>*</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -789,7 +978,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_jsonf">
-<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_jsonf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_jsonf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>indent: int = None</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -809,7 +998,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_pretty_json">
-<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_pretty_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_pretty_json</code><span class="sig-paren">(</span><em>*</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_pretty_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to pretty json string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -855,7 +1044,7 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_yaml">
-<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_yaml" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yaml</code><span class="sig-paren">(</span><em>*</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_yaml" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -894,14 +1083,15 @@ owlmixin.errors.RequiredError:
 
 <dl class="method">
 <dt id="owlmixin.OwlMixin.to_yamlf">
-<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_yamlf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_yamlf</code><span class="sig-paren">(</span><em>fpath: str</em>, <em>encoding: str = 'utf8'</em>, <em>*</em>, <em>ignore_none: bool = True</em>, <em>ignore_empty: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#owlmixin.OwlMixin.to_yamlf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to yaml file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
 <li><p><strong>fpath</strong> – Yaml file path</p></li>
 <li><p><strong>encoding</strong> – Yaml file encoding</p></li>
+<li><p><strong>ignore_none</strong> – Properties which is None are excluded if True</p></li>
+<li><p><strong>ignore_empty</strong> – Properties which is empty are excluded if True</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -959,7 +1149,7 @@ owlmixin.errors.RequiredError:
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 4.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

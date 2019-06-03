@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin &#8212; owlmixin 3.1.1 documentation</title>
+    <title>owlmixin &#8212; owlmixin 4.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 4.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -41,43 +41,53 @@
   <h1>Source code for owlmixin</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Type</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">owlmixin.version</span>
-<span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="k">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TList</span><span class="p">,</span> <span class="n">TDict</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
-<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">DictTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">,</span> <span class="n">traverse_dict</span><span class="p">,</span> <span class="n">TOption</span>
+<span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="k">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TIterator</span><span class="p">,</span> <span class="n">TList</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
+<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">DictTransformer</span><span class="p">,</span>
+    <span class="n">JsonTransformer</span><span class="p">,</span>
+    <span class="n">YamlTransformer</span><span class="p">,</span>
+    <span class="n">ValueTransformer</span><span class="p">,</span>
+    <span class="n">traverse_dict</span><span class="p">,</span>
+    <span class="n">TOption</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s1">&#39;OwlMixin&#39;</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;OwlMixin&quot;</span><span class="p">)</span>
 
 <span class="n">__version__</span> <span class="o">=</span> <span class="n">owlmixin</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">__version__</span>
 
 
-<span class="k">def</span> <span class="nf">_is_generic</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="s1">&#39;__origin__&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_is_generic</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s2">&quot;__origin__&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">assert_extra</span><span class="p">(</span><span class="n">cls_properties</span><span class="p">,</span> <span class="n">arg_dict</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
-    <span class="n">extra_keys</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">arg_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cls_properties</span><span class="p">])</span>
+    <span class="n">extra_keys</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">arg_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cls_properties</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">extra_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">UnknownPropertiesError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">extra_keys</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">UnknownPropertiesError</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">extra_keys</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">RequiredError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">RequiredError</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">type_</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">InvalidTypeError</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">InvalidTypeError</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="n">types</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s1">&#39;__forward_arg__&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
+    <span class="n">type_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="c1"># pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s2">&quot;__forward_arg__&quot;</span><span class="p">):</span>
         <span class="c1"># XXX: Only if `_ForwardRef` includes myself</span>
         <span class="n">type_</span> <span class="o">=</span> <span class="bp">cls</span>
 
@@ -85,17 +95,18 @@
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="nb">any</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">value</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
             <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+                <span class="n">value</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">force_cast</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">type_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">force_cast</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">type_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
 
     <span class="n">o_type</span> <span class="o">=</span> <span class="n">type_</span><span class="o">.</span><span class="n">__origin__</span>
     <span class="n">g_type</span> <span class="o">=</span> <span class="n">type_</span><span class="o">.</span><span class="n">__args__</span>
@@ -103,35 +114,59 @@
     <span class="k">if</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TList</span><span class="p">:</span>
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{name}</span><span class="s1">.</span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
-                      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">)])</span>
-    <span class="k">elif</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TDict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2">.</span><span class="si">{i}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TIterator</span><span class="p">:</span>
+        <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">Iterable</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TIterator</span><span class="p">(</span>
+            <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2">.</span><span class="si">{i}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TDict</span><span class="p">:</span>
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{name}</span><span class="s1">.</span><span class="si">{k}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
-                      <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
-    <span class="k">elif</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TOption</span><span class="p">:</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="n">TOption</span> <span class="k">else</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span>
+                    <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2">.</span><span class="si">{k}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TOption</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TOption</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
         <span class="c1"># TODO: Fot `from_csvf`... need to more simple!!</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
+                <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;This generics is not supported </span><span class="si">{o_type}</span><span class="s2">&quot;</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;This generics is not supported `</span><span class="si">{o_type}</span><span class="s2">`&quot;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">OwlMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
-        <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_methods_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">cls</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
+        <span class="n">ret_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+        <span class="n">ret_cls</span><span class="o">.</span><span class="n">__methods_dict__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">ret_cls</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret_cls</span>
 
 
 <div class="viewcode-block" id="OwlMixin"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin">[docs]</a><span class="k">class</span> <span class="nc">OwlMixin</span><span class="p">(</span><span class="n">DictTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">OwlMeta</span><span class="p">):</span>
-
 <div class="viewcode-block" id="OwlMixin.from_dict"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From dict to instance</span>
 
 <span class="sd">        :param d: Dict</span>
@@ -283,25 +318,34 @@
             <span class="n">assert_extra</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_methods_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;_</span><span class="si">{cls.__name__}</span><span class="s1">___</span><span class="si">{n}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__methods_dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;_</span><span class="si">{cls.__name__}</span><span class="s2">___</span><span class="si">{n}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">arg_v</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">if</span> <span class="n">f</span> <span class="k">else</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
             <span class="n">def_v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span>
-                    <span class="n">traverse</span><span class="p">(</span>
-                        <span class="n">type_</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
-                        <span class="n">name</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
-                        <span class="n">value</span><span class="o">=</span><span class="n">def_v</span> <span class="k">if</span> <span class="n">arg_v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">arg_v</span><span class="p">,</span>
-                        <span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
-                        <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                        <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                        <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
-                    <span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">instance</span><span class="p">,</span>
+                <span class="n">n</span><span class="p">,</span>
+                <span class="n">traverse</span><span class="p">(</span>
+                    <span class="n">type_</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">def_v</span> <span class="k">if</span> <span class="n">arg_v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">arg_v</span><span class="p">,</span>
+                    <span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
+                    <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                    <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                    <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">instance</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_optional_dict"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_optional_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_optional_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
-                           <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_optional_dict</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From dict to optional instance.</span>
 
 <span class="sd">        :param d: Dict</span>
@@ -333,14 +377,23 @@
 <span class="sd">                * If `id` is optional, change type from `int` to `TOption[int]`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span>
-                                     <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                                     <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                                     <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+                <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_dicts"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_dicts">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dicts</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
-                   <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_dicts</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From list of dict to list of instance</span>
 
 <span class="sd">        :param ds: List of dict</span>
@@ -361,14 +414,60 @@
 <span class="sd">            &gt;&gt;&gt; humans[1].name</span>
 <span class="sd">            &#39;John&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TList</span><span class="p">([</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span>
-                                    <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                                    <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                                    <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">TList</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+                    <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_iterable_dicts"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_iterable_dicts">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_iterable_dicts</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From iterable dict to iterable instance</span>
+
+<span class="sd">        :param ds: Iterable dict</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterator</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human</span>
+<span class="sd">            &gt;&gt;&gt; humans: TIterator[Human] = Human.from_iterable_dicts([</span>
+<span class="sd">            ...    {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
+<span class="sd">            ...    {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
+<span class="sd">            ... ])</span>
+<span class="sd">            &gt;&gt;&gt; humans.next_at(0).get().name</span>
+<span class="sd">            &#39;Tom&#39;</span>
+<span class="sd">            &gt;&gt;&gt; humans.next_at(0).get().name</span>
+<span class="sd">            &#39;John&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TIterator</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+                <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_optional_dicts"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_optional_dicts">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_optional_dicts</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]],</span>
-                            <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">from_optional_dicts</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;From list of dict to optional list of instance.</span>
 
 <span class="sd">        :param ds: List of dict</span>
@@ -385,14 +484,56 @@
 <span class="sd">            &gt;&gt;&gt; Human.from_optional_dicts([]).get()</span>
 <span class="sd">            []</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span>
-                                      <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                                      <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                                      <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span> <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_optional_iterable_dicts"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_optional_iterable_dicts">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_optional_iterable_dicts</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">]],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;From iterable dict to optional iterable instance.</span>
+
+<span class="sd">        :param ds: Iterable dict</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable instance</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human</span>
+<span class="sd">            &gt;&gt;&gt; Human.from_optional_dicts(None).is_none()</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; Human.from_optional_dicts([]).get()</span>
+<span class="sd">            []</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_dicts_by_key"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_dicts_by_key">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dicts_by_key</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-                          <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TDict</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_dicts_by_key</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TDict</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From dict of dict to dict of instance</span>
 
 <span class="sd">        :param ds: Dict of dict</span>
@@ -413,14 +554,24 @@
 <span class="sd">            &gt;&gt;&gt; humans_by_name[&#39;John&#39;].name</span>
 <span class="sd">            &#39;John&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span>
-                                       <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                                       <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                                       <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></div>
+        <span class="k">return</span> <span class="n">TDict</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+                    <span class="n">v</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_optional_dicts_by_key"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_optional_dicts_by_key">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_optional_dicts_by_key</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
-                                   <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TDict</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">from_optional_dicts_by_key</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TDict</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;From dict of dict to optional dict of instance.</span>
 
 <span class="sd">        :param ds: Dict of dict</span>
@@ -437,13 +588,18 @@
 <span class="sd">            &gt;&gt;&gt; Human.from_optional_dicts_by_key({}).get()</span>
 <span class="sd">            {}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span>
-                                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span> <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">(</span>
+                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_json"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From json string to instance</span>
 
 <span class="sd">        :param data: Json string</span>
@@ -470,14 +626,23 @@
 <span class="sd">            &gt;&gt;&gt; human.favorites[0].names_by_lang.get()[&quot;de&quot;]</span>
 <span class="sd">            &#39;Apfel&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_jsonf"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_jsonf">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_jsonf</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                   <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_jsonf</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From json file path to instance</span>
 
 <span class="sd">        :param fpath: Json file path</span>
@@ -487,14 +652,17 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: Instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_jsonf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
-                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_jsonf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_json_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_to_list">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_json_to_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                          <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_json_to_list</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From json string to list of instance</span>
 
 <span class="sd">        :param data: Json string</span>
@@ -515,14 +683,54 @@
 <span class="sd">            &gt;&gt;&gt; humans[1].name</span>
 <span class="sd">            &#39;John&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                              <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                              <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                              <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_json_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_json_to_iterator</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From json string to iterable instance</span>
+
+<span class="sd">        :param data: Json string</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable instance</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human</span>
+<span class="sd">            &gt;&gt;&gt; humans: TIterator[Human] = Human.from_json_to_iterator(&#39;&#39;&#39;[</span>
+<span class="sd">            ...    {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
+<span class="sd">            ...    {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
+<span class="sd">            ... ]&#39;&#39;&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; humans.next_at(1).get().name</span>
+<span class="sd">            &#39;John&#39;</span>
+<span class="sd">            &gt;&gt;&gt; humans.next_at(0).is_none()</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_jsonf_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_jsonf_to_list">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_jsonf_to_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                           <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_jsonf_to_list</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From json file path to list of instance</span>
 
 <span class="sd">        :param fpath: Json file path</span>
@@ -532,13 +740,43 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: List of instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_jsonf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
-                              <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                              <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                              <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_jsonf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_jsonf_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_jsonf_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_jsonf_to_iterator</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From json file path to iterable instance</span>
+
+<span class="sd">        :param fpath: Json file path</span>
+<span class="sd">        :param encoding: Json file encoding</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_jsonf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_yaml"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From yaml string to instance</span>
 
 <span class="sd">        :param data: Yaml string</span>
@@ -567,14 +805,23 @@
 <span class="sd">            &gt;&gt;&gt; human.favorites[0].names_by_lang.get()[&quot;de&quot;]</span>
 <span class="sd">            &#39;Apfel&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_yamlf"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yamlf">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_yamlf</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                   <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_yamlf</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From yaml file path to instance</span>
 
 <span class="sd">        :param fpath: Yaml file path</span>
@@ -584,14 +831,17 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: Instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_yamlf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
-                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yamlf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_yaml_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_list">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_yaml_to_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                          <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_yaml_to_list</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From yaml string to list of instance</span>
 
 <span class="sd">        :param data: Yaml string</span>
@@ -620,14 +870,63 @@
 <span class="sd">            &gt;&gt;&gt; humans[0].favorites[0].name</span>
 <span class="sd">            &#39;Apple&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                              <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                              <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                              <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_yaml_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_yaml_to_iterator</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From yaml string to iterable instance</span>
+
+<span class="sd">        :param data: Yaml string</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable instance</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Human</span>
+<span class="sd">            &gt;&gt;&gt; humans: TIterator[Human] = Human.from_yaml_to_iterator(&#39;&#39;&#39;</span>
+<span class="sd">            ... - id: 1</span>
+<span class="sd">            ...   name: Tom</span>
+<span class="sd">            ...   favorites:</span>
+<span class="sd">            ...     - name: Apple</span>
+<span class="sd">            ... - id: 2</span>
+<span class="sd">            ...   name: John</span>
+<span class="sd">            ...   favorites:</span>
+<span class="sd">            ...     - name: Orange</span>
+<span class="sd">            ... &#39;&#39;&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; human1 = humans.next_at(1).get()</span>
+<span class="sd">            &gt;&gt;&gt; human1.name</span>
+<span class="sd">            &#39;John&#39;</span>
+<span class="sd">            &gt;&gt;&gt; humans.next_at(0).is_none()</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; human1.favorites[0].name</span>
+<span class="sd">            &#39;Orange&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_yamlf_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yamlf_to_list">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_yamlf_to_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                           <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_yamlf_to_list</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From yaml file path to list of instance</span>
 
 <span class="sd">        :param fpath: Yaml file path</span>
@@ -637,14 +936,49 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: List of instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_yamlf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
-                              <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                              <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                              <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yamlf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OwlMixin.from_csvf"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_csvf">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_csvf</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                  <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+<div class="viewcode-block" id="OwlMixin.from_yamlf_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yamlf_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_yamlf_to_iterator</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From yaml file path to iterable instance</span>
+
+<span class="sd">        :param fpath: Yaml file path</span>
+<span class="sd">        :param encoding: Yaml file encoding</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param force_cast: Cast forcibly if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_yamlf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_csvf_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_csvf_to_list">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csvf_to_list</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;From csv file path to list of instance</span>
 
 <span class="sd">        :param fpath: Csv file path</span>
@@ -654,13 +988,43 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: List of Instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_csvf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
-                              <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                              <span class="n">force_cast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                              <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_csvf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwlMixin.from_csvf_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_csvf_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csvf_to_iterator</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">fieldnames</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;From csv file path to iterable instance</span>
+
+<span class="sd">        :param fpath: Csv file path</span>
+<span class="sd">        :param fieldnames: Specify csv header names if not included in the file</span>
+<span class="sd">        :param encoding: Csv file encoding</span>
+<span class="sd">        :param force_snake_case: Keys are transformed to snake case in order to compliant PEP8 if True</span>
+<span class="sd">        :param restrict: Prohibit extra parameters if True</span>
+<span class="sd">        :return: Iterable Instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_csvf</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">encoding</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OwlMixin.from_json_url"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_url">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_json_url</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_json_url</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;From url which returns json to instance</span>
 
 <span class="sd">        :param url: Url which returns json</span>
@@ -669,10 +1033,12 @@
 <span class="sd">        :param restrict: Prohibit extra parameters if True</span>
 <span class="sd">        :return: Instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">load_json_url</span><span class="p">(</span><span class="n">url</span><span class="p">),</span>
-                             <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
-                             <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
-                             <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">load_json_url</span><span class="p">(</span><span class="n">url</span><span class="p">),</span>
+            <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+            <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+            <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -700,7 +1066,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 3.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 4.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
