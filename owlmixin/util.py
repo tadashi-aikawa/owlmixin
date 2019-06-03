@@ -1,61 +1,61 @@
 # coding: utf-8
 
+# The location of `import yaml` is not optimized!!
+# pylint: disable=wrong-import-order,duplicate-code
+
 import codecs
 import csv
-# Need not unicode_literals
 import io
 import json
 import re
-from csv import register_dialect, Dialect, QUOTE_MINIMAL
 from typing import List, Dict, Union, Sequence, Iterable, Iterator
 from urllib.request import urlopen
 
 import yaml
 from math import floor, ceil
 from unicodedata import east_asian_width
-from yaml import SafeLoader
 
 
-class CrLfCsvDialect(Dialect):
+class CrLfCsvDialect(csv.Dialect):
     delimiter = ","
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
     lineterminator = "\r\n"
-    quoting = QUOTE_MINIMAL
+    quoting = csv.QUOTE_MINIMAL
 
 
-class CrLfTsvDialect(Dialect):
+class CrLfTsvDialect(csv.Dialect):
     delimiter = "\t"
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
     lineterminator = "\r\n"
-    quoting = QUOTE_MINIMAL
+    quoting = csv.QUOTE_MINIMAL
 
 
-class LfCsvDialect(Dialect):
+class LfCsvDialect(csv.Dialect):
     delimiter = ","
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
     lineterminator = "\n"
-    quoting = QUOTE_MINIMAL
+    quoting = csv.QUOTE_MINIMAL
 
 
-class LfTsvDialect(Dialect):
+class LfTsvDialect(csv.Dialect):
     delimiter = "\t"
     quotechar = '"'
     doublequote = True
     skipinitialspace = True
     lineterminator = "\n"
-    quoting = QUOTE_MINIMAL
+    quoting = csv.QUOTE_MINIMAL
 
 
-register_dialect("crlf_csv", CrLfCsvDialect)
-register_dialect("crlf_tsv", CrLfTsvDialect)
-register_dialect("lf_csv", LfCsvDialect)
-register_dialect("lf_tsv", LfTsvDialect)
+csv.register_dialect("crlf_csv", CrLfCsvDialect)
+csv.register_dialect("crlf_tsv", CrLfTsvDialect)
+csv.register_dialect("lf_csv", LfCsvDialect)
+csv.register_dialect("lf_tsv", LfTsvDialect)
 
 
 def get_dialect_name(crlf: bool, tsv: bool) -> str:
@@ -65,6 +65,7 @@ def get_dialect_name(crlf: bool, tsv: bool) -> str:
 
 
 class MyDumper(yaml.SafeDumper):
+    # pylint: disable=too-many-ancestors
     def increase_indent(self, flow=False, indentless=False):
         return super(MyDumper, self).increase_indent(flow, False)
 
@@ -73,7 +74,7 @@ def construct_yaml_str(self, node):
     return self.construct_scalar(node)
 
 
-SafeLoader.add_constructor("tag:yaml.org,2002:str", construct_yaml_str)
+yaml.SafeLoader.add_constructor("tag:yaml.org,2002:str", construct_yaml_str)
 
 
 def replace_keys(d, keymap, force_snake_case):
@@ -163,6 +164,7 @@ def load_json_url(url):
 def dump_csv(
     data: Iterable[dict],
     fieldnames: Sequence[str],
+    *,
     with_header: bool = False,
     crlf: bool = False,
     tsv: bool = False,
@@ -191,9 +193,10 @@ def dump_csv(
         return sio.read()
 
 
-def save_csvf(
+def dump_csvf(
     data: Iterable[any],
     fieldnames: Sequence[str],
+    *,
     fpath: str,
     encoding: str,
     with_header: bool = False,
@@ -237,7 +240,7 @@ def dump_json(data, indent=None):
     )
 
 
-def save_jsonf(data: Union[list, dict], fpath: str, encoding: str, indent=None) -> str:
+def dump_jsonf(data: Union[list, dict], *, fpath: str, encoding: str, indent=None) -> str:
     """
     :param data: list | dict data
     :param fpath: write path
@@ -260,7 +263,7 @@ def dump_yaml(data):
     )
 
 
-def save_yamlf(data: Union[list, dict], fpath: str, encoding: str) -> str:
+def dump_yamlf(data: Union[list, dict], *, fpath: str, encoding: str) -> str:
     """
     :param data: list | dict data
     :param fpath: write path

@@ -262,11 +262,11 @@ class JsonTransformer:
         :param ignore_empty: Properties which is empty are excluded if True
         :return: Json file path
         """
-        return util.save_jsonf(
+        return util.dump_jsonf(
             traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty),
-            fpath,
-            encoding,
-            indent,
+            fpath=fpath,
+            encoding=encoding,
+            indent=indent,
         )
 
     def to_pretty_json(self, *, ignore_none: bool = True, ignore_empty: bool = False) -> str:
@@ -361,10 +361,10 @@ class YamlTransformer:
         :param ignore_empty: Properties which is empty are excluded if True
         :return: Yaml file path
         """
-        return util.save_yamlf(
+        return util.dump_yamlf(
             traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty),
-            fpath,
-            encoding,
+            fpath=fpath,
+            encoding=encoding,
         )
 
 
@@ -407,7 +407,13 @@ class CsvTransformer:
             John,2,[{'name': 'Orange'}]
             <BLANKLINE>
         """
-        return util.dump_csv(traverse(self, force_value=True), fieldnames, with_header, crlf, tsv)
+        return util.dump_csv(
+            traverse(self, force_value=True),
+            fieldnames=fieldnames,
+            with_header=with_header,
+            crlf=crlf,
+            tsv=tsv,
+        )
 
     def to_csvf(
         self,
@@ -429,14 +435,14 @@ class CsvTransformer:
         :param tsv: Use tabs as separator if True, else use comma
         :return: Csv file path
         """
-        return util.save_csvf(
+        return util.dump_csvf(
             map(lambda x: traverse(x, force_value=True), self),
             fieldnames,
-            fpath,
-            encoding,
-            with_header,
-            crlf,
-            tsv,
+            fpath=fpath,
+            encoding=encoding,
+            with_header=with_header,
+            crlf=crlf,
+            tsv=tsv,
         )
 
 
