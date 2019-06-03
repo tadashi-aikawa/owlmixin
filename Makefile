@@ -85,14 +85,15 @@ release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to envi
 	@echo '4. Tags'
 	git tag v$(version) -m v$(version)
 
-	@echo '5. Push'
-	git push
-
-	@echo '6. Deploy'
+	@echo '5. Deploy'
 	@echo 'Packageing...'
 	@pipenv run python setup.py bdist_wheel
 	@echo 'Deploying...'
 	@pipenv run twine upload dist/owlmixin-$(version)-py3-none-any.whl
+
+	@echo '6. Push'
+	git push --tags
+	git push
 
 	@echo 'Success All!!'
 	@echo 'Create a pull request and merge to master!!'
