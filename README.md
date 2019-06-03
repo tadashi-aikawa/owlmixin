@@ -187,6 +187,8 @@ $ make serve-docs
 
 ### Version up
 
+**Windows is not supported!!!**
+
 Before release, you need to
 
 1. Confirm that your branch name equals release version
