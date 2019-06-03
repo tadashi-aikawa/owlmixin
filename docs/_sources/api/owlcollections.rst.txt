@@ -23,6 +23,26 @@ TList
         sort
 
 
+TIterator
+---------
+
+.. autoclass:: owlmixin.owlcollections.TIterator
+    :members:
+    :inherited-members:
+    :exclude-members:
+        append,
+        clear,
+        copy,
+        count,
+        extend,
+        index,
+        insert,
+        pop,
+        remove,
+        reverse,
+        sort
+
+
 TDict
 -----
 
