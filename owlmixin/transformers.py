@@ -36,7 +36,7 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
         return traverse_list(
             value, ignore_none=ignore_none, force_value=force_value, ignore_empty=ignore_empty
         )
-    if isinstance(value, Iterable) and not isinstance(value, str):
+    if isinstance(value, Iterable) and not isinstance(value, (str, bytes)):
         return traverse_list(list(value), ignore_none, force_value, ignore_empty)
     if isinstance(value, DictTransformer):
         return value.to_dict(
