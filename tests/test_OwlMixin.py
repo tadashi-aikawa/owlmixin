@@ -369,6 +369,15 @@ class TestToDict:
     def test_bytes_value(self):
         assert TDict({"key": b"value"}).to_dict() == {"key": b"value"}
 
+    def test_tuple_value(self):
+        assert TDict({"key": (1, 2, 3)}).to_dict() == {"key": (1, 2, 3)}
+
+    def test_set_value(self):
+        assert TDict({"key": {1, 2, 3}}).to_dict() == {"key": {1, 2, 3}}
+
+    def test_iterator_value(self):
+        assert TDict({"key": iter([1, 2, 3])}).to_dict() == {"key": [1, 2, 3]}
+
 
 class TestToDicts:
     def test_normal(self):
@@ -888,6 +897,23 @@ class TestToJsonf:
 
         assert r.to_jsonf(fpath, encoding="sjis", ignore_none=True) == fpath
         assert Spot.from_jsonf_to_list(fpath, encoding="sjis").to_dicts() == r.to_dicts()
+
+    def test_string_value(self):
+        assert TDict({"key": "value"}).to_json() == '{"key": "value"}'
+
+    def test_bytes_value(self):
+        with pytest.raises(TypeError):
+            assert TDict({"key": b"value"}).to_json()
+
+    def test_tuple_value(self):
+        assert TDict({"key": (1, 2, 3)}).to_json() == '{"key": [1,2,3]}'
+
+    def test_set_value(self):
+        with pytest.raises(TypeError):
+            assert TDict({"key": {1, 2, 3}}).to_json()
+
+    def test_iterator_value(self):
+        assert TDict({"key": iter([1, 2, 3])}).to_json() == '{"key": [1,2,3]}'
 
 
 class TestToPrettyJson:

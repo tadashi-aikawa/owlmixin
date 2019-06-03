@@ -1,5 +1,5 @@
 # coding: utf-8
-from typing import List, Sequence, Iterable, Iterator, Optional
+from typing import List, Sequence, Iterator, Optional
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -36,7 +36,7 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
         return traverse_list(
             value, ignore_none=ignore_none, force_value=force_value, ignore_empty=ignore_empty
         )
-    if isinstance(value, Iterable) and not isinstance(value, (str, bytes)):
+    if isinstance(value, Iterator):
         return traverse_list(list(value), ignore_none, force_value, ignore_empty)
     if isinstance(value, DictTransformer):
         return value.to_dict(
