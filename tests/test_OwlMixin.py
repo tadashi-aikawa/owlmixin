@@ -1,4 +1,5 @@
 # coding: utf-8
+# pylint: disable=no-self-use
 
 import os
 
@@ -362,6 +363,12 @@ class TestToDict:
             },
         }
 
+    def test_string_value(self):
+        assert TDict({"key": "value"}).to_dict() == {"key": "value"}
+
+    def test_bytes_value(self):
+        assert TDict({"key": b"value"}).to_dict() == {"key": b"value"}
+
 
 class TestToDicts:
     def test_normal(self):
@@ -424,7 +431,7 @@ class TestFromDicts:
         r = Spot.from_dicts(SAMPLE_HUMAN["favorite_spots"])
 
         assert len(r) == 2
-        assert type(r) == TList
+        assert isinstance(r, TList)
         assert r[0].to_dict(force_value=False) == {
             "names": ["spot1"],
             "address": {"name": "address1"},
@@ -440,7 +447,7 @@ class TestFromOptionalDicts:
         r: TOption[TList[Spot]] = Spot.from_optional_dicts(SAMPLE_HUMAN["favorite_spots"])
 
         assert len(r.get()) == 2
-        assert type(r.get()) == TList
+        assert isinstance(r.get(), TList)
         assert r.get()[0].to_dict(force_value=False) == {
             "names": ["spot1"],
             "address": {"name": "address1"},
@@ -456,7 +463,7 @@ class TestFromOptionalDicts:
     def test_empty(self):
         r = Human.from_optional_dicts([])
         assert isinstance(r.get(), TList)
-        assert len(r.get()) == 0
+        assert not r.get()
 
 
 class TestFromDictsByKey:
@@ -464,7 +471,7 @@ class TestFromDictsByKey:
         r = Human.from_dicts_by_key(SAMPLE_HUMAN["friends_by_short_name"])
 
         assert len(r) == 2
-        assert type(r) == TDict
+        assert isinstance(r, TDict)
         assert r.to_dict() == {
             "toshi": {
                 "id": 100,
@@ -488,7 +495,7 @@ class TestFromOptionalDictsByKey:
         )
 
         assert len(r.get()) == 2
-        assert type(r.get()) == TDict
+        assert isinstance(r.get(), TDict)
         assert r.get().to_dict() == {
             "toshi": {
                 "id": 100,
@@ -510,7 +517,7 @@ class TestFromOptionalDictsByKey:
     def test_empty(self):
         r = Human.from_optional_dicts_by_key({})
         assert isinstance(r.get(), TDict)
-        assert len(r.get()) == 0
+        assert not r.get()
 
 
 class TestFromCsvfToList:
