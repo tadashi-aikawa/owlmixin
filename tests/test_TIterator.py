@@ -355,6 +355,10 @@ class TestGroupBy:
             "2": [{"names": ["spot21", "spot22"]}, {"names": ["spot31", "spot32"]}],
         }
 
+        assert Spot.from_iterable_dicts(d).group_by(lambda s: str(len(s.names)))["1"].map(
+            lambda x: x.names
+        ).to_dicts() == [["spot1"], ["spot4"]]
+
 
 class TestKeyBy:
     def test_normal(self):
