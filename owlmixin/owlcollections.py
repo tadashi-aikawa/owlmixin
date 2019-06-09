@@ -2,7 +2,7 @@
 
 import functools
 from collections import Iterable, Iterator, deque
-from itertools import chain, islice, filterfalse, takewhile, tee
+from itertools import chain, islice, filterfalse, takewhile, tee, groupby
 from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union
 
 from owlmixin.owloption import TOption
@@ -532,19 +532,14 @@ class TIterator(
         t1, t2 = tee(self)
         return TIterator(filterfalse(func, t1)), TIterator(filter(func, t2))
 
-    def group_by(self, to_key: Callable[[T], str]) -> "TDict[TIterator[T]]":
+    def group_by(self, to_key: Callable[[T], str]) -> "TDict[TList[T]]":
         """
         Usage:
 
             >>> TIterator([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
             '{"0": [2,4],"1": [1,3,5]}'
         """
-        ret = TDict()
-        for v in self:
-            k = to_key(v)
-            ret.setdefault(k, TIterator([]))
-            ret[k] = chain(ret[k], [v])
-        return ret
+        return TDict({k: TList(v) for k, v in groupby(sorted(self, key=to_key), to_key)})
 
     def key_by(self, to_key: Callable[[T], str]) -> "TDict[T]":
         """

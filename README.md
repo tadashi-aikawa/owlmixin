@@ -8,7 +8,12 @@ OwlMixin
 [![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)]()
 
-**(ﾟ∀ﾟ) v4.0 have ??? breaking changes**
+**(ﾟ∀ﾟ) v5.0 have breaking changes**
+
+* `TIterator#group_by`
+  * Return `TDict[TList[T]]` instead of `TDict[TIterator[T]]`
+
+**(ﾟ∀ﾟ) v4.0 have breaking changes**
 
 * `OwlMixin`
   * Must use keyword arguments in `from_XXX` and `to_XXX` except for some ones

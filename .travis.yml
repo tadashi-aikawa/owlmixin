@@ -6,9 +6,14 @@ language:
 matrix:
   include:
   - python: "3.6"
+    dist: xenial
     env:
       SPHINX_TARGET: "yes"
       TEST_REPORT_TARGET: "yes"
+  - python: "3.7"
+    dist: xenial
+  - python: "3.8-dev"
+    dist: xenial
 install:
   - pip install pipenv
   - make init
