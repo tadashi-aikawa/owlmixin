@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin &#8212; owlmixin 5.0.0 documentation</title>
+    <title>owlmixin &#8212; owlmixin 5.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -40,8 +40,10 @@
             
   <h1>Source code for owlmixin</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
+<span class="c1"># pylint: disable=too-many-lines</span>
 
 <span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">owlmixin.version</span>
@@ -87,9 +89,12 @@
     <span class="n">type_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
     <span class="c1"># pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">type_</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s2">&quot;__forward_arg__&quot;</span><span class="p">):</span>
-        <span class="c1"># XXX: Only if `_ForwardRef` includes myself</span>
-        <span class="n">type_</span> <span class="o">=</span> <span class="bp">cls</span>
+        <span class="c1"># `_ForwardRef` (3.6) or `ForwardRef` (&gt;= 3.7) includes __forward_arg__</span>
+        <span class="c1"># PEP 563 -- Postponed Evaluation of Annotations</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">type_</span><span class="o">.</span><span class="n">__forward_arg__</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_generic</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -1066,7 +1071,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
