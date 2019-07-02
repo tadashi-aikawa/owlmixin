@@ -1,6 +1,8 @@
 # coding: utf-8
+# pylint: disable=too-many-lines
 
 import inspect
+import sys
 from typing import TypeVar, Optional, Sequence, Iterable, List
 
 import owlmixin.version
@@ -46,9 +48,12 @@ def traverse(
     type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool
 ) -> any:
     # pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments
+    if isinstance(type_, str):
+        type_ = sys.modules[cls.__module__].__dict__.get(type_)
     if hasattr(type_, "__forward_arg__"):
-        # XXX: Only if `_ForwardRef` includes myself
-        type_ = cls
+        # `_ForwardRef` (3.6) or `ForwardRef` (>= 3.7) includes __forward_arg__
+        # PEP 563 -- Postponed Evaluation of Annotations
+        type_ = sys.modules[cls.__module__].__dict__.get(type_.__forward_arg__)
 
     if not _is_generic(type_):
         assert_none(value, type_, cls, name)
