@@ -1,5 +1,5 @@
 # coding: utf-8
-# pylint: disable=no-self-use
+# pylint: disable=no-self-use,too-many-lines
 
 import os
 
@@ -21,6 +21,14 @@ class Color(OwlEnum):
 
 class OnlyAny(OwlMixin):
     hoge: any
+
+
+class ForwardRefType(OwlMixin):
+    id: int
+    address: "Address"
+    address_optional: TOption["Address"]
+    addresses: TList["Address"]
+    addresses_optional: TOption[TList["Address"]]
 
 
 class Paper(OwlMixin):
@@ -179,6 +187,33 @@ class TestFromDict:
     def test_from_dict_includes_any(self):
         r: OnlyAny = OnlyAny.from_dict({"hoge": {"huga": [1, 2, 3]}})
         assert r.hoge == {"huga": [1, 2, 3]}
+
+    def test_from_dict_includes_forwardref_type(self):
+        r: ForwardRefType = ForwardRefType.from_dict(
+            {"id": 1, "address": {"name": "address_name"}, "addresses": []}
+        )
+        assert r.id == 1
+        assert r.address.name == "address_name"
+        assert r.addresses == []
+
+    def test_from_dict_includes_generic_forwardref_type(self):
+        r: ForwardRefType = ForwardRefType.from_dict(
+            {
+                "id": 1,
+                "address": {"name": "address_name"},
+                "addresses": [{"name": "address_name1"}, {"name": "address_name2"}],
+                "address_optional": {"name": "address_optional_name"},
+                "addresses_optional": [{"name": "address_name1"}, {"name": "address_name2"}],
+            }
+        )
+        assert r.id == 1
+        assert r.address.name == "address_name"
+        assert r.addresses.to_dicts() == [{"name": "address_name1"}, {"name": "address_name2"}]
+        assert r.address_optional.get().name == "address_optional_name"
+        assert r.addresses_optional.get().to_dicts() == [
+            {"name": "address_name1"},
+            {"name": "address_name2"},
+        ]
 
     def test_none(self):
         with pytest.raises(AttributeError):
