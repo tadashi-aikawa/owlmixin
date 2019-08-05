@@ -6,7 +6,7 @@ from typing import TypeVar
 
 from owlmixin.transformers import ValueTransformer
 
-T = TypeVar('T', bound='OwlObjectEnum')    # pylint: disable=invalid-name
+T = TypeVar("T", bound="OwlObjectEnum")  # pylint: disable=invalid-name
 
 warnings.simplefilter("once")
 
@@ -31,9 +31,8 @@ class OwlObjectEnum(ValueTransformer, Enum):
             DOG = ("dog", {"cry": "bow-wow"})
             CAT = ("cat", {"cry": "mewing"})
 
-        def crow(self):
+        def cry(self):
             return self.object["cry"]
-    TODO: Not exec doctest
     """
 
     def __init__(self, symbol, obj):
@@ -49,8 +48,8 @@ class OwlObjectEnum(ValueTransformer, Enum):
         Usage:
 
             >>> from owlmixin.samples import Animal
-            >>> Animal.from_value('cat').crow()
-            mewing
+            >>> Animal.from_value('cat').cry()
+            'mewing'
         """
         return [x for x in cls.__members__.values() if x.value[0] == value][0]
 
