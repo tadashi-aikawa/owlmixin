@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin &#8212; owlmixin 5.1.0 documentation</title>
+    <title>owlmixin &#8212; owlmixin 5.2.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -283,7 +283,7 @@
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">            `owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.</span>
-<span class="sd">            Expected type is one of [&#39;Food&#39;, &#39;dict&#39;], but actual type is `str`</span>
+<span class="sd">            Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                * If you want to force cast, set `force_cast=True`</span>
 <span class="sd">                * If you don&#39;t want to force cast, specify value which has correct type</span>
@@ -305,10 +305,10 @@
 <span class="sd">            ＿＿＿＿＿＿／  | |</span>
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            `owlmixin.samples.Human#name: str` is empty!!</span>
+<span class="sd">            `owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                * If `name` is certainly required, specify anything.</span>
-<span class="sd">                * If `name` is optional, change type from `str` to `TOption[str]`</span>
+<span class="sd">                * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
@@ -376,10 +376,10 @@
 <span class="sd">            ＿＿＿＿＿＿／  | |</span>
 <span class="sd">            |------ー----ー|／</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
-<span class="sd">            `owlmixin.samples.Human#id: int` is empty!!</span>
+<span class="sd">            `owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">                * If `id` is certainly required, specify anything.</span>
-<span class="sd">                * If `id` is optional, change type from `int` to `TOption[int]`</span>
+<span class="sd">                * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
@@ -1071,13 +1071,13 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

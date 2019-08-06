@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin.owlcollections &#8212; owlmixin 5.1.0 documentation</title>
+    <title>owlmixin.owlcollections &#8212; owlmixin 5.2.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -286,6 +286,16 @@
 <span class="sd">            &#39;A-B-C&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.unlines"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.unlines">[docs]</a>    <span class="k">def</span> <span class="nf">unlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+<span class="sd">            &gt;&gt;&gt; TList([&#39;aaa&#39;, &#39;bbb&#39;, &#39;ccc&#39;]).unlines()</span>
+<span class="sd">            &#39;aaa\nbbb\nccc&#39;</span>
+<span class="sd">            &gt;&gt;&gt; TList([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]).unlines(crlf=True)</span>
+<span class="sd">            &#39;A\r\nB\r\nC&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">crlf</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TList.find"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -667,6 +677,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TIterator.unlines"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.unlines">[docs]</a>    <span class="k">def</span> <span class="nf">unlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">crlf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+<span class="sd">            &gt;&gt;&gt; TIterator([&#39;aaa&#39;, &#39;bbb&#39;, &#39;ccc&#39;]).unlines()</span>
+<span class="sd">            &#39;aaa\nbbb\nccc&#39;</span>
+<span class="sd">            &gt;&gt;&gt; TIterator([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]).unlines(crlf=True)</span>
+<span class="sd">            &#39;A\r\nB\r\nC&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">crlf</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TIterator.find"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
@@ -957,14 +977,14 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

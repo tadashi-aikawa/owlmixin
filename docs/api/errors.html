@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Errors &#8212; owlmixin 5.1.0 documentation</title>
+    <title>Errors &#8212; owlmixin 5.2.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="owlenum.html" title="OwlEnum"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,39 +53,39 @@
 <span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 
 
-<span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="n">DOG</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;bow-wow&quot;</span><span class="p">})</span>
     <span class="n">CAT</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cry&quot;</span><span class="p">:</span> <span class="s2">&quot;mewing&quot;</span><span class="p">})</span>
 
-    <span class="k">def</span> <span class="nf">crow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+    <span class="k">def</span> <span class="nf">cry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">[</span><span class="s2">&quot;cry&quot;</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">OwlEnum</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">OwlEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
     <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
     <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">Food</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Food</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">names_by_lang</span><span class="p">:</span> <span class="n">TOption</span><span class="p">[</span><span class="n">TDict</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
 
 
-<span class="k">class</span> <span class="nc">Human</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Human</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">favorites</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Food</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">Machine</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Machine</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
 
 
-<span class="k">class</span> <span class="nc">Japanese</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>    <span class="c1"># pragma: no cover</span>
+<span class="k">class</span> <span class="nc">Japanese</span><span class="p">(</span><span class="n">OwlMixin</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;japanese&#39;</span>
+    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;japanese&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -219,12 +219,12 @@ set self.__traceback__ to tb and return self.</p>
         <li class="right" >
           <a href="owlenum.html" title="OwlEnum"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

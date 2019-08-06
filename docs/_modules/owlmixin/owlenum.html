@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>owlmixin.owlenum &#8212; owlmixin 5.2.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for owlmixin.owlenum</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span>
+
+<span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="k">import</span> <span class="n">ValueTransformer</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;OwlObjectEnum&quot;</span><span class="p">)</span>  <span class="c1"># pylint: disable=invalid-name</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OwlEnum"><a class="viewcode-back" href="../../api/owlenum.html#owlmixin.owlenum.OwlEnum">[docs]</a><span class="k">class</span> <span class="nc">OwlEnum</span><span class="p">(</span><span class="n">ValueTransformer</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This class is similar to Enum except that can dump as json or yaml</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="OwlObjectEnum"><a class="viewcode-back" href="../../api/owlenum.html#owlmixin.owlenum.OwlObjectEnum">[docs]</a><span class="k">class</span> <span class="nc">OwlObjectEnum</span><span class="p">(</span><span class="n">ValueTransformer</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This class is similar to OwlEnum except that can have additional object.</span>
+
+<span class="sd">    Use case example:</span>
+<span class="sd">        class Animal(OwlObjectEnum):</span>
+<span class="sd">            DOG = (&quot;dog&quot;, {&quot;cry&quot;: &quot;bow-wow&quot;})</span>
+<span class="sd">            CAT = (&quot;cat&quot;, {&quot;cry&quot;: &quot;mewing&quot;})</span>
+
+<span class="sd">        def cry(self):</span>
+<span class="sd">            return self.object[&quot;cry&quot;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="n">obj</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create instance from symbol</span>
+<span class="sd">        :param value: unique symbol</span>
+<span class="sd">        :return: This instance</span>
+
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from owlmixin.samples import Animal</span>
+<span class="sd">            &gt;&gt;&gt; Animal.from_value(&#39;cat&#39;).cry()</span>
+<span class="sd">            &#39;mewing&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">to_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_none</span><span class="p">,</span> <span class="n">force_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">symbol</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, tadashi-aikawa.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>
