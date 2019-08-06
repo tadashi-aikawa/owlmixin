@@ -245,6 +245,16 @@ class TList(
         """
         return joint.join(self)
 
+    def unlines(self, *, crlf: bool = False) -> str:
+        r"""
+        Usage:
+            >>> TList(['aaa', 'bbb', 'ccc']).unlines()
+            'aaa\nbbb\nccc'
+            >>> TList(['A', 'B', 'C']).unlines(crlf=True)
+            'A\r\nB\r\nC'
+        """
+        return self.join("\r\n" if crlf else "\n")
+
     def find(self, func: Callable[[T], bool]) -> TOption[T]:
         """
         Usage:
@@ -624,6 +634,16 @@ class TIterator(
             'A-B-C'
         """
         return joint.join(self)
+
+    def unlines(self, *, crlf: bool = False) -> str:
+        r"""
+        Usage:
+            >>> TIterator(['aaa', 'bbb', 'ccc']).unlines()
+            'aaa\nbbb\nccc'
+            >>> TIterator(['A', 'B', 'C']).unlines(crlf=True)
+            'A\r\nB\r\nC'
+        """
+        return self.join("\r\n" if crlf else "\n")
 
     def find(self, func: Callable[[T], bool]) -> TOption[T]:
         """

@@ -43,8 +43,8 @@ class InvalidTypeError(OwlMixinError):
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
         self.value = value
-        self.expected = [t.__name__ for t in expected]
-        self.actual = actual.__name__
+        self.expected = [str(t) for t in expected]
+        self.actual = str(actual)
 
     @property
     def description(self) -> str:
@@ -100,7 +100,7 @@ class RequiredError(OwlMixinError):
         super().__init__()
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
-        self.type_ = f"{type_.__name__}"
+        self.type_ = str(type_)
 
     @property
     def description(self) -> str:

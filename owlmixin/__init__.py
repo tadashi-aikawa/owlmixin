@@ -242,7 +242,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             |------ー----ー|／
             <BLANKLINE>
             `owlmixin.samples.Human#favorites.0 = apple` doesn't match expected types.
-            Expected type is one of ['Food', 'dict'], but actual type is `str`
+            Expected type is one of ["<class 'owlmixin.samples.Food'>", "<class 'dict'>"], but actual type is `<class 'str'>`
             <BLANKLINE>
                 * If you want to force cast, set `force_cast=True`
                 * If you don't want to force cast, specify value which has correct type
@@ -264,10 +264,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            `owlmixin.samples.Human#name: str` is empty!!
+            `owlmixin.samples.Human#name: <class 'str'>` is empty!!
             <BLANKLINE>
                 * If `name` is certainly required, specify anything.
-                * If `name` is optional, change type from `str` to `TOption[str]`
+                * If `name` is optional, change type from `<class 'str'>` to `TOption[<class 'str'>]`
             <BLANKLINE>
         """
         if isinstance(d, cls):
@@ -335,10 +335,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             ＿＿＿＿＿＿／  | |
             |------ー----ー|／
             <BLANKLINE>
-            `owlmixin.samples.Human#id: int` is empty!!
+            `owlmixin.samples.Human#id: <class 'int'>` is empty!!
             <BLANKLINE>
                 * If `id` is certainly required, specify anything.
-                * If `id` is optional, change type from `int` to `TOption[int]`
+                * If `id` is optional, change type from `<class 'int'>` to `TOption[<class 'int'>]`
             <BLANKLINE>
         """
         return TOption(
