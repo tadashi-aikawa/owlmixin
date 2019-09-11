@@ -32,6 +32,7 @@ jobs:
                   python -m pip install --upgrade pip pipfile-requirements
                   pipfile2req > requirements.txt
                   pip install -r requirements.txt
+                  pip install pytest pytest-cov mock
             - name: Test documentation
               run: python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
             - name: Unit test
