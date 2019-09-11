@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python: ["3.6", "3.7", "3.8"]
+                python: ["3.6", "3.7"]
         name: Python ${{ matrix.python }}
 
         steps:
@@ -29,10 +29,9 @@ jobs:
                   python-version: ${{ matrix.python }}
             - name: Install dependencies
               run: |
-                  python -m pip install --upgrade pip pipfile-requirements
+                  python -m pip install --upgrade pip pipfile-requirements pytest pytest-cov mock
                   pipfile2req > requirements.txt
                   pip install -r requirements.txt
-                  pip install pytest pytest-cov mock
             - name: Test documentation
               run: python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
             - name: Unit test
