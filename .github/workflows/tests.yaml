@@ -41,7 +41,7 @@ jobs:
               run: python -m pytest -vv --cov-report=xml --cov=. tests/
 
             - name: Test report
-              if: matrix.python == 3.7 && job.steps.unittest.status == 'success'
+              if: matrix.python == 3.7 && job.steps.unittest.status == success
               env:
                   CC_TEST_REPORTER_ID: 3e113735ca4277f3ea59db80fbdca7bceb293775290baa2db1fdc216ba940228
               run: |
