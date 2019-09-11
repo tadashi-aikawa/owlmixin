@@ -93,6 +93,9 @@ ENV/
 .idea
 *.iml
 
+# VSCode
+/.vscode
+
 # Ctags
 /tags
 
