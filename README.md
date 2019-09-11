@@ -1,7 +1,7 @@
 OwlMixin
 ========
 
-[![travis](https://api.travis-ci.org/tadashi-aikawa/owlmixin.svg?branch=master)](https://travis-ci.org/tadashi-aikawa/owlmixin/builds)
+[![Actions Status](https://github.com/tadashi-aikawa/owlmixin/workflows/Tests/badge.svg)](https://github.com/tadashi-aikawa/owlmixin/actions)
 [![coverage](https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/coverage.svg)](https://codeclimate.com/github/tadashi-aikawa/owlmixin/coverage)
 [![complexity](https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/gpa.svg)](https://codeclimate.com/github/tadashi-aikawa/owlmixin)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
@@ -45,8 +45,8 @@ See following `Example` and `API Reference` sections.
 Installation
 ------------
 
-```
-$ pip install owlmixin
+```bash
+pip install owlmixin
 ```
 
 
@@ -122,13 +122,8 @@ id,name,color
 
 You can also use methods chains as following.
 
-> Below sample code uses [kachayev/fn.py](https://github.com/kachayev/fn.py), great package!!
-
-
 ```python
 from owlmixin import OwlMixin, TOption, TIterator
-
-from fn import _
 
 
 class Repository(OwlMixin):
@@ -151,8 +146,8 @@ Then...
 ...     GithubRepository
 ...         .from_json_url("https://api.github.com/search/repositories?q=git")
 ...         .items
-...         .filter(_.stargazers_count > 100)
-...         .order_by(_.stargazers_count, True)
+...         .filter(lambda x: x.stargazers_count > 100)
+...         .order_by(lambda x: x.stargazers_count, True)
 ...         .take(5)
 ...         .emap(lambda v, i: {
 ...             'RANK': i+1,
@@ -181,7 +176,7 @@ Requires pipenv and make.
 
 ### Commands
 
-```
+```bash
 # Create env
 $ make init
 
@@ -200,8 +195,7 @@ Before release, you need to
 
 Then
 
+```bash
+make release
 ```
-$ make release
-```
-
 
