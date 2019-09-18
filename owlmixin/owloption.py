@@ -2,8 +2,8 @@
 
 from typing import Generic, TypeVar, Callable
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar("T")
+U = TypeVar("U")
 
 
 class TOption(Generic[T]):
@@ -61,7 +61,7 @@ class TOption(Generic[T]):
         """
         return self.value is not None
 
-    def map(self, func: Callable[[T], U]) -> 'TOption[U]':
+    def map(self, func: Callable[[T], U]) -> "TOption[U]":
         """
         Usage:
 
@@ -72,7 +72,7 @@ class TOption(Generic[T]):
         """
         return self if self.is_none() else TOption(func(self.value))
 
-    def flat_map(self, func: Callable[[T], 'TOption[U]']) -> 'TOption[U]':
+    def flat_map(self, func: Callable[[T], "TOption[U]"]) -> "TOption[U]":
         """
         Usage:
 
@@ -86,79 +86,79 @@ class TOption(Generic[T]):
         return self if self.is_none() else TOption(func(self.value).get())
 
     def __repr__(self):
-        return f'Option --> {self.get()}'
+        return f"Option --> {self.get()}"
 
     def __raise_no_conditional_expression(self, expression_name):
-        raise NotImplementedError(f'No expression `{expression_name}` in TOption instance')
+        raise NotImplementedError(f"No expression `{expression_name}` in TOption instance")
 
     def __add__(self, other):
-        self.__raise_no_conditional_expression('__add__')
+        self.__raise_no_conditional_expression("__add__")
 
     def __and__(self, other):
-        self.__raise_no_conditional_expression('__and__')
+        self.__raise_no_conditional_expression("__and__")
 
     def __bool__(self):
-        self.__raise_no_conditional_expression('__bool__')
+        self.__raise_no_conditional_expression("__bool__")
 
     def __contains__(self, item):
-        self.__raise_no_conditional_expression('__contains__')
+        self.__raise_no_conditional_expression("__contains__")
 
     def __delete__(self, instance):
-        self.__raise_no_conditional_expression('__delete__')
+        self.__raise_no_conditional_expression("__delete__")
 
     def __eq__(self, other):
-        self.__raise_no_conditional_expression('__eq__')
+        self.__raise_no_conditional_expression("__eq__")
 
     def __format__(self, format_spec):
-        self.__raise_no_conditional_expression('__format__')
+        self.__raise_no_conditional_expression("__format__")
 
     def __float__(self):
-        self.__raise_no_conditional_expression('__float__')
+        self.__raise_no_conditional_expression("__float__")
 
     def __ge__(self, other):
-        self.__raise_no_conditional_expression('__ge__')
+        self.__raise_no_conditional_expression("__ge__")
 
     def __gt__(self, other):
-        self.__raise_no_conditional_expression('__gt__')
+        self.__raise_no_conditional_expression("__gt__")
 
     def __int__(self):
-        self.__raise_no_conditional_expression('__int__')
+        self.__raise_no_conditional_expression("__int__")
 
     def __le__(self, other):
-        self.__raise_no_conditional_expression('__le__')
+        self.__raise_no_conditional_expression("__le__")
 
     def __len__(self):
-        self.__raise_no_conditional_expression('__len__')
+        self.__raise_no_conditional_expression("__len__")
 
     def __lt__(self, other):
-        self.__raise_no_conditional_expression('__lt__')
+        self.__raise_no_conditional_expression("__lt__")
 
     def __mul__(self, other):
-        self.__raise_no_conditional_expression('__mul__')
+        self.__raise_no_conditional_expression("__mul__")
 
     def __mod__(self, other):
-        self.__raise_no_conditional_expression('__mod__')
+        self.__raise_no_conditional_expression("__mod__")
 
     def __ne__(self, other):
-        self.__raise_no_conditional_expression('__ne__')
+        self.__raise_no_conditional_expression("__ne__")
 
     def __or__(self, other):
-        self.__raise_no_conditional_expression('__or__')
+        self.__raise_no_conditional_expression("__or__")
 
     def __radd__(self, other):
-        self.__raise_no_conditional_expression('__radd__')
+        self.__raise_no_conditional_expression("__radd__")
 
     def __rand__(self, other):
-        self.__raise_no_conditional_expression('__rand__')
+        self.__raise_no_conditional_expression("__rand__")
 
     def __ror__(self, other):
-        self.__raise_no_conditional_expression('__ror__')
+        self.__raise_no_conditional_expression("__ror__")
 
     def __rmul__(self, other):
-        self.__raise_no_conditional_expression('__rmul__')
+        self.__raise_no_conditional_expression("__rmul__")
 
     def __rxor__(self, other):
-        self.__raise_no_conditional_expression('__rxor__')
+        self.__raise_no_conditional_expression("__rxor__")
 
     def __xor__(self, other):
-        self.__raise_no_conditional_expression('__xor__')
+        self.__raise_no_conditional_expression("__xor__")

@@ -1,9 +1,9 @@
 # coding: utf-8
 
 import functools
-from collections import Iterable, Iterator, deque
+from collections import deque
 from itertools import chain, islice, filterfalse, takewhile, tee, groupby
-from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union
+from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union, Iterable, Iterator
 
 from owlmixin.owloption import TOption
 from owlmixin.transformers import (
@@ -229,6 +229,19 @@ class TList(
         """
         return self.map(func).sum()
 
+    def count_by(self, func: Callable[[T], Any]) -> "TDict[int]":
+        """
+        Usage:
+            >>> TList([1, 11, 25, 35, 21, 4]).count_by(lambda x: x % 10)
+            {1: 3, 5: 2, 4: 1}
+        """
+        ret = TDict()
+        for v in self:
+            k = func(v)
+            ret.setdefault(k, 0)
+            ret[k] += 1
+        return ret
+
     def size(self) -> int:
         """
         Usage:
@@ -314,13 +327,7 @@ class TList(
 
 
 class TIterator(
-    Iterator,
-    DictsTransformer,
-    JsonTransformer,
-    YamlTransformer,
-    CsvTransformer,
-    TableTransformer,
-    Generic[T],
+    DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]
 ):
     # pylint: disable=too-many-ancestors
     __inner_iterator: Iterator

@@ -182,6 +182,9 @@ $ make init
 
 # Build documentation and run server locally
 $ make serve-docs
+
+# Test (Doc test & Unit test)
+$ make test
 ```
 
 
