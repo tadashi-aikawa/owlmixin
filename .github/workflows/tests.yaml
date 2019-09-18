@@ -34,9 +34,6 @@ jobs:
                   sed -ri 's/python_version = ".+"/python_version = "${{ matrix.python }}"/g' Pipfile
                   pipenv install --dev --skip-lock
 
-            - name: Doc test
-              run: make doctest
-
             - name: Unit test
               id: unittest
               run: make test
@@ -68,7 +65,7 @@ jobs:
               if: always()
               with:
                   type: ${{ job.status }}
-                  job_name: ":python: All matrix tests are success :+1:"
+                  job_name: ":python: All tests success :+1:"
                   icon_emoji: ":renne:"
                   url: ${{ secrets.SLACK_WEBHOOK }}
 
