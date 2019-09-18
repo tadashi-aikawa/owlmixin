@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Collections &#8212; owlmixin 5.2.0 documentation</title>
+    <title>Collections &#8212; owlmixin 5.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -359,6 +359,18 @@
 <dd><dl>
 <dt>Usage:</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">30</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="owlmixin.owlcollections.TList.count_by">
+<code class="sig-name descname">count_by</code><span class="sig-paren">(</span><em class="sig-param">func: Callable[[T], Any]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TDict[int][int]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TList.count_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TList.count_by" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Usage:</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">{1: 3, 5: 2, 4: 1}</span>
 </pre></div>
 </div>
 </dd>
@@ -787,7 +799,7 @@
 <h2>TIterator<a class="headerlink" href="#titerator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="owlmixin.owlcollections.TIterator">
-<em class="property">class </em><code class="sig-prename descclassname">owlmixin.owlcollections.</code><code class="sig-name descname">TIterator</code><span class="sig-paren">(</span><em class="sig-param">iterable: collections.abc.Iterable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">owlmixin.owlcollections.</code><code class="sig-name descname">TIterator</code><span class="sig-paren">(</span><em class="sig-param">iterable: Iterable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="owlmixin.owlcollections.TIterator.to_list">
 <code class="sig-name descname">to_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TList[~T][T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.to_list" title="Permalink to this definition">¶</a></dt>
@@ -1035,7 +1047,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TIterator.concat">
-<code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T], first: bool = False</em><span class="sig-paren">)</span> &#x2192; TIterator[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.concat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T], first: bool = False</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[~T][T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.concat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">TIterator</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TIterator</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
@@ -1145,7 +1157,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TIterator.intersection">
-<code class="sig-name descname">intersection</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T]</em><span class="sig-paren">)</span> &#x2192; TIterator[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.intersection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">intersection</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[~T][T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.intersection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">TIterator</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
@@ -1158,7 +1170,7 @@
 
 <dl class="method">
 <dt id="owlmixin.owlcollections.TIterator.not_intersection">
-<code class="sig-name descname">not_intersection</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T]</em><span class="sig-paren">)</span> &#x2192; TIterator[T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.not_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.not_intersection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">not_intersection</code><span class="sig-paren">(</span><em class="sig-param">values: Iterable[T]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owlcollections.TIterator[~T][T]<a class="reference internal" href="../_modules/owlmixin/owlcollections.html#TIterator.not_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owlcollections.TIterator.not_intersection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">TIterator</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">not_intersection</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
@@ -1978,7 +1990,7 @@
         <li class="right" >
           <a href="owlmixin.html" title="OwlMixin"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.2.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin.owloption &#8212; owlmixin 5.2.0 documentation</title>
+    <title>owlmixin.owloption &#8212; owlmixin 5.3.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.3.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" accesskey="U">owlmixin</a> &#187;</li> 
       </ul>
@@ -44,8 +44,8 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Callable</span>
 
-<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="TOption"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption">[docs]</a><span class="k">class</span> <span class="nc">TOption</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
@@ -103,7 +103,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="TOption.map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TOption[U]&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="TOption.map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
@@ -114,7 +114,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span> <span class="k">else</span> <span class="n">TOption</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TOption.flat_map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.flat_map">[docs]</a>    <span class="k">def</span> <span class="nf">flat_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="s1">&#39;TOption[U]&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;TOption[U]&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="TOption.flat_map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.flat_map">[docs]</a>    <span class="k">def</span> <span class="nf">flat_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
@@ -128,82 +128,82 @@
         <span class="k">return</span> <span class="bp">self</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span> <span class="k">else</span> <span class="n">TOption</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">())</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">f</span><span class="s1">&#39;Option --&gt; {self.get()}&#39;</span>
+        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;Option --&gt; {self.get()}&quot;</span>
 
     <span class="k">def</span> <span class="nf">__raise_no_conditional_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression_name</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;No expression `</span><span class="si">{expression_name}</span><span class="s1">` in TOption instance&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;No expression `</span><span class="si">{expression_name}</span><span class="s2">` in TOption instance&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__add__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__add__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__and__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__and__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__bool__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__bool__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__contains__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__contains__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__delete__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__delete__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__eq__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__eq__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__format__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__format__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__float__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__float__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__ge__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__ge__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__gt__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__gt__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__int__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__int__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__le__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__le__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__len__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__len__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__lt__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__lt__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__mul__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__mul__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__mod__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__mod__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__ne__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__ne__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__or__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__or__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__radd__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__radd__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__rand__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__rand__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__rand__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__ror__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__ror__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__ror__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__rmul__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__rmul__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__rxor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__rxor__&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__rxor__&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__xor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s1">&#39;__xor__&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__raise_no_conditional_expression</span><span class="p">(</span><span class="s2">&quot;__xor__&quot;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -231,7 +231,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owlmixin 5.3.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../owlmixin.html" >owlmixin</a> &#187;</li> 
       </ul>
