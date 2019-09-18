@@ -60,7 +60,7 @@ jobs:
 
             - name: "Slack notification (not success)"
               uses: homoluctus/slatify@master
-              if: !success()
+              if: "! success()"
               with:
                   type: ${{ job.status }}
                   job_name: ":python:*${{ matrix.python }}* Tests failure @channel"
