@@ -49,11 +49,20 @@ jobs:
                   chmod +x ./cc-test-reporter
                   ./cc-test-reporter after-build
 
-            - name: Slack notification
+            - name: "Slack notification (success)"
               uses: homoluctus/slatify@master
-              if: always()
+              if: success()
               with:
                   type: ${{ job.status }}
-                  job_name: ":python:*${{ matrix.python }}* Tests ${{ success() || @channel }}"
+                  job_name: ":python:*${{ matrix.python }}* Tests success"
+                  icon_emoji: "tio2"
+                  url: ${{ secrets.SLACK_WEBHOOK }}
+
+            - name: "Slack notification (not success)"
+              uses: homoluctus/slatify@master
+              if: not success()
+              with:
+                  type: ${{ job.status }}
+                  job_name: ":python:*${{ matrix.python }}* Tests failure @channel"
                   icon_emoji: "tio2"
                   url: ${{ secrets.SLACK_WEBHOOK }}
