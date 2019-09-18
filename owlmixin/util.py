@@ -8,11 +8,11 @@ import csv
 import io
 import json
 import re
+from math import floor, ceil
 from typing import List, Dict, Union, Sequence, Iterable, Iterator
 from urllib.request import urlopen
 
 import yaml
-from math import floor, ceil
 from unicodedata import east_asian_width
 
 

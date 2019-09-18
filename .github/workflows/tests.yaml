@@ -49,8 +49,6 @@ jobs:
                   chmod +x ./cc-test-reporter
                   ./cc-test-reporter after-build
 
-            - name: Set slack message
-
             - name: Slack notification
               uses: homoluctus/slatify@master
               if: always()
