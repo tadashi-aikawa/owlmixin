@@ -49,11 +49,13 @@ jobs:
                   chmod +x ./cc-test-reporter
                   ./cc-test-reporter after-build
 
+            - name: Set slack message
+
             - name: Slack notification
               uses: homoluctus/slatify@master
               if: always()
               with:
                   type: ${{ job.status }}
-                  job_name: ":python:*${{ matrix.python }}* Tests"
+                  job_name: ":python:*${{ matrix.python }}* Tests ${{ success() || @channel }}"
                   icon_emoji: "tio2"
                   url: ${{ secrets.SLACK_WEBHOOK }}
