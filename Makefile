@@ -46,12 +46,7 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 
 test: ## Unit test
 	@echo Start $@
-	@pipenv run python -m pytest -vv --cov-report=xml --cov=. tests/
-	@echo End $@
-
-doctest: ## Doc test
-	@echo Start $@
-	@pipenv run python -m doctest owlmixin/{__init__.py,transformers.py,owlcollections.py,owlenum.py,owloption.py,util.py} -v
+	@pipenv run pytest -vv --doctest-modules --cov-report=xml --cov=.
 	@echo End $@
 
 _clean-package: ## Clean package
@@ -69,7 +64,6 @@ release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to envi
 	@echo '0. Install packages from lockfile and test'
 	@pipenv install --deploy
 	@make test
-	@make doctest
 
 	@echo '1. Recreate `owlmixin/version.py`'
 	@echo "__version__ = '$(version)'" > owlmixin/version.py
