@@ -233,7 +233,7 @@ class TList(
         """
         Usage:
             >>> TList([1, 11, 25, 35, 21, 4]).count_by(lambda x: x % 10)
-            {1: 3, 5: 2, 4: 11}
+            {1: 3, 5: 2, 4: 1}
         """
         ret = TDict()
         for v in self:
