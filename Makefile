@@ -46,7 +46,7 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 
 test: ## Unit test
 	@echo Start $@
-	@pipenv run pytest -vv --doctest-modules --cov-report=xml --cov=.
+	@pipenv run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
 	@echo End $@
 
 _clean-package: ## Clean package

@@ -448,7 +448,7 @@ class TestCountBy:
             {"names": ["spot31", "spot32"]},
         ]
 
-        assert Spot.from_dicts(d).count_by(lambda x: len(x.names)) == {1: 1, 2: 3}
+        assert Spot.from_dicts(d).count_by(lambda x: len(x.names)) == {1: 1, 2: 2}
 
 
 class TestSize:
