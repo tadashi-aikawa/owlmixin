@@ -72,7 +72,7 @@ class Human(OwlMixin):
 
 SAMPLE_HUMAN: dict = {
     "id": 1,
-    "name": "メンバ1111",
+    "name": "メンバ1",
     "favorite_spots": [
         {"names": ["spot1"], "address": {"name": "address1"}},
         {"names": ["spot21", "spot22"], "color": "red"},

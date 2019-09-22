@@ -52,7 +52,7 @@ jobs:
               with:
                   type: ${{ job.status }}
                   username: GitHub Actions (Failure)
-                  job_name: "@channel :python:*${{ matrix.python }}* Tests"
+                  job_name: ":python:*${{ matrix.python }}* Tests"
                   icon_emoji: "tio2"
                   url: ${{ secrets.SLACK_WEBHOOK }}
 
