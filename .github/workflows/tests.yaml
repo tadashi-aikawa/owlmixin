@@ -51,6 +51,7 @@ jobs:
               if: "! success()"
               with:
                   type: ${{ job.status }}
+                  username: GitHub Actions (Failure)
                   job_name: ":python:*${{ matrix.python }}* Tests failure @channel"
                   icon_emoji: "tio2"
                   url: ${{ secrets.SLACK_WEBHOOK }}
@@ -65,7 +66,7 @@ jobs:
               if: always()
               with:
                   type: ${{ job.status }}
+                  username: GitHub Actions (Success)
                   job_name: ":python: All tests success :+1:"
                   icon_emoji: ":renne:"
                   url: ${{ secrets.SLACK_WEBHOOK }}
-
