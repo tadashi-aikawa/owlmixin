@@ -1,69 +1,68 @@
 name: "Tests"
 
 on:
-    push:
-        paths:
-            - ".github/**/*"
-            - "owlmixin/*"
-            - "owlmixin/**/*"
-            - "tests/*"
-            - "tests/**/*"
-            - "Pipfile.lock"
-    schedule:
-        - cron: "0 0 * * *"
+  push:
+    paths:
+      - ".github/**/*"
+      - "owlmixin/*"
+      - "owlmixin/**/*"
+      - "tests/*"
+      - "tests/**/*"
+      - "Pipfile.lock"
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                python: ["3.6", "3.7"]
-        name: Python ${{ matrix.python }}
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.6", "3.7"]
+    name: Python ${{ matrix.python }}
 
-        steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-python@v1
-              with:
-                  python-version: ${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
 
-            - name: Install dependencies
-              run: |
-                  python -m pip install --upgrade pip pipenv
-                  sed -ri 's/python_version = ".+"/python_version = "${{ matrix.python }}"/g' Pipfile
-                  pipenv install --dev --skip-lock
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip pipenv
+          sed -ri 's/python_version = ".+"/python_version = "${{ matrix.python }}"/g' Pipfile
+          pipenv install --dev --skip-lock
 
-            - run: make test
+      - run: make test
+      - name: Test report
+        if: matrix.python == 3.7 && success()
+        env:
+          CC_TEST_REPORTER_ID: 3e113735ca4277f3ea59db80fbdca7bceb293775290baa2db1fdc216ba940228
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter after-build
 
-            - name: Test report
-              if: matrix.python == 3.7 && success()
-              env:
-                  CC_TEST_REPORTER_ID: 3e113735ca4277f3ea59db80fbdca7bceb293775290baa2db1fdc216ba940228
-              run: |
-                  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                  chmod +x ./cc-test-reporter
-                  ./cc-test-reporter after-build
+      - name: "Slack notification (not success)"
+        uses: homoluctus/slatify@master
+        if: "! success()"
+        with:
+          type: ${{ job.status }}
+          username: GitHub Actions (Failure)
+          job_name: "<!channel> :python:*${{ matrix.python }}* Tests"
+          icon_emoji: "tio2"
+          url: ${{ secrets.SLACK_WEBHOOK }}
 
-            - name: "Slack notification (not success)"
-              uses: homoluctus/slatify@master
-              if: "! success()"
-              with:
-                  type: ${{ job.status }}
-                  username: GitHub Actions (Failure)
-                  job_name: ":python:*${{ matrix.python }}* Tests"
-                  icon_emoji: "tio2"
-                  url: ${{ secrets.SLACK_WEBHOOK }}
+  notify:
+    needs: test
+    runs-on: ubuntu-latest
 
-    notify:
-        needs: test
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: "Slack Notification (success)"
-              uses: homoluctus/slatify@master
-              if: always()
-              with:
-                  type: ${{ job.status }}
-                  username: GitHub Actions (Success)
-                  job_name: ":python: All tests"
-                  icon_emoji: ":renne:"
-                  url: ${{ secrets.SLACK_WEBHOOK }}
+    steps:
+      - name: "Slack Notification (success)"
+        uses: homoluctus/slatify@master
+        if: always()
+        with:
+          type: ${{ job.status }}
+          username: GitHub Actions (Success)
+          job_name: ":python: All tests"
+          icon_emoji: ":renne:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
