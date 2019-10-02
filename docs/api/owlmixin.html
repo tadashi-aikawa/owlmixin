@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>OwlMixin &#8212; owlmixin 5.3.0 documentation</title>
+    <title>OwlMixin &#8212; owlmixin  documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -136,7 +136,7 @@
 <p>You can use default value</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">&#39;taro&#39;</span>
-<span class="gp">... </span><span class="p">})</span>  <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
+<span class="gp">... </span><span class="p">})</span>  
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;taro&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">language</span>
@@ -178,7 +178,7 @@
 ...         {&quot;name&quot;: &quot;Apple&quot;, &quot;namesByLang&quot;: {&quot;en&quot;: &quot;Apple&quot;, &quot;de&quot;: &quot;Apfel&quot;}},
 ...         {&quot;name&quot;: &quot;Orange&quot;}
 ...     ]
-... })  # doctest: +NORMALIZE_WHITESPACE
+... })  
 Traceback (most recent call last):
     ...
 owlmixin.errors.UnknownPropertiesError:
@@ -189,12 +189,11 @@ owlmixin.errors.UnknownPropertiesError:
 ／￣￣旦￣￣￣／|
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
-&lt;BLANKLINE&gt;
+
 `owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!
-&lt;BLANKLINE&gt;
+
     * If you want to allow unknown properties, set `restrict=False`
     * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human
-&lt;BLANKLINE&gt;
 </pre></div>
 </div>
 <p>If you specify wrong type…</p>
@@ -202,7 +201,7 @@ owlmixin.errors.UnknownPropertiesError:
 ...     &quot;id&quot;: 1,
 ...     &quot;name&quot;: &quot;ichiro&quot;,
 ...     &quot;favorites&quot;: [&quot;apple&quot;, &quot;orange&quot;]
-... })  # doctest: +NORMALIZE_WHITESPACE
+... })  
 Traceback (most recent call last):
     ...
 owlmixin.errors.InvalidTypeError:
@@ -213,19 +212,18 @@ owlmixin.errors.InvalidTypeError:
 ／￣￣旦￣￣￣／|
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
-&lt;BLANKLINE&gt;
+
 `owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.
 Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`
-&lt;BLANKLINE&gt;
+
     * If you want to force cast, set `force_cast=True`
     * If you don&#39;t want to force cast, specify value which has correct type
-&lt;BLANKLINE&gt;
 </pre></div>
 </div>
 <p>If you don’t specify required params… (ex. name</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; human: Human = Human.from_dict({
 ...     &quot;id&quot;: 1
-... })  # doctest: +NORMALIZE_WHITESPACE
+... })  
 Traceback (most recent call last):
     ...
 owlmixin.errors.RequiredError:
@@ -236,12 +234,11 @@ owlmixin.errors.RequiredError:
 ／￣￣旦￣￣￣／|
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
-&lt;BLANKLINE&gt;
+
 `owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!
-&lt;BLANKLINE&gt;
+
     * If `name` is certainly required, specify anything.
     * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`
-&lt;BLANKLINE&gt;
 </pre></div>
 </div>
 </dd></dl>
@@ -267,7 +264,7 @@ owlmixin.errors.RequiredError:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; from owlmixin.samples import Human
 &gt;&gt;&gt; Human.from_optional_dict(None).is_none()
 True
-&gt;&gt;&gt; Human.from_optional_dict({}).get()  # doctest: +NORMALIZE_WHITESPACE
+&gt;&gt;&gt; Human.from_optional_dict({}).get()  
 Traceback (most recent call last):
     ...
 owlmixin.errors.RequiredError:
@@ -278,12 +275,11 @@ owlmixin.errors.RequiredError:
 ／￣￣旦￣￣￣／|
 ＿＿＿＿＿＿／  | |
 |------ー----ー|／
-&lt;BLANKLINE&gt;
+
 `owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!
-&lt;BLANKLINE&gt;
+
     * If `id` is certainly required, specify anything.
     * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`
-&lt;BLANKLINE&gt;
 </pre></div>
 </div>
 </dd></dl>
@@ -1076,7 +1072,6 @@ owlmixin.errors.RequiredError:
 <span class="go">  - name: Orange</span>
 <span class="go">id: 1</span>
 <span class="go">name: Tom</span>
-<span class="go">&lt;BLANKLINE&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1149,12 +1144,12 @@ owlmixin.errors.RequiredError:
         <li class="right" >
           <a href="../index.html" title="Owlmixin API Reference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+        &#169; Copyright 2019, tadashi-aikawa.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

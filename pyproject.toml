@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "owlmixin"
-version = "5.3.0"
+version = "5.4.0"
 description = "Mixin which converts ``data class instance`` and others each other more simple."
 authors = ["tadashi-aikawa <syou.maman@gmail.com>"]
 license = "MIT"
