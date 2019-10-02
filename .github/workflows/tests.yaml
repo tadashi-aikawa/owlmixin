@@ -8,7 +8,7 @@ on:
       - "owlmixin/**/*"
       - "tests/*"
       - "tests/**/*"
-      - "Pipfile.lock"
+      - "poetry.lock"
   schedule:
     - cron: "0 0 * * *"
 
