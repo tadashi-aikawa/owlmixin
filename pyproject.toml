@@ -1,3 +1,31 @@
+[tool.poetry]
+name = "OwlMixin"
+version = "5.3.0"
+description = "Mixin which converts ``data class instance`` and others each other more simple."
+authors = ["tadashi-aikawa <syou.maman@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/tadashi-aikawa/owlmixin"
+repository = "https://github.com/tadashi-aikawa/owlmixin"
+documentation = "https://tadashi-aikawa.github.io/owlmixin/"
+keywords = ["dict", "json", "yaml", "parser", "mixin"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+pyyaml = "^5.1"
+
+[tool.poetry.dev-dependencies]
+sphinx = "^2.2"
+pytest = "^5.2"
+mock = "^3.0"
+pytest-cov = "^2.7"
+
 [tool.black]
 line-length = 100
 target-version = ['py36', 'py37']
@@ -20,3 +48,7 @@ exclude = '''
   | profiling
 )/
 '''
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
