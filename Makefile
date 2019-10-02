@@ -17,7 +17,7 @@ version := $(shell git rev-parse --abbrev-ref HEAD)
 
 #------
 
-init: ## Install dependencies and create envirionment
+init-dev: ## Install dependencies and create envirionment
 	@echo Start $@
 	@pipenv install -d
 	@echo End $@

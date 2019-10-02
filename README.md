@@ -173,12 +173,22 @@ For developer
 
 Requires pipenv and make.
 
+### Requirements
+
+* pipenv
+* make
+
+### Flow
+
+1. Create version branch like as 3.4.0
+2. Create Issue and development! (Feature branch is optional)
+3. Commit with prefix emoji like "📝", and suffix issue number like "#120"
 
 ### Commands
 
 ```bash
 # Create env
-$ make init
+$ make init-dev
 
 # Build documentation and run server locally
 $ make serve-docs
@@ -190,15 +200,10 @@ $ make test
 
 ### Version up
 
-**Windows is not supported!!!**
-
-Before release, you need to
-
-1. Confirm that your branch name equals release version
-
-Then
+**Confirm that your branch name equals release version**
 
 ```bash
 make release
 ```
 
+Finally, create pull request and merge to master!!
