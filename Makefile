@@ -72,7 +72,7 @@ release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to envi
 	@poetry publish
 
 	@echo '7. Push'
-	git push --tags
+	git push origin v$(version)
 	git push
 
 	@echo 'Success All!!'
