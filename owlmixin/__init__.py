@@ -5,7 +5,6 @@ import inspect
 import sys
 from typing import TypeVar, Optional, Sequence, Iterable, List
 
-import owlmixin.version
 from owlmixin import util
 from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
 from owlmixin.owlcollections import TDict, TIterator, TList
@@ -20,8 +19,6 @@ from owlmixin.transformers import (
 )
 
 T = TypeVar("T", bound="OwlMixin")
-
-__version__ = owlmixin.version.__version__
 
 
 def _is_generic(type_):
