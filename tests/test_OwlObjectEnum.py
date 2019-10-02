@@ -48,6 +48,14 @@ class TestFunction:
 
 
 class TestOwlMixin:
+    def test_from_dict(self):
+        ins: Sample = Sample.from_dict({"color": "blue"})
+        assert ins.color == Color.BLUE
+
+    def test_from_dict_includes_instance(self):
+        ins: Sample = Sample.from_dict({"color": Color.BLUE})
+        assert ins.color == Color.BLUE
+
     def test_to_dict(self):
         assert Sample.from_dict({"color": "blue"}).to_dict() == {
             "color": "blue"

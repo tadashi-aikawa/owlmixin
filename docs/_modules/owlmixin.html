@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>owlmixin &#8212; owlmixin 5.3.0 documentation</title>
+    <title>owlmixin &#8212; owlmixin  documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -46,7 +46,6 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">import</span> <span class="nn">owlmixin.version</span>
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
 <span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="k">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TIterator</span><span class="p">,</span> <span class="n">TList</span>
@@ -61,8 +60,6 @@
 <span class="p">)</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;OwlMixin&quot;</span><span class="p">)</span>
-
-<span class="n">__version__</span> <span class="o">=</span> <span class="n">owlmixin</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">__version__</span>
 
 
 <span class="k">def</span> <span class="nf">_is_generic</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
@@ -99,6 +96,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_generic</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="nb">any</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">value</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
             <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -1071,13 +1070,13 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin 5.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+        &#169; Copyright 2019, tadashi-aikawa.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

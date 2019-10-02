@@ -171,11 +171,9 @@ Don't you think smart?
 For developer
 ------------
 
-Requires pipenv and make.
-
 ### Requirements
 
-* pipenv
+* poetry
 * make
 
 ### Flow

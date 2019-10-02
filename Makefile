@@ -15,81 +15,66 @@ help: ## Print this help
 
 version := $(shell git rev-parse --abbrev-ref HEAD)
 
-#------
+#---- Basic
 
 init-dev: ## Install dependencies and create envirionment
-	@echo Start $@
-	@pipenv install -d
-	@echo End $@
+	@poetry install
+
+test: ## Unit test
+	@poetry run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
+
+#---- Docs
 
 _clean-docs: ## Clean documentation
-	@cd sphinx-docs && pipenv run make clean
+	@cd sphinx-docs && poetry run make clean
 
 build-docs: _clean-docs ## Build documentation
-	@echo Start $@
-	@cd sphinx-docs && pipenv run make html linkcheck
-	@echo End $@
+	@cd sphinx-docs && poetry run make html linkcheck
 
 serve-docs: build-docs ## Serve documentation
-	@echo Start $@
-	@cd sphinx-docs/_build/html && pipenv run python -m http.server
-	@echo End $@
+	@cd sphinx-docs/_build/html && poetry run python -m http.server
 
 _clean-package-docs: ## Clean package documentation
 	@rm -rf docs/*
 
 _package-docs: build-docs _clean-package-docs ## Package documentation
-	@echo Start $@
 	@cp -r sphinx-docs/_build/html/* docs/
 	@touch docs/.nojekyll
-	@echo End $@
 
-test: ## Unit test
-	@echo Start $@
-	@pipenv run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
-	@echo End $@
+#---- Release
 
-_clean-package: ## Clean package
-	@echo Start $@
-	@rm -rf build dist owlmixin.egg-info
-	@echo End $@
-
-_package: _clean-package ## Package OwlMixin
-	@echo Start $@
-	@pipenv run python setup.py bdist_wheel
-	@echo End $@
+_package: ## Package OwlMixin
+	@poetry build -f wheel
 
 release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
-
 	@echo '0. Install packages from lockfile and test'
-	@pipenv install --deploy
+	@make init-dev
 	@make test
 
-	@echo '1. Recreate `owlmixin/version.py`'
-	@echo "__version__ = '$(version)'" > owlmixin/version.py
+	@echo '1. Version up'
+	@poetry version $(version)
 
 	@echo '2. Package documentation'
 	@make _package-docs
 
 	@echo '3. Staging and commit'
-	git add owlmixin/version.py
+	git add pyproject.toml
 	git add docs
 	git commit -m ':package: Version $(version)'
 
 	@echo '4. Tags'
 	git tag v$(version) -m v$(version)
 
-	@echo '5. Deploy'
-	@echo 'Packageing...'
-	@pipenv run python setup.py bdist_wheel
-	@echo 'Deploying...'
-	@pipenv run twine upload dist/owlmixin-$(version)-py3-none-any.whl
+	@echo '5. Package OwlMixin'
+	@make _package
 
-	@echo '6. Push'
-	git push --tags
+	@echo '6. Publish'
+	@poetry publish
+
+	@echo '7. Push'
+	git push origin v$(version)
 	git push
 
 	@echo 'Success All!!'
 	@echo 'Create a pull request and merge to master!!'
 	@echo 'https://github.com/tadashi-aikawa/owlmixin/compare/$(version)?expand=1'
-
