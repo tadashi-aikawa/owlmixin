@@ -1,12 +1,40 @@
 version: "2"
-plugins:
-  sonar-python:
+checks:
+  argument-count:
+    enabled: false
+  return-statements:
+    enabled: false
+  method-count:
+    enabled: false
+  complex-logic:
     enabled: true
     config:
-      tests_patterns:
-        - tests/**
-        - docs/**
-        - sphinx-docs/**
+      threshold: 4
+  file-lines:
+    enabled: true
+    config:
+      threshold: 1000
+  method-complexity:
+    enabled: true
+    config:
+      threshold: 5
+  method-lines:
+    enabled: true
+    config:
+      threshold: 50
+  nested-control-flow:
+    enabled: true
+    config:
+      threshold: 4
+  similar-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+  identical-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
+
 exclude_patterns:
   - tests/
   - docs/
