@@ -18,46 +18,32 @@ version := $(shell git rev-parse --abbrev-ref HEAD)
 #------
 
 init-dev: ## Install dependencies and create envirionment
-	@echo Start $@
-	@pipenv install -d
-	@echo End $@
+	@poetry install
 
 _clean-docs: ## Clean documentation
 	@cd sphinx-docs && pipenv run make clean
 
 build-docs: _clean-docs ## Build documentation
-	@echo Start $@
 	@cd sphinx-docs && pipenv run make html linkcheck
-	@echo End $@
 
 serve-docs: build-docs ## Serve documentation
-	@echo Start $@
 	@cd sphinx-docs/_build/html && pipenv run python -m http.server
-	@echo End $@
 
 _clean-package-docs: ## Clean package documentation
 	@rm -rf docs/*
 
 _package-docs: build-docs _clean-package-docs ## Package documentation
-	@echo Start $@
 	@cp -r sphinx-docs/_build/html/* docs/
 	@touch docs/.nojekyll
-	@echo End $@
 
 test: ## Unit test
-	@echo Start $@
-	@pipenv run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
-	@echo End $@
+	@poetry run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
 
 _clean-package: ## Clean package
-	@echo Start $@
 	@rm -rf build dist owlmixin.egg-info
-	@echo End $@
 
 _package: _clean-package ## Package OwlMixin
-	@echo Start $@
 	@pipenv run python setup.py bdist_wheel
-	@echo End $@
 
 release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
 
