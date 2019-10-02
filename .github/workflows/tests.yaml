@@ -9,6 +9,7 @@ on:
       - "tests/*"
       - "tests/**/*"
       - "poetry.lock"
+      - ".codeclimate.yml"
   pull_request:
     branches:
       - master
