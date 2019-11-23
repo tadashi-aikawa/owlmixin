@@ -44,7 +44,7 @@
 
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
 <span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="k">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
@@ -84,7 +84,7 @@
 
 <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
     <span class="n">type_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="c1"># pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">type_</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">type_</span><span class="p">)</span>
@@ -313,7 +313,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">d</span>
 
-        <span class="n">instance</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">instance</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">replace_keys</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;self&quot;</span><span class="p">:</span> <span class="s2">&quot;_self&quot;</span><span class="p">},</span> <span class="n">force_snake_case</span><span class="p">)</span>
 
         <span class="n">properties</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__annotations__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -322,7 +322,7 @@
             <span class="n">assert_extra</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__methods_dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;_</span><span class="si">{cls.__name__}</span><span class="s2">___</span><span class="si">{n}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__methods_dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;_</span><span class="si">{cls.__name__}</span><span class="s2">___</span><span class="si">{n}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
             <span class="n">arg_v</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">if</span> <span class="n">f</span> <span class="k">else</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
             <span class="n">def_v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span>

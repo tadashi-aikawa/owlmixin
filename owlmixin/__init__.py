@@ -3,7 +3,7 @@
 
 import inspect
 import sys
-from typing import TypeVar, Optional, Sequence, Iterable, List
+from typing import TypeVar, Optional, Sequence, Iterable, List, Any
 
 from owlmixin import util
 from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
@@ -43,7 +43,7 @@ def assert_types(value, types: tuple, cls, name):
 
 def traverse(
     type_, name, value, cls, force_snake_case: bool, force_cast: bool, restrict: bool
-) -> any:
+) -> Any:
     # pylint: disable=too-many-return-statements,too-many-branches,too-many-arguments
     if isinstance(type_, str):
         type_ = sys.modules[cls.__module__].__dict__.get(type_)
@@ -272,7 +272,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         if isinstance(d, cls):
             return d
 
-        instance: T = cls()
+        instance: T = cls()  # type: ignore
         d = util.replace_keys(d, {"self": "_self"}, force_snake_case)
 
         properties = cls.__annotations__.items()
@@ -281,7 +281,7 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
             assert_extra(properties, d, cls)
 
         for n, t in properties:
-            f = cls.__methods_dict__.get(f"_{cls.__name__}___{n}")
+            f = cls.__methods_dict__.get(f"_{cls.__name__}___{n}")  # type: ignore
             arg_v = f(d.get(n)) if f else d.get(n)
             def_v = getattr(instance, n, None)
             setattr(

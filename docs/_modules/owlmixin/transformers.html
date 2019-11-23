@@ -41,7 +41,7 @@
             
   <h1>Source code for owlmixin.transformers</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">util</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owloption</span> <span class="k">import</span> <span class="n">TOption</span>
@@ -57,7 +57,7 @@
     <span class="k">return</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">TOption</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">is_none</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">TOption</span><span class="p">))</span> <span class="k">else</span> <span class="n">v</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span> <span class="k">else</span> <span class="n">p</span>
 
@@ -478,7 +478,7 @@
 <span class="sd">        :return: Csv file path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">dump_csvf</span><span class="p">(</span>
-            <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="bp">self</span><span class="p">),</span>
+            <span class="n">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
             <span class="n">fieldnames</span><span class="p">,</span>
             <span class="n">fpath</span><span class="o">=</span><span class="n">fpath</span><span class="p">,</span>
             <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
