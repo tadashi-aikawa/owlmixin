@@ -1,19 +1,26 @@
 OwlMixin
 ========
 
+[![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
+[![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![Actions Status](https://github.com/tadashi-aikawa/owlmixin/workflows/Tests/badge.svg)](https://github.com/tadashi-aikawa/owlmixin/actions)
 [![coverage](https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/coverage.svg)](https://codeclimate.com/github/tadashi-aikawa/owlmixin/coverage)
 [![complexity](https://codeclimate.com/github/tadashi-aikawa/owlmixin/badges/gpa.svg)](https://codeclimate.com/github/tadashi-aikawa/owlmixin)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-[![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
-[![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)]()
 
-**(ﾟ∀ﾟ) v5.0 have breaking changes**
+
+<details>
+    <summary><b>(ﾟ∀ﾟ) v5.0 have breaking changes</b></summary>
+    <div>
 
 * `TIterator#group_by`
   * Return `TDict[TList[T]]` instead of `TDict[TIterator[T]]`
+    </div>
+</details>
 
-**(ﾟ∀ﾟ) v4.0 have breaking changes**
+<details>
+    <summary><b>(ﾟ∀ﾟ) v4.0 have breaking changes</b></summary>
+    <div>
 
 * `OwlMixin`
   * Must use keyword arguments in `from_XXX` and `to_XXX` except for some ones
@@ -31,6 +38,8 @@ OwlMixin
     * `to_yamlf`
     * `to_csv`
     * `to_csvf`
+    </div>
+</details>
 
 
 Motivation
