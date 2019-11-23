@@ -1,5 +1,5 @@
 # coding: utf-8
-from typing import List, Sequence, Iterator, Optional
+from typing import List, Sequence, Iterator, Optional, Any
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -15,7 +15,7 @@ def is_ignore(v) -> bool:
     return v is None or (isinstance(v, TOption) and v.is_none())
 
 
-def evaluate(v) -> Optional[any]:
+def evaluate(v) -> Optional[Any]:
     p = v.get() if (isinstance(v, TOption)) else v
     return list(v) if isinstance(v, Iterator) else p
 
@@ -436,7 +436,7 @@ class CsvTransformer:
         :return: Csv file path
         """
         return util.dump_csvf(
-            map(lambda x: traverse(x, force_value=True), self),
+            traverse(self, force_value=True),
             fieldnames,
             fpath=fpath,
             encoding=encoding,

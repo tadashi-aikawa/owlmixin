@@ -1,10 +1,9 @@
 # coding: utf-8
-from typing import List, Sequence
+from typing import List, Sequence, Any
 
 
 class OwlMixinError(Exception):
     title: str
-    description: str
 
     def __str__(self) -> str:
         return f"""
@@ -19,6 +18,10 @@ class OwlMixinError(Exception):
 {self.description}
         """
 
+    @property
+    def description(self) -> str:
+        raise NotImplementedError
+
 
 class InvalidTypeError(OwlMixinError):
     """
@@ -26,7 +29,7 @@ class InvalidTypeError(OwlMixinError):
     :ivar str description: Error description
     :ivar str cls: Class name
     :ivar str prop: Property name
-    :ivar any value: Property value
+    :ivar Any value: Property value
     :ivar List[str] expected: Expected types
     :ivar str actual: Actual type
     """
@@ -34,11 +37,11 @@ class InvalidTypeError(OwlMixinError):
     title: str = "Invalid Type error"
     cls: str
     prop: str
-    value: any
+    value: Any
     expected: Sequence[str]
     actual: str
 
-    def __init__(self, *, cls, prop: str, value: any, expected: Sequence[str], actual):
+    def __init__(self, *, cls, prop: str, value: Any, expected: Sequence[str], actual):
         super().__init__()
         self.cls = f"{cls.__module__}.{cls.__name__}"
         self.prop = prop
