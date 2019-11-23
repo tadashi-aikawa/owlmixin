@@ -70,7 +70,7 @@ class TOption(Generic[T]):
             >>> TOption(None).map(lambda x: x+1).get_or(999)
             999
         """
-        return self if self.is_none() else TOption(func(self.value))
+        return TOption(None) if self.is_none() else TOption(func(self.value))
 
     def flat_map(self, func: Callable[[T], "TOption[U]"]) -> "TOption[U]":
         """
@@ -83,7 +83,7 @@ class TOption(Generic[T]):
             >>> TOption(None).flat_map(lambda x: TOption(str(x+1))).get_or("none")
             'none'
         """
-        return self if self.is_none() else TOption(func(self.value).get())
+        return TOption(None) if self.is_none() else TOption(func(self.value).get())
 
     def __repr__(self):
         return f"Option --> {self.get()}"

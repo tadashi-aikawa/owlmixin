@@ -9,7 +9,7 @@ import io
 import json
 import re
 from math import floor, ceil
-from typing import List, Dict, Union, Sequence, Iterable, Iterator
+from typing import List, Dict, Union, Sequence, Iterable, Iterator, Optional
 from urllib.request import urlopen
 
 import yaml
@@ -135,7 +135,7 @@ def load_yamlf(fpath, encoding):
         return yaml.safe_load(f)
 
 
-def load_csvf(fpath: str, fieldnames: List[str], encoding: str) -> Iterator[dict]:
+def load_csvf(fpath: str, fieldnames: Optional[Sequence[str]], encoding: str) -> Iterator[dict]:
     """
     :param fpath:
     :param fieldnames:
@@ -148,7 +148,7 @@ def load_csvf(fpath: str, fieldnames: List[str], encoding: str) -> Iterator[dict
 
         dialect = csv.Sniffer().sniff(snippet)
         dialect.skipinitialspace = True
-        reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)
+        reader = csv.DictReader(f, fieldnames=fieldnames, dialect=dialect)  # type: ignore
         for d in reader:
             yield d
 
@@ -194,7 +194,7 @@ def dump_csv(
 
 
 def dump_csvf(
-    data: Iterable[any],
+    data: Iterable[dict],
     fieldnames: Sequence[str],
     *,
     fpath: str,
@@ -300,14 +300,12 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
         )
 
     def to_record(r: dict) -> str:
-        return (
-            f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col.get(f)) for f in fieldnames])}|"
-        )
+        return f"|{'|'.join([fill_spaces(str(r.get(f)), width_by_col[f]) for f in fieldnames])}|"
 
     lf = "\n"
     return f"""
-|{'|'.join([fill_spaces(x, width_by_col.get(x), center=True) for x in fieldnames])}|
-|{'|'.join([fill_spaces(width_by_col.get(x) * "-", width_by_col.get(x)) for x in fieldnames])}|
+|{'|'.join([fill_spaces(x, width_by_col[x], center=True) for x in fieldnames])}|
+|{'|'.join([fill_spaces(width_by_col[x] * "-", width_by_col[x]) for x in fieldnames])}|
 {lf.join([to_record(x) for x in data])}
 """.lstrip()
 

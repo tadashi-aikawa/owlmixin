@@ -33,6 +33,7 @@ class TList(
         return TList(list(self) + values)
 
     def get(self, index: int) -> TOption[T]:
+        # TODO: Rename -> not implemented super class
         """
         Usage:
             >>> TList([1, 2, 3, 4, 5]).get(3)
@@ -114,7 +115,7 @@ class TList(
             >>> TList([1, 2, 30, 4, 50]).take_while(lambda x: x < 10)
             [1, 2]
         """
-        r = TList()
+        r = TList[T]()
         for x in self:
             if not func(x):
                 return r
@@ -135,7 +136,7 @@ class TList(
             >>> TList([1, 2, 3, 2, 1]).uniq()
             [1, 2, 3]
         """
-        rs = TList()
+        rs = TList[T]()
         for e in self:
             if e not in rs:
                 rs.append(e)
@@ -147,7 +148,7 @@ class TList(
             >>> TList([1, 2, 3, -2, -1]).uniq_by(lambda x: x**2)
             [1, 2, 3]
         """
-        rs = TList()
+        rs = TList[T]()
         for e in self:
             if func(e) not in rs.map(func):
                 rs.append(e)
@@ -167,7 +168,7 @@ class TList(
             >>> TList([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
             '{"0": [2,4],"1": [1,3,5]}'
         """
-        ret = TDict()
+        ret = TDict[TList[T]]()
         for v in self:
             k = to_key(v)
             ret.setdefault(k, TList())
@@ -195,7 +196,7 @@ class TList(
         """
         return TList(sorted(self, key=func, reverse=reverse))
 
-    def concat(self, values: "List[T]", first: bool = False) -> "TList[T]":
+    def concat(self, values: List[T], first: bool = False) -> "TList[T]":
         """
         Usage:
             >>> TList([1, 2]).concat(TList([3, 4]))
@@ -203,7 +204,7 @@ class TList(
             >>> TList([1, 2]).concat(TList([3, 4]), first=True)
             [3, 4, 1, 2]
         """
-        return values + self if first else self + values
+        return TList(values) + self if first else self + values  # type: ignore
 
     def reduce(self, func: Callable[[U, T], U], init_value: U) -> U:
         """
@@ -235,7 +236,7 @@ class TList(
             >>> TList([1, 11, 25, 35, 21, 4]).count_by(lambda x: x % 10)
             {1: 3, 5: 2, 4: 1}
         """
-        ret = TDict()
+        ret = TDict[int]()
         for v in self:
             k = func(v)
             ret.setdefault(k, 0)
@@ -317,7 +318,8 @@ class TList(
         """
         return self.reject(lambda x: x in values)
 
-    def reverse(self) -> "TList[T]":
+    def reverse(self) -> "TList[T]":  # type: ignore
+        # TODO: Rename -> not implemented super class
         """
         Usage:
             >>> TList([1, 2, 3]).reverse()
@@ -712,7 +714,8 @@ class TIterator(
         """
         return self.reject(lambda x: x in values)
 
-    def reverse(self) -> "TIterator[T]":
+    def reverse(self) -> "TIterator[T]":  # type: ignore
+        # TODO: Rename -> not implemented super class
         """
         Usage:
 
@@ -730,7 +733,7 @@ class TDict(dict, DictTransformer, JsonTransformer, YamlTransformer, Generic[T])
     def _dict(self) -> dict:
         return dict(self)
 
-    def get(self, key: K) -> TOption[T]:
+    def get(self, key: K) -> TOption[T]:  # type: ignore
         """
         Usage:
 

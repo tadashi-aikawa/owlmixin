@@ -51,7 +51,7 @@ class OwlObjectEnum(ValueTransformer, Enum):
             >>> Animal.from_value('cat').cry()
             'mewing'
         """
-        return [x for x in cls.__members__.values() if x.value[0] == value][0]
+        return [x for x in cls.__members__.values() if x.value[0] == value][0]  # type: ignore
 
     def to_value(self, ignore_none, force_value):
         return self.symbol
