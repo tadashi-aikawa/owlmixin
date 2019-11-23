@@ -102,3 +102,6 @@ ENV/
 
 # pypi
 /.pypirc
+
+#mypy
+.mypy_cache
