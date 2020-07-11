@@ -25,6 +25,8 @@ sphinx = "^2.2"
 pytest = "^5.2"
 mock = "^3.0"
 pytest-cov = "^2.7"
+mypy = "^0.782"
+pylint = "^2.5.3"
 
 [tool.black]
 line-length = 100
