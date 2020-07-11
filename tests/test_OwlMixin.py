@@ -5,6 +5,7 @@ import os
 
 import pytest
 from mock import patch
+from typing import Any
 
 from owlmixin import OwlMixin, RequiredError
 from owlmixin.owlcollections import TDict, TList
@@ -20,7 +21,12 @@ class Color(OwlEnum):
 
 
 class OnlyAny(OwlMixin):
-    hoge: any
+    hoge: any  # type: ignore
+    """ any is invalid """
+
+
+class OnlyTypingAny(OwlMixin):
+    hoge: Any
 
 
 class ForwardRefType(OwlMixin):
@@ -186,6 +192,10 @@ class TestFromDict:
 
     def test_from_dict_includes_any(self):
         r: OnlyAny = OnlyAny.from_dict({"hoge": {"huga": [1, 2, 3]}})
+        assert r.hoge == {"huga": [1, 2, 3]}
+
+    def test_from_dict_includes_typing_any(self):
+        r: OnlyTypingAny = OnlyTypingAny.from_dict({"hoge": {"huga": [1, 2, 3]}})
         assert r.hoge == {"huga": [1, 2, 3]}
 
     def test_from_dict_includes_forwardref_type(self):

@@ -56,6 +56,8 @@ def traverse(
         assert_none(value, type_, cls, name)
         if type_ is any:
             return value
+        if type_ is Any:
+            return value
         if isinstance(value, type_):
             return value
         if issubclass(type_, OwlMixin):
