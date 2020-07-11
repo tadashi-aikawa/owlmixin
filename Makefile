@@ -1,17 +1,23 @@
 MAKEFLAGS += --warn-undefined-variables
-SHELL := /bin/bash
+SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
 
 .PHONY: $(shell egrep -oh ^[a-zA-Z0-9][a-zA-Z0-9_-]+: $(MAKEFILE_LIST) | sed 's/://')
-
--include .env
 
 help: ## Print this help
 	@echo 'Usage: make [target]'
 	@echo ''
 	@echo 'Targets:'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9][a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+guard-%:
+	@ if [ "${${*}}" = "" ]; then \
+		echo "[REQUIRED ERROR] \`$*\` is required."; \
+		exit 1; \
+	fi
+
+-include .env
 
 version := $(shell git rev-parse --abbrev-ref HEAD)
 
