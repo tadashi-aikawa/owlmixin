@@ -180,6 +180,15 @@ class TestGet:
         assert Spot.from_dicts(d).get(2).is_none()
 
 
+class TestForEach:
+    def test_normal(self):
+        d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
+
+        ret = []
+        assert Spot.from_dicts(d).for_each(lambda s: ret.append(s.names[0])) is None
+        assert ret == ["spot1", "spot21"]
+
+
 class TestMap:
     def test_normal(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]

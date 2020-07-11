@@ -29,6 +29,7 @@ class TList(
     TableTransformer,
     Generic[T],
 ):
+    # pylint: disable=too-many-ancestors
     def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
@@ -42,6 +43,18 @@ class TList(
             Option --> None
         """
         return TOption(self[index]) if len(self) > index else TOption(None)
+
+    def for_each(self, func: Callable[[T], None]) -> None:
+        """
+        Usage:
+
+            >>> TList([1, 2, 3]).for_each(lambda x: print(str(x)))
+            1
+            2
+            3
+        """
+        for x in self:
+            func(x)
 
     def map(self, func: Callable[[T], U]) -> "TList[U]":
         """
@@ -374,6 +387,18 @@ class TIterator(
             Option --> None
         """
         return TOption(next(islice(self, index, None), None))
+
+    def for_each(self, func: Callable[[T], None]) -> None:
+        """
+        Usage:
+
+            >>> TIterator([1, 2, 3]).for_each(lambda x: print(str(x)))
+            1
+            2
+            3
+        """
+        for x in self:
+            func(x)
 
     def map(self, func: Callable[[T], U]) -> "TIterator[U]":
         """

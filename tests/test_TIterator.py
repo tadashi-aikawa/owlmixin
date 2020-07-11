@@ -8,6 +8,7 @@ from owlmixin import OwlMixin, TOption
 from owlmixin.owlcollections import TList, TIterator
 
 
+# noinspection DuplicatedCode
 class Address(OwlMixin):
     name: str
 
@@ -179,6 +180,15 @@ class TestNextAt:
     def test_not_found(self):
         d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
         assert Spot.from_iterable_dicts(d).next_at(2).is_none()
+
+
+class TestForEach:
+    def test_normal(self):
+        d = [{"names": ["spot1"], "address": {"name": "address1"}}, {"names": ["spot21", "spot22"]}]
+
+        ret = []
+        assert Spot.from_iterable_dicts(d).for_each(lambda s: ret.append(s.names[0])) is None
+        assert ret == ["spot1", "spot21"]
 
 
 class TestMap:
