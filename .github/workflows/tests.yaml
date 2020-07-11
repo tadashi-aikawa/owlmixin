@@ -23,7 +23,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python: ["3.6", "3.7", "3.8"]
-    name: Python ${{ matrix.python }}
+    name: Python ${{ matrix.python }} on ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
@@ -65,6 +65,6 @@ jobs:
         with:
           type: ${{ job.status }}
           username: GitHub Actions (Success)
-          job_name: ":python: All tests [:ubuntu:,:appleinc:,:windows:]x[3.6,3.7,3.8]"
+          job_name: ":python: All tests  `OS` :ubuntu::appleinc::windows:  `Versions` 3.6/3.7/3.8"
           icon_emoji: ":github:"
           url: ${{ secrets.SLACK_WEBHOOK }}
