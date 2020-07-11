@@ -36,14 +36,10 @@ jobs:
           poetry install
 
       - run: make test
-      - name: Test report
-        if: matrix.python == 3.7 && success()
-        env:
-          CC_TEST_REPORTER_ID: 3e113735ca4277f3ea59db80fbdca7bceb293775290baa2db1fdc216ba940228
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter after-build
+      - uses: codecov/codecov-action@v1
+        if: matrix.python == 3.8 && success()
+        with:
+          fail_ci_if_error: true
 
       - name: "Slack notification (not success)"
         uses: homoluctus/slatify@master
