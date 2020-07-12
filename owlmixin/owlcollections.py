@@ -33,6 +33,18 @@ class TList(
     def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
+    def to_iterator(self) -> "TIterator[T]":
+        """
+        Usage:
+
+            >>> it = TList([1, 2, 3]).to_iterator()
+            >>> it.to_list()
+            [1, 2, 3]
+            >>> it.to_list()
+            []
+        """
+        return TIterator(self)
+
     def get(self, index: int) -> TOption[T]:
         # TODO: Rename -> not implemented super class
         """
