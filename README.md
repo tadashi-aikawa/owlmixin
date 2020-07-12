@@ -41,8 +41,8 @@ OwlMixin
 </details>
 
 
-Motivation
-----------
+💪 Motivation
+---------------
 
 Have you ever wanted to write robust code in Python? This library will make such your wishes come true.
 
@@ -50,22 +50,22 @@ Define your data class which is extend OwlMixin, you can use some useful methods
 See following `Example` and `API Reference` sections.
 
 
-Installation
-------------
+💃 Installation
+-----------------
 
 ```bash
 pip install owlmixin
 ```
 
 
-API Reference
--------------
+📜 API Reference
+------------------
 
 https://tadashi-aikawa.github.io/owlmixin/
 
 
-Example
--------
+👉 Examples
+-------------
 
 ```python
 from owlmixin import OwlMixin, OwlEnum, TOption, TList
@@ -176,8 +176,8 @@ RANK,STAR,NAME,DESCRIPTION
 Don't you think smart?
 
 
-For developer
-------------
+💻 For developers
+-----------------
 
 ### Requirements
 
@@ -186,9 +186,8 @@ For developer
 
 ### Flow
 
-1. Create version branch like as 3.4.0
-2. Create Issue and development! (Feature branch is optional)
-3. Commit with prefix emoji like "📝", and suffix issue number like "#120"
+1. Development on master and if you need branches and issues, create them
+2. Commit with prefix emoji such as "📝", and suffix issue number like "#120"
 
 ### Commands
 
@@ -204,12 +203,19 @@ $ make test
 ```
 
 
-### Version up
+📦 Release
+------------
 
-**Confirm that your branch name equals release version**
+### Requirements
+
+* poetry
+* make
+* [ghr]
+
+[ghr]: https://github.com/tcnksm/ghr
+
+### Commands
 
 ```bash
-make release
+make release version=x.y.z
 ```
-
-Finally, create pull request and merge to master!!
