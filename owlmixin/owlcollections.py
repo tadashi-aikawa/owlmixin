@@ -5,6 +5,7 @@ from collections import deque
 from itertools import chain, islice, filterfalse, takewhile, tee, groupby
 from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union, Iterable, Iterator
 
+from owlmixin import cutil
 from owlmixin.owloption import TOption
 from owlmixin.transformers import (
     DictTransformer,
@@ -29,7 +30,6 @@ class TList(
     TableTransformer,
     Generic[T],
 ):
-    # pylint: disable=too-many-ancestors
     def __add__(self, values: list) -> "TList[T]":
         return TList(list(self) + values)
 
@@ -356,7 +356,6 @@ class TList(
 class TIterator(
     DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]
 ):
-    # pylint: disable=too-many-ancestors
     __inner_iterator: Iterator
 
     def __init__(self, iterable: Iterable):
