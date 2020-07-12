@@ -19,8 +19,6 @@ guard-%:
 
 -include .env
 
-version := $(shell git rev-parse --abbrev-ref HEAD)
-
 #---- Basic
 
 init-dev: ## Install dependencies and create envirionment
@@ -52,9 +50,9 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 _package: ## Package OwlMixin
 	@poetry build -f wheel
 
-release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to enviroment varialbles)
-	@echo '0. Install packages from lockfile and test'
-	@make init-dev
+release: guard-version test _package-docs ## make release version=x.y.z
+	@echo '0. Install packages from lockfile'
+	@poetry install --no-dev --no-root
 	@make test
 
 	@echo '1. Version up'
@@ -69,7 +67,7 @@ release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to envi
 	git commit -m ':package: Version $(version)'
 
 	@echo '4. Tags'
-	git tag v$(version) -m v$(version)
+	ghr v$(version)
 
 	@echo '5. Package OwlMixin'
 	@make _package
@@ -78,9 +76,7 @@ release: _package-docs ## Release (set TWINE_USERNAME and TWINE_PASSWORD to envi
 	@poetry publish
 
 	@echo '7. Push'
-	git push origin v$(version)
+	git push --tags
 	git push
 
 	@echo 'Success All!!'
-	@echo 'Create a pull request and merge to master!!'
-	@echo 'https://github.com/tadashi-aikawa/owlmixin/compare/$(version)?expand=1'
