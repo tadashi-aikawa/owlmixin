@@ -52,8 +52,7 @@ _package: ## Package OwlMixin
 
 release: guard-version test _package-docs ## make release version=x.y.z
 	@echo '0. Install packages from lockfile'
-	@poetry install --no-dev --no-root
-	@make test
+	@poetry install --no-root
 
 	@echo '1. Version up'
 	@poetry version $(version)
