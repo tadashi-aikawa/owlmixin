@@ -74,6 +74,18 @@
     <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TList[T]&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">TList</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="n">values</span><span class="p">)</span>
 
+<div class="viewcode-block" id="TList.to_iterator"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.to_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">to_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TIterator[T]&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; it = TList([1, 2, 3]).to_iterator()</span>
+<span class="sd">            &gt;&gt;&gt; it.to_list()</span>
+<span class="sd">            [1, 2, 3]</span>
+<span class="sd">            &gt;&gt;&gt; it.to_list()</span>
+<span class="sd">            []</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TList.get"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOption</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="c1"># TODO: Rename -&gt; not implemented super class</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -84,6 +96,18 @@
 <span class="sd">            Option --&gt; None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">index</span> <span class="k">else</span> <span class="n">TOption</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TList.for_each"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.for_each">[docs]</a>    <span class="k">def</span> <span class="nf">for_each</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TList([1, 2, 3]).for_each(lambda x: print(str(x)))</span>
+<span class="sd">            1</span>
+<span class="sd">            2</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TList.map"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TList.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TList[U]&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -373,7 +397,6 @@
 <div class="viewcode-block" id="TIterator"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator">[docs]</a><span class="k">class</span> <span class="nc">TIterator</span><span class="p">(</span>
     <span class="n">DictsTransformer</span><span class="p">,</span> <span class="n">JsonTransformer</span><span class="p">,</span> <span class="n">YamlTransformer</span><span class="p">,</span> <span class="n">CsvTransformer</span><span class="p">,</span> <span class="n">TableTransformer</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
 <span class="p">):</span>
-    <span class="c1"># pylint: disable=too-many-ancestors</span>
     <span class="n">__inner_iterator</span><span class="p">:</span> <span class="n">Iterator</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
@@ -416,6 +439,18 @@
 <span class="sd">            Option --&gt; None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="kc">None</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TIterator.for_each"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.for_each">[docs]</a>    <span class="k">def</span> <span class="nf">for_each</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; TIterator([1, 2, 3]).for_each(lambda x: print(str(x)))</span>
+<span class="sd">            1</span>
+<span class="sd">            2</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TIterator.map"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TIterator[U]&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -676,6 +711,22 @@
 <span class="sd">            30</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TIterator.count_by"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.count_by">[docs]</a>    <span class="k">def</span> <span class="nf">count_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TDict[int]&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Usage:</span>
+<span class="sd">            &gt;&gt;&gt; it = TIterator([1, 11, 25, 35, 21, 4])</span>
+<span class="sd">            &gt;&gt;&gt; it.count_by(lambda x: x % 10)</span>
+<span class="sd">            {1: 3, 5: 2, 4: 1}</span>
+<span class="sd">            &gt;&gt;&gt; it.to_list()</span>
+<span class="sd">            []</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TDict</span><span class="p">[</span><span class="nb">int</span><span class="p">]()</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TIterator.join"><a class="viewcode-back" href="../../api/owlcollections.html#owlmixin.owlcollections.TIterator.join">[docs]</a>    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joint</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>

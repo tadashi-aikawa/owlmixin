@@ -97,6 +97,8 @@
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="nb">any</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">value</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
