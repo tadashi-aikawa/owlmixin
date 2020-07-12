@@ -5,7 +5,6 @@ from collections import deque
 from itertools import chain, islice, filterfalse, takewhile, tee, groupby
 from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union, Iterable, Iterator
 
-from owlmixin import cutil
 from owlmixin.owloption import TOption
 from owlmixin.transformers import (
     DictTransformer,
