@@ -466,6 +466,17 @@ class TestSumBy:
         assert Spot.from_iterable_dicts(d).sum_by(lambda x: len(x.names)) == 3
 
 
+class TestCountBy:
+    def test_normal(self):
+        d = [
+            {"names": ["spot1"], "address": {"name": "address1"}},
+            {"names": ["spot21", "spot22"]},
+            {"names": ["spot31", "spot32"]},
+        ]
+
+        assert Spot.from_iterable_dicts(d).count_by(lambda x: len(x.names)) == {1: 1, 2: 2}
+
+
 class TestJoin:
     def test_normal(self):
         assert TIterator(["a", "bc", "def"]).join("---") == "a---bc---def"

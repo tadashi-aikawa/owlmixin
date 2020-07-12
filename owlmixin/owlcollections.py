@@ -660,6 +660,22 @@ class TIterator(
         """
         return self.map(func).sum()
 
+    def count_by(self, func: Callable[[T], Any]) -> "TDict[int]":
+        """
+        Usage:
+            >>> it = TIterator([1, 11, 25, 35, 21, 4])
+            >>> it.count_by(lambda x: x % 10)
+            {1: 3, 5: 2, 4: 1}
+            >>> it.to_list()
+            []
+        """
+        ret = TDict[int]()
+        for v in self:
+            k = func(v)
+            ret.setdefault(k, 0)
+            ret[k] += 1
+        return ret
+
     def join(self, joint: str) -> str:
         """
         Usage:
