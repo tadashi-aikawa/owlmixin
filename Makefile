@@ -50,9 +50,10 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 _package: ## Package OwlMixin
 	@poetry build -f wheel
 
-release: guard-version test _package-docs ## make release version=x.y.z
-	@echo '0. Install packages from lockfile'
+release: guard-version ## make release version=x.y.z
+	@echo '0. Install packages from lockfile, then test and package documentation'
 	@poetry install --no-root
+	@make test _package-docs
 
 	@echo '1. Version up'
 	@poetry version $(version)
