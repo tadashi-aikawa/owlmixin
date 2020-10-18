@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ["3.6", "3.7", "3.8"]
+        python: ["3.6", "3.7", "3.8", "3.9"]
     name: Python ${{ matrix.python }} on ${{ matrix.os }}
 
     steps:
@@ -38,7 +38,7 @@ jobs:
 
       - run: make test
       - uses: codecov/codecov-action@v1
-        if: matrix.python == 3.8 && matrix.os == 'ubuntu-latest' && success()
+        if: matrix.python == 3.9 && matrix.os == 'ubuntu-latest' && success()
 
       - name: "Slack notification (not success)"
         uses: homoluctus/slatify@master
@@ -63,6 +63,6 @@ jobs:
         with:
           type: ${{ job.status }}
           username: GitHub Actions (Success)
-          job_name: ":python: All tests  `OS` :ubuntu::appleinc::windows:  `Versions` 3.6/3.7/3.8"
+          job_name: ":python: All tests  `OS` :ubuntu::appleinc::windows:  `Versions` 3.6/3.7/3.8/3.9"
           icon_emoji: ":github:"
           url: ${{ secrets.SLACK_WEBHOOK }}
