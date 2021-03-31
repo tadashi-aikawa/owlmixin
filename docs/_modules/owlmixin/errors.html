@@ -7,11 +7,11 @@
     <title>owlmixin.errors &#8212; owlmixin  documentation</title>
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -41,23 +41,23 @@
             
   <h1>Source code for owlmixin.errors</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span>
 
 
 <span class="k">class</span> <span class="nc">OwlMixinError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">.        ∧,,_∧      ,___________________</span>
-<span class="s2">     ⊂ ( ･ω･ )つ-  &lt;  </span><span class="si">{self.title}</span><span class="s2"></span>
+<span class="s2">     ⊂ ( ･ω･ )つ-  &lt;  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">   ／／/     /::/     `-------------------</span>
 <span class="s2">   |::|/⊂ヽノ|::|」</span>
 <span class="s2">／￣￣旦￣￣￣／|</span>
 <span class="s2">＿＿＿＿＿＿／  | |</span>
 <span class="s2">|------ー----ー|／</span>
 
-<span class="si">{self.description}</span><span class="s2"></span>
+<span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">        &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -83,9 +83,9 @@
     <span class="n">expected</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">actual</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">actual</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{cls.__module__}</span><span class="s2">.</span><span class="si">{cls.__name__}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prop</span> <span class="o">=</span> <span class="n">prop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">]</span>
@@ -94,8 +94,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="c1"># expected_typestr = &quot; or &quot;.join((str(t) for t in expected))</span>
-        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{self.cls}</span><span class="s2">#</span><span class="si">{self.prop}</span><span class="s2"> = </span><span class="si">{self.value}</span><span class="s2">` doesn&#39;t match expected types.</span>
-<span class="s2">Expected type is one of </span><span class="si">{self.expected}</span><span class="s2">, but actual type is `</span><span class="si">{self.actual}</span><span class="s2">`</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">` doesn&#39;t match expected types.</span>
+<span class="s2">Expected type is one of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="si">}</span><span class="s2">, but actual type is `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">actual</span><span class="si">}</span><span class="s2">`</span>
 
 <span class="s2">    * If you want to force cast, set `force_cast=True`</span>
 <span class="s2">    * If you don&#39;t want to force cast, specify value which has correct type&quot;&quot;&quot;</span></div>
@@ -113,18 +113,18 @@
     <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{cls.__module__}</span><span class="s2">.</span><span class="si">{cls.__name__}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="n">props</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{self.cls}</span><span class="s2">` has unknown properties </span><span class="si">{self.props}</span><span class="s2">!!</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">` has unknown properties </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="si">}</span><span class="s2">!!</span>
 
 <span class="s2">    * If you want to allow unknown properties, set `restrict=False`</span>
-<span class="s2">    * If you want to disallow unknown properties, add {&#39; and &#39;.join(</span>
-<span class="s2">            [&#39;`&#39; + x + &#39;`&#39; for x in self.props])} to </span><span class="si">{self.cls}</span><span class="s2">&quot;&quot;&quot;</span></div>
+<span class="s2">    * If you want to disallow unknown properties, add </span><span class="si">{</span><span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">])</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="RequiredError"><a class="viewcode-back" href="../../api/errors.html#owlmixin.errors.RequiredError">[docs]</a><span class="k">class</span> <span class="nc">RequiredError</span><span class="p">(</span><span class="n">OwlMixinError</span><span class="p">):</span>
@@ -141,18 +141,18 @@
     <span class="n">prop</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">type_</span><span class="p">:</span> <span class="nb">str</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{cls.__module__}</span><span class="s2">.</span><span class="si">{cls.__name__}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prop</span> <span class="o">=</span> <span class="n">prop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type_</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{self.cls}</span><span class="s2">#</span><span class="si">{self.prop}</span><span class="s2">: </span><span class="si">{self.type_}</span><span class="s2">` is empty!!</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;`</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type_</span><span class="si">}</span><span class="s2">` is empty!!</span>
 
-<span class="s2">    * If `</span><span class="si">{self.prop}</span><span class="s2">` is certainly required, specify anything.</span>
-<span class="s2">    * If `</span><span class="si">{self.prop}</span><span class="s2">` is optional, change type from `</span><span class="si">{self.type_}</span><span class="s2">` to `TOption[</span><span class="si">{self.type_}</span><span class="s2">]`&quot;&quot;&quot;</span></div>
+<span class="s2">    * If `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="si">}</span><span class="s2">` is certainly required, specify anything.</span>
+<span class="s2">    * If `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="si">}</span><span class="s2">` is optional, change type from `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type_</span><span class="si">}</span><span class="s2">` to `TOption[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type_</span><span class="si">}</span><span class="s2">]`&quot;&quot;&quot;</span></div>
 </pre></div>
 
           </div>
@@ -169,7 +169,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -187,7 +187,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

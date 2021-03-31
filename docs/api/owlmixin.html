@@ -7,11 +7,11 @@
     <title>OwlMixin &#8212; owlmixin  documentation</title>
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Collections" href="owlcollections.html" />
@@ -52,9 +52,9 @@
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: utf-8</span>
 
-<span class="kn">from</span> <span class="nn">owlmixin</span> <span class="k">import</span> <span class="n">OwlMixin</span><span class="p">,</span> <span class="n">TOption</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="k">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TList</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="k">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
+<span class="kn">from</span> <span class="nn">owlmixin</span> <span class="kn">import</span> <span class="n">OwlMixin</span><span class="p">,</span> <span class="n">TOption</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="kn">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TList</span>
+<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="kn">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 
 
 <span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">OwlObjectEnum</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
@@ -114,7 +114,7 @@
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span><span class="p">,</span> <span class="n">Japanese</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span><span class="p">,</span> <span class="n">Japanese</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -134,7 +134,7 @@
 </pre></div>
 </div>
 <p>You can use default value</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="p">:</span> <span class="n">Japanese</span> <span class="o">=</span> <span class="n">Japanese</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">&#39;taro&#39;</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taro</span><span class="o">.</span><span class="n">name</span>
@@ -144,7 +144,7 @@
 </pre></div>
 </div>
 <p>If you don’t set <cite>force_snake=False</cite> explicitly, keys are transformed to snake case as following.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;--id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;&lt;name&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -160,7 +160,7 @@
 </pre></div>
 </div>
 <p>You can allow extra parameters (like <code class="docutils literal notranslate"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=False</cite>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span><span class="p">:</span> <span class="n">Food</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span><span class="p">:</span> <span class="n">Food</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;hogehoge&quot;</span><span class="p">:</span> <span class="s2">&quot;ooooooooooooooooooooo&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">},</span> <span class="n">restrict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -169,76 +169,76 @@
 </pre></div>
 </div>
 <p>You can prohibit extra parameters (like <code class="docutils literal notranslate"><span class="pre">hogehoge</span></code>) if you set <cite>restrict=True</cite> (which is default).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; human = Human.from_dict({
-...     &quot;id&quot;: 1,
-...     &quot;name&quot;: &quot;Tom&quot;,
-...     &quot;hogehoge1&quot;: &quot;ooooooooooooooooooooo&quot;,
-...     &quot;hogehoge2&quot;: [&quot;aaaaaaaaaaaaaaaaaa&quot;, &quot;iiiiiiiiiiiiiiiii&quot;],
-...     &quot;favorites&quot;: [
-...         {&quot;name&quot;: &quot;Apple&quot;, &quot;namesByLang&quot;: {&quot;en&quot;: &quot;Apple&quot;, &quot;de&quot;: &quot;Apfel&quot;}},
-...         {&quot;name&quot;: &quot;Orange&quot;}
-...     ]
-... })  
-Traceback (most recent call last):
-    ...
-owlmixin.errors.UnknownPropertiesError:
-.        ∧,,_∧      ,___________________
-     ⊂ ( ･ω･ )つ-  &lt;  Unknown properties error
-   ／／/     /::/     `-------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;hogehoge1&quot;</span><span class="p">:</span> <span class="s2">&quot;ooooooooooooooooooooo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;hogehoge2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;aaaaaaaaaaaaaaaaaa&quot;</span><span class="p">,</span> <span class="s2">&quot;iiiiiiiiiiiiiiiii&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;namesByLang&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Apfel&quot;</span><span class="p">}},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>  
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">owlmixin.errors.UnknownPropertiesError</span>:
+<span class="go">.        ∧,,_∧      ,___________________</span>
+<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Unknown properties error</span>
+<span class="go">   ／／/     /::/     `-------------------</span>
+<span class="go">   |::|/⊂ヽノ|::|」</span>
+<span class="go">／￣￣旦￣￣￣／|</span>
+<span class="go">＿＿＿＿＿＿／  | |</span>
+<span class="go">|------ー----ー|／</span>
 
-`owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!
+<span class="go">`owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!</span>
 
-    * If you want to allow unknown properties, set `restrict=False`
-    * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human
+<span class="go">    * If you want to allow unknown properties, set `restrict=False`</span>
+<span class="go">    * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human</span>
 </pre></div>
 </div>
 <p>If you specify wrong type…</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; human: Human = Human.from_dict({
-...     &quot;id&quot;: 1,
-...     &quot;name&quot;: &quot;ichiro&quot;,
-...     &quot;favorites&quot;: [&quot;apple&quot;, &quot;orange&quot;]
-... })  
-Traceback (most recent call last):
-    ...
-owlmixin.errors.InvalidTypeError:
-.        ∧,,_∧      ,___________________
-     ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error
-   ／／/     /::/     `-------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ichiro&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>  
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">owlmixin.errors.InvalidTypeError</span>:
+<span class="go">.        ∧,,_∧      ,___________________</span>
+<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error</span>
+<span class="go">   ／／/     /::/     `-------------------</span>
+<span class="go">   |::|/⊂ヽノ|::|」</span>
+<span class="go">／￣￣旦￣￣￣／|</span>
+<span class="go">＿＿＿＿＿＿／  | |</span>
+<span class="go">|------ー----ー|／</span>
 
-`owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.
-Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`
+<span class="go">`owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.</span>
+<span class="go">Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`</span>
 
-    * If you want to force cast, set `force_cast=True`
-    * If you don&#39;t want to force cast, specify value which has correct type
+<span class="go">    * If you want to force cast, set `force_cast=True`</span>
+<span class="go">    * If you don&#39;t want to force cast, specify value which has correct type</span>
 </pre></div>
 </div>
 <p>If you don’t specify required params… (ex. name</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; human: Human = Human.from_dict({
-...     &quot;id&quot;: 1
-... })  
-Traceback (most recent call last):
-    ...
-owlmixin.errors.RequiredError:
-.        ∧,,_∧      ,___________________
-     ⊂ ( ･ω･ )つ-  &lt;  Required error
-   ／／/     /::/     `-------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="gp">... </span><span class="p">})</span>  
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">owlmixin.errors.RequiredError</span>:
+<span class="go">.        ∧,,_∧      ,___________________</span>
+<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
+<span class="go">   ／／/     /::/     `-------------------</span>
+<span class="go">   |::|/⊂ヽノ|::|」</span>
+<span class="go">／￣￣旦￣￣￣／|</span>
+<span class="go">＿＿＿＿＿＿／  | |</span>
+<span class="go">|------ー----ー|／</span>
 
-`owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!
+<span class="go">`owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!</span>
 
-    * If `name` is certainly required, specify anything.
-    * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`
+<span class="go">    * If `name` is certainly required, specify anything.</span>
+<span class="go">    * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -261,25 +261,25 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; from owlmixin.samples import Human
-&gt;&gt;&gt; Human.from_optional_dict(None).is_none()
-True
-&gt;&gt;&gt; Human.from_optional_dict({}).get()  
-Traceback (most recent call last):
-    ...
-owlmixin.errors.RequiredError:
-.        ∧,,_∧      ,___________________
-     ⊂ ( ･ω･ )つ-  &lt;  Required error
-   ／／/     /::/     `-------------------
-   |::|/⊂ヽノ|::|」
-／￣￣旦￣￣￣／|
-＿＿＿＿＿＿／  | |
-|------ー----ー|／
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">owlmixin.errors.RequiredError</span>:
+<span class="go">.        ∧,,_∧      ,___________________</span>
+<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
+<span class="go">   ／／/     /::/     `-------------------</span>
+<span class="go">   |::|/⊂ヽノ|::|」</span>
+<span class="go">／￣￣旦￣￣￣／|</span>
+<span class="go">＿＿＿＿＿＿／  | |</span>
+<span class="go">|------ー----ー|／</span>
 
-`owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!
+<span class="go">`owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!</span>
 
-    * If `id` is certainly required, specify anything.
-    * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`
+<span class="go">    * If `id` is certainly required, specify anything.</span>
+<span class="go">    * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -302,7 +302,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">([</span>
 <span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
 <span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
@@ -333,7 +333,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">([</span>
 <span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
 <span class="gp">... </span>   <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
@@ -364,7 +364,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">([])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -391,7 +391,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts</span><span class="p">([])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -418,7 +418,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans_by_name</span><span class="p">:</span> <span class="n">TDict</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">({</span>
 <span class="gp">... </span>   <span class="s1">&#39;Tom&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>  <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">}]},</span>
 <span class="gp">... </span>   <span class="s1">&#39;John&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">}]}</span>
@@ -449,7 +449,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts_by_key</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dicts_by_key</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -476,7 +476,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;{</span>
 <span class="gp">... </span><span class="s1">    &quot;id&quot;: 1,</span>
 <span class="gp">... </span><span class="s1">    &quot;name&quot;: &quot;Tom&quot;,</span>
@@ -533,7 +533,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;[</span>
 <span class="gp">... </span><span class="s1">   {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
 <span class="gp">... </span><span class="s1">   {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
@@ -564,7 +564,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_json_to_iterator</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;[</span>
 <span class="gp">... </span><span class="s1">   {&quot;id&quot;: 1, &quot;name&quot;: &quot;Tom&quot;,  &quot;favorites&quot;: [{&quot;name&quot;: &quot;Apple&quot;}]},</span>
 <span class="gp">... </span><span class="s1">   {&quot;id&quot;: 2, &quot;name&quot;: &quot;John&quot;, &quot;favorites&quot;: [{&quot;name&quot;: &quot;Orange&quot;}]}</span>
@@ -635,7 +635,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span><span class="p">:</span> <span class="n">Human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="gp">... </span><span class="s1">id: 1</span>
 <span class="gp">... </span><span class="s1">name: Tom</span>
@@ -694,7 +694,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TList</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml_to_list</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="gp">... </span><span class="s1">- id: 1</span>
 <span class="gp">... </span><span class="s1">  name: Tom</span>
@@ -733,7 +733,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">humans</span><span class="p">:</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">Human</span><span class="p">]</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_yaml_to_iterator</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="gp">... </span><span class="s1">- id: 1</span>
 <span class="gp">... </span><span class="s1">  name: Tom</span>
@@ -867,7 +867,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -898,7 +898,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <dl>
-<dt>Usage:</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span><span class="p">,</span> <span class="n">Food</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human_dict</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -913,7 +913,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>You can include None properties by specifying False for ignore_none</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
@@ -922,7 +922,7 @@ owlmixin.errors.RequiredError:
 </pre></div>
 </div>
 <p>As default</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Food</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 <span class="go">&#39;Apple&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;names_by_lang&quot;</span> <span class="ow">in</span> <span class="n">f</span>
@@ -930,7 +930,7 @@ owlmixin.errors.RequiredError:
 </pre></div>
 </div>
 <p>You can exclude Empty properties by specifying True for ignore_empty</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;favorites&quot;</span><span class="p">]</span>
 <span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ichiro&quot;</span><span class="p">,</span> <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[]})</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">ignore_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -957,7 +957,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1008,7 +1008,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1054,7 +1054,7 @@ owlmixin.errors.RequiredError:
 </dd>
 </dl>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="k">import</span> <span class="n">Human</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">owlmixin.samples</span> <span class="kn">import</span> <span class="n">Human</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">human</span> <span class="o">=</span> <span class="n">Human</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
@@ -1127,7 +1127,7 @@ owlmixin.errors.RequiredError:
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1149,7 +1149,7 @@ owlmixin.errors.RequiredError:
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>
