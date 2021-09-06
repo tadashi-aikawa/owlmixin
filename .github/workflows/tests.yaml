@@ -45,7 +45,7 @@ jobs:
         if: "! success()"
         with:
           description: "⚠ Owlmixin Tests failed!"
-          footer: "Python v*${{ matrix.python }}* on *${{ matrix.os }}*)"
+          footer: "Python v${{ matrix.python }} on ${{ matrix.os }})"
           severity: error
           avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
@@ -60,7 +60,7 @@ jobs:
         if: always()
         with:
           description: "✅ Owlmixin Tests passed!"
-          footer: "Python v*3.6/3.7/3.8/3.9*"
+          footer: "Python v3.6/3.7/3.8/3.9"
           severity: info
           avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
