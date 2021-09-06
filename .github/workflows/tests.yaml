@@ -40,29 +40,27 @@ jobs:
       - uses: codecov/codecov-action@v1
         if: matrix.python == 3.9 && matrix.os == 'ubuntu-latest' && success()
 
-      - name: "Slack notification (not success)"
-        uses: homoluctus/slatify@master
+      - name: "Discord notification (not success)"
+        uses: rjstone/discord-webhook-notify@v1
         if: "! success()"
         with:
-          type: ${{ job.status }}
-          username: GitHub Actions (Failure)
-          job_name: ":python:*${{ matrix.python }}* on *${{ matrix.os }}* Tests"
-          mention: channel
-          mention_if: always
-          icon_emoji: "github"
-          url: ${{ secrets.SLACK_WEBHOOK }}
+          description: "⚠ Owlmixin Tests failed!"
+          footer: "Python v*${{ matrix.python }}* on *${{ matrix.os }}*)"
+          severity: error
+          avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   notify:
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Slack Notification (success)"
-        uses: homoluctus/slatify@master
+      - name: "Discord notification (success)"
+        uses: rjstone/discord-webhook-notify@v1
         if: always()
         with:
-          type: ${{ job.status }}
-          username: GitHub Actions (Success)
-          job_name: ":python: All tests  `OS` :ubuntu::appleinc::windows:  `Versions` 3.6/3.7/3.8/3.9"
-          icon_emoji: ":github:"
-          url: ${{ secrets.SLACK_WEBHOOK }}
+          description: "✅ Owlmixin Tests passed!"
+          footer: "Python v*3.6/3.7/3.8/3.9*"
+          severity: info
+          avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
