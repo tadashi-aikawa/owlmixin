@@ -1,17 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
     <title>Errors &#8212; owlmixin  documentation</title>
-    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pyramid.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="OwlEnum" href="owlenum.html" />
@@ -32,7 +35,8 @@
         <li class="right" >
           <a href="owlenum.html" title="OwlEnum"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Errors</a></li> 
       </ul>
     </div>  
 
@@ -41,8 +45,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="errors">
-<h1>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+  <section id="errors">
+<h1>Errors<a class="headerlink" href="#errors" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
@@ -89,13 +93,13 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="invalidtypeerror">
-<h2>InvalidTypeError<a class="headerlink" href="#invalidtypeerror" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="owlmixin.errors.InvalidTypeError">
-<em class="property">class </em><code class="sig-prename descclassname">owlmixin.errors.</code><code class="sig-name descname">InvalidTypeError</code><span class="sig-paren">(</span><em class="sig-param">*, cls, prop: str, value: Any, expected: Sequence[str], actual</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#InvalidTypeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.InvalidTypeError" title="Permalink to this definition">¶</a></dt>
+<section id="invalidtypeerror">
+<h2>InvalidTypeError<a class="headerlink" href="#invalidtypeerror" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="owlmixin.errors.InvalidTypeError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">owlmixin.errors.</span></span><span class="sig-name descname"><span class="pre">InvalidTypeError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actual</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#InvalidTypeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.errors.InvalidTypeError" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
@@ -107,23 +111,23 @@
 </ul>
 </dd>
 </dl>
-<dl class="method">
-<dt id="owlmixin.errors.InvalidTypeError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.InvalidTypeError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.errors.InvalidTypeError.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.InvalidTypeError.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="unknownpropertieserror">
-<h2>UnknownPropertiesError<a class="headerlink" href="#unknownpropertieserror" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="owlmixin.errors.UnknownPropertiesError">
-<em class="property">class </em><code class="sig-prename descclassname">owlmixin.errors.</code><code class="sig-name descname">UnknownPropertiesError</code><span class="sig-paren">(</span><em class="sig-param">*, cls, props: List[str]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#UnknownPropertiesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="unknownpropertieserror">
+<h2>UnknownPropertiesError<a class="headerlink" href="#unknownpropertieserror" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="owlmixin.errors.UnknownPropertiesError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">owlmixin.errors.</span></span><span class="sig-name descname"><span class="pre">UnknownPropertiesError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#UnknownPropertiesError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
@@ -132,23 +136,23 @@ set self.__traceback__ to tb and return self.</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
-<dt id="owlmixin.errors.UnknownPropertiesError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.errors.UnknownPropertiesError.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.UnknownPropertiesError.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="requirederror">
-<h2>RequiredError<a class="headerlink" href="#requirederror" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="owlmixin.errors.RequiredError">
-<em class="property">class </em><code class="sig-prename descclassname">owlmixin.errors.</code><code class="sig-name descname">RequiredError</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">cls</em>, <em class="sig-param">prop: str</em>, <em class="sig-param">type_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#RequiredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.errors.RequiredError" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="requirederror">
+<h2>RequiredError<a class="headerlink" href="#requirederror" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="owlmixin.errors.RequiredError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">owlmixin.errors.</span></span><span class="sig-name descname"><span class="pre">RequiredError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/errors.html#RequiredError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.errors.RequiredError" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>str</em>) – Error title</p></li>
 <li><p><strong>description</strong> (<em>str</em>) – Error description</p></li>
@@ -158,37 +162,60 @@ set self.__traceback__ to tb and return self.</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
-<dt id="owlmixin.errors.RequiredError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.RequiredError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.errors.RequiredError.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#owlmixin.errors.RequiredError.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Errors</a><ul>
-<li><a class="reference internal" href="#invalidtypeerror">InvalidTypeError</a></li>
-<li><a class="reference internal" href="#unknownpropertieserror">UnknownPropertiesError</a></li>
-<li><a class="reference internal" href="#requirederror">RequiredError</a></li>
+<li><a class="reference internal" href="#invalidtypeerror">InvalidTypeError</a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.InvalidTypeError"><code class="docutils literal notranslate"><span class="pre">InvalidTypeError</span></code></a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.InvalidTypeError.with_traceback"><code class="docutils literal notranslate"><span class="pre">InvalidTypeError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unknownpropertieserror">UnknownPropertiesError</a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.UnknownPropertiesError"><code class="docutils literal notranslate"><span class="pre">UnknownPropertiesError</span></code></a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.UnknownPropertiesError.with_traceback"><code class="docutils literal notranslate"><span class="pre">UnknownPropertiesError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#requirederror">RequiredError</a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.RequiredError"><code class="docutils literal notranslate"><span class="pre">RequiredError</span></code></a><ul>
+<li><a class="reference internal" href="#owlmixin.errors.RequiredError.with_traceback"><code class="docutils literal notranslate"><span class="pre">RequiredError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="owlenum.html"
-                        title="previous chapter">OwlEnum</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="owlenum.html"
+                          title="previous chapter">OwlEnum</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -200,12 +227,12 @@ set self.__traceback__ to tb and return self.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -219,12 +246,13 @@ set self.__traceback__ to tb and return self.</p>
         <li class="right" >
           <a href="owlenum.html" title="OwlEnum"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Errors</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

@@ -1,17 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
     <title>Option &#8212; owlmixin  documentation</title>
-    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pyramid.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="OwlEnum" href="owlenum.html" />
@@ -36,7 +39,8 @@
         <li class="right" >
           <a href="owlcollections.html" title="Collections"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Option</a></li> 
       </ul>
     </div>  
 
@@ -45,8 +49,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="option">
-<h1>Option<a class="headerlink" href="#option" title="Permalink to this headline">¶</a></h1>
+  <section id="option">
+<h1>Option<a class="headerlink" href="#option" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Usage on each methods are valid on the premise that the following classes is defined in advance.</p>
@@ -93,14 +97,14 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="toption">
-<h2>TOption<a class="headerlink" href="#toption" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="owlmixin.owloption.TOption">
-<em class="property">class </em><code class="sig-prename descclassname">owlmixin.owloption.</code><code class="sig-name descname">TOption</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="owlmixin.owloption.TOption.get">
-<code class="sig-name descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.get" title="Permalink to this definition">¶</a></dt>
+<section id="toption">
+<h2>TOption<a class="headerlink" href="#toption" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">owlmixin.owloption.</span></span><span class="sig-name descname"><span class="pre">TOption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">3</span>
@@ -111,9 +115,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="owlmixin.owloption.TOption.get_or">
-<code class="sig-name descname">get_or</code><span class="sig-paren">(</span><em class="sig-param">default: T</em><span class="sig-paren">)</span> &#x2192; T<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.get_or"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.get_or" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.get_or">
+<span class="sig-name descname"><span class="pre">get_or</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.get_or"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.get_or" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">get_or</span><span class="p">(</span><span class="mi">999</span><span class="p">)</span>
 <span class="go">3</span>
@@ -125,9 +129,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="owlmixin.owloption.TOption.is_none">
-<code class="sig-name descname">is_none</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.is_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.is_none" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.is_none">
+<span class="sig-name descname"><span class="pre">is_none</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.is_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.is_none" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span>
 <span class="go">False</span>
@@ -139,9 +143,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="owlmixin.owloption.TOption.any">
-<code class="sig-name descname">any</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.any"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.any" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.any">
+<span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.any"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.any" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
 <span class="go">True</span>
@@ -153,9 +157,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="owlmixin.owloption.TOption.map">
-<code class="sig-name descname">map</code><span class="sig-paren">(</span><em class="sig-param">func: Callable[[T], U]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[~U][U]<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.map" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.map">
+<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#owlmixin.owloption.TOption" title="owlmixin.owloption.TOption"><span class="pre">TOption</span></a><span class="p"><span class="pre">[</span></span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">4</span>
@@ -165,9 +169,9 @@
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="owlmixin.owloption.TOption.flat_map">
-<code class="sig-name descname">flat_map</code><span class="sig-paren">(</span><em class="sig-param">func: Callable[[T], TOption[U]]</em><span class="sig-paren">)</span> &#x2192; owlmixin.owloption.TOption[~U][U]<a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.flat_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owlmixin.owloption.TOption.flat_map" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="owlmixin.owloption.TOption.flat_map">
+<span class="sig-name descname"><span class="pre">flat_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#owlmixin.owloption.TOption" title="owlmixin.owloption.TOption"><span class="pre">TOption</span></a><span class="p"><span class="pre">[</span></span><span class="pre">U</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#owlmixin.owloption.TOption" title="owlmixin.owloption.TOption"><span class="pre">TOption</span></a><span class="p"><span class="pre">[</span></span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/owlmixin/owloption.html#TOption.flat_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#owlmixin.owloption.TOption.flat_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TOption</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">TOption</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">&#39;4&#39;</span>
@@ -181,29 +185,47 @@
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Option</a><ul>
-<li><a class="reference internal" href="#toption">TOption</a></li>
+<li><a class="reference internal" href="#toption">TOption</a><ul>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption"><code class="docutils literal notranslate"><span class="pre">TOption</span></code></a><ul>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.get"><code class="docutils literal notranslate"><span class="pre">TOption.get()</span></code></a></li>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.get_or"><code class="docutils literal notranslate"><span class="pre">TOption.get_or()</span></code></a></li>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.is_none"><code class="docutils literal notranslate"><span class="pre">TOption.is_none()</span></code></a></li>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.any"><code class="docutils literal notranslate"><span class="pre">TOption.any()</span></code></a></li>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.map"><code class="docutils literal notranslate"><span class="pre">TOption.map()</span></code></a></li>
+<li><a class="reference internal" href="#owlmixin.owloption.TOption.flat_map"><code class="docutils literal notranslate"><span class="pre">TOption.flat_map()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="owlcollections.html"
-                        title="previous chapter">Collections</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="owlenum.html"
-                        title="next chapter">OwlEnum</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="owlcollections.html"
+                          title="previous chapter">Collections</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="owlenum.html"
+                          title="next chapter">OwlEnum</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -215,12 +237,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -237,12 +259,13 @@
         <li class="right" >
           <a href="owlcollections.html" title="Collections"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Option</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

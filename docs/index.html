@@ -1,17 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
     <title>Owlmixin API Reference &#8212; owlmixin  documentation</title>
-    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="OwlMixin" href="api/owlmixin.html" />
@@ -32,7 +35,8 @@
         <li class="right" >
           <a href="api/owlmixin.html" title="OwlMixin"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Owlmixin API Reference</a></li> 
       </ul>
     </div>  
 
@@ -41,60 +45,257 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="owlmixin-api-reference">
-<h1>Owlmixin API Reference<a class="headerlink" href="#owlmixin-api-reference" title="Permalink to this headline">¶</a></h1>
+  <section id="owlmixin-api-reference">
+<h1>Owlmixin API Reference<a class="headerlink" href="#owlmixin-api-reference" title="Permalink to this heading">¶</a></h1>
 <p>Github and README: <a class="reference external" href="https://github.com/tadashi-aikawa/owlmixin">https://github.com/tadashi-aikawa/owlmixin</a></p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/owlmixin.html">OwlMixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/owlmixin.html">OwlMixin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin"><code class="docutils literal notranslate"><span class="pre">OwlMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_dict"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_optional_dict"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_optional_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_dicts"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_dicts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_iterable_dicts"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_iterable_dicts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_optional_dicts"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_optional_dicts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_optional_iterable_dicts"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_optional_iterable_dicts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_dicts_by_key"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_dicts_by_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_optional_dicts_by_key"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_optional_dicts_by_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_json"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_jsonf"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_jsonf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_json_to_list"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_json_to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_json_to_iterator"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_json_to_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_jsonf_to_list"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_jsonf_to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_jsonf_to_iterator"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_jsonf_to_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yaml"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yaml()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yamlf"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yamlf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_list"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yaml_to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_iterator"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yaml_to_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yamlf_to_list"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yamlf_to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_yamlf_to_iterator"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_yamlf_to_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_csvf_to_list"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_csvf_to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_csvf_to_iterator"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_csvf_to_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.from_json_url"><code class="docutils literal notranslate"><span class="pre">OwlMixin.from_json_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.str_format"><code class="docutils literal notranslate"><span class="pre">OwlMixin.str_format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_dict"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_json"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_jsonf"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_jsonf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_pretty_json"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_pretty_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_yaml"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_yaml()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/owlmixin.html#owlmixin.OwlMixin.to_yamlf"><code class="docutils literal notranslate"><span class="pre">OwlMixin.to_yamlf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/owlcollections.html">Collections</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#tlist">TList</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#titerator">TIterator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#tdict">TDict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#tlist">TList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList"><code class="docutils literal notranslate"><span class="pre">TList</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_iterator"><code class="docutils literal notranslate"><span class="pre">TList.to_iterator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.get"><code class="docutils literal notranslate"><span class="pre">TList.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.for_each"><code class="docutils literal notranslate"><span class="pre">TList.for_each()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.map"><code class="docutils literal notranslate"><span class="pre">TList.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.emap"><code class="docutils literal notranslate"><span class="pre">TList.emap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.flatten"><code class="docutils literal notranslate"><span class="pre">TList.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.flat_map"><code class="docutils literal notranslate"><span class="pre">TList.flat_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.filter"><code class="docutils literal notranslate"><span class="pre">TList.filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.reject"><code class="docutils literal notranslate"><span class="pre">TList.reject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.head"><code class="docutils literal notranslate"><span class="pre">TList.head()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.take"><code class="docutils literal notranslate"><span class="pre">TList.take()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.take_while"><code class="docutils literal notranslate"><span class="pre">TList.take_while()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.tail"><code class="docutils literal notranslate"><span class="pre">TList.tail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.uniq"><code class="docutils literal notranslate"><span class="pre">TList.uniq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.uniq_by"><code class="docutils literal notranslate"><span class="pre">TList.uniq_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.partition"><code class="docutils literal notranslate"><span class="pre">TList.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.group_by"><code class="docutils literal notranslate"><span class="pre">TList.group_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.key_by"><code class="docutils literal notranslate"><span class="pre">TList.key_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.order_by"><code class="docutils literal notranslate"><span class="pre">TList.order_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.concat"><code class="docutils literal notranslate"><span class="pre">TList.concat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.reduce"><code class="docutils literal notranslate"><span class="pre">TList.reduce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.sum"><code class="docutils literal notranslate"><span class="pre">TList.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.sum_by"><code class="docutils literal notranslate"><span class="pre">TList.sum_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.count_by"><code class="docutils literal notranslate"><span class="pre">TList.count_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.size"><code class="docutils literal notranslate"><span class="pre">TList.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.join"><code class="docutils literal notranslate"><span class="pre">TList.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.unlines"><code class="docutils literal notranslate"><span class="pre">TList.unlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.find"><code class="docutils literal notranslate"><span class="pre">TList.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.all"><code class="docutils literal notranslate"><span class="pre">TList.all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.any"><code class="docutils literal notranslate"><span class="pre">TList.any()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.intersection"><code class="docutils literal notranslate"><span class="pre">TList.intersection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.not_intersection"><code class="docutils literal notranslate"><span class="pre">TList.not_intersection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_csv"><code class="docutils literal notranslate"><span class="pre">TList.to_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_csvf"><code class="docutils literal notranslate"><span class="pre">TList.to_csvf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_dicts"><code class="docutils literal notranslate"><span class="pre">TList.to_dicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_json"><code class="docutils literal notranslate"><span class="pre">TList.to_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_jsonf"><code class="docutils literal notranslate"><span class="pre">TList.to_jsonf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_pretty_json"><code class="docutils literal notranslate"><span class="pre">TList.to_pretty_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_table"><code class="docutils literal notranslate"><span class="pre">TList.to_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_yaml"><code class="docutils literal notranslate"><span class="pre">TList.to_yaml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TList.to_yamlf"><code class="docutils literal notranslate"><span class="pre">TList.to_yamlf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#titerator">TIterator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator"><code class="docutils literal notranslate"><span class="pre">TIterator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_list"><code class="docutils literal notranslate"><span class="pre">TIterator.to_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.next_at"><code class="docutils literal notranslate"><span class="pre">TIterator.next_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.for_each"><code class="docutils literal notranslate"><span class="pre">TIterator.for_each()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.map"><code class="docutils literal notranslate"><span class="pre">TIterator.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.emap"><code class="docutils literal notranslate"><span class="pre">TIterator.emap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.filter"><code class="docutils literal notranslate"><span class="pre">TIterator.filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.reject"><code class="docutils literal notranslate"><span class="pre">TIterator.reject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.flatten"><code class="docutils literal notranslate"><span class="pre">TIterator.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.flat_map"><code class="docutils literal notranslate"><span class="pre">TIterator.flat_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.head"><code class="docutils literal notranslate"><span class="pre">TIterator.head()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.take"><code class="docutils literal notranslate"><span class="pre">TIterator.take()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.take_while"><code class="docutils literal notranslate"><span class="pre">TIterator.take_while()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.tail"><code class="docutils literal notranslate"><span class="pre">TIterator.tail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.uniq"><code class="docutils literal notranslate"><span class="pre">TIterator.uniq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.uniq_by"><code class="docutils literal notranslate"><span class="pre">TIterator.uniq_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.partition"><code class="docutils literal notranslate"><span class="pre">TIterator.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.group_by"><code class="docutils literal notranslate"><span class="pre">TIterator.group_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.key_by"><code class="docutils literal notranslate"><span class="pre">TIterator.key_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.order_by"><code class="docutils literal notranslate"><span class="pre">TIterator.order_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.concat"><code class="docutils literal notranslate"><span class="pre">TIterator.concat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.reduce"><code class="docutils literal notranslate"><span class="pre">TIterator.reduce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.sum"><code class="docutils literal notranslate"><span class="pre">TIterator.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.sum_by"><code class="docutils literal notranslate"><span class="pre">TIterator.sum_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.count_by"><code class="docutils literal notranslate"><span class="pre">TIterator.count_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.join"><code class="docutils literal notranslate"><span class="pre">TIterator.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.unlines"><code class="docutils literal notranslate"><span class="pre">TIterator.unlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.find"><code class="docutils literal notranslate"><span class="pre">TIterator.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.all"><code class="docutils literal notranslate"><span class="pre">TIterator.all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.any"><code class="docutils literal notranslate"><span class="pre">TIterator.any()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.intersection"><code class="docutils literal notranslate"><span class="pre">TIterator.intersection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.not_intersection"><code class="docutils literal notranslate"><span class="pre">TIterator.not_intersection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_csv"><code class="docutils literal notranslate"><span class="pre">TIterator.to_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_csvf"><code class="docutils literal notranslate"><span class="pre">TIterator.to_csvf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_dicts"><code class="docutils literal notranslate"><span class="pre">TIterator.to_dicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_json"><code class="docutils literal notranslate"><span class="pre">TIterator.to_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_jsonf"><code class="docutils literal notranslate"><span class="pre">TIterator.to_jsonf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_pretty_json"><code class="docutils literal notranslate"><span class="pre">TIterator.to_pretty_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_table"><code class="docutils literal notranslate"><span class="pre">TIterator.to_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_yaml"><code class="docutils literal notranslate"><span class="pre">TIterator.to_yaml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TIterator.to_yamlf"><code class="docutils literal notranslate"><span class="pre">TIterator.to_yamlf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/owlcollections.html#tdict">TDict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict"><code class="docutils literal notranslate"><span class="pre">TDict</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.map"><code class="docutils literal notranslate"><span class="pre">TDict.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.map_values"><code class="docutils literal notranslate"><span class="pre">TDict.map_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.map_values2"><code class="docutils literal notranslate"><span class="pre">TDict.map_values2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.filter"><code class="docutils literal notranslate"><span class="pre">TDict.filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.reject"><code class="docutils literal notranslate"><span class="pre">TDict.reject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.sum"><code class="docutils literal notranslate"><span class="pre">TDict.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.sum_by"><code class="docutils literal notranslate"><span class="pre">TDict.sum_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.size"><code class="docutils literal notranslate"><span class="pre">TDict.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.find"><code class="docutils literal notranslate"><span class="pre">TDict.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_list"><code class="docutils literal notranslate"><span class="pre">TDict.to_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_iterator"><code class="docutils literal notranslate"><span class="pre">TDict.to_iterator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.all"><code class="docutils literal notranslate"><span class="pre">TDict.all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.any"><code class="docutils literal notranslate"><span class="pre">TDict.any()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.assign"><code class="docutils literal notranslate"><span class="pre">TDict.assign()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.pick_by"><code class="docutils literal notranslate"><span class="pre">TDict.pick_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.omit_by"><code class="docutils literal notranslate"><span class="pre">TDict.omit_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.str_format"><code class="docutils literal notranslate"><span class="pre">TDict.str_format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_dict"><code class="docutils literal notranslate"><span class="pre">TDict.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_json"><code class="docutils literal notranslate"><span class="pre">TDict.to_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_jsonf"><code class="docutils literal notranslate"><span class="pre">TDict.to_jsonf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_pretty_json"><code class="docutils literal notranslate"><span class="pre">TDict.to_pretty_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_yaml"><code class="docutils literal notranslate"><span class="pre">TDict.to_yaml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owlcollections.html#owlmixin.owlcollections.TDict.to_yamlf"><code class="docutils literal notranslate"><span class="pre">TDict.to_yamlf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/owloption.html">Option</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/owloption.html#toption">TOption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/owloption.html#toption">TOption</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption"><code class="docutils literal notranslate"><span class="pre">TOption</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.get"><code class="docutils literal notranslate"><span class="pre">TOption.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.get_or"><code class="docutils literal notranslate"><span class="pre">TOption.get_or()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.is_none"><code class="docutils literal notranslate"><span class="pre">TOption.is_none()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.any"><code class="docutils literal notranslate"><span class="pre">TOption.any()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.map"><code class="docutils literal notranslate"><span class="pre">TOption.map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/owloption.html#owlmixin.owloption.TOption.flat_map"><code class="docutils literal notranslate"><span class="pre">TOption.flat_map()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/owlenum.html">OwlEnum</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/owlenum.html#id1">OwlEnum</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/owlenum.html#owlobjectenum">OwlObjectEnum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/owlenum.html#id1">OwlEnum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlenum.html#owlmixin.owlenum.OwlEnum"><code class="docutils literal notranslate"><span class="pre">OwlEnum</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/owlenum.html#owlobjectenum">OwlObjectEnum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/owlenum.html#owlmixin.owlenum.OwlObjectEnum"><code class="docutils literal notranslate"><span class="pre">OwlObjectEnum</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/owlenum.html#owlmixin.owlenum.OwlObjectEnum.from_value"><code class="docutils literal notranslate"><span class="pre">OwlObjectEnum.from_value()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/errors.html">Errors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/errors.html#invalidtypeerror">InvalidTypeError</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/errors.html#unknownpropertieserror">UnknownPropertiesError</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/errors.html#requirederror">RequiredError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/errors.html#invalidtypeerror">InvalidTypeError</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/errors.html#owlmixin.errors.InvalidTypeError"><code class="docutils literal notranslate"><span class="pre">InvalidTypeError</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/errors.html#owlmixin.errors.InvalidTypeError.with_traceback"><code class="docutils literal notranslate"><span class="pre">InvalidTypeError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/errors.html#unknownpropertieserror">UnknownPropertiesError</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/errors.html#owlmixin.errors.UnknownPropertiesError"><code class="docutils literal notranslate"><span class="pre">UnknownPropertiesError</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/errors.html#owlmixin.errors.UnknownPropertiesError.with_traceback"><code class="docutils literal notranslate"><span class="pre">UnknownPropertiesError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/errors.html#requirederror">RequiredError</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/errors.html#owlmixin.errors.RequiredError"><code class="docutils literal notranslate"><span class="pre">RequiredError</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/errors.html#owlmixin.errors.RequiredError.with_traceback"><code class="docutils literal notranslate"><span class="pre">RequiredError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Owlmixin API Reference</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="api/owlmixin.html"
-                        title="next chapter">OwlMixin</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="api/owlmixin.html"
+                          title="next chapter">OwlMixin</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -106,12 +307,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -125,12 +326,13 @@
         <li class="right" >
           <a href="api/owlmixin.html" title="OwlMixin"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">owlmixin  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">owlmixin  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Owlmixin API Reference</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, tadashi-aikawa.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
