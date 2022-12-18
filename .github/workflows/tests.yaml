@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ["3.6", "3.7", "3.8", "3.9"]
+        python: ["3.7", "3.8", "3.9"]
     name: Python ${{ matrix.python }} on ${{ matrix.os }}
 
     steps:
@@ -60,7 +60,7 @@ jobs:
         if: always()
         with:
           description: "✅ Owlmixin Tests passed!"
-          footer: "Python v3.6/3.7/3.8/3.9"
+          footer: "Python v3.7/3.8/3.9"
           severity: info
           avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
