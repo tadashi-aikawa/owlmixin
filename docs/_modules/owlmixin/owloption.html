@@ -56,7 +56,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="TOption.get"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).get()</span>
@@ -68,7 +68,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
 
 <div class="viewcode-block" id="TOption.get_or"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.get_or">[docs]</a>    <span class="k">def</span> <span class="nf">get_or</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).get_or(999)</span>
@@ -81,7 +81,7 @@
         <span class="k">return</span> <span class="n">default</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
 
 <div class="viewcode-block" id="TOption.is_none"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.is_none">[docs]</a>    <span class="k">def</span> <span class="nf">is_none</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).is_none()</span>
@@ -94,7 +94,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TOption.any"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.any">[docs]</a>    <span class="k">def</span> <span class="nf">any</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).any()</span>
@@ -107,7 +107,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TOption.map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).map(lambda x: x+1).get()</span>
@@ -118,7 +118,7 @@
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_none</span><span class="p">()</span> <span class="k">else</span> <span class="n">TOption</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TOption.flat_map"><a class="viewcode-back" href="../../api/owloption.html#owlmixin.owloption.TOption.flat_map">[docs]</a>    <span class="k">def</span> <span class="nf">flat_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;TOption[U]&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Usage:</span>
 
 <span class="sd">            &gt;&gt;&gt; TOption(3).flat_map(lambda x: TOption(str(x+1))).get()</span>

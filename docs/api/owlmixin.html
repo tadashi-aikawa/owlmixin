@@ -184,20 +184,20 @@
 <span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gt">Traceback (most recent call last):</span>
-    <span class="o">...</span>
-<span class="gr">owlmixin.errors.UnknownPropertiesError</span>:
-<span class="go">.        ∧,,_∧      ,___________________</span>
-<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Unknown properties error</span>
-<span class="go">   ／／/     /::/     `-------------------</span>
-<span class="go">   |::|/⊂ヽノ|::|」</span>
-<span class="go">／￣￣旦￣￣￣／|</span>
-<span class="go">＿＿＿＿＿＿／  | |</span>
-<span class="go">|------ー----ー|／</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">owlmixin.errors.UnknownPropertiesError</span><span class="w">:</span>
+<span class="x">.        ∧,,_∧      ,___________________</span>
+<span class="x">     ⊂ ( ･ω･ )つ-  &lt;  Unknown properties error</span>
+<span class="x">   ／／/     /::/     `-------------------</span>
+<span class="x">   |::|/⊂ヽノ|::|」</span>
+<span class="x">／￣￣旦￣￣￣／|</span>
+<span class="x">＿＿＿＿＿＿／  | |</span>
+<span class="x">|------ー----ー|／</span>
 
-<span class="go">`owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!</span>
+<span class="x">`owlmixin.samples.Human` has unknown properties [&#39;hogehoge1&#39;, &#39;hogehoge2&#39;]!!</span>
 
-<span class="go">    * If you want to allow unknown properties, set `restrict=False`</span>
-<span class="go">    * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human</span>
+<span class="x">    * If you want to allow unknown properties, set `restrict=False`</span>
+<span class="x">    * If you want to disallow unknown properties, add `hogehoge1` and `hogehoge2` to owlmixin.samples.Human</span>
 </pre></div>
 </div>
 <p>If you specify wrong type…</p>
@@ -207,21 +207,21 @@
 <span class="gp">... </span>    <span class="s2">&quot;favorites&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gt">Traceback (most recent call last):</span>
-    <span class="o">...</span>
-<span class="gr">owlmixin.errors.InvalidTypeError</span>:
-<span class="go">.        ∧,,_∧      ,___________________</span>
-<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error</span>
-<span class="go">   ／／/     /::/     `-------------------</span>
-<span class="go">   |::|/⊂ヽノ|::|」</span>
-<span class="go">／￣￣旦￣￣￣／|</span>
-<span class="go">＿＿＿＿＿＿／  | |</span>
-<span class="go">|------ー----ー|／</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">owlmixin.errors.InvalidTypeError</span><span class="w">:</span>
+<span class="x">.        ∧,,_∧      ,___________________</span>
+<span class="x">     ⊂ ( ･ω･ )つ-  &lt;  Invalid Type error</span>
+<span class="x">   ／／/     /::/     `-------------------</span>
+<span class="x">   |::|/⊂ヽノ|::|」</span>
+<span class="x">／￣￣旦￣￣￣／|</span>
+<span class="x">＿＿＿＿＿＿／  | |</span>
+<span class="x">|------ー----ー|／</span>
 
-<span class="go">`owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.</span>
-<span class="go">Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`</span>
+<span class="x">`owlmixin.samples.Human#favorites.0 = apple` doesn&#39;t match expected types.</span>
+<span class="x">Expected type is one of [&quot;&lt;class &#39;owlmixin.samples.Food&#39;&gt;&quot;, &quot;&lt;class &#39;dict&#39;&gt;&quot;], but actual type is `&lt;class &#39;str&#39;&gt;`</span>
 
-<span class="go">    * If you want to force cast, set `force_cast=True`</span>
-<span class="go">    * If you don&#39;t want to force cast, specify value which has correct type</span>
+<span class="x">    * If you want to force cast, set `force_cast=True`</span>
+<span class="x">    * If you don&#39;t want to force cast, specify value which has correct type</span>
 </pre></div>
 </div>
 <p>If you don’t specify required params… (ex. name</p>
@@ -229,20 +229,20 @@
 <span class="gp">... </span>    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="gp">... </span><span class="p">})</span>  
 <span class="gt">Traceback (most recent call last):</span>
-    <span class="o">...</span>
-<span class="gr">owlmixin.errors.RequiredError</span>:
-<span class="go">.        ∧,,_∧      ,___________________</span>
-<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
-<span class="go">   ／／/     /::/     `-------------------</span>
-<span class="go">   |::|/⊂ヽノ|::|」</span>
-<span class="go">／￣￣旦￣￣￣／|</span>
-<span class="go">＿＿＿＿＿＿／  | |</span>
-<span class="go">|------ー----ー|／</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">owlmixin.errors.RequiredError</span><span class="w">:</span>
+<span class="x">.        ∧,,_∧      ,___________________</span>
+<span class="x">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
+<span class="x">   ／／/     /::/     `-------------------</span>
+<span class="x">   |::|/⊂ヽノ|::|」</span>
+<span class="x">／￣￣旦￣￣￣／|</span>
+<span class="x">＿＿＿＿＿＿／  | |</span>
+<span class="x">|------ー----ー|／</span>
 
-<span class="go">`owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!</span>
+<span class="x">`owlmixin.samples.Human#name: &lt;class &#39;str&#39;&gt;` is empty!!</span>
 
-<span class="go">    * If `name` is certainly required, specify anything.</span>
-<span class="go">    * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`</span>
+<span class="x">    * If `name` is certainly required, specify anything.</span>
+<span class="x">    * If `name` is optional, change type from `&lt;class &#39;str&#39;&gt;` to `TOption[&lt;class &#39;str&#39;&gt;]`</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -270,20 +270,20 @@
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Human</span><span class="o">.</span><span class="n">from_optional_dict</span><span class="p">({})</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  
 <span class="gt">Traceback (most recent call last):</span>
-    <span class="o">...</span>
-<span class="gr">owlmixin.errors.RequiredError</span>:
-<span class="go">.        ∧,,_∧      ,___________________</span>
-<span class="go">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
-<span class="go">   ／／/     /::/     `-------------------</span>
-<span class="go">   |::|/⊂ヽノ|::|」</span>
-<span class="go">／￣￣旦￣￣￣／|</span>
-<span class="go">＿＿＿＿＿＿／  | |</span>
-<span class="go">|------ー----ー|／</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">owlmixin.errors.RequiredError</span><span class="w">:</span>
+<span class="x">.        ∧,,_∧      ,___________________</span>
+<span class="x">     ⊂ ( ･ω･ )つ-  &lt;  Required error</span>
+<span class="x">   ／／/     /::/     `-------------------</span>
+<span class="x">   |::|/⊂ヽノ|::|」</span>
+<span class="x">／￣￣旦￣￣￣／|</span>
+<span class="x">＿＿＿＿＿＿／  | |</span>
+<span class="x">|------ー----ー|／</span>
 
-<span class="go">`owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!</span>
+<span class="x">`owlmixin.samples.Human#id: &lt;class &#39;int&#39;&gt;` is empty!!</span>
 
-<span class="go">    * If `id` is certainly required, specify anything.</span>
-<span class="go">    * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`</span>
+<span class="x">    * If `id` is certainly required, specify anything.</span>
+<span class="x">    * If `id` is optional, change type from `&lt;class &#39;int&#39;&gt;` to `TOption[&lt;class &#39;int&#39;&gt;]`</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -946,7 +946,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="owlmixin.OwlMixin.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_none</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_empty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#owlmixin.OwlMixin.to_json" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_none</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_empty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#owlmixin.OwlMixin.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -978,7 +978,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="owlmixin.OwlMixin.to_jsonf">
-<span class="sig-name descname"><span class="pre">to_jsonf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'utf8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_none</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_empty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#owlmixin.OwlMixin.to_jsonf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_jsonf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'utf8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_none</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_empty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#owlmixin.OwlMixin.to_jsonf" title="Permalink to this definition">¶</a></dt>
 <dd><p>From instance to json file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

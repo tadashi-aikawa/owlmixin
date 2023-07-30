@@ -53,14 +53,14 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">.        ∧,,_∧      ,___________________</span>
-<span class="s2">     ⊂ ( ･ω･ )つ-  &lt;  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">     ⊂ ( ･ω･ )つ-  &lt;  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="si">}</span>
 <span class="s2">   ／／/     /::/     `-------------------</span>
 <span class="s2">   |::|/⊂ヽノ|::|」</span>
 <span class="s2">／￣￣旦￣￣￣／|</span>
 <span class="s2">＿＿＿＿＿＿／  | |</span>
 <span class="s2">|------ー----ー|／</span>
 
-<span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2"></span>
+<span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span>
 <span class="s2">        &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -69,7 +69,7 @@
 
 
 <div class="viewcode-block" id="InvalidTypeError"><a class="viewcode-back" href="../../api/errors.html#owlmixin.errors.InvalidTypeError">[docs]</a><span class="k">class</span> <span class="nc">InvalidTypeError</span><span class="p">(</span><span class="n">OwlMixinError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :ivar str title: Error title</span>
 <span class="sd">    :ivar str description: Error description</span>
 <span class="sd">    :ivar str cls: Class name</span>
@@ -105,7 +105,7 @@
 
 
 <div class="viewcode-block" id="UnknownPropertiesError"><a class="viewcode-back" href="../../api/errors.html#owlmixin.errors.UnknownPropertiesError">[docs]</a><span class="k">class</span> <span class="nc">UnknownPropertiesError</span><span class="p">(</span><span class="n">OwlMixinError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :ivar str title: Error title</span>
 <span class="sd">    :ivar str description: Error description</span>
 <span class="sd">    :ivar str cls: Class name</span>
@@ -127,11 +127,11 @@
 
 <span class="s2">    * If you want to allow unknown properties, set `restrict=False`</span>
 <span class="s2">    * If you want to disallow unknown properties, add </span><span class="si">{</span><span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">])</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span></div>
+<span class="w">            </span><span class="p">[</span><span class="s1">&#39;`&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;`&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">])</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="RequiredError"><a class="viewcode-back" href="../../api/errors.html#owlmixin.errors.RequiredError">[docs]</a><span class="k">class</span> <span class="nc">RequiredError</span><span class="p">(</span><span class="n">OwlMixinError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :ivar str title: Error title</span>
 <span class="sd">    :ivar str description: Error description</span>
 <span class="sd">    :ivar str cls: Class name</span>
