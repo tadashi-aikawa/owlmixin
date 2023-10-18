@@ -1,5 +1,4 @@
-OwlMixin
-========
+# OwlMixin
 
 [![pypi](https://img.shields.io/pypi/v/owlmixin.svg)](https://pypi.org/project/owlmixin/)
 [![versions](https://img.shields.io/pypi/pyversions/owlmixin.svg)](https://pypi.org/project/owlmixin/)
@@ -41,8 +40,7 @@ OwlMixin
 </details>
 
 
-💪 Motivation
----------------
+## 💪 Motivation
 
 Have you ever wanted to write robust code in Python? This library will make such your wishes come true.
 
@@ -50,22 +48,19 @@ Define your data class which is extend OwlMixin, you can use some useful methods
 See following `Example` and `API Reference` sections.
 
 
-💃 Installation
------------------
+## 💃 Installation
 
 ```bash
 pip install owlmixin
 ```
 
 
-📜 API Reference
-------------------
+## 📜 API Reference
 
 https://tadashi-aikawa.github.io/owlmixin/
 
 
-👉 Examples
--------------
+## 👉 Examples
 
 ```python
 from owlmixin import OwlMixin, OwlEnum, TOption, TList
@@ -176,8 +171,7 @@ RANK,STAR,NAME,DESCRIPTION
 Don't you think smart?
 
 
-💻 For developers
------------------
+## 💻 For developers
 
 ### Requirements
 
@@ -203,8 +197,7 @@ $ make test
 ```
 
 
-📦 Release
-------------
+## 📦 Release
 
 ### Requirements
 
