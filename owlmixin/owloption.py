@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from typing import Generic, TypeVar, Callable
+from typing import Callable, Generic, TypeVar
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -89,7 +89,9 @@ class TOption(Generic[T]):
         return f"Option --> {self.get()}"
 
     def __raise_no_conditional_expression(self, expression_name):
-        raise NotImplementedError(f"No expression `{expression_name}` in TOption instance")
+        raise NotImplementedError(
+            f"No expression `{expression_name}` in TOption instance"
+        )
 
     def __add__(self, other):
         self.__raise_no_conditional_expression("__add__")

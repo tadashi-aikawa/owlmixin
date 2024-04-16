@@ -3,19 +3,17 @@
 
 import inspect
 import sys
-from typing import TypeVar, Optional, Sequence, Iterable, List, Any
+from typing import Any, Iterable, List, Optional, Sequence, TypeVar
 
 from owlmixin import util
-from owlmixin.errors import RequiredError, UnknownPropertiesError, InvalidTypeError
+from owlmixin.errors import InvalidTypeError, RequiredError, UnknownPropertiesError
 from owlmixin.owlcollections import TDict, TIterator, TList
-from owlmixin.owlenum import OwlEnum, OwlObjectEnum
 from owlmixin.transformers import (
     DictTransformer,
     JsonTransformer,
-    YamlTransformer,
-    ValueTransformer,
-    traverse_dict,
     TOption,
+    ValueTransformer,
+    YamlTransformer,
 )
 
 T = TypeVar("T", bound="OwlMixin")
@@ -38,7 +36,9 @@ def assert_none(value, type_, cls, name):
 
 def assert_types(value, types: tuple, cls, name):
     if not isinstance(value, types):
-        raise InvalidTypeError(cls=cls, prop=name, value=value, expected=types, actual=type(value))
+        raise InvalidTypeError(
+            cls=cls, prop=name, value=value, expected=types, actual=type(value)
+        )
 
 
 def traverse(
@@ -63,7 +63,10 @@ def traverse(
         if issubclass(type_, OwlMixin):
             assert_types(value, (type_, dict), cls, name)
             return type_.from_dict(
-                value, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                value,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
         if issubclass(type_, ValueTransformer):
             return type_.from_value(value)
@@ -81,7 +84,15 @@ def traverse(
         assert_types(value, (list,), cls, name)
         return TList(
             [
-                traverse(g_type[0], f"{name}.{i}", v, cls, force_snake_case, force_cast, restrict)
+                traverse(
+                    g_type[0],
+                    f"{name}.{i}",
+                    v,
+                    cls,
+                    force_snake_case,
+                    force_cast,
+                    restrict,
+                )
                 for i, v in enumerate(value)
             ]
         )
@@ -89,7 +100,9 @@ def traverse(
         assert_none(value, type_, cls, name)
         assert_types(value, (Iterable,), cls, name)
         return TIterator(
-            traverse(g_type[0], f"{name}.{i}", v, cls, force_snake_case, force_cast, restrict)
+            traverse(
+                g_type[0], f"{name}.{i}", v, cls, force_snake_case, force_cast, restrict
+            )
             for i, v in enumerate(value)
         )
     if o_type == TDict:
@@ -98,7 +111,13 @@ def traverse(
         return TDict(
             {
                 k: traverse(
-                    g_type[0], f"{name}.{k}", v, cls, force_snake_case, force_cast, restrict
+                    g_type[0],
+                    f"{name}.{k}",
+                    v,
+                    cls,
+                    force_snake_case,
+                    force_cast,
+                    restrict,
                 )
                 for k, v in value.items()
             }
@@ -108,7 +127,9 @@ def traverse(
         # TODO: Fot `from_csvf`... need to more simple!!
         if (isinstance(v, str) and v) or (not isinstance(v, str) and v is not None):
             return TOption(
-                traverse(g_type[0], name, v, cls, force_snake_case, force_cast, restrict)
+                traverse(
+                    g_type[0], name, v, cls, force_snake_case, force_cast, restrict
+                )
             )
         return TOption(None)
 
@@ -344,7 +365,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         """
         return TOption(
             cls.from_dict(
-                d, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                d,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
             if d is not None
             else None
@@ -382,7 +406,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         return TList(
             [
                 cls.from_dict(
-                    d, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                    d,
+                    force_snake_case=force_snake_case,
+                    force_cast=force_cast,
+                    restrict=restrict,
                 )
                 for d in ds
             ]
@@ -419,7 +446,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         """
         return TIterator(
             cls.from_dict(
-                d, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                d,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
             for d in ds
         )
@@ -451,7 +481,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         """
         return TOption(
             cls.from_dicts(
-                ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                ds,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
             if ds is not None
             else None
@@ -484,7 +517,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         """
         return TOption(
             cls.from_iterable_dicts(
-                ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                ds,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
             if ds is not None
             else None
@@ -522,7 +558,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         return TDict(
             {
                 k: cls.from_dict(
-                    v, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                    v,
+                    force_snake_case=force_snake_case,
+                    force_cast=force_cast,
+                    restrict=restrict,
                 )
                 for k, v in ds.items()
             }
@@ -555,7 +594,10 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
         """
         return TOption(
             cls.from_dicts_by_key(
-                ds, force_snake_case=force_snake_case, force_cast=force_cast, restrict=restrict
+                ds,
+                force_snake_case=force_snake_case,
+                force_cast=force_cast,
+                restrict=restrict,
             )
             if ds is not None
             else None
@@ -563,7 +605,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = False,
     ) -> T:
         """From json string to instance
 
@@ -626,7 +673,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_to_list(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = False,
     ) -> TList[T]:
         """From json string to list of instance
 
@@ -657,7 +709,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_to_iterator(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = False,
     ) -> TIterator[T]:
         """From json string to iterable instance
 
@@ -740,7 +797,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = True,
     ) -> T:
         """From yaml string to instance
 
@@ -805,7 +867,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml_to_list(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = True,
     ) -> TList[T]:
         """From yaml string to list of instance
 
@@ -844,7 +911,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_yaml_to_iterator(
-        cls, data: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = True
+        cls,
+        data: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = True,
     ) -> TIterator[T]:
         """From yaml string to iterable instance
 
@@ -988,7 +1060,12 @@ class OwlMixin(DictTransformer, JsonTransformer, YamlTransformer, metaclass=OwlM
 
     @classmethod
     def from_json_url(
-        cls, url: str, *, force_snake_case=True, force_cast: bool = False, restrict: bool = False
+        cls,
+        url: str,
+        *,
+        force_snake_case=True,
+        force_cast: bool = False,
+        restrict: bool = False,
     ) -> T:
         """From url which returns json to instance
 

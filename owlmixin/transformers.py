@@ -1,5 +1,5 @@
 # coding: utf-8
-from typing import List, Sequence, Iterator, Optional, Any
+from typing import Any, Iterator, List, Optional, Sequence
 
 from owlmixin import util
 from owlmixin.owloption import TOption
@@ -26,15 +26,24 @@ def traverse(value, ignore_none=True, force_value=False, ignore_empty=False):
         return value.to_value(ignore_none, force_value)
     if isinstance(value, TOption):
         return traverse(
-            value.get(), ignore_none=ignore_none, force_value=force_value, ignore_empty=ignore_empty
+            value.get(),
+            ignore_none=ignore_none,
+            force_value=force_value,
+            ignore_empty=ignore_empty,
         )
     if isinstance(value, dict):
         return traverse_dict(
-            value, ignore_none=ignore_none, force_value=force_value, ignore_empty=ignore_empty
+            value,
+            ignore_none=ignore_none,
+            force_value=force_value,
+            ignore_empty=ignore_empty,
         )
     if isinstance(value, list):
         return traverse_list(
-            value, ignore_none=ignore_none, force_value=force_value, ignore_empty=ignore_empty
+            value,
+            ignore_none=ignore_none,
+            force_value=force_value,
+            ignore_empty=ignore_empty,
         )
     if isinstance(value, Iterator):
         return traverse_list(list(value), ignore_none, force_value, ignore_empty)
@@ -66,8 +75,7 @@ def traverse_list(instance_list, ignore_none, force_value=False, ignore_empty=Fa
 
 
 class DictTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     @property
     def _dict(self):
@@ -95,7 +103,11 @@ class DictTransformer:
         return format_.format(**self.to_dict())
 
     def to_dict(
-        self, *, ignore_none: bool = True, force_value: bool = True, ignore_empty: bool = False
+        self,
+        *,
+        ignore_none: bool = True,
+        force_value: bool = True,
+        ignore_empty: bool = False,
     ) -> dict:
         """From instance to dict
 
@@ -147,11 +159,14 @@ class DictTransformer:
 
 
 class DictsTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     def to_dicts(
-        self, *, ignore_none: bool = True, force_value: bool = True, ignore_empty: bool = False
+        self,
+        *,
+        ignore_none: bool = True,
+        force_value: bool = True,
+        ignore_empty: bool = False,
     ) -> List[dict]:
         """From instance to dict
 
@@ -213,11 +228,14 @@ class DictsTransformer:
 
 
 class JsonTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     def to_json(
-        self, *, indent: int = None, ignore_none: bool = True, ignore_empty: bool = False
+        self,
+        *,
+        indent: int = None,
+        ignore_none: bool = True,
+        ignore_empty: bool = False,
     ) -> str:
         """From instance to json string
 
@@ -241,7 +259,8 @@ class JsonTransformer:
             '{"favorites": [{"name": "Apple","names_by_lang": {"de": "Apfel","en": "Apple"}},{"name": "Orange"}],"id": 1,"name": "Tom"}'
         """
         return util.dump_json(
-            traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty), indent
+            traverse(self, ignore_none, force_value=True, ignore_empty=ignore_empty),
+            indent,
         )
 
     def to_jsonf(
@@ -269,7 +288,9 @@ class JsonTransformer:
             indent=indent,
         )
 
-    def to_pretty_json(self, *, ignore_none: bool = True, ignore_empty: bool = False) -> str:
+    def to_pretty_json(
+        self, *, ignore_none: bool = True, ignore_empty: bool = False
+    ) -> str:
         """From instance to pretty json string
 
         :param ignore_none: Properties which is None are excluded if True
@@ -305,12 +326,13 @@ class JsonTransformer:
                 "name": "Tom"
             }
         """
-        return self.to_json(indent=4, ignore_none=ignore_none, ignore_empty=ignore_empty)
+        return self.to_json(
+            indent=4, ignore_none=ignore_none, ignore_empty=ignore_empty
+        )
 
 
 class YamlTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     def to_yaml(self, *, ignore_none: bool = True, ignore_empty: bool = False) -> str:
         """From instance to yaml string
@@ -369,8 +391,7 @@ class YamlTransformer:
 
 
 class CsvTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     def to_csv(
         self,
@@ -447,8 +468,7 @@ class CsvTransformer:
 
 
 class TableTransformer:
-    """ `@property _dict` can overridden
-    """
+    """`@property _dict` can overridden"""
 
     def to_table(self, fieldnames: Sequence[str]) -> str:
         """From sequence of text to csv string

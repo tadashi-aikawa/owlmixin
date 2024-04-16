@@ -8,12 +8,12 @@ import csv
 import io
 import json
 import re
-from math import floor, ceil
-from typing import List, Dict, Union, Sequence, Iterable, Iterator, Optional
+from math import ceil, floor
+from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Union
+from unicodedata import east_asian_width
 from urllib.request import urlopen
 
 import yaml
-from unicodedata import east_asian_width
 
 
 class CrLfCsvDialect(csv.Dialect):
@@ -96,7 +96,9 @@ def to_snake(value):
     :param unicode value:
     :rtype: unicode
     """
-    return re.sub(r"((?<!^)[A-Z])", "_\\1", value.strip("<>-")).lower().replace("-", "_")
+    return (
+        re.sub(r"((?<!^)[A-Z])", "_\\1", value.strip("<>-")).lower().replace("-", "_")
+    )
 
 
 def load_json(json_str):
@@ -135,7 +137,9 @@ def load_yamlf(fpath, encoding):
         return yaml.safe_load(f)
 
 
-def load_csvf(fpath: str, fieldnames: Optional[Sequence[str]], encoding: str) -> Iterator[dict]:
+def load_csvf(
+    fpath: str, fieldnames: Optional[Sequence[str]], encoding: str
+) -> Iterator[dict]:
     """
     :param fpath:
     :param fieldnames:
@@ -184,7 +188,9 @@ def dump_csv(
 
     with io.StringIO() as sio:
         dialect = get_dialect_name(crlf, tsv)
-        writer = csv.DictWriter(sio, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore")
+        writer = csv.DictWriter(
+            sio, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore"
+        )
         if with_header:
             writer.writeheader()
         for x in data:
@@ -220,7 +226,9 @@ def dump_csvf(
 
     with codecs.open(fpath, mode="w", encoding=encoding) as f:
         dialect = get_dialect_name(crlf, tsv)
-        writer = csv.DictWriter(f, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore")
+        writer = csv.DictWriter(
+            f, fieldnames=fieldnames, dialect=dialect, extrasaction="ignore"
+        )
         if with_header:
             writer.writeheader()
         for x in data:
@@ -240,7 +248,9 @@ def dump_json(data, indent=None):
     )
 
 
-def dump_jsonf(data: Union[list, dict], *, fpath: str, encoding: str, indent=None) -> str:
+def dump_jsonf(
+    data: Union[list, dict], *, fpath: str, encoding: str, indent=None
+) -> str:
     """
     :param data: list | dict data
     :param fpath: write path
@@ -259,7 +269,12 @@ def dump_yaml(data):
     :rtype: unicode
     """
     return yaml.dump(
-        data, indent=2, encoding=None, allow_unicode=True, default_flow_style=False, Dumper=MyDumper
+        data,
+        indent=2,
+        encoding=None,
+        allow_unicode=True,
+        default_flow_style=False,
+        Dumper=MyDumper,
     )
 
 
@@ -291,7 +306,7 @@ def dump_table(data: List[dict], fieldnames: Sequence[str]) -> str:
     }
 
     def fill_spaces(word: str, width: int, center=False):
-        """ aaa, 4 => ' aaa  ' """
+        """aaa, 4 => ' aaa  '"""
         to_fills: int = width - string_width(word)
         return (
             f" {' ' * floor(to_fills / 2)}{word}{' ' * ceil(to_fills / 2)} "

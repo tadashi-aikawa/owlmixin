@@ -21,11 +21,17 @@ guard-%:
 
 #---- Basic
 
-init-dev: ## Install dependencies and create envirionment
-	@poetry install
+lint: ## Lint
+	@shopt -s globstar; poetry run ruff check owlmixin/**/*.py
 
-test: ## Unit test
+format: ## Format
+	@shopt -s globstar; poetry run ruff format owlmixin/**/*.py
+
+test: ## Test
 	@poetry run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
+
+ci: ## lint & format & test & test-e2e
+	@make lint format test
 
 #---- Docs
 

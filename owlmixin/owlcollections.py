@@ -2,17 +2,28 @@
 
 import functools
 from collections import deque
-from itertools import chain, islice, filterfalse, takewhile, tee, groupby
-from typing import TypeVar, Generic, Any, Callable, Dict, List, Tuple, Union, Iterable, Iterator
+from itertools import chain, filterfalse, groupby, islice, takewhile, tee
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generic,
+    Iterable,
+    Iterator,
+    List,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 from owlmixin.owloption import TOption
 from owlmixin.transformers import (
-    DictTransformer,
-    DictsTransformer,
-    JsonTransformer,
-    YamlTransformer,
     CsvTransformer,
+    DictsTransformer,
+    DictTransformer,
+    JsonTransformer,
     TableTransformer,
+    YamlTransformer,
 )
 
 T = TypeVar("T")
@@ -353,7 +364,12 @@ class TList(
 
 
 class TIterator(
-    DictsTransformer, JsonTransformer, YamlTransformer, CsvTransformer, TableTransformer, Generic[T]
+    DictsTransformer,
+    JsonTransformer,
+    YamlTransformer,
+    CsvTransformer,
+    TableTransformer,
+    Generic[T],
 ):
     __inner_iterator: Iterator
 
@@ -569,7 +585,9 @@ class TIterator(
 
         return TIterator(make_generator())
 
-    def partition(self, func: Callable[[T], bool]) -> Tuple["TIterator[T]", "TIterator[T]"]:
+    def partition(
+        self, func: Callable[[T], bool]
+    ) -> Tuple["TIterator[T]", "TIterator[T]"]:
         """
         Usage:
 
@@ -593,7 +611,9 @@ class TIterator(
             >>> TIterator([1, 2, 3, 4, 5]).group_by(lambda x: x % 2).to_json()
             '{"0": [2,4],"1": [1,3,5]}'
         """
-        return TDict({k: TList(v) for k, v in groupby(sorted(self, key=to_key), to_key)})
+        return TDict(
+            {k: TList(v) for k, v in groupby(sorted(self, key=to_key), to_key)}
+        )
 
     def key_by(self, to_key: Callable[[T], str]) -> "TDict[T]":
         """
@@ -607,7 +627,9 @@ class TIterator(
         """
         return TDict({to_key(x): x for x in self})
 
-    def order_by(self, func: Callable[[T], Any], reverse: bool = False) -> "TIterator[T]":
+    def order_by(
+        self, func: Callable[[T], Any], reverse: bool = False
+    ) -> "TIterator[T]":
         """
         Usage:
 

@@ -12,8 +12,7 @@ warnings.simplefilter("once")
 
 
 class OwlEnum(ValueTransformer, Enum):
-    """ This class is similar to Enum except that can dump as json or yaml
-    """
+    """This class is similar to Enum except that can dump as json or yaml"""
 
     @classmethod
     def from_value(cls, value: str):
@@ -24,7 +23,7 @@ class OwlEnum(ValueTransformer, Enum):
 
 
 class OwlObjectEnum(ValueTransformer, Enum):
-    """ This class is similar to OwlEnum except that can have additional object.
+    """This class is similar to OwlEnum except that can have additional object.
 
     Use case example:
         class Animal(OwlObjectEnum):

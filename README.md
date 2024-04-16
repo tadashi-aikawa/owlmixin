@@ -187,7 +187,8 @@ Don't you think smart?
 
 ```bash
 # Create env
-$ make init-dev
+$ poetry env use <path of python 3.8>
+$ poetry install
 
 # Build documentation and run server locally
 $ make serve-docs
