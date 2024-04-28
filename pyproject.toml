@@ -33,6 +33,9 @@ ruff = "^0.3.7"
 # import順を最適化
 extend-select = ["I"]
 
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

@@ -8,12 +8,19 @@ from typing import Any, Iterable, List, Optional, Sequence, TypeVar
 from owlmixin import util
 from owlmixin.errors import InvalidTypeError, RequiredError, UnknownPropertiesError
 from owlmixin.owlcollections import TDict, TIterator, TList
+
+# Avoid for breaking changes (import will be not working...)
+from owlmixin.owlenum import (
+    OwlEnum,
+    OwlObjectEnum,
+)
 from owlmixin.transformers import (
     DictTransformer,
     JsonTransformer,
     TOption,
     ValueTransformer,
     YamlTransformer,
+    traverse_dict,  # Avoid for breaking changes (import will be not working...)
 )
 
 T = TypeVar("T", bound="OwlMixin")
