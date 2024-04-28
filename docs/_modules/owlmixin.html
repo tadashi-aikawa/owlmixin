@@ -47,19 +47,17 @@
 
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">from</span> <span class="nn">owlmixin</span> <span class="kn">import</span> <span class="n">util</span>
-<span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="kn">import</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span><span class="p">,</span> <span class="n">InvalidTypeError</span>
+<span class="kn">from</span> <span class="nn">owlmixin.errors</span> <span class="kn">import</span> <span class="n">InvalidTypeError</span><span class="p">,</span> <span class="n">RequiredError</span><span class="p">,</span> <span class="n">UnknownPropertiesError</span>
 <span class="kn">from</span> <span class="nn">owlmixin.owlcollections</span> <span class="kn">import</span> <span class="n">TDict</span><span class="p">,</span> <span class="n">TIterator</span><span class="p">,</span> <span class="n">TList</span>
-<span class="kn">from</span> <span class="nn">owlmixin.owlenum</span> <span class="kn">import</span> <span class="n">OwlEnum</span><span class="p">,</span> <span class="n">OwlObjectEnum</span>
 <span class="kn">from</span> <span class="nn">owlmixin.transformers</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">DictTransformer</span><span class="p">,</span>
     <span class="n">JsonTransformer</span><span class="p">,</span>
-    <span class="n">YamlTransformer</span><span class="p">,</span>
-    <span class="n">ValueTransformer</span><span class="p">,</span>
-    <span class="n">traverse_dict</span><span class="p">,</span>
     <span class="n">TOption</span><span class="p">,</span>
+    <span class="n">ValueTransformer</span><span class="p">,</span>
+    <span class="n">YamlTransformer</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;OwlMixin&quot;</span><span class="p">)</span>
@@ -82,7 +80,9 @@
 
 <span class="k">def</span> <span class="nf">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">InvalidTypeError</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="n">types</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">InvalidTypeError</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="n">types</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
@@ -107,7 +107,10 @@
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">OwlMixin</span><span class="p">):</span>
             <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-                <span class="n">value</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">value</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">ValueTransformer</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">type_</span><span class="o">.</span><span class="n">from_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -125,7 +128,15 @@
         <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">TList</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+                <span class="n">traverse</span><span class="p">(</span>
+                    <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">v</span><span class="p">,</span>
+                    <span class="bp">cls</span><span class="p">,</span>
+                    <span class="n">force_snake_case</span><span class="p">,</span>
+                    <span class="n">force_cast</span><span class="p">,</span>
+                    <span class="n">restrict</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
             <span class="p">]</span>
         <span class="p">)</span>
@@ -133,7 +144,9 @@
         <span class="n">assert_none</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">assert_types</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">Iterable</span><span class="p">,),</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">TIterator</span><span class="p">(</span>
-            <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+            <span class="n">traverse</span><span class="p">(</span>
+                <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span>
+            <span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="n">o_type</span> <span class="o">==</span> <span class="n">TDict</span><span class="p">:</span>
@@ -142,7 +155,13 @@
         <span class="k">return</span> <span class="n">TDict</span><span class="p">(</span>
             <span class="p">{</span>
                 <span class="n">k</span><span class="p">:</span> <span class="n">traverse</span><span class="p">(</span>
-                    <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span>
+                    <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">v</span><span class="p">,</span>
+                    <span class="bp">cls</span><span class="p">,</span>
+                    <span class="n">force_snake_case</span><span class="p">,</span>
+                    <span class="n">force_cast</span><span class="p">,</span>
+                    <span class="n">restrict</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">}</span>
@@ -152,7 +171,9 @@
         <span class="c1"># TODO: Fot `from_csvf`... need to more simple!!</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
-                <span class="n">traverse</span><span class="p">(</span><span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="p">)</span>
+                <span class="n">traverse</span><span class="p">(</span>
+                    <span class="n">g_type</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span>
+                <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
@@ -388,7 +409,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-                <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">d</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="kc">None</span>
@@ -426,7 +450,10 @@
         <span class="k">return</span> <span class="n">TList</span><span class="p">(</span>
             <span class="p">[</span>
                 <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                    <span class="n">d</span><span class="p">,</span>
+                    <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                    <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                    <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span>
             <span class="p">]</span>
@@ -463,7 +490,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TIterator</span><span class="p">(</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-                <span class="n">d</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">d</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span>
         <span class="p">)</span></div>
@@ -495,7 +525,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts</span><span class="p">(</span>
-                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">ds</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="kc">None</span>
@@ -528,7 +561,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">from_iterable_dicts</span><span class="p">(</span>
-                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">ds</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="kc">None</span>
@@ -566,7 +602,10 @@
         <span class="k">return</span> <span class="n">TDict</span><span class="p">(</span>
             <span class="p">{</span>
                 <span class="n">k</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-                    <span class="n">v</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                    <span class="n">v</span><span class="p">,</span>
+                    <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                    <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                    <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">}</span>
@@ -599,7 +638,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TOption</span><span class="p">(</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">from_dicts_by_key</span><span class="p">(</span>
-                <span class="n">ds</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span> <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span> <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span>
+                <span class="n">ds</span><span class="p">,</span>
+                <span class="n">force_snake_case</span><span class="o">=</span><span class="n">force_snake_case</span><span class="p">,</span>
+                <span class="n">force_cast</span><span class="o">=</span><span class="n">force_cast</span><span class="p">,</span>
+                <span class="n">restrict</span><span class="o">=</span><span class="n">restrict</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="kc">None</span>
@@ -607,7 +649,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_json"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From json string to instance</span>
 
@@ -670,7 +717,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_json_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_to_list">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json_to_list</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From json string to list of instance</span>
 
@@ -701,7 +753,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_json_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json_to_iterator</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From json string to iterable instance</span>
 
@@ -784,7 +841,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_yaml"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From yaml string to instance</span>
 
@@ -849,7 +911,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_yaml_to_list"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_list">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_yaml_to_list</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TList</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From yaml string to list of instance</span>
 
@@ -888,7 +955,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_yaml_to_iterator"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_yaml_to_iterator">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_yaml_to_iterator</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TIterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From yaml string to iterable instance</span>
 
@@ -1032,7 +1104,12 @@
 
 <div class="viewcode-block" id="OwlMixin.from_json_url"><a class="viewcode-back" href="../api/owlmixin.html#owlmixin.OwlMixin.from_json_url">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json_url</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">force_snake_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force_cast</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">restrict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;From url which returns json to instance</span>
 
