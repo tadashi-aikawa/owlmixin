@@ -200,16 +200,23 @@ $ make test
 
 ## 📦 Release
 
-### Requirements
+https://github.com/tadashi-aikawa/owlmixin/actions/workflows/release.yaml?query=workflow%3ARelease
 
-* poetry
+### (Appendix) Another way
+
+If you can't or don't want to use GitHub Actions, you can release locally as following.
+
+#### (a1) Requirements
+
+* **Windows is not supported!!!**
+* poetry (with pypi authentications)
 * make
-* [ghr]
 
-[ghr]: https://github.com/tcnksm/ghr
-
-### Commands
+#### (a2) Commands
 
 ```bash
 make release version=x.y.z
 ```
+
+
+[ghr]: https://github.com/tcnksm/ghr

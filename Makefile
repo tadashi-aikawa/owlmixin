@@ -73,7 +73,7 @@ release: guard-version ## make release version=x.y.z
 	git commit -m ':package: Version $(version)'
 
 	@echo '4. Tags'
-	ghr v$(version)
+	git tag v$(version) -m v$(version)
 
 	@echo '5. Package OwlMixin'
 	@make _package
