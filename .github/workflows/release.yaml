@@ -33,7 +33,6 @@ jobs:
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
 
       - name: "Discord notification (not success)"
         uses: rjstone/discord-webhook-notify@v1
