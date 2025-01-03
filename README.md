@@ -181,7 +181,7 @@ Don't you think smart?
 ### Flow
 
 1. Development on master and if you need branches and issues, create them
-2. Commit with prefix emoji such as "📝", and suffix issue number like "#120"
+2. Use the [Conventional Commits] message
 
 ### Commands
 
@@ -219,3 +219,4 @@ make release version=x.y.z
 
 
 [ghr]: https://github.com/tcnksm/ghr
+[Conventional Commits]: https://www.conventionalcommits.org/ja/v1.0.0/
