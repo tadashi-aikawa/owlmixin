@@ -32,6 +32,8 @@ jobs:
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
 
       - name: "Discord notification (not success)"
         uses: rjstone/discord-webhook-notify@v1
