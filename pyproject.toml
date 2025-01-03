@@ -8,7 +8,7 @@ dependencies = [
     "pyyaml<7.0,>=6.0",
 ]
 name = "owlmixin"
-version = "7.0.0"
+version = "7.0.1"
 description = "Mixin which converts ``data class instance`` and others each other more simple."
 readme = "README.md"
 keywords = [
