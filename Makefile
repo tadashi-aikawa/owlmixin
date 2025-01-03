@@ -53,16 +53,13 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 
 #---- Release
 
-_package: ## Package OwlMixin
-	@uv build -f wheel
-
 release: guard-version ## make release version=x.y.z
 	@echo '0. Install packages from lockfile, then test and package documentation'
-	@uv install --no-root
+	@uv sync
 	@make test _package-docs
 
 	@echo '1. Version up'
-	@uv version $(version)
+	@sed -i 's/^version = ".*"/version = "$(version)"/' pyproject.toml
 
 	@echo '2. Package documentation'
 	@make _package-docs
@@ -76,7 +73,7 @@ release: guard-version ## make release version=x.y.z
 	git tag v$(version) -m v$(version)
 
 	@echo '5. Package OwlMixin'
-	@make _package
+	@uv build
 
 	@echo '6. Publish'
 	@uv publish
