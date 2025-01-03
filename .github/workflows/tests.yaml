@@ -8,7 +8,7 @@ on:
       - "owlmixin/**/*"
       - "tests/*"
       - "tests/**/*"
-      - "poetry.lock"
+      - "uv.lock"
       - ".codeclimate.yml"
   pull_request:
     branches:
@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     name: Python ${{ matrix.python }} on ${{ matrix.os }}
 
     steps:
@@ -33,12 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip poetry
-          poetry install
+          pipx install uv
+          uv sync
 
       - run: make test
       - uses: codecov/codecov-action@v3
-        if: matrix.python == 3.12 && matrix.os == 'ubuntu-latest' && success()
+        if: matrix.python == 3.13 && matrix.os == 'ubuntu-latest' && success()
 
       - name: "Discord notification (not success)"
         uses: rjstone/discord-webhook-notify@v1
@@ -60,7 +60,7 @@ jobs:
         if: always()
         with:
           description: "✅ Owlmixin Tests passed!"
-          footer: "Python v3.8/3.9/3.10/3.11/3.12"
+          footer: "Python v3.9/3.10/3.11/3.12/3.13"
           severity: info
           avatarUrl: https://www.suruga-ya.jp/database/pics_light/game/871005085.jpg
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

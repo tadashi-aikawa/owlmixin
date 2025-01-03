@@ -175,7 +175,7 @@ Don't you think smart?
 
 ### Requirements
 
-* poetry
+* uv
 * make
 
 ### Flow
@@ -187,8 +187,7 @@ Don't you think smart?
 
 ```bash
 # Create env
-$ poetry env use <path of python 3.8>
-$ poetry install
+$ uv run
 
 # Build documentation and run server locally
 $ make serve-docs
@@ -209,7 +208,7 @@ If you can't or don't want to use GitHub Actions, you can release locally as fol
 #### (a1) Requirements
 
 * **Windows is not supported!!!**
-* poetry (with pypi authentications)
+* uv (with pypi authentications)
 * make
 
 #### (a2) Commands

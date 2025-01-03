@@ -22,13 +22,13 @@ guard-%:
 #---- Basic
 
 lint: ## Lint
-	@shopt -s globstar; poetry run ruff check owlmixin/**/*.py
+	@shopt -s globstar; uv run ruff check owlmixin/**/*.py
 
 format: ## Format
-	@shopt -s globstar; poetry run ruff format owlmixin/**/*.py
+	@shopt -s globstar; uv run ruff format owlmixin/**/*.py
 
 test: ## Test
-	@poetry run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
+	@uv run pytest -vv --doctest-modules --doctest-continue-on-failure --cov-report=xml --cov=.
 
 ci: ## lint & format & test & test-e2e
 	@make lint format test
@@ -36,13 +36,13 @@ ci: ## lint & format & test & test-e2e
 #---- Docs
 
 _clean-docs: ## Clean documentation
-	@cd sphinx-docs && poetry run make clean
+	@cd sphinx-docs && uv run make clean
 
 build-docs: _clean-docs ## Build documentation
-	@cd sphinx-docs && poetry run make html linkcheck
+	@cd sphinx-docs && uv run make html linkcheck
 
 serve-docs: build-docs ## Serve documentation
-	@cd sphinx-docs/_build/html && poetry run python -m http.server
+	@cd sphinx-docs/_build/html && uv run python -m http.server
 
 _clean-package-docs: ## Clean package documentation
 	@rm -rf docs/*
@@ -54,15 +54,15 @@ _package-docs: build-docs _clean-package-docs ## Package documentation
 #---- Release
 
 _package: ## Package OwlMixin
-	@poetry build -f wheel
+	@uv build -f wheel
 
 release: guard-version ## make release version=x.y.z
 	@echo '0. Install packages from lockfile, then test and package documentation'
-	@poetry install --no-root
+	@uv install --no-root
 	@make test _package-docs
 
 	@echo '1. Version up'
-	@poetry version $(version)
+	@uv version $(version)
 
 	@echo '2. Package documentation'
 	@make _package-docs
@@ -79,7 +79,7 @@ release: guard-version ## make release version=x.y.z
 	@make _package
 
 	@echo '6. Publish'
-	@poetry publish
+	@uv publish
 
 	@echo '7. Push'
 	git push --tags
